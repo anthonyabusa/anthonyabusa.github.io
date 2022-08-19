@@ -395,7 +395,7 @@ body:not(.user-is-tabbing) a:focus {
 
 .nav__link:hover::after {
     right: 0;
-    height: 2px;
+    height: 4px;
     background: var(--pink);
 }
 
@@ -405,7 +405,7 @@ body:not(.user-is-tabbing) a:focus {
 
 .header {
     background: linear-gradient(rgba(0,0,0, .1), rgba(0,0,0, .4)), 
-        url('./images/header.jpg');
+        url('./images/IMG_0129.jpg');
     height: 100vh;
     background-size: cover;
     background-position: center;
