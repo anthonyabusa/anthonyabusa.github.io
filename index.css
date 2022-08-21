@@ -3,17 +3,17 @@
 /* --------------------------------------- */
 
 @font-face {
-    font-family: 'Hk Grotesk';
+    font-family: 'Hind';
     font-style: normal;
     font-weight: 400;
-    src: url('./fonts/HKGrotesk-Regular.woff') format('woff');
+    src: url('./fonts/HindSiliguri-Regular.ttf') format('woff');
 }
 
 @font-face {
-    font-family: 'Jost';
+    font-family: 'Shanti';
     font-style: normal;
     font-weight: 400;
-    src: url('./fonts/Jost-Regular.ttf') format('woff');
+    src: url('./fonts/Shanti-Regular.ttf') format('woff');
 }
 
 * {
@@ -122,7 +122,7 @@ img {
 h1,
 h2,
 h3 {
-    font-family: 'Jost', sans-serif;
+    font-family: 'Hind', sans-serif;
     font-weight: 400;
     line-height: var(--line-height-small);
     color: var(--white);
@@ -190,7 +190,7 @@ p {
 a {
     color: var(--white);
     font-weight: 400;
-    font-family: 'Jost', sans-serif;
+    font-family: 'Hind', sans-serif;
     transition: all .2s;
     outline: 2px solid transparent;
 }
@@ -422,7 +422,7 @@ body:not(.user-is-tabbing) a:focus {
 .header__text p {
     margin: 1.5rem 0 3.5rem;
     max-width: var(--container-medium-width);
-    font-family: 'Jost', sans-serif;
+    font-family: 'Hind', sans-serif;
     font-size: var(--font-size-medium);
 }
 
