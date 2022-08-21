@@ -405,8 +405,10 @@ body:not(.user-is-tabbing) a:focus {
 
 .header {
     background: linear-gradient(rgba(0,0,0, .1), rgba(0,0,0, .4)), 
-        url('./images/header.jpg');
+        url('./images/Tibetan Snow Cap.jpg');
     height: 100vh;
+    filter: brightness(70%);
+    opactity: 0.75;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
