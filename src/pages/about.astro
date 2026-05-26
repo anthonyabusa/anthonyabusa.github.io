@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+
+const expertise = [
+  {
+    icon: '📈',
+    title: 'Business Strategy',
+    description: 'Go-to-market planning, competitive positioning, and growth frameworks for early-stage and scaling companies.',
+  },
+  {
+    icon: '🛠️',
+    title: 'Product Development',
+    description: 'Taking ideas from napkin sketch to shipped product — user research, roadmapping, and execution.',
+  },
+  {
+    icon: '🤖',
+    title: 'AI & Automation',
+    description: 'Building intelligent systems that remove friction — from personal productivity tools to business-critical pipelines.',
+  },
+  {
+    icon: '🚀',
+    title: 'Venture & Startups',
+    description: 'Founder experience with Navore Market, advising pre-seed teams on structure, fundraising, and early traction.',
+  },
+];
+
+const skills = {
+  Business: ['Strategy', 'GTM Planning', 'Financial Modeling', 'Fundraising', 'Operations'],
+  Technical: ['Python', 'TypeScript', 'Node.js', 'SQL', 'REST APIs', 'AI/ML'],
+  Tools: ['ClickUp', 'Notion', 'GitHub', 'Figma', 'Kraken API'],
+};
+---
+
+<BaseLayout
+  title="About"
+  description="Anthony Abusa — business consultant and tech entrepreneur. Background in strategy, product, and AI-driven systems."
+>
+  <div class="max-w-5xl mx-auto px-6 pt-32 pb-24">
+
+    <!-- Header -->
+    <div class="reveal mb-16">
+      <p class="text-[#F59E0B] font-mono text-xs tracking-widest uppercase mb-4">About Me</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-[#F1F5F9] mb-8 leading-tight">
+        Consultant.<br/>Entrepreneur.<br/>Builder.
+      </h1>
+    </div>
+
+    <!-- Bio + photo -->
+    <div class="reveal grid md:grid-cols-3 gap-12 mb-20">
+      <div class="md:col-span-2 space-y-5 text-[#94A3B8] leading-relaxed">
+        <p>
+          I'm Anthony Abusa — based in San Diego, California. I work at the intersection of business strategy and technology, helping early-stage companies find their footing and helping established ones move faster.
+        </p>
+        <p>
+          My background spans chemical engineering, management consulting, and software development — an unusual combination that lets me understand both the technical and commercial dimensions of a problem simultaneously. I've advised companies across food & beverage, fintech, and SaaS.
+        </p>
+        <p>
+          I'm also the founder of <strong class="text-[#F1F5F9]">Navore Market</strong>, a food marketplace connecting local producers with San Diego consumers. Building it has sharpened my thinking on product, logistics, and what it actually takes to create a two-sided marketplace from scratch.
+        </p>
+        <p>
+          When I'm not advising or building, I'm exploring AI infrastructure — specifically how autonomous agent systems can augment the way individuals and small teams operate.
+        </p>
+        <div class="pt-4">
+          <SocialLinks />
+        </div>
+      </div>
+
+      <div class="reveal flex justify-center md:justify-end">
+        <div class="w-52 h-52 rounded-2xl bg-gradient-to-br from-[#F59E0B]/20 via-[#141928] to-[#1E2640] border border-[#1E2640] flex items-center justify-center text-6xl font-bold text-[#F59E0B] select-none">
+          AA
+        </div>
+      </div>
+    </div>
+
+    <!-- Expertise -->
+    <div class="mb-20">
+      <p class="text-[#F59E0B] font-mono text-xs tracking-widest uppercase mb-3">What I Do</p>
+      <h2 class="text-2xl font-bold text-[#F1F5F9] mb-8">Areas of Expertise</h2>
+      <div class="reveal-group grid sm:grid-cols-2 gap-5">
+        {expertise.map((item) => (
+          <div class="reveal p-6 rounded-xl border border-[#1E2640] bg-[#141928]">
+            <div class="text-2xl mb-3">{item.icon}</div>
+            <h3 class="text-[#F1F5F9] font-semibold mb-2">{item.title}</h3>
+            <p class="text-[#64748B] text-sm leading-relaxed">{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="reveal">
+      <p class="text-[#F59E0B] font-mono text-xs tracking-widest uppercase mb-3">Toolkit</p>
+      <h2 class="text-2xl font-bold text-[#F1F5F9] mb-8">Skills & Tools</h2>
+      <div class="space-y-5">
+        {Object.entries(skills).map(([category, items]) => (
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="text-xs text-[#475569] font-mono w-20 shrink-0">{category}</span>
+            <div class="flex flex-wrap gap-2">
+              {items.map((skill) => <span class="tag">{skill}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</BaseLayout>

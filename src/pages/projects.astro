@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import rawProjects from '../data/projects.json';
+
+interface Project {
+  title: string;
+  description: string;
+  url: string;
+  liveUrl: string;
+  tags: string[];
+  featured: boolean;
+  year: number;
+  type: string;
+}
+
+const projects = (rawProjects as Project[]).sort((a, b) => {
+  if (a.featured !== b.featured) return a.featured ? -1 : 1;
+  return b.year - a.year;
+});
+
+const allTags = [...new Set(projects.flatMap((p) => p.tags))].sort();
+---
+
+<BaseLayout
+  title="Projects"
+  description="A selection of products, consulting work, and open-source projects by Anthony Abusa."
+>
+  <div class="max-w-5xl mx-auto px-6 pt-32 pb-24">
+
+    <div class="reveal mb-14">
+      <p class="text-[#F59E0B] font-mono text-xs tracking-widest uppercase mb-4">Portfolio</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-[#F1F5F9] mb-4">Projects</h1>
+      <p class="text-[#64748B] max-w-lg">
+        A mix of products I've built, systems I've automated, and ventures I'm running.
+      </p>
+    </div>
+
+    <!-- Tag filter (visual only — all shown by default) -->
+    <div class="reveal flex flex-wrap gap-2 mb-10">
+      {allTags.map((tag) => (
+        <span class="tag cursor-default">{tag}</span>
+      ))}
+    </div>
+
+    <div class="reveal-group grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {projects.map((project) => (
+        <ProjectCard {...project} liveUrl={project.liveUrl || undefined} />
+      ))}
+    </div>
+
+  </div>
+</BaseLayout>

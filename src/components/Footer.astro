@@ -1,0 +1,13 @@
+---
+import SocialLinks from './SocialLinks.astro';
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-[#1E2640] mt-24">
+  <div class="max-w-5xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+    <p class="text-[#64748B] text-sm">
+      &copy; {year} Anthony Abusa. All rights reserved.
+    </p>
+    <SocialLinks />
+  </div>
+</footer>

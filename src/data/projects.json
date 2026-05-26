@@ -1,0 +1,32 @@
+[
+  {
+    "title": "OpenClaw Framework",
+    "description": "A personal AI agent infrastructure running on macOS — gateway, memory, Discord bot, and dashboard, all orchestrated as a self-managing system.",
+    "url": "https://github.com/anthonyabusa",
+    "liveUrl": "",
+    "tags": ["AI", "Node.js", "Python", "Automation"],
+    "featured": true,
+    "year": 2025,
+    "type": "product"
+  },
+  {
+    "title": "Navore Market",
+    "description": "Pre-seed food marketplace startup based in San Diego — connecting local food producers with consumers through a modern, mobile-first platform.",
+    "url": "https://github.com/anthonyabusa",
+    "liveUrl": "",
+    "tags": ["Startup", "Marketplace", "Strategy"],
+    "featured": true,
+    "year": 2025,
+    "type": "product"
+  },
+  {
+    "title": "Crypto Trading Bot",
+    "description": "An automated Kraken trading bot with configurable strategies, real-time monitoring, and a live dashboard for portfolio tracking.",
+    "url": "https://github.com/anthonyabusa",
+    "liveUrl": "",
+    "tags": ["Python", "Trading", "Automation", "Finance"],
+    "featured": true,
+    "year": 2024,
+    "type": "product"
+  }
+]

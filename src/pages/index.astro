@@ -1,0 +1,164 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import BlogPostCard from '../components/BlogPostCard.astro';
+import StatCounter from '../components/StatCounter.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { getCollection } from 'astro:content';
+import projects from '../data/projects.json';
+
+const featuredProjects = projects
+  .filter((p) => p.featured)
+  .sort((a, b) => b.year - a.year)
+  .slice(0, 3);
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const recentPosts = posts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 2);
+---
+
+<BaseLayout
+  title="Home"
+  description="Anthony Abusa — business consultant and tech entrepreneur based in San Diego. I help companies grow and build products that matter."
+>
+  <!-- Hero -->
+  <section class="relative min-h-screen flex items-center hero-grid overflow-hidden">
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#F59E0B]/5 rounded-full blur-3xl pointer-events-none" />
+
+    <div class="relative max-w-5xl mx-auto px-6 pt-28 pb-20 w-full">
+      <p class="text-[#F59E0B] font-mono text-sm tracking-widest uppercase mb-6 opacity-0 animate-[fadeUp_0.6s_ease_0.1s_forwards]">
+        San Diego, California
+      </p>
+
+      <h1 class="text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight mb-6 opacity-0 animate-[fadeUp_0.6s_ease_0.25s_forwards]">
+        <span class="text-[#F1F5F9]">Anthony</span><br />
+        <span class="gradient-text">Abusa.</span>
+      </h1>
+
+      <p class="text-xl md:text-2xl text-[#64748B] max-w-xl leading-relaxed mb-10 opacity-0 animate-[fadeUp_0.6s_ease_0.4s_forwards]">
+        Business consultant. Tech entrepreneur.<br />
+        I help companies grow and build products that matter.
+      </p>
+
+      <div class="flex flex-wrap gap-4 opacity-0 animate-[fadeUp_0.6s_ease_0.55s_forwards]">
+        <a
+          href="/projects"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#F59E0B] text-[#0B0F1A] font-semibold text-sm hover:bg-[#D97706] transition-colors"
+        >
+          View Work
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-[#1E2640] text-[#94A3B8] text-sm hover:border-[#F59E0B] hover:text-[#F59E0B] transition-colors"
+        >
+          Read Writing
+        </a>
+      </div>
+
+      <div class="mt-12 opacity-0 animate-[fadeUp_0.6s_ease_0.7s_forwards]">
+        <SocialLinks />
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats strip -->
+  <section class="max-w-5xl mx-auto px-6 py-20">
+    <div class="reveal-group grid grid-cols-2 md:grid-cols-4 gap-4">
+      <StatCounter value={5} suffix="+" label="Years in consulting" />
+      <StatCounter value={12} suffix="+" label="Companies advised" />
+      <StatCounter value={3} label="Products launched" />
+      <StatCounter value={100} suffix="%" label="Shipped, no excuses" />
+    </div>
+  </section>
+
+  <!-- About teaser -->
+  <section class="max-w-5xl mx-auto px-6 pb-24">
+    <div class="reveal flex flex-col md:flex-row items-center gap-10 p-8 rounded-2xl border border-[#1E2640] bg-[#141928]">
+      <div class="shrink-0 w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-[#F59E0B]/20 to-[#1E2640] flex items-center justify-center text-4xl font-bold text-[#F59E0B] select-none">
+        AA
+      </div>
+      <div>
+        <h2 class="text-xl font-semibold text-[#F1F5F9] mb-3">Hey, I'm Anthony.</h2>
+        <p class="text-[#64748B] leading-relaxed mb-4">
+          I operate at the intersection of business strategy and technology — advising early-stage companies on growth, building products from zero to one, and exploring how AI is reshaping both.
+        </p>
+        <a href="/about" class="text-sm text-[#F59E0B] hover:text-[#D97706] transition-colors font-medium">
+          More about me →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Projects -->
+  <section class="max-w-5xl mx-auto px-6 pb-24">
+    <div class="flex items-end justify-between mb-10">
+      <div>
+        <p class="text-[#F59E0B] font-mono text-xs tracking-widest uppercase mb-2">Selected Work</p>
+        <h2 class="text-3xl font-bold text-[#F1F5F9]">Projects</h2>
+      </div>
+      <a href="/projects" class="text-sm text-[#64748B] hover:text-[#F59E0B] transition-colors">
+        View all →
+      </a>
+    </div>
+    <div class="reveal-group grid md:grid-cols-3 gap-6">
+      {featuredProjects.map((project) => (
+        <ProjectCard {...project} liveUrl={project.liveUrl || undefined} />
+      ))}
+    </div>
+  </section>
+
+  <!-- Recent Writing -->
+  {recentPosts.length > 0 && (
+    <section class="max-w-5xl mx-auto px-6 pb-24">
+      <div class="flex items-end justify-between mb-10">
+        <div>
+          <p class="text-[#F59E0B] font-mono text-xs tracking-widest uppercase mb-2">Latest</p>
+          <h2 class="text-3xl font-bold text-[#F1F5F9]">Writing</h2>
+        </div>
+        <a href="/blog" class="text-sm text-[#64748B] hover:text-[#F59E0B] transition-colors">
+          Read all →
+        </a>
+      </div>
+      <div class="reveal-group grid md:grid-cols-2 gap-6">
+        {recentPosts.map((post) => (
+          <BlogPostCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            tags={post.data.tags}
+            slug={post.id}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="max-w-5xl mx-auto px-6 pb-32">
+    <div class="reveal text-center p-14 rounded-2xl border border-[#1E2640] bg-[#141928] relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-[#F59E0B]/5 via-transparent to-transparent pointer-events-none" />
+      <h2 class="relative text-3xl md:text-4xl font-bold text-[#F1F5F9] mb-4">
+        Let's build something.
+      </h2>
+      <p class="relative text-[#64748B] mb-8 max-w-sm mx-auto">
+        Whether it's a new venture, a strategy challenge, or a product idea — I'd love to hear about it.
+      </p>
+      <a
+        href="/contact"
+        class="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-[#F59E0B] text-[#0B0F1A] font-semibold hover:bg-[#D97706] transition-colors"
+      >
+        Get in touch
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
