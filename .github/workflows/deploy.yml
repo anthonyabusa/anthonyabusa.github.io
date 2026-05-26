@@ -23,6 +23,8 @@ jobs:
 
       - name: Build and upload to Pages
         uses: withastro/action@v3
+        with:
+          node-version: 22
 
   deploy:
     needs: build
