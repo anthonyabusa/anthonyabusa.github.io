@@ -6,35 +6,35 @@ const expertise = [
   {
     icon: '↗',
     title: 'Strategy & Operations',
-    description: 'Market analysis, operating models, financial planning, and execution systems for early-stage and scaling organizations.',
+    description: 'Market design, GTM planning, operating models, and execution rhythms for teams that need traction, not theater.',
   },
   {
     icon: '◈',
     title: 'Product & Program Leadership',
-    description: 'Cross-functional roadmaps, vendor management, launch planning, and delivery discipline across technical and business teams.',
+    description: 'Turning messy ideas into scoped releases, roadmaps, feedback loops, dashboards, and repeatable delivery.',
   },
   {
     icon: '✦',
     title: 'AI & Automation',
-    description: 'Applied AI systems, automation workflows, analytics, and tooling that reduce operational friction and improve decision-making.',
+    description: 'Designing agent workflows, memory systems, analytics, and automations that reduce operational drag.',
   },
   {
     icon: '◎',
     title: 'Marketplace & Venture Building',
-    description: 'Hands-on experience building local food marketplace infrastructure, producer operations, grant programs, and growth systems.',
+    description: 'Hands-on founder work building local food marketplace infrastructure, producer operations, grants, and growth systems.',
   },
 ];
 
 const skills = {
-  Business: ['Strategy', 'GTM Planning', 'Financial Modeling', 'Operations', 'Market Research'],
-  Technical: ['Python', 'TypeScript', 'SQL', 'APIs', 'AI/ML', 'Analytics'],
-  Tools: ['ClickUp', 'GitHub', 'Tableau', 'RStudio', 'Notion', 'GA4'],
+  Business: ['Marketplaces', 'GTM Planning', 'Financial Modeling', 'Operations', 'Fundraising'],
+  Technical: ['Python', 'TypeScript', 'Node.js', 'Astro', 'AI Agents', 'APIs'],
+  Tools: ['GitHub', 'ClickUp', 'FastAPI', 'Ollama', 'Discord Bots', 'Kraken API'],
 };
 ---
 
 <BaseLayout
   title="About"
-  description="Anthony Abusa — strategy, operations, and technology leader. Background in chemical engineering, business strategy, product execution, and AI-driven systems."
+  description="Anthony Abusa — San Diego founder/operator building Navore Market, OpenClaw AI infrastructure, and practical automation systems."
 >
   <div class="max-w-5xl mx-auto px-6 pt-32 pb-24">
 
@@ -48,7 +48,7 @@ const skills = {
     <div class="reveal grid md:grid-cols-3 gap-12 mb-20">
       <div class="md:col-span-2 space-y-5 text-[#94A3B8] leading-relaxed">
         <p>
-          I'm Anthony Abusa — a San Diego-based strategy and operations leader working at the intersection of business, technology, and product execution.
+          I'm Anthony Abusa — a San Diego-based founder and operator working at the intersection of business strategy, product execution, and automation.
         </p>
         <p>
           My background spans chemical engineering, a quantitative MBA, corporate strategy, startup operations, and technical program management. That mix helps me move between systems-level technical thinking and the commercial realities that determine whether products and organizations actually work.
@@ -57,7 +57,7 @@ const skills = {
           Today, I help build and scale <strong class="text-[#F1F5F9]">Navore Market</strong>, a local food marketplace connecting San Diego producers with consumers. My work spans strategy, operations, grant execution, product roadmap, analytics, distribution design, and cross-functional execution.
         </p>
         <p>
-          I'm especially interested in the way AI, automation, and better operating systems can help small teams move with more leverage, clarity, and resilience.
+          I'm also building <strong class="text-[#F1F5F9]">OpenClaw</strong>, a personal AI operations stack for agents, memory, dashboards, Discord workflows, and automation. It is part lab, part operating system, and part proof that small teams can run with much more leverage.
         </p>
         <div class="pt-4">
           <SocialLinks />
@@ -77,7 +77,7 @@ const skills = {
       <div class="reveal-group grid sm:grid-cols-2 gap-5">
         {expertise.map((item) => (
           <div class="reveal p-6 rounded-xl border border-[#1E2640] bg-[#141928]">
-            <div class="text-2xl mb-3 text-[#F59E0B] font-mono">{item.icon}</div>
+            <div class="text-2xl mb-3">{item.icon}</div>
             <h3 class="text-[#F1F5F9] font-semibold mb-2">{item.title}</h3>
             <p class="text-[#64748B] text-sm leading-relaxed">{item.description}</p>
           </div>
