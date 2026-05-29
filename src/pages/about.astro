@@ -4,62 +4,60 @@ import SocialLinks from '../components/SocialLinks.astro';
 
 const expertise = [
   {
-    icon: '📈',
-    title: 'Business Strategy',
-    description: 'Go-to-market planning, competitive positioning, and growth frameworks for early-stage and scaling companies.',
+    icon: '↗',
+    title: 'Strategy & Operations',
+    description: 'Market analysis, operating models, financial planning, and execution systems for early-stage and scaling organizations.',
   },
   {
-    icon: '🛠️',
-    title: 'Product Development',
-    description: 'Taking ideas from napkin sketch to shipped product — user research, roadmapping, and execution.',
+    icon: '◈',
+    title: 'Product & Program Leadership',
+    description: 'Cross-functional roadmaps, vendor management, launch planning, and delivery discipline across technical and business teams.',
   },
   {
-    icon: '🤖',
+    icon: '✦',
     title: 'AI & Automation',
-    description: 'Building intelligent systems that remove friction — from personal productivity tools to business-critical pipelines.',
+    description: 'Applied AI systems, automation workflows, analytics, and tooling that reduce operational friction and improve decision-making.',
   },
   {
-    icon: '🚀',
-    title: 'Venture & Startups',
-    description: 'Founder experience with Navore Market, advising pre-seed teams on structure, fundraising, and early traction.',
+    icon: '◎',
+    title: 'Marketplace & Venture Building',
+    description: 'Hands-on experience building local food marketplace infrastructure, producer operations, grant programs, and growth systems.',
   },
 ];
 
 const skills = {
-  Business: ['Strategy', 'GTM Planning', 'Financial Modeling', 'Fundraising', 'Operations'],
-  Technical: ['Python', 'TypeScript', 'Node.js', 'SQL', 'REST APIs', 'AI/ML'],
-  Tools: ['ClickUp', 'Notion', 'GitHub', 'Figma', 'Kraken API'],
+  Business: ['Strategy', 'GTM Planning', 'Financial Modeling', 'Operations', 'Market Research'],
+  Technical: ['Python', 'TypeScript', 'SQL', 'APIs', 'AI/ML', 'Analytics'],
+  Tools: ['ClickUp', 'GitHub', 'Tableau', 'RStudio', 'Notion', 'GA4'],
 };
 ---
 
 <BaseLayout
   title="About"
-  description="Anthony Abusa — business consultant and tech entrepreneur. Background in strategy, product, and AI-driven systems."
+  description="Anthony Abusa — strategy, operations, and technology leader. Background in chemical engineering, business strategy, product execution, and AI-driven systems."
 >
   <div class="max-w-5xl mx-auto px-6 pt-32 pb-24">
 
-    <!-- Header -->
     <div class="reveal mb-16">
       <p class="text-[#F59E0B] font-mono text-xs tracking-widest uppercase mb-4">About Me</p>
       <h1 class="text-4xl md:text-5xl font-bold text-[#F1F5F9] mb-8 leading-tight">
-        Consultant.<br/>Entrepreneur.<br/>Builder.
+        Strategist.<br/>Operator.<br/>Builder.
       </h1>
     </div>
 
-    <!-- Bio + photo -->
     <div class="reveal grid md:grid-cols-3 gap-12 mb-20">
       <div class="md:col-span-2 space-y-5 text-[#94A3B8] leading-relaxed">
         <p>
-          I'm Anthony Abusa — based in San Diego, California. I work at the intersection of business strategy and technology, helping early-stage companies find their footing and helping established ones move faster.
+          I'm Anthony Abusa — a San Diego-based strategy and operations leader working at the intersection of business, technology, and product execution.
         </p>
         <p>
-          My background spans chemical engineering, management consulting, and software development — an unusual combination that lets me understand both the technical and commercial dimensions of a problem simultaneously. I've advised companies across food & beverage, fintech, and SaaS.
+          My background spans chemical engineering, a quantitative MBA, corporate strategy, startup operations, and technical program management. That mix helps me move between systems-level technical thinking and the commercial realities that determine whether products and organizations actually work.
         </p>
         <p>
-          I'm also the founder of <strong class="text-[#F1F5F9]">Navore Market</strong>, a food marketplace connecting local producers with San Diego consumers. Building it has sharpened my thinking on product, logistics, and what it actually takes to create a two-sided marketplace from scratch.
+          Today, I help build and scale <strong class="text-[#F1F5F9]">Navore Market</strong>, a local food marketplace connecting San Diego producers with consumers. My work spans strategy, operations, grant execution, product roadmap, analytics, distribution design, and cross-functional execution.
         </p>
         <p>
-          When I'm not advising or building, I'm exploring AI infrastructure — specifically how autonomous agent systems can augment the way individuals and small teams operate.
+          I'm especially interested in the way AI, automation, and better operating systems can help small teams move with more leverage, clarity, and resilience.
         </p>
         <div class="pt-4">
           <SocialLinks />
@@ -73,14 +71,13 @@ const skills = {
       </div>
     </div>
 
-    <!-- Expertise -->
     <div class="mb-20">
       <p class="text-[#F59E0B] font-mono text-xs tracking-widest uppercase mb-3">What I Do</p>
       <h2 class="text-2xl font-bold text-[#F1F5F9] mb-8">Areas of Expertise</h2>
       <div class="reveal-group grid sm:grid-cols-2 gap-5">
         {expertise.map((item) => (
           <div class="reveal p-6 rounded-xl border border-[#1E2640] bg-[#141928]">
-            <div class="text-2xl mb-3">{item.icon}</div>
+            <div class="text-2xl mb-3 text-[#F59E0B] font-mono">{item.icon}</div>
             <h3 class="text-[#F1F5F9] font-semibold mb-2">{item.title}</h3>
             <p class="text-[#64748B] text-sm leading-relaxed">{item.description}</p>
           </div>
@@ -88,7 +85,6 @@ const skills = {
       </div>
     </div>
 
-    <!-- Skills -->
     <div class="reveal">
       <p class="text-[#F59E0B] font-mono text-xs tracking-widest uppercase mb-3">Toolkit</p>
       <h2 class="text-2xl font-bold text-[#F1F5F9] mb-8">Skills & Tools</h2>
