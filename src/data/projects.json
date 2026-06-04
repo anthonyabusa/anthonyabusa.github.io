@@ -30,6 +30,26 @@
     "type": "automation"
   },
   {
+    "title": "HealthRise Global ML/AI",
+    "description": "ML and AI integration across global healthcare programs operating in India, Brazil, South Africa, and Ethiopia — embedding predictive tools into operations serving hundreds of thousands of patients.",
+    "url": "",
+    "liveUrl": "",
+    "tags": ["ML/AI", "Healthcare", "Global Programs", "Integration"],
+    "featured": true,
+    "year": 2021,
+    "type": "program"
+  },
+  {
+    "title": "Johnson Matthey Transformation",
+    "description": "Led 12 enterprise transformation programs at a global specialty chemicals manufacturer, driving +37% process efficiency. Founded the North America Government Affairs function from scratch.",
+    "url": "",
+    "liveUrl": "",
+    "tags": ["Strategy", "Operations", "Government Affairs", "Program Management"],
+    "featured": true,
+    "year": 2020,
+    "type": "program"
+  },
+  {
     "title": "Personal Portfolio",
     "description": "This Astro-powered site: a living portfolio for projects, writing, and public proof-of-work rather than a static resume page.",
     "url": "https://github.com/anthonyabusa/anthonyabusa.github.io",
