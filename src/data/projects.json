@@ -1,32 +1,62 @@
 [
   {
-    "title": "OpenClaw Framework",
-    "description": "A personal AI agent infrastructure running on macOS — gateway, memory, Discord bot, and dashboard, all orchestrated as a self-managing system.",
-    "url": "https://github.com/anthonyabusa",
-    "liveUrl": "",
-    "tags": ["AI", "Node.js", "Python", "Automation"],
-    "featured": true,
-    "year": 2025,
-    "type": "product"
-  },
-  {
     "title": "Navore Market",
-    "description": "Pre-seed food marketplace startup based in San Diego — connecting local food producers with consumers through a modern, mobile-first platform.",
-    "url": "https://github.com/anthonyabusa",
-    "liveUrl": "",
-    "tags": ["Startup", "Marketplace", "Strategy"],
+    "description": "A San Diego food marketplace connecting local producers with consumers through a modern, mobile-first operating model. USDA-backed and built around real logistics, trust, and neighborhood demand.",
+    "url": "https://navoremarket.com",
+    "liveUrl": "https://navoremarket.com",
+    "tags": ["Startup", "Marketplace", "Food", "Operations"],
     "featured": true,
-    "year": 2025,
-    "type": "product"
+    "year": 2026,
+    "type": "venture"
   },
   {
-    "title": "Crypto Trading Bot",
-    "description": "An automated Kraken trading bot with configurable strategies, real-time monitoring, and a live dashboard for portfolio tracking.",
-    "url": "https://github.com/anthonyabusa",
+    "title": "OpenClaw Framework",
+    "description": "Personal AI infrastructure for agent workflows: gateway, memory RAG, Discord collaboration, dashboard visibility, scheduled briefs, and local/remote machine orchestration.",
+    "url": "https://github.com/Busa-Legacies/Ant-openclaw-framework",
     "liveUrl": "",
-    "tags": ["Python", "Trading", "Automation", "Finance"],
+    "tags": ["AI Agents", "Python", "Node.js", "Automation"],
     "featured": true,
-    "year": 2024,
-    "type": "product"
+    "year": 2026,
+    "type": "infrastructure"
+  },
+  {
+    "title": "Kraken Trading Bot",
+    "description": "A paper-first crypto trading system with strategy gates, sentiment filters, Kelly-style sizing, dry-run safety, and dashboard monitoring before any live deployment.",
+    "url": "https://github.com/Busa-Legacies/Ant-openclaw-framework/tree/main/projects/trading-bot",
+    "liveUrl": "",
+    "tags": ["Python", "Trading", "Risk", "Dashboards"],
+    "featured": true,
+    "year": 2026,
+    "type": "automation"
+  },
+  {
+    "title": "HealthRise Global ML/AI",
+    "description": "ML and AI integration across global healthcare programs operating in India, Brazil, South Africa, and Ethiopia — embedding predictive tools into operations serving hundreds of thousands of patients.",
+    "url": "",
+    "liveUrl": "",
+    "tags": ["ML/AI", "Healthcare", "Global Programs", "Integration"],
+    "featured": true,
+    "year": 2021,
+    "type": "program"
+  },
+  {
+    "title": "Johnson Matthey Transformation",
+    "description": "Led 12 enterprise transformation programs at a global specialty chemicals manufacturer, driving +37% process efficiency. Founded the North America Government Affairs function from scratch.",
+    "url": "",
+    "liveUrl": "",
+    "tags": ["Strategy", "Operations", "Government Affairs", "Program Management"],
+    "featured": true,
+    "year": 2020,
+    "type": "program"
+  },
+  {
+    "title": "Personal Portfolio",
+    "description": "This Astro-powered site: a living portfolio for projects, writing, and public proof-of-work rather than a static resume page.",
+    "url": "https://github.com/anthonyabusa/anthonyabusa.github.io",
+    "liveUrl": "https://anthonyabusa.github.io",
+    "tags": ["Astro", "Design", "Writing"],
+    "featured": false,
+    "year": 2026,
+    "type": "site"
   }
 ]
