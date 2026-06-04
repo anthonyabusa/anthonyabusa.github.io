@@ -11,7 +11,7 @@ const links = [
 
 <header id="site-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
   <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="/" class="text-[#F1F5F9] font-semibold tracking-tight hover:text-[#F59E0B] transition-colors">
+    <a href="/" class="text-[#F1F5F9] font-semibold tracking-tight hover:text-[#6366F1] transition-colors">
       Anthony Abusa
     </a>
 
@@ -24,7 +24,7 @@ const links = [
           class:list={[
             "text-sm transition-colors duration-200",
             pathname.startsWith(href)
-              ? "text-[#F59E0B]"
+              ? "text-[#6366F1]"
               : "text-[#64748B] hover:text-[#F1F5F9]"
           ]}
         >
@@ -39,13 +39,13 @@ const links = [
         <svg class="group-open:hidden" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
         <svg class="hidden group-open:block" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </summary>
-      <nav class="absolute top-full left-0 right-0 bg-[#141928] border-b border-[#1E2640] py-4 px-6 flex flex-col gap-4">
+      <nav class="absolute top-full left-0 right-0 bg-[#13161F] border-b border-[#222538] py-4 px-6 flex flex-col gap-4">
         {links.map(({ href, label }) => (
           <a
             href={href}
             class:list={[
               "text-sm",
-              pathname.startsWith(href) ? "text-[#F59E0B]" : "text-[#64748B]"
+              pathname.startsWith(href) ? "text-[#6366F1]" : "text-[#64748B]"
             ]}
           >
             {label}
@@ -60,9 +60,9 @@ const links = [
   const nav = document.getElementById('site-nav');
   const onScroll = () => {
     if (window.scrollY > 20) {
-      nav?.classList.add('bg-[#0B0F1A]/90', 'backdrop-blur-md', 'border-b', 'border-[#1E2640]');
+      nav?.classList.add('bg-[#0B0D14]/90', 'backdrop-blur-md', 'border-b', 'border-[#222538]');
     } else {
-      nav?.classList.remove('bg-[#0B0F1A]/90', 'backdrop-blur-md', 'border-b', 'border-[#1E2640]');
+      nav?.classList.remove('bg-[#0B0D14]/90', 'backdrop-blur-md', 'border-b', 'border-[#222538]');
     }
   };
   window.addEventListener('scroll', onScroll, { passive: true });

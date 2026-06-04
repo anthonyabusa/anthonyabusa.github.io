@@ -34,7 +34,7 @@ const contactLinks = [
   <div class="max-w-5xl mx-auto px-6 pt-32 pb-24">
 
     <div class="reveal max-w-2xl mb-16">
-      <p class="text-[#F59E0B] font-mono text-xs tracking-widest uppercase mb-4">Get in Touch</p>
+      <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Get in Touch</p>
       <h1 class="text-4xl md:text-5xl font-bold text-[#F1F5F9] mb-6 leading-tight">
         Let's talk.
       </h1>
@@ -50,9 +50,9 @@ const contactLinks = [
           href={link.href}
           target={link.href.startsWith('mailto') ? undefined : '_blank'}
           rel={link.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-          class="reveal group flex flex-col gap-4 p-6 rounded-xl border border-[#1E2640] bg-[#141928] card-hover"
+          class="reveal group flex flex-col gap-4 p-6 rounded-xl border border-[#222538] bg-[#13161F] card-hover"
         >
-          <div class="text-[#64748B] group-hover:text-[#F59E0B] transition-colors" set:html={link.icon} />
+          <div class="text-[#64748B] group-hover:text-[#6366F1] transition-colors" set:html={link.icon} />
           <div>
             <p class="text-[#F1F5F9] font-semibold text-sm mb-1">{link.label}</p>
             <p class="text-[#475569] text-xs font-mono truncate">{link.value}</p>
@@ -63,7 +63,7 @@ const contactLinks = [
     </div>
 
     <!-- Availability note -->
-    <div class="reveal p-8 rounded-2xl border border-[#1E2640] bg-[#141928]">
+    <div class="reveal p-8 rounded-2xl border border-[#222538] bg-[#13161F]">
       <div class="flex items-center gap-2 mb-3">
         <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
         <span class="text-xs text-green-400 font-mono uppercase tracking-widest">Available</span>

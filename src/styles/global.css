@@ -1,28 +1,40 @@
 @import "tailwindcss";
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/500.css";
-@import "@fontsource/inter/600.css";
 @import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+@import "@fontsource/jetbrains-mono/700.css";
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-background: #0B0F1A;
-  --color-surface: #141928;
-  --color-border: #1E2640;
-  --color-accent: #F59E0B;
-  --color-accent-hover: #D97706;
+  --color-background: #0B0D14;
+  --color-surface: #13161F;
+  --color-surface2: #1A1D2A;
+  --color-border: #222538;
+  --color-border-hi: rgba(255, 255, 255, 0.06);
+  --color-accent: #6366F1;
+  --color-accent-hover: #4F46E5;
   --color-text: #F1F5F9;
   --color-muted: #64748B;
 
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  /* Terminal aesthetic: monospace is the primary UI face (chrome, headings, labels) */
+  --font-sans: 'JetBrains Mono', ui-monospace, monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  /* Hybrid: long-form blog prose uses a readable serif (not Inter) */
+  --font-prose: 'Iowan Old Style', 'Charter', Georgia, Cambria, serif;
 }
 
 html {
-  background-color: #0B0F1A;
+  background-color: #0B0D14;
   color: #F1F5F9;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
   scroll-behavior: smooth;
+}
+
+/* Blog article body — readable serif, mono headings stay for the terminal feel */
+.prose {
+  font-family: var(--font-prose);
+}
+.prose :is(h1, h2, h3, h4, code, pre, kbd) {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 body {
@@ -53,14 +65,14 @@ body {
   border-radius: 9999px;
   font-size: 0.75rem;
   font-family: 'JetBrains Mono', monospace;
-  background-color: #1E2640;
+  background-color: #222538;
   color: #94A3B8;
-  border: 1px solid #2D3A55;
+  border: 1px solid #2E3350;
 }
 
 /* Animated gradient text for hero heading */
 .gradient-text {
-  background: linear-gradient(135deg, #F59E0B 0%, #FCD34D 50%, #F59E0B 100%);
+  background: linear-gradient(135deg, #6366F1 0%, #818CF8 50%, #6366F1 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -75,16 +87,19 @@ body {
 /* Subtle grid background for hero */
 .hero-grid {
   background-image:
-    linear-gradient(rgba(245, 158, 11, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 158, 11, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(99, 102, 241, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.04) 1px, transparent 1px);
   background-size: 48px 48px;
 }
 
 /* Card hover lift */
 .card-hover {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border-top-color: var(--color-border-hi);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 6px 24px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(245, 158, 11, 0.12);
+  transform: translateY(-2px);
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7), 0 12px 40px rgba(0, 0, 0, 0.45);
 }
