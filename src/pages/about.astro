@@ -34,14 +34,14 @@ const skills = {
 
 <BaseLayout
   title="About"
-  description="Anthony Abusa — San Diego founder/operator building Navore Market, OpenClaw AI infrastructure, and practical automation systems."
+  description="Anthony Abusa — San Diego founder/operator building Navore Market, a personal AI operations system, and practical automation."
 >
   <div class="max-w-5xl mx-auto px-6 pt-32 pb-24">
 
     <div class="reveal mb-16">
       <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">About Me</p>
       <h1 class="text-4xl md:text-5xl font-bold text-[#F1F5F9] mb-8 leading-tight">
-        Strategist.<br/>Operator.<br/>Builder.
+        Strategist.<br/>Builder.<br/>Transformation Leader.
       </h1>
     </div>
 
@@ -54,13 +54,13 @@ const skills = {
           My background spans chemical engineering, a quantitative MBA, corporate strategy, startup operations, and technical program management. That mix helps me move between systems-level technical thinking and the commercial realities that determine whether products and organizations actually work.
         </p>
         <p>
-          Today, I help build and scale <strong class="text-[#F1F5F9]">Navore Market</strong>, a local food marketplace connecting San Diego producers with consumers. My work spans strategy, operations, USDA grant execution, product roadmap, analytics, distribution design, and cross-functional execution.
+          Today, I help build and scale <a href="/projects/navore-market-aggtech-startup" class="project-link">Navore Market</a>, a local food marketplace connecting local San Diego producers with consumers. My work spans strategy, operations, USDA grant execution, product roadmap, analytics, distribution design, and cross-functional execution.
         </p>
         <p>
-          I'm also building <strong class="text-[#F1F5F9]">OpenClaw</strong>, a personal AI operations stack for agents, memory, dashboards, Discord workflows, and automation. It is part lab, part operating system, and part proof that small teams can run with much more leverage.
+          I'm also building a <a href="/projects/personal-ai-operations-system" class="project-link">personal AI operations system</a> for agents, memory, dashboards, Discord workflows, and automation. It is part lab, part operating system, and part proof that small teams can run with much more leverage.
         </p>
         <p>
-          Before startups: led 12 transformation programs at <strong class="text-[#F1F5F9]">Johnson Matthey</strong> (global specialty chemicals) driving +37% process efficiency, and founded the North America Government Affairs function there from scratch. Worked with <strong class="text-[#F1F5F9]">HealthRise</strong> on ML/AI integration across global healthcare programs operating in India, Brazil, South Africa, and Ethiopia.
+          Before Navore: led 12 transformation programs at <a href="/experience/johnson-matthey-global-sustainability" class="project-link">Johnson Matthey</a> (global specialty chemicals) driving +37% process efficiency, and founded the North America Government Affairs function there from scratch. Worked with <a href="/experience/healthrise-ehr-revenue-operations" class="project-link">HealthRise</a>, a healthtech startup combining EHR software, revenue cycle management, and consulting services.
         </p>
         <div class="pt-4">
           <SocialLinks />
@@ -98,11 +98,7 @@ const skills = {
         </div>
         <div class="flex gap-4 items-start">
           <span class="text-[#6366F1] font-mono text-xs mt-1 shrink-0 w-32">Education</span>
-          <p><strong class="text-[#F1F5F9]">Carnegie Mellon University</strong> — MBA, Tepper School (quantitative focus). <strong class="text-[#F1F5F9]">Villanova University</strong> — B.S. Chemical Engineering (Student Body President; built student government structure from the ground up).</p>
-        </div>
-        <div class="flex gap-4 items-start">
-          <span class="text-[#6366F1] font-mono text-xs mt-1 shrink-0 w-32">Recognition</span>
-          <p><strong class="text-[#F1F5F9]">Google Cloud Student Innovator</strong>. Photojournalism exhibit on globalization — fieldwork in Tibet and Mongolia.</p>
+          <p><strong class="text-[#F1F5F9]">Carnegie Mellon University</strong> — MBA, Tepper School (quantitative focus).<br /><strong class="text-[#F1F5F9]">Villanova University</strong> — B.S. Chemical Engineering (Student Body President; built student government structure from the ground up).</p>
         </div>
         <div class="flex gap-4 items-start">
           <span class="text-[#6366F1] font-mono text-xs mt-1 shrink-0 w-32">Interests</span>
@@ -128,3 +124,18 @@ const skills = {
 
   </div>
 </BaseLayout>
+
+<style>
+  .project-link {
+    color: #F1F5F9;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: rgba(99, 102, 241, .55);
+    text-underline-offset: 4px;
+    transition: color .2s ease, text-decoration-color .2s ease;
+  }
+  .project-link:hover {
+    color: #A5B4FC;
+    text-decoration-color: #818CF8;
+  }
+</style>

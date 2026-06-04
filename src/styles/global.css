@@ -70,6 +70,21 @@ body {
   border: 1px solid #2E3350;
 }
 
+.project-filter {
+  padding: 6px 14px;
+  border: 1px solid #2E3350;
+  border-radius: 9999px;
+  color: #64748B;
+  font-size: 0.75rem;
+  transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+}
+.project-filter:hover,
+.project-filter.active {
+  color: #A5B4FC;
+  border-color: rgba(99, 102, 241, .55);
+  background: rgba(99, 102, 241, .10);
+}
+
 /* Animated gradient text for hero heading */
 .gradient-text {
   background: linear-gradient(135deg, #6366F1 0%, #818CF8 50%, #6366F1 100%);

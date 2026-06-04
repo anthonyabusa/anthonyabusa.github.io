@@ -4,51 +4,41 @@ interface Props {
   description: string;
   url: string;
   liveUrl?: string;
+  slug?: string;
   tags: string[];
-  year: number;
+  year: number | string;
+  endYear?: number | string;
   type: string;
+  status?: string;
 }
 
-const { title, description, url, liveUrl, tags, year } = Astro.props;
+const { title, description, url, slug, tags, year, endYear = 'Present', status } = Astro.props;
+const href = slug ? `/projects/${slug}` : url;
+const isExternal = !slug && Boolean(url);
 ---
 
-<div class="reveal flex flex-col p-6 rounded-xl border border-[#222538] bg-[#13161F] card-hover">
-  <div class="flex flex-wrap gap-2 mb-4">
-    {tags.map((tag) => <span class="tag">{tag}</span>)}
-  </div>
-
-  <h3 class="text-lg font-semibold text-[#F1F5F9] mb-2 leading-snug">{title}</h3>
-  <p class="text-[#64748B] text-sm leading-relaxed flex-1 mb-6">{description}</p>
-
-  <div class="flex items-center gap-4 mt-auto">
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="inline-flex items-center gap-1.5 text-sm text-[#64748B] hover:text-[#6366F1] transition-colors"
-    >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-      </svg>
-      GitHub
-    </a>
-
-    {liveUrl && (
-      <a
-        href={liveUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-1.5 text-sm text-[#6366F1] hover:text-[#4F46E5] transition-colors font-medium"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-          <polyline points="15 3 21 3 21 9"/>
-          <line x1="10" y1="14" x2="21" y2="3"/>
-        </svg>
-        Live Demo
-      </a>
-    )}
-
-    <span class="ml-auto text-xs text-[#475569] font-mono">{year}</span>
-  </div>
-</div>
+{href ? (
+  <a
+    href={href}
+    target={isExternal ? '_blank' : undefined}
+    rel={isExternal ? 'noopener noreferrer' : undefined}
+    aria-label={`View ${title}`}
+    class="reveal group flex flex-col p-6 rounded-xl border border-[#222538] bg-[#13161F] card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]"
+  >
+    <h3 class="text-lg font-semibold text-[#F1F5F9] group-hover:text-[#A5B4FC] transition-colors mb-4 leading-snug">{title}</h3>
+    {status && <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#818CF8] mb-3">{status}</p>}
+    <div class="flex flex-wrap gap-2 mb-4">
+      {tags.map((tag) => <span class="tag">{tag}</span>)}
+    </div>
+    <p class="text-[#64748B] text-sm leading-relaxed flex-1 mb-6">{description}</p>
+    <span class="mt-auto pt-1 text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono">{year} — {endYear}</span>
+  </a>
+) : (
+  <article class="reveal flex flex-col p-6 rounded-xl border border-[#222538] bg-[#13161F]">
+    <h3 class="text-lg font-semibold text-[#F1F5F9] mb-4 leading-snug">{title}</h3>
+    {status && <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#818CF8] mb-3">{status}</p>}
+    <div class="flex flex-wrap gap-2 mb-4">{tags.map((tag) => <span class="tag">{tag}</span>)}</div>
+    <p class="text-[#64748B] text-sm leading-relaxed flex-1 mb-6">{description}</p>
+    <span class="mt-auto pt-1 text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono">{year} — {endYear}</span>
+  </article>
+)}
