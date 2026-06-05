@@ -1,0 +1,221 @@
+[
+  {
+    "title": "Navore Market AggTech Startup",
+    "slug": "navore-market-aggtech-startup",
+    "role": "Founder & operator",
+    "status": "Active venture",
+    "description": "A San Diego food marketplace connecting local producers with consumers through a modern, mobile-first operating model. USDA-backed and built around real logistics, trust, and neighborhood demand.",
+    "url": "https://navoremarket.com",
+    "liveUrl": "https://navoremarket.com",
+    "tags": [
+      "Startup",
+      "Strategy",
+      "Venture Leadership",
+      "Operations"
+    ],
+    "featured": true,
+    "year": 2024,
+    "endYear": "Present",
+    "type": "venture",
+    "challenge": "Local food systems are fragmented across producer discovery, ordering, logistics, trust, and recurring neighborhood demand. The opportunity required more than a storefront: it needed a practical operating model.",
+    "approach": "I built Navore as a marketplace and operating system together\u2014pairing customer experience with producer relationships, hub operations, grant strategy, logistics, and feedback loops.",
+    "metrics": [
+      {
+        "value": "~$471k",
+        "label": "USDA-backed funding"
+      },
+      {
+        "value": "San Diego",
+        "label": "Initial operating market"
+      },
+      {
+        "value": "Live",
+        "label": "Marketplace and hub operations"
+      }
+    ],
+    "outcomes": [
+      "Launched a real local-food marketplace and neighborhood hub.",
+      "Secured USDA-backed funding to expand the model.",
+      "Created operating workflows connecting demand, producers, fulfillment, and growth."
+    ]
+  },
+  {
+    "title": "Personal AI Operations System",
+    "slug": "personal-ai-operations-system",
+    "role": "Architect & builder",
+    "status": "Active infrastructure",
+    "description": "A private, local-first AI operations system for agent workflows: gateway, memory RAG, Discord collaboration, dashboard visibility, scheduled briefs, and multi-machine orchestration.",
+    "url": "",
+    "liveUrl": "",
+    "tags": [
+      "AI Agents",
+      "Python",
+      "Node.js",
+      "Automation"
+    ],
+    "featured": true,
+    "year": 2026,
+    "endYear": "Present",
+    "type": "infrastructure",
+    "challenge": "Useful AI agents need more than a chat interface. They need durable memory, task coordination, live system visibility, safe automation, and a way to operate across machines and channels.",
+    "approach": "I designed a local-first agent operations stack around a persistent gateway, specialized lanes, memory RAG, Discord coordination, scheduled workflows, and a unified FastAPI dashboard.",
+    "metrics": [
+      {
+        "value": "6",
+        "label": "Specialized agent lanes"
+      },
+      {
+        "value": "Local-first",
+        "label": "Private Ollama inference"
+      },
+      {
+        "value": "Always-on",
+        "label": "Gateway, dashboard, and automation"
+      }
+    ],
+    "outcomes": [
+      "Unified agent coordination, memory, monitoring, and handoffs.",
+      "Built live operational visibility across projects and machines.",
+      "Automated recurring briefs, health checks, and task workflows."
+    ]
+  },
+  {
+    "title": "HealthRise EHR & Revenue Operations",
+    "placement": "experience",
+    "slug": "healthrise-ehr-revenue-operations",
+    "role": "Healthtech startup operator",
+    "status": "Healthtech startup",
+    "description": "A healthtech startup combining electronic health record software, revenue cycle management, and consulting services to improve healthcare operations.",
+    "url": "",
+    "liveUrl": "",
+    "tags": [
+      "EHR",
+      "Healthcare",
+      "RCM",
+      "Consulting",
+      "AI/ML"
+    ],
+    "featured": true,
+    "year": 2021,
+    "endYear": 2021,
+    "type": "program",
+    "challenge": "Healthcare organizations often manage disconnected clinical, billing, and operational workflows. HealthRise addressed the need for technology and hands-on operational support within one startup offering.",
+    "approach": "The company combined EHR software with revenue cycle management and consulting work, connecting the technology layer to the operational realities of healthcare delivery and reimbursement.",
+    "metrics": [
+      {
+        "value": "EHR",
+        "label": "Clinical workflow technology"
+      },
+      {
+        "value": "RCM",
+        "label": "Revenue cycle management"
+      },
+      {
+        "value": "Consulting",
+        "label": "Operational advisory services"
+      }
+    ],
+    "outcomes": [
+      "Supported healthcare operations through an integrated technology and services model.",
+      "Connected clinical workflows with revenue cycle operations.",
+      "Delivered consulting support alongside the startup's EHR and RCM offerings."
+    ]
+  },
+  {
+    "title": "Johnson Matthey Global Sustainability",
+    "placement": "experience",
+    "slug": "johnson-matthey-global-sustainability",
+    "role": "Transformation program leader",
+    "status": "Enterprise transformation",
+    "description": "Led 12 enterprise transformation programs at a global specialty chemicals manufacturer, driving +37% process efficiency. Founded the North America Government Affairs function from scratch.",
+    "url": "",
+    "liveUrl": "",
+    "tags": [
+      "Strategy",
+      "Operations",
+      "Government Affairs",
+      "Program Management"
+    ],
+    "featured": true,
+    "year": 2020,
+    "endYear": 2020,
+    "type": "program",
+    "challenge": "Enterprise transformation at a global specialty chemicals manufacturer required coordinating complex programs across operations, stakeholders, and organizational boundaries while creating durable new capabilities.",
+    "approach": "I led a portfolio of transformation programs focused on measurable operating improvement, while also building the North America Government Affairs function from the ground up.",
+    "metrics": [
+      {
+        "value": "12",
+        "label": "Enterprise transformation programs led"
+      },
+      {
+        "value": "+37%",
+        "label": "Process efficiency improvement"
+      },
+      {
+        "value": "0→1",
+        "label": "North America Government Affairs function"
+      }
+    ],
+    "outcomes": [
+      "Led 12 enterprise transformation programs.",
+      "Drove a 37% improvement in process efficiency.",
+      "Founded the North America Government Affairs function from scratch."
+    ]
+  },
+  {
+    "title": "Personal Portfolio",
+    "description": "This Astro-powered site: a living portfolio for projects, writing, and public proof-of-work rather than a static resume page.",
+    "url": "https://github.com/anthonyabusa/anthonyabusa.github.io",
+    "liveUrl": "https://anthonyabusa.github.io",
+    "tags": [
+      "Astro",
+      "Design",
+      "Writing",
+      "AI"
+    ],
+    "featured": false,
+    "year": 2026,
+    "endYear": "Present",
+    "type": "site"
+  },
+  {
+    "title": "Globalization Photojournalism Exhibit",
+    "slug": "globalization-photojournalism-exhibit",
+    "role": "Photojournalist & creator",
+    "status": "Independent creative project",
+    "description": "A photojournalism exhibit exploring globalization through fieldwork in Tibet and Mongolia.",
+    "url": "",
+    "liveUrl": "",
+    "tags": [
+      "Photojournalism",
+      "Storytelling",
+      "Field Research",
+      "Globalization"
+    ],
+    "featured": false,
+    "year": "Undergraduate",
+    "endYear": "Exhibited",
+    "type": "creative",
+    "challenge": "Globalization is often discussed through abstract economic and political language. The project sought to document how it appeared in lived environments and everyday experience.",
+    "approach": "I conducted fieldwork in Tibet and Mongolia, using photography and firsthand observation to build a visual narrative around globalization and cultural change.",
+    "metrics": [
+      {
+        "value": "2",
+        "label": "Fieldwork regions"
+      },
+      {
+        "value": "Exhibit",
+        "label": "Final public format"
+      },
+      {
+        "value": "Visual",
+        "label": "Research and storytelling method"
+      }
+    ],
+    "outcomes": [
+      "Produced a photojournalism exhibit based on international fieldwork.",
+      "Translated an abstract global issue into a visual narrative.",
+      "Documented perspectives and environments across Tibet and Mongolia."
+    ]
+  }
+]

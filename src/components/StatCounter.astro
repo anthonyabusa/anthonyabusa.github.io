@@ -1,0 +1,44 @@
+---
+interface Props {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  label: string;
+}
+const { value, prefix = '', suffix = '', label } = Astro.props;
+---
+
+<div class="reveal text-center p-6 rounded-xl border border-[#222538] bg-[#13161F]">
+  <div
+    class="text-4xl font-bold text-[#6366F1] mb-2 tabular-nums"
+    data-target={value}
+    data-prefix={prefix}
+    data-suffix={suffix}
+  >
+    {prefix}0{suffix}
+  </div>
+  <p class="text-sm text-[#64748B]">{label}</p>
+</div>
+
+<script>
+  document.querySelectorAll('[data-target]').forEach((el) => {
+    const target = parseInt(el.getAttribute('data-target') ?? '0', 10);
+    const prefix = el.getAttribute('data-prefix') ?? '';
+    const suffix = el.getAttribute('data-suffix') ?? '';
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+
+      let current = 0;
+      const step = Math.ceil(target / 40);
+      const tick = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = prefix + current + suffix;
+        if (current >= target) clearInterval(tick);
+      }, 30);
+    }, { threshold: 0.5 });
+
+    observer.observe(el);
+  });
+</script>

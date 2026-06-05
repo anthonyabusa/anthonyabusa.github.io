@@ -1,0 +1,166 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import BlogPostCard from '../components/BlogPostCard.astro';
+import StatCounter from '../components/StatCounter.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { getCollection } from 'astro:content';
+import projects from '../data/projects.json';
+
+const featuredProjects = projects
+  .filter((p) => p.featured && p.placement !== 'experience')
+  .sort((a, b) => (Number(b.year) || 0) - (Number(a.year) || 0))
+  .slice(0, 3);
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const recentPosts = posts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 2);
+---
+
+<BaseLayout
+  title="Home"
+  description="Anthony Abusa — San Diego founder and operator building Navore Market, a personal AI operations system, and practical automation."
+>
+  <!-- Hero -->
+  <section class="relative min-h-screen flex items-center hero-grid overflow-hidden">
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#6366F1]/5 rounded-full blur-3xl pointer-events-none" />
+
+    <div class="relative max-w-5xl mx-auto px-6 pt-28 pb-20 w-full">
+      <p class="text-[#6366F1] font-mono text-sm tracking-widest uppercase mb-6 opacity-0 animate-[fadeUp_0.6s_ease_0.1s_forwards]">
+        San Diego founder · transformation leader · systems builder
+      </p>
+
+      <h1 class="text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight mb-6 opacity-0 animate-[fadeUp_0.6s_ease_0.25s_forwards]">
+        <span class="text-[#F1F5F9]">Building high-impact</span><br />
+        <span class="gradient-text">systems.</span>
+      </h1>
+
+      <p class="text-xl md:text-2xl text-[#94A3B8] max-w-2xl leading-relaxed mb-10 opacity-0 animate-[fadeUp_0.6s_ease_0.4s_forwards]">
+        I'm Anthony Abusa — founder of Navore Market and builder of a private, personal AI operations system. I work where strategy, product, and automation meet.
+      </p>
+
+      <div class="flex flex-wrap gap-4 opacity-0 animate-[fadeUp_0.6s_ease_0.55s_forwards]">
+        <a
+          href="/projects"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#6366F1] text-[#0B0D14] font-semibold text-sm hover:bg-[#4F46E5] transition-colors"
+        >
+          View Projects
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-[#222538] text-[#94A3B8] text-sm hover:border-[#6366F1] hover:text-[#6366F1] transition-colors"
+        >
+          Read Notes
+        </a>
+      </div>
+
+      <div class="mt-12 opacity-0 animate-[fadeUp_0.6s_ease_0.7s_forwards]">
+        <SocialLinks />
+      </div>
+    </div>
+  </section>
+
+  <!-- About teaser -->
+  <section class="max-w-5xl mx-auto px-6 py-20">
+    <div class="reveal flex flex-col md:flex-row items-center gap-10 p-8 rounded-2xl border border-[#222538] bg-[#13161F]">
+      <img
+        src="/anthony-abusa-headshot.png"
+        alt="Anthony A. Busa"
+        class="shrink-0 w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border border-[#363B58] border-t-white/10"
+        loading="lazy"
+      />
+      <div>
+        <h2 class="text-xl font-semibold text-[#F1F5F9] mb-3">I turn complex challenges into clear strategy and measurable progress.</h2>
+        <p class="text-[#64748B] leading-relaxed mb-4">
+          My work spans venture leadership, enterprise transformation, and technology-enabled growth. The throughline: clarify what matters, align people around the path forward, and deliver durable results.
+        </p>
+        <a href="/about" class="text-sm text-[#6366F1] hover:text-[#4F46E5] transition-colors font-medium">
+          More about me →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats strip -->
+  <section class="max-w-5xl mx-auto px-6 pb-24">
+    <div class="reveal-group grid grid-cols-2 md:grid-cols-4 gap-4">
+      <StatCounter value={11} suffix="+" label="Years of experience" />
+      <StatCounter value={450} prefix="$" suffix="K+" label="USDA-backed funding" />
+      <StatCounter value={3} label="Active product systems" />
+      <StatCounter value={12} label="Enterprise transformation programs led" />
+    </div>
+  </section>
+
+  <!-- Featured Projects -->
+  <section class="max-w-5xl mx-auto px-6 pb-24">
+    <div class="flex items-end justify-between mb-10">
+      <div>
+        <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-2">Current Builds</p>
+        <h2 class="text-3xl font-bold text-[#F1F5F9]">What I'm building</h2>
+      </div>
+      <a href="/projects" class="text-sm text-[#64748B] hover:text-[#6366F1] transition-colors">
+        View all →
+      </a>
+    </div>
+    <div class="reveal-group grid md:grid-cols-3 gap-6">
+      {featuredProjects.map((project) => (
+        <ProjectCard {...project} liveUrl={project.liveUrl || undefined} />
+      ))}
+    </div>
+  </section>
+
+  <!-- Recent Writing -->
+  {recentPosts.length > 0 && (
+    <section class="max-w-5xl mx-auto px-6 pb-24">
+      <div class="flex items-end justify-between mb-10">
+        <div>
+          <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-2">Latest</p>
+          <h2 class="text-3xl font-bold text-[#F1F5F9]">Writing</h2>
+        </div>
+        <a href="/blog" class="text-sm text-[#64748B] hover:text-[#6366F1] transition-colors">
+          Read all →
+        </a>
+      </div>
+      <div class="reveal-group grid md:grid-cols-2 gap-6">
+        {recentPosts.map((post) => (
+          <BlogPostCard
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            tags={post.data.tags}
+            slug={post.id}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="max-w-5xl mx-auto px-6 pb-32">
+    <div class="reveal text-center p-14 rounded-2xl border border-[#222538] bg-[#13161F] relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-[#6366F1]/5 via-transparent to-transparent pointer-events-none" />
+      <h2 class="relative text-3xl md:text-4xl font-bold text-[#F1F5F9] mb-4">
+        Let's make a good connection.
+      </h2>
+      <p class="relative text-[#64748B] mb-8 max-w-sm mx-auto">
+        Worst case, we trade a few good ideas. Best case, we build something worth talking about.
+      </p>
+      <a
+        href="/contact"
+        class="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-[#6366F1] text-[#0B0D14] font-semibold hover:bg-[#4F46E5] transition-colors"
+      >
+        Get in touch
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>

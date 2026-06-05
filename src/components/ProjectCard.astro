@@ -1,0 +1,44 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  url: string;
+  liveUrl?: string;
+  slug?: string;
+  tags: string[];
+  year: number | string;
+  endYear?: number | string;
+  type: string;
+  status?: string;
+}
+
+const { title, description, url, slug, tags, year, endYear = 'Present', status } = Astro.props;
+const href = slug ? `/projects/${slug}` : url;
+const isExternal = !slug && Boolean(url);
+---
+
+{href ? (
+  <a
+    href={href}
+    target={isExternal ? '_blank' : undefined}
+    rel={isExternal ? 'noopener noreferrer' : undefined}
+    aria-label={`View ${title}`}
+    class="reveal group flex flex-col p-6 rounded-xl border border-[#222538] bg-[#13161F] card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]"
+  >
+    <h3 class="text-lg font-semibold text-[#F1F5F9] group-hover:text-[#A5B4FC] transition-colors mb-4 leading-snug">{title}</h3>
+    {status && <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#818CF8] mb-3">{status}</p>}
+    <div class="flex flex-wrap gap-2 mb-4">
+      {tags.map((tag) => <span class="tag">{tag}</span>)}
+    </div>
+    <p class="text-[#64748B] text-sm leading-relaxed flex-1 mb-6">{description}</p>
+    <span class="mt-auto pt-1 text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono">{year} — {endYear}</span>
+  </a>
+) : (
+  <article class="reveal flex flex-col p-6 rounded-xl border border-[#222538] bg-[#13161F]">
+    <h3 class="text-lg font-semibold text-[#F1F5F9] mb-4 leading-snug">{title}</h3>
+    {status && <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#818CF8] mb-3">{status}</p>}
+    <div class="flex flex-wrap gap-2 mb-4">{tags.map((tag) => <span class="tag">{tag}</span>)}</div>
+    <p class="text-[#64748B] text-sm leading-relaxed flex-1 mb-6">{description}</p>
+    <span class="mt-auto pt-1 text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono">{year} — {endYear}</span>
+  </article>
+)}
