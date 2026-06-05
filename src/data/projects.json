@@ -1,5 +1,57 @@
 [
   {
+    "title": "Agent Workbench",
+    "slug": "agent-workbench",
+    "role": "Builder & contributor",
+    "status": "Open source",
+    "description": "A desktop control plane for running multiple AI agents — Claude, Codex, Gemini, shell, and Python REPL — from a single window. PTY-backed terminals, voice input, and an operator panel that steers agents via tool calls.",
+    "url": "https://github.com/anthonyabusa/agent-workbench",
+    "liveUrl": "",
+    "tags": ["AI", "Open Source", "Electron", "TypeScript"],
+    "featured": true,
+    "year": 2026,
+    "endYear": "Present",
+    "type": "open-source",
+    "challenge": "Running multiple AI agents from separate terminals creates context-switching overhead and no shared view of what each agent is doing. There was no single interface for steering multiple AI CLIs, capturing their output, and issuing commands via voice or text.",
+    "approach": "Built on Electron + Next.js with a Node PTY sidecar. Each agent is a real PTY child process with full terminal I/O. An operator panel lets you spawn, kill, and direct agents via tool calls. Push-to-talk voice input goes straight to the operator. State persists locally — nothing leaves your machine beyond the AI APIs you're already signed in to.",
+    "metrics": [
+      { "value": "5+", "label": "Concurrent agent types (Claude, Codex, Gemini, shell, Python)" },
+      { "value": "Local-first", "label": "State and logs persist at ~/.agent-workbench — no cloud" },
+      { "value": "Voice", "label": "Push-to-talk operator panel — hold Space anywhere to dictate" }
+    ],
+    "outcomes": [
+      "Multi-agent terminal control plane with shared operator visibility.",
+      "Voice-to-agent dispatch from any context in the app.",
+      "Session persistence — exited agents stay visible for output review."
+    ]
+  },
+  {
+    "title": "Polymarket Trading Bot",
+    "slug": "polymarket-trading-bot",
+    "role": "Contributor & integrator",
+    "status": "Open source",
+    "description": "A modular prediction market signal pipeline for Polymarket US sports markets. Phases 0–2 active: ingestion, normalization, and a model engine that scores edge, liquidity, timing, and position sizing. Execution gated by design.",
+    "url": "https://github.com/anthonyabusa/polymarket-trading-bot",
+    "liveUrl": "",
+    "tags": ["AI", "Open Source", "Python", "Automation"],
+    "featured": false,
+    "year": 2026,
+    "endYear": "Present",
+    "type": "open-source",
+    "challenge": "Prediction market trading requires combining sportsbook odds, CLOB depth, timing signals, and risk state into a single coherent model — and doing it in a way where the signal logic is auditable and the execution step is safely gated until validated.",
+    "approach": "Four-phase Docker pipeline: risk bridge → ingestion → model/decision engine → execution (disabled). The core model engine is pure Python stdlib — no external ML dependencies. Phase 2 emits decision packets with execution_eligible: false. All secrets and account data are gitignored; the engine operates on normalized data only.",
+    "metrics": [
+      { "value": "76", "label": "Unit tests passing across contract, ingestion, model, and risk" },
+      { "value": "0", "label": "External dependencies in core model engine (pure stdlib)" },
+      { "value": "Gated", "label": "Phase 3 execution disabled by default — validate first" }
+    ],
+    "outcomes": [
+      "Full signal pipeline from market discovery to sized order intents.",
+      "Auditable model: every signal attribution logged per decision packet.",
+      "Paper-trade-first design: inspect output for days before considering live use."
+    ]
+  },
+  {
     "title": "Navore Market AggTech Startup",
     "slug": "navore-market-aggtech-startup",
     "role": "Founder & operator",
