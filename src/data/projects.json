@@ -52,9 +52,9 @@
     ]
   },
   {
-    "title": "Navore Market AggTech Startup",
+    "title": "Navore Market",
     "slug": "navore-market-aggtech-startup",
-    "role": "Founder & operator",
+    "role": "Director of Strategy & Operations",
     "status": "Active venture",
     "description": "A San Diego food marketplace connecting local producers with consumers through a modern, mobile-first operating model. USDA-backed and built around real logistics, trust, and neighborhood demand.",
     "url": "https://navoremarket.com",
@@ -66,11 +66,11 @@
       "Operations"
     ],
     "featured": true,
-    "year": 2024,
+    "year": 2025,
     "endYear": "Present",
     "type": "venture",
     "challenge": "Local food systems are fragmented across producer discovery, ordering, logistics, trust, and recurring neighborhood demand. The opportunity required more than a storefront: it needed a practical operating model.",
-    "approach": "I built Navore as a marketplace and operating system together\u2014pairing customer experience with producer relationships, hub operations, grant strategy, logistics, and feedback loops.",
+    "approach": "I help build Navore as a marketplace and operating model together\u2014pairing customer experience with producer relationships, hub operations, grant strategy, logistics, and feedback loops.",
     "metrics": [
       {
         "value": "~$471k",
@@ -86,8 +86,8 @@
       }
     ],
     "outcomes": [
-      "Launched a real local-food marketplace and neighborhood hub.",
-      "Secured USDA-backed funding to expand the model.",
+      "Launched a real local-food marketplace and neighborhood hub (La Jolla, Jan 2026).",
+      "USDA-backed funding (~$471k) supporting expansion of the model.",
       "Created operating workflows connecting demand, producers, fulfillment, and growth."
     ]
   },
@@ -135,7 +135,7 @@
     "title": "HealthRise EHR & Revenue Operations",
     "placement": "experience",
     "slug": "healthrise-ehr-revenue-operations",
-    "role": "Healthtech startup operator",
+    "role": "Technical Program Manager",
     "status": "Healthtech startup",
     "description": "A healthtech startup combining electronic health record software, revenue cycle management, and consulting services to improve healthcare operations.",
     "url": "",
@@ -148,11 +148,11 @@
       "AI/ML"
     ],
     "featured": true,
-    "year": 2021,
-    "endYear": 2021,
+    "year": 2023,
+    "endYear": 2024,
     "type": "program",
     "challenge": "Healthcare organizations often manage disconnected clinical, billing, and operational workflows. HealthRise addressed the need for technology and hands-on operational support within one startup offering.",
-    "approach": "The company combined EHR software with revenue cycle management and consulting work, connecting the technology layer to the operational realities of healthcare delivery and reimbursement.",
+    "approach": "As Technical Program Manager I drove ML/AI integration across global delivery teams, alongside strategic planning and financial forecasting — connecting the technology layer to the operational realities of healthcare delivery and reimbursement.",
     "metrics": [
       {
         "value": "EHR",
@@ -168,16 +168,16 @@
       }
     ],
     "outcomes": [
-      "Supported healthcare operations through an integrated technology and services model.",
-      "Connected clinical workflows with revenue cycle operations.",
-      "Delivered consulting support alongside the startup's EHR and RCM offerings."
+      "Drove ML/AI integration across global delivery teams.",
+      "Led strategic planning and financial forecasting for the program portfolio.",
+      "Connected clinical workflows with revenue cycle operations."
     ]
   },
   {
-    "title": "Johnson Matthey Global Sustainability",
+    "title": "Johnson Matthey Enterprise Transformation",
     "placement": "experience",
     "slug": "johnson-matthey-global-sustainability",
-    "role": "Transformation program leader",
+    "role": "Corporate Strategy Manager",
     "status": "Enterprise transformation",
     "description": "Led 12 enterprise transformation programs at a global specialty chemicals manufacturer, driving +37% process efficiency. Founded the North America Government Affairs function from scratch.",
     "url": "",
@@ -189,8 +189,8 @@
       "Program Management"
     ],
     "featured": true,
-    "year": 2020,
-    "endYear": 2020,
+    "year": 2019,
+    "endYear": 2023,
     "type": "program",
     "challenge": "Enterprise transformation at a global specialty chemicals manufacturer required coordinating complex programs across operations, stakeholders, and organizational boundaries while creating durable new capabilities.",
     "approach": "I led a portfolio of transformation programs focused on measurable operating improvement, while also building the North America Government Affairs function from the ground up.",
