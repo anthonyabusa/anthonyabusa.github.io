@@ -1,6 +1,6 @@
 ---
 title: "Three Days of Sunlight"
-description: "Anthropic released Claude Fable 5 to the public, then a government directive pulled it three days later. The lesson isn't about the model — it's about what you build around it."
+description: "Anthropic released Claude Fable 5 to the public, then a government directive pulled it three days later. The lesson isn't about the model. It's about what you build around it."
 pubDate: 2026-06-13
 tags: ["AI", "Strategy", "Systems"]
 draft: false
@@ -23,7 +23,7 @@ The takeaway, and it has almost nothing to do with any one company: building you
 
 The prisoners who adjusted fastest weren't the ones with the sharpest memory of the light. They were the ones who, somewhere along the way, had built themselves a lamp.
 
-So the question worth sitting with isn't who will have access to the best model next month (it may be you, it may not). The real question underneath it: what, exactly, will you do the morning the light goes out?
+So the question worth sitting with isn't who will have access to the best model next month (it may be you, it may not). It's quieter, and it points the other way: what are you building now, so that the next time the light goes out, you can make your own?
 
 ---
 
