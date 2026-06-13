@@ -73,7 +73,7 @@
     "approach": "I help build Navore as a marketplace and operating model together\u2014pairing customer experience with producer relationships, hub operations, grant strategy, logistics, and feedback loops.",
     "metrics": [
       {
-        "value": "~$471k",
+        "value": "$450k+",
         "label": "USDA-backed funding"
       },
       {
@@ -87,7 +87,7 @@
     ],
     "outcomes": [
       "Launched a real local-food marketplace and neighborhood hub (La Jolla, Jan 2026).",
-      "USDA-backed funding (~$471k) supporting expansion of the model.",
+      "USDA-backed funding ($450k+) supporting expansion of the model.",
       "Created operating workflows connecting demand, producers, fulfillment, and growth."
     ]
   },
@@ -110,19 +110,31 @@
     "endYear": "Present",
     "type": "infrastructure",
     "challenge": "Most AI assistants start cold every session, can't run unattended, and break the moment two of them touch the same work. To be genuinely useful, agents need memory that compounds over time, a way to coordinate and govern their own work safely, live visibility into what's running, and the ability to operate across machines and channels — not just a chat window.",
-    "approach": "I built a local-first operations stack where a single high-judgment model orchestrates the work and delegates heavy generation to specialized local Ollama lanes — keeping cost in the judgment layer while free local models do the volume. A spine of persistent memory (RAG, working context, and daily logs) lets the system sharpen with use instead of restarting from zero. Governance is enforced in code: a single-source task store with a forward-only state machine, plus leases and fencing tokens so multiple sessions run in parallel without clobbering each other. A unified dashboard and heartbeat checks keep it observable, and the whole system spans two coordinated machines.",
+    "approach": "I architected a local-first agent operating system with a deliberate division of labor: one high-judgment orchestrating model plans and applies, while specialized local Ollama lanes (running qwen3-coder:30b for generation, research, review, and summarization) absorb the heavy token volume at zero marginal cost. Durable state is the backbone — a retrieval-augmented memory layer of working context, daily logs, and semantic recall lets the system compound knowledge instead of starting cold each session. Self-governance is enforced in code: a single-source task store projects to human-readable boards, state advances along a forward-only DAG with audited escape hatches, and Kleppmann-style leases plus monotonic fencing tokens let multiple sessions and two machines operate the same repository concurrently without stale-writer corruption. A FastAPI dashboard, status caches, and scheduled heartbeat checks provide always-on observability, and a provider-neutral driver layer lets different agent CLIs drive the same core through thin adapters behind an automated parity check.",
     "metrics": [
       {
         "value": "6",
-        "label": "Specialized local model lanes, steered by one orchestrating model"
+        "label": "Specialized local-model lanes (generation, research, review, governance), steered by one orchestrating model"
       },
       {
         "value": "2",
-        "label": "Machines coordinated — an always-on host plus an on-demand peer"
+        "label": "Machines coordinated — an always-on host plus an on-demand peer sharing one model host"
       },
       {
         "value": "Local-first",
-        "label": "Private inference; memory and state stay on the machines"
+        "label": "Private Ollama inference; memory and state never leave the machines"
+      },
+      {
+        "value": "RAG",
+        "label": "Durable cross-session memory — working context, daily logs, semantic recall"
+      },
+      {
+        "value": "Lease + fence",
+        "label": "Kleppmann-style fencing tokens for safe multi-session concurrency"
+      },
+      {
+        "value": "FastAPI",
+        "label": "Unified ops dashboard, status caches, and heartbeat health checks"
       }
     ],
     "outcomes": [
