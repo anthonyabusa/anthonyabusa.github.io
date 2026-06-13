@@ -23,7 +23,7 @@ The takeaway, and it has almost nothing to do with any one company: building you
 
 The prisoners who adjusted fastest weren't the ones with the sharpest memory of the light. They were the ones who, somewhere along the way, had built themselves a lamp.
 
-So the question worth sitting with isn't who will have access to the best model next month (it may be you, it may not). It's quieter, and it points the other way: what are you building now, so that the next time the light goes out, you can make your own?
+So the question worth sitting with isn't who will have access to the best model next month (it may be you, it may not). It's quieter, and it points the other way: what can you put in place now so that the next time the light goes out, you will have your own?
 
 ---
 
