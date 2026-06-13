@@ -1,5 +1,5 @@
 ---
-title: "Three Days of Sunlight"
+title: "Three Days of Sun"
 description: "Anthropic released Claude Fable 5 to the public, then a government directive pulled it three days later. The lesson isn't about the model. It's about what you build around it."
 pubDate: 2026-06-13
 tags: ["AI", "Strategy", "Systems"]
