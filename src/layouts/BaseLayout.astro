@@ -37,6 +37,14 @@ const personSchema = {
     'https://linkedin.com/in/anthonyabusa',
   ],
 };
+
+// WebSite entity — helps search engines model the site (and enables sitelinks).
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Anthony Busa',
+  url: 'https://anthonyabusa.com',
+};
 ---
 
 <!doctype html>
@@ -75,6 +83,7 @@ const personSchema = {
 
     <!-- Structured data: Person (branded search / rich results) -->
     <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
     {CF_BEACON_TOKEN && (
       <script
