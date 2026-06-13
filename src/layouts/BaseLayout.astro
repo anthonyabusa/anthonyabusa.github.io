@@ -17,6 +17,26 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Cloudflare Web Analytics beacon token.
+// Get it from: CF dashboard → Analytics & Logs → Web Analytics → Add a site
+// (anthonyabusa.com) → copy the token from the snippet. Leave '' to disable.
+const CF_BEACON_TOKEN = '';
+
+// Person structured data — powers branded search ("Anthony Busa") + rich results.
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Anthony Busa',
+  url: 'https://anthonyabusa.com',
+  jobTitle: 'Director of Strategy & Operations',
+  worksFor: { '@type': 'Organization', name: 'Navore Market' },
+  description,
+  sameAs: [
+    'https://github.com/anthonyabusa',
+    'https://linkedin.com/in/anthonyabusa',
+  ],
+};
 ---
 
 <!doctype html>
@@ -43,6 +63,23 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:title" content={`${title} | Anthony Busa`} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />
+
+    <meta property="og:site_name" content="Anthony Busa" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image:alt" content="Anthony Busa — strategy & operations leader" />
+    <meta name="author" content="Anthony Busa" />
+    <meta name="theme-color" content="#0B0D14" />
+
+    <!-- Structured data: Person (branded search / rich results) -->
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
+    {CF_BEACON_TOKEN && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={`{"token": "${CF_BEACON_TOKEN}"}`}
+      />
+    )}
   </head>
   <body>
     <Nav />
