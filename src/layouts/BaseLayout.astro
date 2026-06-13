@@ -45,6 +45,25 @@ const websiteSchema = {
   name: 'Anthony Busa',
   url: 'https://anthonyabusa.com',
 };
+
+// BreadcrumbList — built from the URL path so every non-home page gets accurate
+// breadcrumbs with zero per-page wiring (helps Google render breadcrumb rich results).
+const crumbSegments = Astro.url.pathname.split('/').filter(Boolean);
+const breadcrumbSchema = crumbSegments.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).href },
+        ...crumbSegments.map((seg, i) => ({
+          '@type': 'ListItem',
+          position: i + 2,
+          name: decodeURIComponent(seg).replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+          item: new URL('/' + crumbSegments.slice(0, i + 1).join('/') + '/', Astro.site).href,
+        })),
+      ],
+    }
+  : null;
 ---
 
 <!doctype html>
@@ -84,6 +103,7 @@ const websiteSchema = {
     <!-- Structured data: Person (branded search / rich results) -->
     <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
 
     {CF_BEACON_TOKEN && (
       <script
