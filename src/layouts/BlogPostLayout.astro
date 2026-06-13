@@ -12,10 +12,13 @@ interface Props {
 
 const { title, description, pubDate, updatedDate, tags = [], ogImage } = Astro.props;
 
+// Format in UTC — frontmatter dates coerce to UTC midnight, so formatting in the
+// build machine's local TZ (PT) would shift the displayed day back by one.
 const formattedDate = pubDate.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
+  timeZone: 'UTC',
 });
 
 // BlogPosting structured data — richer search results + accurate article metadata.
@@ -45,7 +48,7 @@ const postSchema = {
       <p class="text-[#64748B] text-sm">
         <time datetime={pubDate.toISOString()}>{formattedDate}</time>
         {updatedDate && (
-          <span> · Updated {updatedDate.toLocaleDateString('en-US', { dateStyle: 'medium' })}</span>
+          <span> · Updated {updatedDate.toLocaleDateString('en-US', { dateStyle: 'medium', timeZone: 'UTC' })}</span>
         )}
       </p>
     </header>

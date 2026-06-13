@@ -3,7 +3,7 @@ title: "Why I'm Building in Public"
 description: "Shipping a portfolio is easy. Building one that actually reflects who you are is harder. Here's why I chose to do it openly."
 pubDate: 2026-05-21
 tags: ["Entrepreneurship", "Building", "Personal Brand"]
-draft: false
+draft: true
 ---
 
 Most portfolios are graveyards — a list of projects you finished years ago, sitting untouched while the real work happens elsewhere.
