@@ -1,9 +1,15 @@
 export const focusAreas = [
   {
-    slug: 'strategy-operations',
+    slug: 'strategy',
     icon: '↗',
-    title: 'Strategy & Operations',
-    description: 'Market design, GTM planning, operating models, and execution rhythms for teams that need traction, not theater.',
+    title: 'Strategy',
+    description: 'Market design, positioning, growth logic, stakeholder alignment, and the choices that determine where effort should go.',
+  },
+  {
+    slug: 'operations',
+    icon: '◆',
+    title: 'Operations',
+    description: 'Operating models, workflows, execution rhythms, logistics, metrics, and the routines that make ambitious ideas actually run.',
   },
   {
     slug: 'product-program-leadership',
