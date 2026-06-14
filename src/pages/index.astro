@@ -12,6 +12,12 @@ const featuredProjects = projects
   .sort((a, b) => (Number(b.year) || 0) - (Number(a.year) || 0))
   .slice(0, 3);
 
+const proofPoints = [
+  'USDA-backed local food marketplace',
+  'Private AI ops system running daily',
+  '12 enterprise transformation programs',
+];
+
 const posts = await getCollection('blog', ({ data }) => !data.draft);
 const recentPosts = posts
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -40,6 +46,15 @@ const recentPosts = posts
         I'm Anthony Busa — Director of Strategy & Operations at Navore Market and builder of a private, personal AI operations system. I work where strategy, product, and automation meet.
       </p>
 
+      <div class="flex flex-wrap gap-2 mb-10 opacity-0 animate-[fadeUp_0.6s_ease_0.5s_forwards]" aria-label="Selected proof points">
+        {proofPoints.map((point) => (
+          <span class="inline-flex items-center gap-2 rounded-full border border-[#2E3350] bg-[#13161F]/80 px-3 py-2 text-xs text-[#CBD5E1] shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
+            <span class="h-1.5 w-1.5 rounded-full bg-[#818CF8]" />
+            {point}
+          </span>
+        ))}
+      </div>
+
       <div class="flex flex-wrap gap-4 opacity-0 animate-[fadeUp_0.6s_ease_0.55s_forwards]">
         <a
           href="/projects"
@@ -49,10 +64,10 @@ const recentPosts = posts
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <a
-          href="/blog"
+          href="/contact"
           class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-[#222538] text-[#94A3B8] text-sm hover:border-[#6366F1] hover:text-[#6366F1] transition-colors"
         >
-          Read Notes
+          Start a Conversation
         </a>
       </div>
 

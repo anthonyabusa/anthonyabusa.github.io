@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import projects from '../../data/projects.json';
+import { focusAreas } from '../../data/focusAreas';
+
+export function getStaticPaths() {
+  return focusAreas.map((focus) => ({ params: { focus: focus.slug }, props: { focus } }));
+}
+
+const { focus } = Astro.props;
+const related = projects
+  .filter((project) => project.focusAreas?.includes(focus.slug))
+  .sort((a, b) => {
+    if ((a.placement === 'experience') !== (b.placement === 'experience')) {
+      return a.placement === 'experience' ? 1 : -1;
+    }
+    return (Number(b.year) || 0) - (Number(a.year) || 0);
+  });
+
+const projectWork = related.filter((project) => project.placement !== 'experience');
+const experienceWork = related.filter((project) => project.placement === 'experience');
+---
+
+<BaseLayout
+  title={`${focus.title} Work`}
+  description={`${focus.title} projects and professional experience by Anthony Busa.`}
+>
+  <div class="max-w-5xl mx-auto px-6 pt-32 pb-24">
+    <a href="/about" class="text-xs text-[#64748B] hover:text-[#818CF8] transition-colors">← Back to about</a>
+
+    <header class="reveal max-w-3xl mt-10 mb-14">
+      <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Filtered work</p>
+      <div class="flex items-center gap-4 mb-5">
+        <span class="text-3xl text-[#A5B4FC]">{focus.icon}</span>
+        <h1 class="text-4xl md:text-5xl font-bold text-[#F1F5F9] leading-tight">{focus.title}</h1>
+      </div>
+      <p class="text-[#94A3B8] text-lg leading-relaxed">{focus.description}</p>
+    </header>
+
+    {projectWork.length > 0 && (
+      <section class="mb-16">
+        <div class="flex items-end justify-between mb-7">
+          <div>
+            <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-2">Projects</p>
+            <h2 class="text-2xl font-bold text-[#F1F5F9]">Built systems</h2>
+          </div>
+          <span class="text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono">{projectWork.length} matched</span>
+        </div>
+        <div class="reveal-group grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {projectWork.map((project) => (
+            <ProjectCard {...project} liveUrl={project.liveUrl || undefined} />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {experienceWork.length > 0 && (
+      <section>
+        <div class="flex items-end justify-between mb-7">
+          <div>
+            <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-2">Experience</p>
+            <h2 class="text-2xl font-bold text-[#F1F5F9]">Professional work</h2>
+          </div>
+          <span class="text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono">{experienceWork.length} matched</span>
+        </div>
+        <div class="space-y-6">
+          {experienceWork.map((role) => (
+            <a href={`/experience/${role.slug}`} class="reveal group block p-7 rounded-xl border border-[#222538] bg-[#13161F] card-hover">
+              <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
+                <div>
+                  <h3 class="text-xl font-semibold text-[#F1F5F9] group-hover:text-[#A5B4FC] transition-colors">{role.title}</h3>
+                  <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#818CF8] mt-2">{role.role}</p>
+                </div>
+                <span class="text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono whitespace-nowrap">{role.year} — {role.endYear}</span>
+              </div>
+              <div class="flex flex-wrap gap-2 mb-5">{role.tags.map((tag: string) => <span class="tag">{tag}</span>)}</div>
+              <p class="text-[#64748B] text-sm leading-relaxed max-w-3xl">{role.description}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>
