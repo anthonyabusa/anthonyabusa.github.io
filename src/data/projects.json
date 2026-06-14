@@ -43,8 +43,8 @@
       "Session persistence — exited agents stay visible for output review."
     ],
     "focusNarratives": {
-      "product-program-leadership": "Product leadership here meant turning a messy multi-agent workflow into a scoped desktop product: terminal sessions, operator controls, voice input, persistence, and review states organized into a usable control plane rather than a pile of disconnected CLIs.",
-      "ai-automation": "The AI automation work centers on orchestration: multiple agent runtimes, PTY-backed command channels, voice-to-agent dispatch, and local-first session state so an operator can coordinate AI work without losing context or control."
+      "product-program-leadership": "Agent Workbench is a desktop control plane for coordinating multiple AI tools from one operator surface. The product work was defining the right interaction model—persistent terminal sessions, clear agent states, voice input, and reviewable outputs—so a powerful developer workflow felt coherent instead of chaotic.",
+      "ai-automation": "Agent Workbench brings several AI runtimes into one local-first workspace. The automation challenge was orchestration: routing instructions to the right agent, preserving session context, exposing PTY-backed controls, and keeping the human operator in the loop instead of hiding execution behind a black box."
     }
   },
   {
@@ -90,7 +90,7 @@
       "Paper-trade-first design: inspect output for days before considering live use."
     ],
     "focusNarratives": {
-      "ai-automation": "This project is automation with safety gates: ingestion, normalization, model scoring, liquidity/risk checks, and sized order intents are automated, while execution remains deliberately disabled until the signal is validated through paper-trade review."
+      "ai-automation": "The Polymarket bot is a prediction-market signal pipeline for U.S. sports markets. The automation work focuses on the pieces that should be systematic—market ingestion, normalization, edge scoring, liquidity checks, timing signals, and sizing—while keeping execution gated until the model earns trust through review."
     }
   },
   {
@@ -138,9 +138,9 @@
       "Created operating workflows connecting demand, producers, fulfillment, and growth."
     ],
     "focusNarratives": {
-      "strategy-operations": "Strategy and operations work at Navore spans marketplace positioning, producer and customer workflows, hub operations, grant execution, logistics design, analytics, and the operating cadence needed to turn local demand into repeatable marketplace throughput.",
-      "product-program-leadership": "Product leadership at Navore connects customer experience, producer onboarding, mobile ordering, fulfillment workflows, feedback loops, and roadmap tradeoffs into one operating system for a live marketplace rather than isolated feature work.",
-      "marketplace-venture-building": "This is the core venture-building case: a USDA-backed San Diego local-food marketplace, built across supply, demand, trust, neighborhood hub operations, producer relationships, and the practical constraints of local fulfillment."
+      "strategy-operations": "Navore Market is a San Diego local-food marketplace backed by USDA funding and real neighborhood operations. My strategy and operations work centers on turning that concept into a repeatable model: producer workflows, hub operations, logistics, grant execution, customer demand loops, and the metrics needed to know what is actually working.",
+      "product-program-leadership": "Navore is both a marketplace product and an operating system for local food. The product work connects customer experience, producer onboarding, mobile ordering, fulfillment, roadmap tradeoffs, and feedback loops so the marketplace improves as a live service—not as disconnected features.",
+      "marketplace-venture-building": "Navore is the venture-building case in its most direct form: supply, demand, trust, logistics, funding, and neighborhood adoption all have to move together. My role spans the practical 0→1 work of shaping the marketplace model, supporting producer relationships, building hub operations, and translating early traction into a scalable operating playbook."
     }
   },
   {
@@ -201,9 +201,9 @@
       "Automated recurring briefs, health checks, and a disciplined start / checkpoint / end session lifecycle."
     ],
     "focusNarratives": {
-      "strategy-operations": "The operations work is designing a personal command system: task governance, status dashboards, health checks, handoffs, scheduled briefs, and lane routing that turn scattered AI sessions into a managed operating rhythm.",
-      "product-program-leadership": "Product and program leadership shows up in the system architecture: scoping agent lanes, dashboard surfaces, done gates, memory flows, feedback loops, and release sequencing so the stack evolves like a product instead of a collection of scripts.",
-      "ai-automation": "The AI automation layer includes local agents, memory RAG, Discord collaboration, scheduled workflows, multi-machine orchestration, and safety gates that let useful automation run continuously without handing over uncontrolled authority."
+      "strategy-operations": "This system is my private operating layer for running projects with AI support across machines, dashboards, Discord, memory, and scheduled workflows. The operations work is making that reliable day to day: task governance, handoffs, health checks, status visibility, lane routing, and clear escalation points when automation should stop.",
+      "product-program-leadership": "The AI operations stack behaves like a product even though it is personally operated infrastructure. I scope releases, design dashboard surfaces, sequence agent capabilities, define done gates, and build feedback loops so the system compounds instead of becoming a pile of scripts.",
+      "ai-automation": "The system combines local agents, memory RAG, Discord workflows, dashboards, scheduled briefs, and multi-machine orchestration. The automation work is not just making agents do more—it is giving them context, boundaries, verification loops, and durable memory so they can be useful without becoming reckless."
     }
   },
   {
@@ -253,9 +253,9 @@
       "Connected clinical workflows with revenue cycle operations."
     ],
     "focusNarratives": {
-      "strategy-operations": "Strategy and operations work connected clinical workflows, revenue cycle realities, forecasting, delivery planning, and cross-functional execution so technical initiatives could map to how healthcare organizations actually operate.",
-      "product-program-leadership": "Product leadership at HealthRise included SaaS product lifecycle work across EHR and revenue-operations tooling: product development cadence, Scrum delivery, UX/UI testing, requirements translation, roadmap coordination, and release execution with global delivery teams.",
-      "ai-automation": "The AI and automation angle was ML/AI integration inside healthcare operations: identifying where model-assisted workflows could support delivery teams, connecting automation to EHR/RCM processes, and keeping implementation grounded in operational constraints."
+      "strategy-operations": "HealthRise sat at the intersection of EHR software, revenue cycle operations, consulting delivery, and healthcare workflow improvement. My strategy and operations work connected product and delivery priorities to the realities of clinical workflows, RCM processes, forecasting, team capacity, and implementation constraints.",
+      "product-program-leadership": "HealthRise was a SaaS and services environment where product decisions had direct operational consequences. I worked across the product development lifecycle—requirements translation, Scrum delivery, UX/UI testing, roadmap coordination, release planning, stakeholder feedback, and global delivery execution—to move EHR and revenue-operations initiatives from idea to shipped workflow.",
+      "ai-automation": "At HealthRise, AI work had to fit inside healthcare operations rather than sit beside them. I helped drive ML/AI integration across global delivery teams, focusing on where automation could support EHR and revenue-cycle workflows while staying grounded in usability, implementation risk, and the constraints of healthcare delivery."
     }
   },
   {
@@ -303,8 +303,8 @@
       "Founded the North America Government Affairs function from scratch."
     ],
     "focusNarratives": {
-      "strategy-operations": "This experience is the enterprise strategy and operations case: 12 transformation programs, operating-model work, stakeholder alignment, process-efficiency improvement, and building the North America Government Affairs function from zero to durable capability.",
-      "product-program-leadership": "Program leadership at Johnson Matthey meant running complex cross-functional transformation portfolios: scoping initiatives, aligning stakeholders, managing execution rhythms, tracking outcomes, and turning ambiguous enterprise priorities into delivered operating improvements."
+      "strategy-operations": "Johnson Matthey was large-scale enterprise transformation inside a global specialty chemicals company. My work focused on operating-model change: leading 12 transformation programs, improving process efficiency, aligning stakeholders, and building the North America Government Affairs function from zero into a durable capability.",
+      "product-program-leadership": "The Johnson Matthey work was program leadership in a complex enterprise environment. I translated ambiguous priorities into scoped initiatives, built execution rhythms, coordinated cross-functional stakeholders, tracked outcomes, and kept transformation work tied to measurable operating improvement rather than slideware."
     }
   },
   {
@@ -327,8 +327,8 @@
     "endYear": "Present",
     "type": "site",
     "focusNarratives": {
-      "product-program-leadership": "The portfolio is treated as a living product: structured information architecture, reusable content models, filtered work surfaces, public proof-of-work, and iterative UX improvements driven by live review comments.",
-      "ai-automation": "The site also demonstrates AI-assisted content operations: project data powers multiple views, browser comments become implementation tasks, and the portfolio is maintained through an agent-supported workflow rather than static manual updates."
+      "product-program-leadership": "This site is a living portfolio rather than a static resume. The product work is the structure underneath it: reusable content models, filtered work surfaces, project detail pages, public proof-of-work, and iterative UX improvements driven by live review rather than one-time redesigns.",
+      "ai-automation": "The portfolio is also part of my AI-assisted operating loop. Browser comments turn into implementation tasks, structured project data powers multiple views, and agent-supported workflows help keep the site current without turning every update into manual website maintenance."
     }
   },
   {
