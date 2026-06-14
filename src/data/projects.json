@@ -8,6 +8,7 @@
     "url": "https://github.com/anthonyabusa/agent-workbench",
     "liveUrl": "",
     "tags": ["AI", "Open Source", "Electron", "TypeScript"],
+    "focusAreas": ["product-program-leadership", "ai-automation"],
     "featured": true,
     "year": 2026,
     "endYear": "Present",
@@ -34,6 +35,7 @@
     "url": "https://github.com/anthonyabusa/polymarket-trading-bot",
     "liveUrl": "",
     "tags": ["AI", "Open Source", "Python", "Automation"],
+    "focusAreas": ["ai-automation"],
     "featured": false,
     "year": 2026,
     "endYear": "Present",
@@ -65,6 +67,7 @@
       "Venture Leadership",
       "Operations"
     ],
+    "focusAreas": ["strategy-operations", "product-program-leadership", "marketplace-venture-building"],
     "featured": true,
     "year": 2025,
     "endYear": "Present",
@@ -105,6 +108,7 @@
       "Node.js",
       "Automation"
     ],
+    "focusAreas": ["strategy-operations", "product-program-leadership", "ai-automation"],
     "featured": true,
     "year": 2026,
     "endYear": "Present",
@@ -160,6 +164,7 @@
       "Consulting",
       "AI/ML"
     ],
+    "focusAreas": ["strategy-operations", "product-program-leadership", "ai-automation"],
     "featured": true,
     "year": 2023,
     "endYear": 2024,
@@ -201,6 +206,7 @@
       "Government Affairs",
       "Program Management"
     ],
+    "focusAreas": ["strategy-operations", "product-program-leadership"],
     "featured": true,
     "year": 2019,
     "endYear": 2023,
@@ -238,6 +244,7 @@
       "Writing",
       "AI"
     ],
+    "focusAreas": ["product-program-leadership", "ai-automation"],
     "featured": false,
     "year": 2026,
     "endYear": "Present",

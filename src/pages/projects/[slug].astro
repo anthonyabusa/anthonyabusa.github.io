@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import FocusAreaLinks from '../../components/FocusAreaLinks.astro';
 import projects from '../../data/projects.json';
 
 export function getStaticPaths() {
@@ -24,6 +25,7 @@ const { project } = Astro.props;
       <aside class="reveal space-y-7">
         <div><p class="case-label">Role</p><p class="text-sm text-[#94A3B8]">{project.role}</p></div>
         <div><p class="case-label">Timeline</p><p class="text-sm text-[#94A3B8]">{project.year} — {project.endYear ?? 'Present'}</p></div>
+        <FocusAreaLinks areaSlugs={project.focusAreas} />
         {project.url && <a href={project.url} target="_blank" rel="noopener noreferrer" class="inline-flex px-5 py-2.5 rounded-lg border border-[#6366F1]/40 text-sm text-[#818CF8] hover:bg-[#6366F1]/10 transition-colors">Open project ↗</a>}
       </aside>
       <div class="space-y-12">
@@ -37,4 +39,5 @@ const { project } = Astro.props;
 
 <style>
   .case-label{color:#818CF8;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}.case-section h2{color:#F1F5F9;font-size:1.5rem;font-weight:700;margin-bottom:14px}.case-section p,.case-section li{color:#94A3B8;line-height:1.8;font-size:.925rem}.case-section ul{display:grid;gap:12px}
+  :global(.case-label){color:#818CF8;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
 </style>

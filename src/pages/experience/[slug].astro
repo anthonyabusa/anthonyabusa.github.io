@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import FocusAreaLinks from '../../components/FocusAreaLinks.astro';
 import projects from '../../data/projects.json';
 
 export function getStaticPaths() {
@@ -24,6 +25,7 @@ const { project } = Astro.props;
       <aside class="reveal space-y-7">
         <div><p class="detail-label">Role</p><p class="text-sm text-[#94A3B8]">{project.role}</p></div>
         <div><p class="detail-label">Timeline</p><p class="text-sm text-[#94A3B8]">{project.year} — {project.endYear}</p></div>
+        <FocusAreaLinks areaSlugs={project.focusAreas} />
       </aside>
       <div class="space-y-12">
         <section class="reveal detail-section"><p class="detail-label">Context</p><h2>What needed to change</h2><p>{project.challenge}</p></section>
@@ -36,4 +38,5 @@ const { project } = Astro.props;
 
 <style>
   .detail-label{color:#818CF8;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}.detail-section h2{color:#F1F5F9;font-size:1.5rem;font-weight:700;margin-bottom:14px}.detail-section p,.detail-section li{color:#94A3B8;line-height:1.8;font-size:.925rem}.detail-section ul{display:grid;gap:12px}
+  :global(.case-label){color:#818CF8;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
 </style>
