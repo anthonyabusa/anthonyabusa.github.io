@@ -13,8 +13,8 @@
     "year": 2026,
     "endYear": "Present",
     "type": "open-source",
-    "challenge": "Running multiple AI agents from separate terminals creates context-switching overhead and no shared view of what each agent is doing. There was no single interface for steering multiple AI CLIs, capturing their output, and issuing commands via voice or text.",
-    "approach": "Built on Electron + Next.js with a Node PTY sidecar. Each agent is a real PTY child process with full terminal I/O. An operator panel lets you spawn, kill, and direct agents via tool calls. Push-to-talk voice input goes straight to the operator. State persists locally — nothing leaves your machine beyond the AI APIs you're already signed in to.",
+    "challenge": "Running several AI coding agents at once means juggling separate terminals, with no shared view of what each one is doing and constant context-switching between them. There was no single cockpit to spawn, watch, and steer multiple AI CLIs — and no way to direct them by voice while your hands are busy.",
+    "approach": "Built on Electron and Next.js with a Node PTY sidecar, so every agent is a real terminal child process with full I/O — not a fragile API wrapper. An operator panel spawns, kills, and directs agents through tool calls, and push-to-talk voice routes straight to the operator from anywhere in the app. State persists locally at ~/.agent-workbench; nothing leaves the machine beyond the AI APIs you're already signed in to.",
     "metrics": [
       { "value": "5+", "label": "Concurrent agent types (Claude, Codex, Gemini, shell, Python)" },
       { "value": "Local-first", "label": "State and logs persist at ~/.agent-workbench — no cloud" },
@@ -76,7 +76,7 @@
     "approach": "I help build Navore as a marketplace and operating model together\u2014pairing customer experience with producer relationships, hub operations, grant strategy, logistics, and feedback loops.",
     "metrics": [
       {
-        "value": "~$471k",
+        "value": "$450k+",
         "label": "USDA-backed funding"
       },
       {
@@ -90,7 +90,7 @@
     ],
     "outcomes": [
       "Launched a real local-food marketplace and neighborhood hub (La Jolla, Jan 2026).",
-      "USDA-backed funding (~$471k) supporting expansion of the model.",
+      "USDA-backed funding ($450k+) supporting expansion of the model.",
       "Created operating workflows connecting demand, producers, fulfillment, and growth."
     ]
   },
@@ -113,26 +113,39 @@
     "year": 2026,
     "endYear": "Present",
     "type": "infrastructure",
-    "challenge": "Useful AI agents need more than a chat interface. They need durable memory, task coordination, live system visibility, safe automation, and a way to operate across machines and channels.",
-    "approach": "I designed a local-first agent operations stack around a persistent gateway, specialized lanes, memory RAG, Discord coordination, scheduled workflows, and a unified FastAPI dashboard.",
+    "challenge": "Most AI assistants start cold every session, can't run unattended, and break the moment two of them touch the same work. To be genuinely useful, agents need memory that compounds over time, a way to coordinate and govern their own work safely, live visibility into what's running, and the ability to operate across machines and channels — not just a chat window.",
+    "approach": "I architected a local-first agent operating system with a deliberate division of labor: one high-judgment orchestrating model plans and applies, while specialized local Ollama lanes (running qwen3-coder:30b for generation, research, review, and summarization) absorb the heavy token volume at zero marginal cost. Durable state is the backbone — a retrieval-augmented memory layer of working context, daily logs, and semantic recall lets the system compound knowledge instead of starting cold each session. Self-governance is enforced in code: a single-source task store projects to human-readable boards, state advances along a forward-only DAG with audited escape hatches, and Kleppmann-style leases plus monotonic fencing tokens let multiple sessions and two machines operate the same repository concurrently without stale-writer corruption. A FastAPI dashboard, status caches, and scheduled heartbeat checks provide always-on observability, and a provider-neutral driver layer lets different agent CLIs drive the same core through thin adapters behind an automated parity check.",
     "metrics": [
       {
         "value": "6",
-        "label": "Specialized agent lanes"
+        "label": "Specialized local-model lanes (generation, research, review, governance), steered by one orchestrating model"
+      },
+      {
+        "value": "2",
+        "label": "Machines coordinated — an always-on host plus an on-demand peer sharing one model host"
       },
       {
         "value": "Local-first",
-        "label": "Private Ollama inference"
+        "label": "Private Ollama inference; memory and state never leave the machines"
       },
       {
-        "value": "Always-on",
-        "label": "Gateway, dashboard, and automation"
+        "value": "RAG",
+        "label": "Durable cross-session memory — working context, daily logs, semantic recall"
+      },
+      {
+        "value": "Lease + fence",
+        "label": "Kleppmann-style fencing tokens for safe multi-session concurrency"
+      },
+      {
+        "value": "FastAPI",
+        "label": "Unified ops dashboard, status caches, and heartbeat health checks"
       }
     ],
     "outcomes": [
-      "Unified agent coordination, memory, monitoring, and handoffs.",
-      "Built live operational visibility across projects and machines.",
-      "Automated recurring briefs, health checks, and task workflows."
+      "Memory that compounds across sessions — the system improves with use instead of starting cold.",
+      "Safe parallel operation: leases and fencing tokens let multiple agent sessions share one repo without conflicts.",
+      "A provider-neutral core — different AI coding tools all drive one shared task store, memory, and governance layer.",
+      "Automated recurring briefs, health checks, and a disciplined start / checkpoint / end session lifecycle."
     ]
   },
   {
