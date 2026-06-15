@@ -6,7 +6,7 @@ const roles = [
   ...projects.filter((project) => project.placement === 'experience').map((project) => ({
     ...project,
     href: `/experience/${project.slug}`,
-    timeline: `${project.year} — ${project.endYear}`,
+    timeline: `${project.year}; ${project.endYear}`,
     sortYear: project.year,
   })),
   {

@@ -29,7 +29,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Blog article body — readable serif, mono headings stay for the terminal feel */
+/* Blog article body; readable serif, mono headings stay for the terminal feel */
 .prose {
   font-family: var(--font-prose);
 }
@@ -41,7 +41,7 @@ body {
   min-height: 100vh;
 }
 
-/* Scroll-reveal — add .reveal to any element, JS toggles .visible */
+/* Scroll-reveal; add .reveal to any element, JS toggles .visible */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
