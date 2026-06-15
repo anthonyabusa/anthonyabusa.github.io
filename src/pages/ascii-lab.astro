@@ -2,66 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const demos = [
-  {
-    key: 'strategy',
-    mark: '/->',
-    title: 'Strategy signal map',
-    note: 'Hover to sweep the decision field.',
-    frame: `+-- MARKET MAP ------+
-|   .   .      x   |
-|      /---->      |
-|  o--/    .    o  |
-|      \--> choice |
-+------------------+`,
-  },
-  {
-    key: 'operations',
-    mark: '[::]',
-    title: 'Operations pipeline',
-    note: 'Click to advance the operating rhythm.',
-    frame: `[ intake ] -> [ triage ]
-     |          |
-     v          v
-[ queue  ] -> [ shipped ]
-     |          |
-     +-- loop --+`,
-  },
-  {
-    key: 'product',
-    mark: '{<>}',
-    title: 'Product / program scope',
-    note: 'Move over it to pull the roadmap into focus.',
-    frame: `{ idea } -> { build }
-    \        /
-     \      /
-      { feedback }
-           |
-      { release }`,
-  },
-  {
-    key: 'automation',
-    mark: '>*_',
-    title: 'AI automation pulse',
-    note: 'Hover to wake the agent mesh.',
-    frame: `agent_01  *> memory
-   |          |
-   v          v
-queue ---> action
-   ^          |
-   +-- eval <-+`,
-  },
-  {
-    key: 'marketplace',
-    mark: '<=>',
-    title: 'Marketplace exchange',
-    note: 'Click to flip supply / demand emphasis.',
-    frame: `producer <=> hub
-    ^        |
-    |        v
-local   <=> buyer
-    \      /
-     market`,
-  },
+  { key: 'strategy', mark: '/->', title: 'Strategy', note: 'Compass / signal-lock energy. Hover to sharpen the vector.' },
+  { key: 'operations', mark: '[::]', title: 'Operations', note: 'Rhythm, cadence, throughput. Click to tighten the pulse.' },
+  { key: 'product', mark: '{<>}', title: 'Product / Program', note: 'Scope taking shape around a moving center.' },
+  { key: 'automation', mark: '>*_', title: 'AI Automation', note: 'A small agent constellation waking up.' },
+  { key: 'marketplace', mark: '&lt;=&gt;', title: 'Marketplace', note: 'Supply and demand as orbit, not pipeline.' },
 ];
 ---
 
@@ -74,7 +19,7 @@ local   <=> buyer
       <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Visual system spike</p>
       <h1 class="text-4xl md:text-6xl font-bold text-[#F1F5F9] leading-tight mb-5">ASCII motion lab</h1>
       <p class="text-[#94A3B8] text-lg leading-relaxed">
-        These are deliberately interactive, not just decorative: hover, click, and move across the panels. The strongest version probably becomes a reusable graphic language for focus areas, project cards, and live-system status.
+        The hero field is close. For the skill cards, this version explores symbolic ASCII motion art: sigils, fields, pulses, and constellations instead of literal process maps.
       </p>
     </div>
 
@@ -97,10 +42,10 @@ local   <=> buyer
     <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
       {demos.map((demo) => (
         <button class={`ascii-demo ascii-demo--${demo.key}`} type="button" data-ascii-demo={demo.key} aria-label={`${demo.title}: ${demo.note}`}>
-          <span class="ascii-demo__mark" aria-hidden="true">{demo.mark}</span>
+          <span class="ascii-demo__mark" aria-hidden="true" set:html={demo.mark} />
           <span class="ascii-demo__title">{demo.title}</span>
           <span class="ascii-demo__note">{demo.note}</span>
-          <pre class="ascii-demo__frame" aria-hidden="true">{demo.frame}</pre>
+          <pre class="ascii-demo__frame" aria-hidden="true" data-symbol-frame={demo.key}></pre>
           <span class="ascii-demo__status" data-status>idle</span>
         </button>
       ))}
@@ -158,142 +103,126 @@ local   <=> buyer
   }
   animateStage();
 
+  const symbolFrames = document.querySelectorAll('[data-symbol-frame]');
+
+  function emptyGrid(width: number, height: number) {
+    return Array.from({ length: height }, () => Array.from({ length: width }, () => ' '));
+  }
+  function put(grid: string[][], x: number, y: number, char: string) {
+    if (grid[y] && grid[y][x] !== undefined) grid[y][x] = char;
+  }
+  function toText(grid: string[][]) {
+    return grid.map((row) => row.join('')).join('\n');
+  }
+  function drawStrategy(symbolTick: number, active: number) {
+    const grid = emptyGrid(25, 11);
+    const cx = 12, cy = 5;
+    for (let i = 0; i < 25; i += 1) {
+      const angle = (i / 25) * Math.PI * 2 + symbolTick * 0.06;
+      const r = 2.5 + ((i + active) % 4);
+      put(grid, Math.round(cx + Math.cos(angle) * r), Math.round(cy + Math.sin(angle) * r), i % 5 === 0 ? '*' : '.');
+    }
+    for (let i = -7; i <= 7; i += 1) put(grid, cx + i, cy - Math.round(i * 0.35), i === 0 ? 'o' : '-');
+    put(grid, 19, 3, '>'); put(grid, 18, 3, '-'); put(grid, 17, 3, '-');
+    return toText(grid);
+  }
+  function drawOperations(symbolTick: number, active: number) {
+    const grid = emptyGrid(25, 11);
+    for (let x = 2; x < 23; x += 4) {
+      for (let y = 1; y < 10; y += 2) {
+        const phase = (x + y + symbolTick + active * 3) % 8;
+        put(grid, x, y, phase < 4 ? '[' : ']');
+        put(grid, x + 1, y, phase < 2 ? ':' : '.');
+        put(grid, x + 2, y, phase < 4 ? ']' : '[');
+      }
+    }
+    for (let x = 1; x < 24; x += 1) put(grid, x, 5, (x + symbolTick) % 6 < 3 ? '-' : '=');
+    return toText(grid);
+  }
+  function drawProduct(symbolTick: number, active: number) {
+    const grid = emptyGrid(25, 11);
+    const cx = 12, cy = 5;
+    const braces = ['{', '}', '<', '>'];
+    for (let i = 0; i < 18; i += 1) {
+      const angle = (i / 18) * Math.PI * 2 + symbolTick * 0.045;
+      put(grid, Math.round(cx + Math.cos(angle) * (8 - active)), Math.round(cy + Math.sin(angle) * (3 + (active % 2))), braces[i % braces.length]);
+    }
+    put(grid, cx - 2, cy, '{'); put(grid, cx, cy, '*'); put(grid, cx + 2, cy, '}');
+    return toText(grid);
+  }
+  function drawAutomation(symbolTick: number, active: number) {
+    const grid = emptyGrid(25, 11);
+    const points = [[4,2],[11,1],[18,3],[6,7],[13,8],[20,7],[12,5]];
+    points.forEach(([x,y], i) => {
+      const pulse = (symbolTick + i * 5 + active * 4) % 18;
+      put(grid, x, y, pulse < 6 ? '*' : 'o');
+      if (pulse < 9) put(grid, Math.round((x + 12) / 2), Math.round((y + 5) / 2), pulse < 4 ? '+' : '.');
+    });
+    put(grid, 10, 5, '>'); put(grid, 11, 5, '*'); put(grid, 12, 5, '_');
+    return toText(grid);
+  }
+  function drawMarketplace(symbolTick: number, active: number) {
+    const grid = emptyGrid(25, 11);
+    const cx = 12, cy = 5;
+    for (let i = 0; i < 28; i += 1) {
+      const angle = (i / 28) * Math.PI * 2 + symbolTick * 0.035 * (active % 2 ? -1 : 1);
+      put(grid, Math.round(cx + Math.cos(angle) * (4 + (i % 2)) * 1.8), Math.round(cy + Math.sin(angle) * (4 + (i % 2)) * 0.8), i % 7 === 0 ? 'o' : '.');
+    }
+    put(grid, 7, 5, '<'); put(grid, 8, 5, '='); put(grid, 12, 5, '*'); put(grid, 16, 5, '='); put(grid, 17, 5, '>');
+    return toText(grid);
+  }
+  function renderSymbol(kind: string, symbolTick: number, active: number) {
+    if (kind === 'strategy') return drawStrategy(symbolTick, active);
+    if (kind === 'operations') return drawOperations(symbolTick, active);
+    if (kind === 'product') return drawProduct(symbolTick, active);
+    if (kind === 'automation') return drawAutomation(symbolTick, active);
+    return drawMarketplace(symbolTick, active);
+  }
+
+  const demoState = new WeakMap<Element, number>();
   document.querySelectorAll('[data-ascii-demo]').forEach((demo) => {
-    let clicks = 0;
+    demoState.set(demo, 0);
     const status = demo.querySelector('[data-status]');
     demo.addEventListener('click', () => {
-      clicks += 1;
-      demo.setAttribute('data-active-step', String(clicks % 4));
-      if (status) status.textContent = ['idle', 'scanning', 'routing', 'shipped'][clicks % 4];
+      const next = ((demoState.get(demo) ?? 0) + 1) % 4;
+      demoState.set(demo, next);
+      demo.setAttribute('data-active-step', String(next));
+      if (status) status.textContent = ['idle', 'charged', 'focused', 'alive'][next];
     });
   });
+
+  let symbolTick = 0;
+  function animateSymbols() {
+    symbolTick += 1;
+    symbolFrames.forEach((frame) => {
+      const kind = frame.getAttribute('data-symbol-frame') ?? 'strategy';
+      const demo = frame.closest('[data-ascii-demo]');
+      const active = demo ? (demoState.get(demo) ?? 0) : 0;
+      frame.textContent = renderSymbol(kind, symbolTick, active);
+    });
+    if (!prefersReduced) window.requestAnimationFrame(animateSymbols);
+  }
+  animateSymbols();
 </script>
 
 <style>
-  .ascii-stage {
-    position: relative;
-    overflow: hidden;
-    min-height: 360px;
-    border: 1px solid #222538;
-    border-top-color: rgba(255,255,255,.07);
-    border-radius: 24px;
-    background: radial-gradient(circle at var(--mx, 60%) var(--my, 35%), rgba(99,102,241,.18), transparent 34%), #10131C;
-    box-shadow: 0 18px 70px rgba(0,0,0,.35);
-  }
-  .ascii-stage__copy {
-    position: relative;
-    z-index: 2;
-    max-width: 430px;
-    padding: 38px;
-  }
-  .ascii-stage__eyebrow,
-  .ascii-demo__status {
-    color: #818CF8;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-  }
-  .ascii-stage h2 {
-    margin: 14px 0;
-    color: #F1F5F9;
-    font-size: clamp(2.25rem, 7vw, 5.5rem);
-    line-height: .95;
-    letter-spacing: -.08em;
-  }
-  .ascii-stage p,
-  .ascii-demo__note {
-    color: #94A3B8;
-    line-height: 1.6;
-  }
-  .ascii-stage__field {
-    position: absolute;
-    right: -20px;
-    bottom: 20px;
-    margin: 0;
-    color: rgba(165, 180, 252, .72);
-    font-size: clamp(9px, 1.25vw, 14px);
-    line-height: 1.25;
-    letter-spacing: -.08em;
-    text-shadow: 0 0 24px rgba(99,102,241,.32);
-    transition: color .2s ease;
-    user-select: none;
-  }
+  .ascii-stage { position: relative; overflow: hidden; min-height: 360px; border: 1px solid #222538; border-top-color: rgba(255,255,255,.07); border-radius: 24px; background: radial-gradient(circle at 60% 35%, rgba(99,102,241,.18), transparent 34%), #10131C; box-shadow: 0 18px 70px rgba(0,0,0,.35); }
+  .ascii-stage__copy { position: relative; z-index: 2; max-width: 430px; padding: 38px; }
+  .ascii-stage__eyebrow, .ascii-demo__status { color: #818CF8; font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+  .ascii-stage h2 { margin: 14px 0; color: #F1F5F9; font-size: clamp(2.25rem, 7vw, 5.5rem); line-height: .95; letter-spacing: -.08em; }
+  .ascii-stage p, .ascii-demo__note { color: #94A3B8; line-height: 1.6; }
+  .ascii-stage__field { position: absolute; right: -20px; bottom: 20px; margin: 0; color: rgba(165, 180, 252, .72); font-size: clamp(9px, 1.25vw, 14px); line-height: 1.25; letter-spacing: -.08em; text-shadow: 0 0 24px rgba(99,102,241,.32); transition: color .2s ease; user-select: none; }
   .ascii-stage:hover .ascii-stage__field { color: rgba(241,245,249,.88); }
-
-  .ascii-demo {
-    position: relative;
-    min-height: 310px;
-    padding: 24px;
-    text-align: left;
-    border: 1px solid #222538;
-    border-top-color: rgba(255,255,255,.06);
-    border-radius: 18px;
-    background: #13161F;
-    cursor: pointer;
-    overflow: hidden;
-    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
-  }
-  .ascii-demo:hover,
-  .ascii-demo:focus-visible {
-    transform: translateY(-3px);
-    border-color: rgba(99,102,241,.55);
-    box-shadow: 0 16px 42px rgba(0,0,0,.35), 0 0 32px rgba(99,102,241,.10);
-    outline: none;
-  }
-  .ascii-demo__mark {
-    display: inline-flex;
-    min-width: 3.8rem;
-    min-height: 2.5rem;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(99,102,241,.28);
-    border-radius: 12px;
-    color: #A5B4FC;
-    background: rgba(99,102,241,.08);
-    font-weight: 800;
-    margin-bottom: 18px;
-  }
-  .ascii-demo__title {
-    display: block;
-    color: #F1F5F9;
-    font-size: 1.05rem;
-    font-weight: 800;
-    margin-bottom: 8px;
-  }
-  .ascii-demo__note {
-    display: block;
-    font-size: .83rem;
-    margin-bottom: 22px;
-  }
-  .ascii-demo__frame {
-    margin: 0;
-    color: rgba(148,163,184,.82);
-    font-size: 12px;
-    line-height: 1.35;
-    letter-spacing: -.055em;
-    transition: color .2s ease, transform .2s ease, text-shadow .2s ease;
-  }
-  .ascii-demo:hover .ascii-demo__frame,
-  .ascii-demo[data-active-step] .ascii-demo__frame {
-    color: rgba(241,245,249,.92);
-    text-shadow: 0 0 18px rgba(99,102,241,.28);
-    transform: translateX(2px);
-  }
-  .ascii-demo__status {
-    position: absolute;
-    right: 20px;
-    bottom: 18px;
-    color: #64748B;
-  }
+  .ascii-demo { position: relative; min-height: 310px; padding: 24px; text-align: left; border: 1px solid #222538; border-top-color: rgba(255,255,255,.06); border-radius: 18px; background: #13161F; cursor: pointer; overflow: hidden; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+  .ascii-demo:hover, .ascii-demo:focus-visible { transform: translateY(-3px); border-color: rgba(99,102,241,.55); box-shadow: 0 16px 42px rgba(0,0,0,.35), 0 0 32px rgba(99,102,241,.10); outline: none; }
+  .ascii-demo__mark { display: inline-flex; min-width: 3.8rem; min-height: 2.5rem; align-items: center; justify-content: center; border: 1px solid rgba(99,102,241,.28); border-radius: 12px; color: #A5B4FC; background: rgba(99,102,241,.08); font-weight: 800; margin-bottom: 18px; }
+  .ascii-demo__title { display: block; color: #F1F5F9; font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; }
+  .ascii-demo__note { display: block; font-size: .83rem; margin-bottom: 22px; }
+  .ascii-demo__frame { margin: 0; color: rgba(148,163,184,.82); font-size: 12px; line-height: 1.35; letter-spacing: -.055em; transition: color .2s ease, transform .2s ease, text-shadow .2s ease; }
+  .ascii-demo:hover .ascii-demo__frame, .ascii-demo[data-active-step] .ascii-demo__frame { color: rgba(241,245,249,.92); text-shadow: 0 0 18px rgba(99,102,241,.28); transform: translateX(2px); }
+  .ascii-demo__status { position: absolute; right: 20px; bottom: 18px; color: #64748B; }
   .ascii-demo[data-active-step="1"] .ascii-demo__mark { color: #F1F5F9; border-color: rgba(129,140,248,.75); }
   .ascii-demo[data-active-step="2"] .ascii-demo__mark { color: #1F9D6B; border-color: rgba(31,157,107,.65); }
   .ascii-demo[data-active-step="3"] .ascii-demo__mark { color: #E0A100; border-color: rgba(224,161,0,.65); }
-
-  @media (prefers-reduced-motion: reduce) {
-    .ascii-demo,
-    .ascii-demo__frame {
-      transition: none;
-    }
-  }
+  @media (prefers-reduced-motion: reduce) { .ascii-demo, .ascii-demo__frame { transition: none; } }
 </style>
