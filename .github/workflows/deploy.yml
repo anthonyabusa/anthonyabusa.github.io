@@ -21,6 +21,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Copy lint
+        run: npm run lint:copy
+
       - name: Build and upload to Pages
         uses: withastro/action@v3
         with:
