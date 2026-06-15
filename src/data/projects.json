@@ -4,7 +4,7 @@
     "slug": "agent-workbench",
     "role": "Builder & contributor",
     "status": "Open source",
-    "description": "A desktop control plane for running multiple AI agents — Claude, Codex, Gemini, shell, and Python REPL — from a single window. PTY-backed terminals, voice input, and an operator panel that steers agents via tool calls.",
+    "description": "A desktop control plane for coordinating Claude, Codex, Gemini, shell, and Python sessions from one operator surface. PTY terminals, voice input, persistent session state, and an operator panel make multi-agent work visible enough to steer.",
     "url": "https://github.com/anthonyabusa/agent-workbench",
     "liveUrl": "",
     "tags": [
@@ -21,8 +21,8 @@
     "year": 2026,
     "endYear": "Present",
     "type": "open-source",
-    "challenge": "Running several AI coding agents at once means juggling separate terminals, with no shared view of what each one is doing and constant context-switching between them. There was no single cockpit to spawn, watch, and steer multiple AI CLIs — and no way to direct them by voice while your hands are busy.",
-    "approach": "Built on Electron and Next.js with a Node PTY sidecar, so every agent is a real terminal child process with full I/O — not a fragile API wrapper. An operator panel spawns, kills, and directs agents through tool calls, and push-to-talk voice routes straight to the operator from anywhere in the app. State persists locally at ~/.agent-workbench; nothing leaves the machine beyond the AI APIs you're already signed in to.",
+    "challenge": "Running several AI coding agents at once means juggling separate terminals with no shared view of what each one is doing. Agent Workbench turns that sprawl into one controllable workspace: spawn the agents, watch their output, and direct the next move without losing the thread.",
+    "approach": "Built on Electron and Next.js with a Node PTY sidecar, so every agent is a real terminal child process with full I/O, not a fragile API wrapper. The operator panel handles spawn, kill, and directed tool calls; push-to-talk voice routes instructions from anywhere in the app; local state keeps the system private and inspectable.",
     "metrics": [
       {
         "value": "5+",
@@ -30,21 +30,21 @@
       },
       {
         "value": "Local-first",
-        "label": "State and logs persist at ~/.agent-workbench — no cloud"
+        "label": "State and logs persist at ~/.agent-workbench; no cloud"
       },
       {
         "value": "Voice",
-        "label": "Push-to-talk operator panel — hold Space anywhere to dictate"
+        "label": "Push-to-talk operator panel; hold Space anywhere to dictate"
       }
     ],
     "outcomes": [
-      "Multi-agent terminal control plane with shared operator visibility.",
+      "A shared control plane for multiple AI agents and terminal sessions.",
       "Voice-to-agent dispatch from any context in the app.",
-      "Session persistence — exited agents stay visible for output review."
+      "Persistent sessions that keep exited agents visible for output review."
     ],
     "focusNarratives": {
-      "product-program-leadership": "Agent Workbench is a desktop control plane for coordinating multiple AI tools from one operator surface. Product decisions centered on the interaction model: persistent terminal sessions, clear agent states, voice input, and reviewable outputs that make a powerful developer workflow feel coherent instead of chaotic.",
-      "ai-automation": "Agent Workbench brings several AI runtimes into one local-first workspace. The orchestration layer routes instructions to the right agent, preserves session context, exposes PTY-backed controls, and keeps the human operator in the loop instead of hiding execution behind a black box."
+      "product-program-leadership": "Agent Workbench turns multi-agent development from terminal sprawl into a product surface. Persistent sessions, clear agent states, voice input, reviewable output, and an operator panel give the workflow enough structure that a human can steer it without slowing it down.",
+      "ai-automation": "Agent Workbench brings several AI runtimes into one local-first workspace. Instructions route to the right agent, session context stays visible, PTY controls keep execution inspectable, and the operator remains in the loop when judgment matters."
     }
   },
   {
@@ -52,7 +52,7 @@
     "slug": "polymarket-trading-bot",
     "role": "Contributor & integrator",
     "status": "Open source",
-    "description": "A modular prediction market signal pipeline for Polymarket US sports markets. Phases 0–2 active: ingestion, normalization, and a model engine that scores edge, liquidity, timing, and position sizing. Execution gated by design.",
+    "description": "A prediction-market signal pipeline for Polymarket sports markets. It ingests markets, normalizes pricing inputs, scores edge and liquidity, and keeps execution gated until the model earns trust through review.",
     "url": "https://github.com/anthonyabusa/polymarket-trading-bot",
     "liveUrl": "",
     "tags": [
@@ -68,8 +68,8 @@
     "year": 2026,
     "endYear": "Present",
     "type": "open-source",
-    "challenge": "Prediction market trading requires combining sportsbook odds, CLOB depth, timing signals, and risk state into a single coherent model — and doing it in a way where the signal logic is auditable and the execution step is safely gated until validated.",
-    "approach": "Four-phase Docker pipeline: risk bridge → ingestion → model/decision engine → execution (disabled). The core model engine is pure Python stdlib — no external ML dependencies. Phase 2 emits decision packets with execution_eligible: false. All secrets and account data are gitignored; the engine operates on normalized data only.",
+    "challenge": "Prediction-market trading demands more than a clever signal. Sportsbook odds, CLOB depth, timing, liquidity, and risk state all have to resolve into an auditable decision before any execution step deserves authority.",
+    "approach": "Structured the pipeline around ingestion, normalization, model scoring, and disabled execution. The decision engine emits sized order intents with signal attribution, while the live-trading path stays off until paper review proves the model is worth trusting.",
     "metrics": [
       {
         "value": "76",
@@ -81,16 +81,16 @@
       },
       {
         "value": "Gated",
-        "label": "Phase 3 execution disabled by default — validate first"
+        "label": "Phase 3 execution disabled by default; validate first"
       }
     ],
     "outcomes": [
-      "Full signal pipeline from market discovery to sized order intents.",
-      "Auditable model: every signal attribution logged per decision packet.",
-      "Paper-trade-first design: inspect output for days before considering live use."
+      "A full path from market discovery to sized order intent.",
+      "Auditable decision packets with signal attribution.",
+      "A validation-first design that keeps live execution disabled by default."
     ],
     "focusNarratives": {
-      "ai-automation": "The Polymarket bot is a prediction-market signal pipeline for U.S. sports markets. Its systematic layer handles market ingestion, normalization, edge scoring, liquidity checks, timing signals, and sizing, while execution stays gated until the model earns trust through review."
+      "ai-automation": "The Polymarket bot handles the pieces that should be systematic: market ingestion, normalization, edge scoring, liquidity checks, timing signals, and sizing. Execution stays gated, because the point is not to automate risk faster; it is to make the signal auditable before it gets authority."
     }
   },
   {
@@ -98,7 +98,7 @@
     "slug": "navore-market-aggtech-startup",
     "role": "Director of Strategy & Operations",
     "status": "Active venture",
-    "description": "A San Diego food marketplace connecting local producers with consumers through a modern, mobile-first operating model. USDA-backed and built around real logistics, trust, and neighborhood demand.",
+    "description": "A USDA-backed San Diego marketplace connecting local producers and consumers through neighborhood hubs, mobile ordering, and practical local-food operations.",
     "url": "https://navoremarket.com",
     "liveUrl": "https://navoremarket.com",
     "tags": [
@@ -117,8 +117,8 @@
     "year": 2025,
     "endYear": "Present",
     "type": "venture",
-    "challenge": "Local food systems are fragmented across producer discovery, ordering, logistics, trust, and recurring neighborhood demand. The opportunity required more than a storefront: it needed a practical operating model.",
-    "approach": "I help build Navore as a marketplace and operating model together—pairing customer experience with producer relationships, hub operations, grant strategy, logistics, and feedback loops.",
+    "challenge": "Local food demand is real, but the system around it is fragmented: producer discovery, ordering, trust, fulfillment, and repeat demand usually live in separate places. Navore has to make those pieces behave like one marketplace.",
+    "approach": "I help shape strategic partnerships, the platform roadmap, AI-enabled initiatives, producer relationships, hub operations, grant execution, logistics, analytics, and customer feedback loops. The marketplace and operating model are built together, because one without the other does not hold.",
     "metrics": [
       {
         "value": "$450k+",
@@ -134,15 +134,15 @@
       }
     ],
     "outcomes": [
-      "Launched a real local-food marketplace and neighborhood hub (La Jolla, Jan 2026).",
-      "USDA-backed funding ($450k+) supporting expansion of the model.",
-      "Created operating workflows connecting demand, producers, fulfillment, and growth."
+      "Launched a real local-food marketplace and La Jolla neighborhood hub.",
+      "USDA-backed funding supports expansion of the model.",
+      "Built operating workflows that connect demand, producers, fulfillment, and growth."
     ],
     "focusNarratives": {
-      "strategy": "Navore Market is a USDA-backed local-food marketplace in San Diego. I helped shape the market model around neighborhood hubs, producer relationships, grant milestones, customer segments, and growth loops—choices that turn local-food demand into something more durable than a one-off storefront.",
-      "operations": "Navore has to work on the ground, not just on a pitch deck. Producer workflows, hub logistics, fulfillment routines, customer support, grant execution, and performance metrics all have to connect cleanly enough for the model to repeat beyond one neighborhood.",
-      "product-program-leadership": "Navore is both a marketplace product and an operating system for local food. Customer experience, producer onboarding, mobile ordering, fulfillment, roadmap tradeoffs, and feedback loops have to evolve together so the marketplace improves as a live service—not as disconnected features.",
-      "marketplace-venture-building": "Navore is the venture-building case in its most direct form: supply, demand, trust, logistics, funding, and neighborhood adoption all have to move together. My role translates that 0→1 complexity into a clearer marketplace model, producer relationships, hub operations, and a scalable operating playbook."
+      "strategy": "Navore Market is a USDA-backed local-food marketplace in San Diego. I helped shape the market model around neighborhood hubs, producer relationships, grant milestones, customer segments, strategic partnerships, platform roadmap, and growth loops that can turn local-food demand into something more durable than a one-off storefront.",
+      "operations": "Navore has to hold up on the ground. Producer workflows, hub logistics, fulfillment routines, customer support, grant execution, analytics, and performance metrics all have to connect cleanly enough for the model to repeat beyond one neighborhood.",
+      "product-program-leadership": "Navore is both a marketplace product and an operating system for local food. Customer experience, producer onboarding, mobile ordering, fulfillment, roadmap tradeoffs, and feedback loops have to evolve together so the marketplace improves as a live service, not as disconnected features.",
+      "marketplace-venture-building": "Navore is the venture-building case in its most direct form: supply, demand, trust, logistics, funding, and neighborhood adoption all have to move together. My role translates that 0 to 1 complexity into a clearer marketplace model, producer relationships, hub operations, and a scalable operating playbook."
     }
   },
   {
@@ -168,8 +168,8 @@
     "year": 2026,
     "endYear": "Present",
     "type": "infrastructure",
-    "challenge": "Most AI assistants start cold every session, can't run unattended, and break the moment two of them touch the same work. To be genuinely useful, agents need memory that compounds over time, a way to coordinate and govern their own work safely, live visibility into what's running, and the ability to operate across machines and channels — not just a chat window.",
-    "approach": "I architected a local-first agent operating system with a deliberate division of labor: one high-judgment orchestrating model plans and applies, while specialized local Ollama lanes (running qwen3-coder:30b for generation, research, review, and summarization) absorb the heavy token volume at zero marginal cost. Durable state is the backbone — a retrieval-augmented memory layer of working context, daily logs, and semantic recall lets the system compound knowledge instead of starting cold each session. Self-governance is enforced in code: a single-source task store projects to human-readable boards, state advances along a forward-only DAG with audited escape hatches, and Kleppmann-style leases plus monotonic fencing tokens let multiple sessions and two machines operate the same repository concurrently without stale-writer corruption. A FastAPI dashboard, status caches, and scheduled heartbeat checks provide always-on observability, and a provider-neutral driver layer lets different agent CLIs drive the same core through thin adapters behind an automated parity check.",
+    "challenge": "Useful agents need more than a chat window. They need memory that compounds, task coordination, live system visibility, safety gates, and a way to operate across machines without stale sessions corrupting shared work.",
+    "approach": "I built a local-first operating layer around a gateway, specialized agent lanes, retrieval-augmented memory, Discord coordination, scheduled workflows, and a FastAPI dashboard. Governance lives in code: task state, leases, fencing tokens, health checks, and explicit done gates keep automation useful without making it reckless.",
     "metrics": [
       {
         "value": "6",
@@ -177,7 +177,7 @@
       },
       {
         "value": "2",
-        "label": "Machines coordinated — an always-on host plus an on-demand peer sharing one model host"
+        "label": "Machines coordinated; an always-on host plus an on-demand peer sharing one model host"
       },
       {
         "value": "Local-first",
@@ -185,7 +185,7 @@
       },
       {
         "value": "RAG",
-        "label": "Durable cross-session memory — working context, daily logs, semantic recall"
+        "label": "Durable cross-session memory; working context, daily logs, semantic recall"
       },
       {
         "value": "Lease + fence",
@@ -197,15 +197,14 @@
       }
     ],
     "outcomes": [
-      "Memory that compounds across sessions — the system improves with use instead of starting cold.",
-      "Safe parallel operation: leases and fencing tokens let multiple agent sessions share one repo without conflicts.",
-      "A provider-neutral core — different AI coding tools all drive one shared task store, memory, and governance layer.",
-      "Automated recurring briefs, health checks, and a disciplined start / checkpoint / end session lifecycle."
+      "Unified coordination, memory, monitoring, and handoffs for agent work.",
+      "Live operational visibility across projects and machines.",
+      "Recurring briefs, health checks, and task workflows that run without starting cold each session."
     ],
     "focusNarratives": {
       "operations": "This system is my private operating layer for running projects with AI support across machines, dashboards, Discord, memory, and scheduled workflows. Task governance, handoffs, health checks, status visibility, lane routing, and escalation rules keep the automation reliable day to day.",
       "product-program-leadership": "The AI operations stack behaves like a product even though it is personally operated infrastructure. I scope releases, design dashboard surfaces, sequence agent capabilities, define done gates, and build feedback loops so the system compounds instead of becoming a pile of scripts.",
-      "ai-automation": "The system combines local agents, memory RAG, Discord workflows, dashboards, scheduled briefs, and multi-machine orchestration. The goal is not simply more agent activity; it is context, boundaries, verification loops, and durable memory that make automation useful without making it reckless."
+      "ai-automation": "The system combines local agents, memory RAG, Discord workflows, dashboards, scheduled briefs, and multi-machine orchestration. Context, boundaries, verification loops, and durable memory matter as much as the agents themselves."
     }
   },
   {
@@ -214,7 +213,7 @@
     "slug": "healthrise-ehr-revenue-operations",
     "role": "Technical Program Manager",
     "status": "Healthtech startup",
-    "description": "A healthtech startup combining electronic health record software, revenue cycle management, and consulting services to improve healthcare operations.",
+    "description": "A healthtech environment spanning EHR software, revenue cycle management, and consulting delivery. I helped connect ML/AI integration, strategic planning, financial forecasting, product execution, and global delivery routines.",
     "url": "",
     "liveUrl": "",
     "tags": [
@@ -234,8 +233,8 @@
     "year": 2023,
     "endYear": 2024,
     "type": "program",
-    "challenge": "Healthcare organizations often manage disconnected clinical, billing, and operational workflows. HealthRise addressed the need for technology and hands-on operational support within one startup offering.",
-    "approach": "As Technical Program Manager I drove ML/AI integration across global delivery teams, alongside strategic planning and financial forecasting — connecting the technology layer to the operational realities of healthcare delivery and reimbursement.",
+    "challenge": "Healthcare technology fails when product ambition ignores clinical workflow, reimbursement reality, and delivery capacity. HealthRise needed EHR and revenue-operations initiatives that could move from roadmap to shipped workflow without losing the operators who had to use them.",
+    "approach": "As Technical Program Manager, I drove ML/AI integration across global healthcare teams while supporting strategic planning and financial forecasting. The work cut across requirements translation, Scrum delivery, UX/UI testing, roadmap coordination, release planning, stakeholder feedback, and global delivery execution.",
     "metrics": [
       {
         "value": "EHR",
@@ -252,13 +251,13 @@
     ],
     "outcomes": [
       "Drove ML/AI integration across global delivery teams.",
-      "Led strategic planning and financial forecasting for the program portfolio.",
-      "Connected clinical workflows with revenue cycle operations."
+      "Supported strategic planning and financial forecasting across the program portfolio.",
+      "Connected clinical workflows, revenue cycle operations, and product delivery."
     ],
     "focusNarratives": {
-      "strategy": "HealthRise sat at the intersection of EHR software, revenue cycle operations, consulting delivery, and healthcare workflow improvement. I connected product direction, delivery priorities, forecasting, and stakeholder needs into initiatives that made sense commercially and could survive implementation.",
+      "strategy": "HealthRise sat at the intersection of EHR software, revenue cycle operations, consulting delivery, and healthcare workflow improvement. I connected product direction, strategic planning, financial forecasting, delivery priorities, and stakeholder needs into initiatives that made sense commercially and could survive implementation.",
       "operations": "Healthcare-product ambition only matters if it can survive real implementation. I translated clinical workflows, RCM handoffs, team capacity, global delivery routines, and rollout constraints into plans teams could execute and customers could adopt.",
-      "product-program-leadership": "HealthRise was a SaaS and services environment where product decisions had direct operational consequences. I worked across the product development lifecycle—requirements translation, Scrum delivery, UX/UI testing, roadmap coordination, release planning, stakeholder feedback, and global delivery execution—to move EHR and revenue-operations initiatives from idea to shipped workflow.",
+      "product-program-leadership": "HealthRise was a SaaS and services environment where product decisions had direct operational consequences. I worked across the product development lifecycle: requirements translation, Scrum delivery, UX/UI testing, roadmap coordination, release planning, stakeholder feedback, and global delivery execution to move EHR and revenue-operations initiatives from idea to shipped workflow.",
       "ai-automation": "At HealthRise, AI had to fit inside healthcare operations rather than sit beside them. I helped drive ML/AI integration across global delivery teams, focusing on model-assisted workflows that could support EHR and revenue-cycle processes without ignoring usability, implementation risk, or delivery constraints."
     }
   },
@@ -268,7 +267,7 @@
     "slug": "johnson-matthey-global-sustainability",
     "role": "Corporate Strategy Manager",
     "status": "Enterprise transformation",
-    "description": "Led 12 enterprise transformation programs at a global specialty chemicals manufacturer, driving +37% process efficiency. Founded the North America Government Affairs function from scratch.",
+    "description": "Enterprise transformation inside a global specialty chemicals company. I led strategic transformation initiatives across North America, drove measurable operating improvement, and built the North America Government Affairs function from zero.",
     "url": "",
     "liveUrl": "",
     "tags": [
@@ -286,8 +285,8 @@
     "year": 2019,
     "endYear": 2023,
     "type": "program",
-    "challenge": "Enterprise transformation at a global specialty chemicals manufacturer required coordinating complex programs across operations, stakeholders, and organizational boundaries while creating durable new capabilities.",
-    "approach": "I led a portfolio of transformation programs focused on measurable operating improvement, while also building the North America Government Affairs function from the ground up.",
+    "challenge": "Johnson Matthey needed transformation programs that could move a complex global business, not just describe a future state. The work required stakeholder alignment, scoped initiatives, process discipline, and new capabilities that could survive after the program ended.",
+    "approach": "I translated ambiguous corporate priorities into transformation programs, execution rhythms, measurable efficiency targets, and cross-functional cadences. The portfolio included 12 strategic transformation initiatives, process-efficiency improvement, and the zero-to-one buildout of North America Government Affairs.",
     "metrics": [
       {
         "value": "12",
@@ -303,9 +302,9 @@
       }
     ],
     "outcomes": [
-      "Led 12 enterprise transformation programs.",
-      "Drove a 37% improvement in process efficiency.",
-      "Founded the North America Government Affairs function from scratch."
+      "Led 12 enterprise transformation programs across North America.",
+      "Drove measurable process-efficiency improvement.",
+      "Founded and headed the North America Government Affairs function from scratch."
     ],
     "focusNarratives": {
       "strategy": "Johnson Matthey needed transformation programs that could move a global specialty chemicals business, not just describe a future state. I translated ambiguous corporate priorities into scoped initiatives, stakeholder alignment, measurable efficiency targets, and the case for building a North America Government Affairs function from zero.",
@@ -315,7 +314,7 @@
   },
   {
     "title": "Personal Portfolio",
-    "description": "This Astro-powered site: a living portfolio for projects, writing, and public proof-of-work rather than a static resume page.",
+    "description": "A living portfolio for projects, writing, and public proof-of-work. Structured project data powers multiple pages so the site can evolve with the work instead of aging into a static resume.",
     "url": "https://github.com/anthonyabusa/anthonyabusa.github.io",
     "liveUrl": "https://anthonyabusa.github.io",
     "tags": [
@@ -333,8 +332,8 @@
     "endYear": "Present",
     "type": "site",
     "focusNarratives": {
-      "product-program-leadership": "This site is a living portfolio rather than a static resume. Its product layer is the structure underneath: reusable content models, filtered work surfaces, project detail pages, public proof-of-work, and iterative UX improvements driven by live review rather than one-time redesigns.",
-      "ai-automation": "The portfolio is also part of my AI-assisted operating loop. Browser comments turn into implementation tasks, structured project data powers multiple views, and agent-supported workflows help keep the site current without turning every update into manual website maintenance."
+      "product-program-leadership": "This site is a living portfolio rather than a static resume. Reusable content models, filtered work surfaces, project detail pages, public proof-of-work, and live review loops make it a small product system, not a one-time redesign.",
+      "ai-automation": "The portfolio is part of my AI-assisted operating loop. Browser comments turn into implementation tasks, structured project data powers multiple views, and agent-supported workflows keep the site current without turning every update into manual website maintenance."
     }
   },
   {
