@@ -1,0 +1,299 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const demos = [
+  {
+    key: 'strategy',
+    mark: '/->',
+    title: 'Strategy signal map',
+    note: 'Hover to sweep the decision field.',
+    frame: `+-- MARKET MAP ------+
+|   .   .      x   |
+|      /---->      |
+|  o--/    .    o  |
+|      \--> choice |
++------------------+`,
+  },
+  {
+    key: 'operations',
+    mark: '[::]',
+    title: 'Operations pipeline',
+    note: 'Click to advance the operating rhythm.',
+    frame: `[ intake ] -> [ triage ]
+     |          |
+     v          v
+[ queue  ] -> [ shipped ]
+     |          |
+     +-- loop --+`,
+  },
+  {
+    key: 'product',
+    mark: '{<>}',
+    title: 'Product / program scope',
+    note: 'Move over it to pull the roadmap into focus.',
+    frame: `{ idea } -> { build }
+    \        /
+     \      /
+      { feedback }
+           |
+      { release }`,
+  },
+  {
+    key: 'automation',
+    mark: '>*_',
+    title: 'AI automation pulse',
+    note: 'Hover to wake the agent mesh.',
+    frame: `agent_01  *> memory
+   |          |
+   v          v
+queue ---> action
+   ^          |
+   +-- eval <-+`,
+  },
+  {
+    key: 'marketplace',
+    mark: '<=>',
+    title: 'Marketplace exchange',
+    note: 'Click to flip supply / demand emphasis.',
+    frame: `producer <=> hub
+    ^        |
+    |        v
+local   <=> buyer
+    \      /
+     market`,
+  },
+];
+---
+
+<BaseLayout
+  title="ASCII Motion Lab"
+  description="Interactive ASCII motion directions for Anthony Busa's portfolio symbol and graphics system."
+>
+  <section class="max-w-6xl mx-auto px-6 pt-32 pb-24">
+    <div class="max-w-3xl mb-12">
+      <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Visual system spike</p>
+      <h1 class="text-4xl md:text-6xl font-bold text-[#F1F5F9] leading-tight mb-5">ASCII motion lab</h1>
+      <p class="text-[#94A3B8] text-lg leading-relaxed">
+        These are deliberately interactive, not just decorative: hover, click, and move across the panels. The strongest version probably becomes a reusable graphic language for focus areas, project cards, and live-system status.
+      </p>
+    </div>
+
+    <div class="ascii-stage mb-10" data-ascii-stage>
+      <div class="ascii-stage__copy">
+        <span class="ascii-stage__eyebrow">hero candidate</span>
+        <h2>systems in motion</h2>
+        <p>Move your cursor through the field. The signal follows, but stays quiet enough to sit behind real copy.</p>
+      </div>
+      <pre class="ascii-stage__field" data-ascii-field aria-hidden="true">+------------------------------------------------+
+| strategy      ops      agents      market      |
+|                                                |
+|    . . .      . . .      . . .      . . .      |
+|      \          |          |          /        |
+|       +---------+----------+---------+         |
+|                 signal: idle                   |
++------------------------------------------------+</pre>
+    </div>
+
+    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+      {demos.map((demo) => (
+        <button class={`ascii-demo ascii-demo--${demo.key}`} type="button" data-ascii-demo={demo.key} aria-label={`${demo.title}: ${demo.note}`}>
+          <span class="ascii-demo__mark" aria-hidden="true">{demo.mark}</span>
+          <span class="ascii-demo__title">{demo.title}</span>
+          <span class="ascii-demo__note">{demo.note}</span>
+          <pre class="ascii-demo__frame" aria-hidden="true">{demo.frame}</pre>
+          <span class="ascii-demo__status" data-status>idle</span>
+        </button>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const density = [' ', '.', ':', '+', '*', '#'];
+
+  function renderField(x: number, y: number, tick: number) {
+    const rows = ['+------------------------------------------------+'];
+    const labels = ['strategy', 'ops', 'agents', 'market'];
+    rows.push('| ' + labels.map((label) => label.padEnd(10, ' ')).join('  ') + ' |');
+    for (let row = 0; row < 8; row += 1) {
+      let line = '| ';
+      for (let col = 0; col < 46; col += 1) {
+        const dx = col / 46 - x;
+        const dy = row / 8 - y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const wave = Math.sin(col * 0.55 + row * 1.1 + tick * 0.15);
+        const index = Math.max(0, Math.min(density.length - 1, Math.floor((1 - dist * 2.5 + wave * 0.35) * density.length)));
+        const node = (col + row * 7 + tick) % 31 === 0;
+        line += node ? 'o' : density[index];
+      }
+      line += ' |';
+      rows.push(line);
+    }
+    rows.push('|                 signal: tracking              |');
+    rows.push('+------------------------------------------------+');
+    return rows.join('\n');
+  }
+
+  const stage = document.querySelector('[data-ascii-stage]');
+  const field = document.querySelector('[data-ascii-field]');
+  let pointer = { x: 0.5, y: 0.5 };
+  let tick = 0;
+
+  stage?.addEventListener('pointermove', (event) => {
+    const pointerEvent = event as PointerEvent;
+    const rect = stage.getBoundingClientRect();
+    pointer = {
+      x: Math.max(0, Math.min(1, (pointerEvent.clientX - rect.left) / rect.width)),
+      y: Math.max(0, Math.min(1, (pointerEvent.clientY - rect.top) / rect.height)),
+    };
+  });
+
+  function animateStage() {
+    if (!prefersReduced && field) {
+      tick += 1;
+      field.textContent = renderField(pointer.x, pointer.y, tick);
+      window.requestAnimationFrame(animateStage);
+    }
+  }
+  animateStage();
+
+  document.querySelectorAll('[data-ascii-demo]').forEach((demo) => {
+    let clicks = 0;
+    const status = demo.querySelector('[data-status]');
+    demo.addEventListener('click', () => {
+      clicks += 1;
+      demo.setAttribute('data-active-step', String(clicks % 4));
+      if (status) status.textContent = ['idle', 'scanning', 'routing', 'shipped'][clicks % 4];
+    });
+  });
+</script>
+
+<style>
+  .ascii-stage {
+    position: relative;
+    overflow: hidden;
+    min-height: 360px;
+    border: 1px solid #222538;
+    border-top-color: rgba(255,255,255,.07);
+    border-radius: 24px;
+    background: radial-gradient(circle at var(--mx, 60%) var(--my, 35%), rgba(99,102,241,.18), transparent 34%), #10131C;
+    box-shadow: 0 18px 70px rgba(0,0,0,.35);
+  }
+  .ascii-stage__copy {
+    position: relative;
+    z-index: 2;
+    max-width: 430px;
+    padding: 38px;
+  }
+  .ascii-stage__eyebrow,
+  .ascii-demo__status {
+    color: #818CF8;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+  .ascii-stage h2 {
+    margin: 14px 0;
+    color: #F1F5F9;
+    font-size: clamp(2.25rem, 7vw, 5.5rem);
+    line-height: .95;
+    letter-spacing: -.08em;
+  }
+  .ascii-stage p,
+  .ascii-demo__note {
+    color: #94A3B8;
+    line-height: 1.6;
+  }
+  .ascii-stage__field {
+    position: absolute;
+    right: -20px;
+    bottom: 20px;
+    margin: 0;
+    color: rgba(165, 180, 252, .72);
+    font-size: clamp(9px, 1.25vw, 14px);
+    line-height: 1.25;
+    letter-spacing: -.08em;
+    text-shadow: 0 0 24px rgba(99,102,241,.32);
+    transition: color .2s ease;
+    user-select: none;
+  }
+  .ascii-stage:hover .ascii-stage__field { color: rgba(241,245,249,.88); }
+
+  .ascii-demo {
+    position: relative;
+    min-height: 310px;
+    padding: 24px;
+    text-align: left;
+    border: 1px solid #222538;
+    border-top-color: rgba(255,255,255,.06);
+    border-radius: 18px;
+    background: #13161F;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .ascii-demo:hover,
+  .ascii-demo:focus-visible {
+    transform: translateY(-3px);
+    border-color: rgba(99,102,241,.55);
+    box-shadow: 0 16px 42px rgba(0,0,0,.35), 0 0 32px rgba(99,102,241,.10);
+    outline: none;
+  }
+  .ascii-demo__mark {
+    display: inline-flex;
+    min-width: 3.8rem;
+    min-height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(99,102,241,.28);
+    border-radius: 12px;
+    color: #A5B4FC;
+    background: rgba(99,102,241,.08);
+    font-weight: 800;
+    margin-bottom: 18px;
+  }
+  .ascii-demo__title {
+    display: block;
+    color: #F1F5F9;
+    font-size: 1.05rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .ascii-demo__note {
+    display: block;
+    font-size: .83rem;
+    margin-bottom: 22px;
+  }
+  .ascii-demo__frame {
+    margin: 0;
+    color: rgba(148,163,184,.82);
+    font-size: 12px;
+    line-height: 1.35;
+    letter-spacing: -.055em;
+    transition: color .2s ease, transform .2s ease, text-shadow .2s ease;
+  }
+  .ascii-demo:hover .ascii-demo__frame,
+  .ascii-demo[data-active-step] .ascii-demo__frame {
+    color: rgba(241,245,249,.92);
+    text-shadow: 0 0 18px rgba(99,102,241,.28);
+    transform: translateX(2px);
+  }
+  .ascii-demo__status {
+    position: absolute;
+    right: 20px;
+    bottom: 18px;
+    color: #64748B;
+  }
+  .ascii-demo[data-active-step="1"] .ascii-demo__mark { color: #F1F5F9; border-color: rgba(129,140,248,.75); }
+  .ascii-demo[data-active-step="2"] .ascii-demo__mark { color: #1F9D6B; border-color: rgba(31,157,107,.65); }
+  .ascii-demo[data-active-step="3"] .ascii-demo__mark { color: #E0A100; border-color: rgba(224,161,0,.65); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ascii-demo,
+    .ascii-demo__frame {
+      transition: none;
+    }
+  }
+</style>
