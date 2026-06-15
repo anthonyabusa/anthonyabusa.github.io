@@ -22,11 +22,11 @@ npm run preview
 
 ## Content map
 
-- `src/pages/` — route pages
-- `src/components/` — reusable UI cards, nav, footer, reveal behavior
-- `src/data/projects.json` — project cards shown on home/projects
-- `src/content/blog/` — Markdown blog posts
-- `public/` — static assets
+- `src/pages/`; route pages
+- `src/components/`; reusable UI cards, nav, footer, reveal behavior
+- `src/data/projects.json`; project cards shown on home/projects
+- `src/content/blog/`; Markdown blog posts
+- `public/`; static assets
 
 ## Deploy
 

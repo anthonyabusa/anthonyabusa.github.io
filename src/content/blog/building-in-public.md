@@ -6,13 +6,13 @@ tags: ["Entrepreneurship", "Building", "Personal Brand"]
 draft: true
 ---
 
-Most portfolios are graveyards — a list of projects you finished years ago, sitting untouched while the real work happens elsewhere.
+Most portfolios are graveyards: a list of projects you finished years ago, sitting untouched while the real work happens elsewhere.
 
 I wanted something different. A site that grows as I do, reflects how I think, and actually brings value to the people who land on it.
 
 ## The constraints I gave myself
 
-**No templates.** If someone can deploy the same site in five minutes, it isn't a personal brand — it's a theme.
+**No templates.** If someone can deploy the same site in five minutes, it isn't a personal brand; it's a theme.
 
 **Content first, design second.** A polished empty site is still empty. Writing comes before polish.
 
@@ -22,7 +22,7 @@ I wanted something different. A site that grows as I do, reflects how I think, a
 
 Projects I've built across consulting, product, and open source. Writing on business strategy, technology, and the overlap between the two. Honest post-mortems on things that didn't work.
 
-If any of it is useful to you — even one idea, one framework, one honest mistake — then it's worth publishing.
+If any of it is useful to you, even one idea, one framework, one honest mistake, then it is worth publishing.
 
 ---
 

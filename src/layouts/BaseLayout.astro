@@ -12,7 +12,7 @@ interface Props {
 
 const {
   title,
-  description = 'Anthony Busa — strategy and operations leader building technology-enabled systems across startups, marketplaces, AI workflows, and business strategy.',
+  description = 'Anthony Busa: strategy and operations leader building technology-enabled systems across startups, marketplaces, AI workflows, and business strategy.',
   ogImage = '/og-image.png',
 } = Astro.props;
 
@@ -23,7 +23,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 // (anthonyabusa.com) → copy the token from the snippet. Leave '' to disable.
 const CF_BEACON_TOKEN = 'd1c4dab9b8da413a83d1128ac6ffc2f0';
 
-// Person structured data — powers branded search ("Anthony Busa") + rich results.
+// Person structured data; powers branded search ("Anthony Busa") + rich results.
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -38,7 +38,7 @@ const personSchema = {
   ],
 };
 
-// WebSite entity — helps search engines model the site (and enables sitelinks).
+// WebSite entity; helps search engines model the site (and enables sitelinks).
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -46,7 +46,7 @@ const websiteSchema = {
   url: 'https://anthonyabusa.com',
 };
 
-// BreadcrumbList — built from the URL path so every non-home page gets accurate
+// BreadcrumbList; built from the URL path so every non-home page gets accurate
 // breadcrumbs with zero per-page wiring (helps Google render breadcrumb rich results).
 const crumbSegments = Astro.url.pathname.split('/').filter(Boolean);
 const breadcrumbSchema = crumbSegments.length
@@ -96,7 +96,7 @@ const breadcrumbSchema = crumbSegments.length
 
     <meta property="og:site_name" content="Anthony Busa" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:image:alt" content="Anthony Busa — strategy & operations leader" />
+    <meta property="og:image:alt" content="Anthony Busa: strategy and operations leader" />
     <meta name="author" content="Anthony Busa" />
     <meta name="theme-color" content="#0B0D14" />
 
