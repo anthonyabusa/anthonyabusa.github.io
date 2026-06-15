@@ -76,7 +76,7 @@ const experienceWork = related.filter((project) => project.placement === 'experi
                   <h3 class="text-xl font-semibold text-[#F1F5F9] group-hover:text-[#A5B4FC] transition-colors">{role.title}</h3>
                   <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#818CF8] mt-2">{role.role}</p>
                 </div>
-                <span class="text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono whitespace-nowrap">{role.year} — {role.endYear}</span>
+                <span class="text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono whitespace-nowrap">{role.year}; {role.endYear}</span>
               </div>
               <div class="flex flex-wrap gap-2 mb-5">{role.tags.map((tag: string) => <span class="tag">{tag}</span>)}</div>
               <p class="text-[#64748B] text-sm leading-relaxed max-w-3xl">{role.focusNarratives?.[focus.slug] ?? role.description}</p>
