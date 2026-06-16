@@ -59,7 +59,7 @@ const demos = [
       <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Visual system spike</p>
       <h1 class="text-4xl md:text-6xl font-bold text-[#F1F5F9] leading-tight mb-5">ASCII motion lab</h1>
       <p class="text-[#94A3B8] text-lg leading-relaxed">
-        This pass keeps the card background restrained and adds depth inside the symbols themselves: brighter foreground strokes, softer shadow strokes, and gradient-like text shading.
+        This pass keeps the card background restrained while making each symbol feel more dimensional: dense textmode fills, gradient shading, and bright edge highlights instead of line-only drawings.
       </p>
     </div>
 
@@ -152,6 +152,38 @@ const demos = [
     drawChar(tc, col, row, char, level, level > 0.78 ? '241,245,249' : '165,180,252');
   }
 
+  function fillEllipse(tc: TextCanvas, cx: number, cy: number, rx: number, ry: number, intensity = 0.38) {
+    const chars = ['.', ':', '+', '*', '#'];
+    for (let y = Math.floor(cy - ry); y <= Math.ceil(cy + ry); y += 1) {
+      for (let x = Math.floor(cx - rx); x <= Math.ceil(cx + rx); x += 1) {
+        const nx = (x - cx) / rx;
+        const ny = (y - cy) / ry;
+        const d = nx * nx + ny * ny;
+        if (d > 1) continue;
+        const light = (1 - d) * intensity + Math.max(0, (cx - x) / rx) * 0.16 + Math.max(0, (cy - y) / ry) * 0.12;
+        const idx = Math.max(0, Math.min(chars.length - 1, Math.floor(light * chars.length)));
+        drawChar(tc, x, y, chars[idx], 0.10 + light * 0.58, idx >= 3 ? '241,245,249' : '165,180,252');
+      }
+    }
+  }
+
+  function fillGear(tc: TextCanvas, cx: number, cy: number, r: number, phase: number, dir: number) {
+    const chars = ['.', ':', '+', '*', '#'];
+    for (let y = Math.floor(cy - r * 0.9); y <= Math.ceil(cy + r * 0.9); y += 1) {
+      for (let x = Math.floor(cx - r * 1.25); x <= Math.ceil(cx + r * 1.25); x += 1) {
+        const nx = (x - cx) / (r * 1.15);
+        const ny = (y - cy) / (r * 0.72);
+        const d = Math.sqrt(nx * nx + ny * ny);
+        if (d > 1 || d < 0.32) continue;
+        const angle = Math.atan2(ny, nx) + phase * dir;
+        const tooth = Math.max(0, Math.cos(angle * 10)) * 0.22;
+        const light = (1 - d) * 0.34 + tooth + Math.max(0, -nx - ny) * 0.16;
+        const idx = Math.max(0, Math.min(chars.length - 1, Math.floor(light * chars.length)));
+        drawChar(tc, x, y, chars[idx], 0.12 + light * 0.55, idx >= 3 ? '241,245,249' : '165,180,252');
+      }
+    }
+  }
+
   function drawLine(tc: TextCanvas, x1: number, y1: number, x2: number, y2: number, char = '.', opacity = 0.55) {
     const steps = Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1), 1);
     for (let i = 0; i <= steps; i += 1) {
@@ -201,6 +233,7 @@ const demos = [
   function renderCompass(tc: TextCanvas, tick: number, hover: boolean) {
     clear(tc, 0);
     const cx = 70, cy = 21;
+    fillEllipse(tc, cx, cy, 25, 12, hover ? 0.34 : 0.26);
     const scale = hover ? 1.08 : 1;
     for (let i = 0; i < 220; i += 1) {
       const a = (i / 220) * Math.PI * 2;
@@ -227,6 +260,7 @@ const demos = [
     clear(tc, 0);
     const phase = tick * (hover ? 0.040 : 0.024);
     const gears = [[55, 21, 13, 1], [81, 21, 12, -1], [68, 32, 8, -1]];
+    gears.forEach(([cx, cy, r, dir]) => fillGear(tc, cx, cy, r, phase, dir));
     gears.forEach(([cx, cy, r, dir]) => {
       for (let i = 0; i < 48; i += 1) {
         const a = (i / 48) * Math.PI * 2 + phase * dir;
@@ -247,6 +281,7 @@ const demos = [
   function renderLoop(tc: TextCanvas, tick: number, hover: boolean) {
     clear(tc, 0);
     const cx = 70, cy = 21;
+    fillEllipse(tc, cx, cy, 32, 14, hover ? 0.26 : 0.20);
     const speed = hover ? 0.012 : 0.007;
     for (let i = 0; i < 240; i += 1) {
       const a = (i / 240) * Math.PI * 2 - tick * speed;
@@ -266,6 +301,8 @@ const demos = [
   function renderBrain(tc: TextCanvas, tick: number, hover: boolean) {
     clear(tc, 0);
     const cx = 70;
+    fillEllipse(tc, cx - 8, 21, 20, 14, hover ? 0.30 : 0.23);
+    fillEllipse(tc, cx + 10, 21, 20, 14, hover ? 0.30 : 0.23);
     const pulse = Math.floor(tick / (hover ? 18 : 30)) % 8;
     for (let i = 0; i < 160; i += 1) {
       const a = (i / 160) * Math.PI * 2;
@@ -297,6 +334,7 @@ const demos = [
   function renderHub(tc: TextCanvas, tick: number, hover: boolean) {
     clear(tc, 0);
     const cx = 70, cy = 21;
+    fillEllipse(tc, cx, cy, 16, 8, hover ? 0.28 : 0.21);
     const spokes = [[70, 4], [109, 10], [103, 35], [70, 40], [37, 34], [31, 9], [116, 23], [24, 23]];
     spokes.forEach(([x, y], i) => {
       const steps = Math.max(Math.abs(x - cx), Math.abs(y - cy));
@@ -354,7 +392,7 @@ const demos = [
   .ascii-stage p, .ascii-demo__note { color: #94A3B8; line-height: 1.6; }
   .ascii-demo { display: block; position: relative; min-height: 360px; padding: 24px; text-align: left; border: 1px solid #222538; border-top-color: rgba(255,255,255,.07); border-radius: 18px; background: radial-gradient(circle at 82% 38%, rgba(99,102,241,.07), transparent 28%), linear-gradient(145deg, rgba(255,255,255,.026), transparent 42%), #13161F; cursor: pointer; overflow: hidden; text-decoration: none; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
   .ascii-demo:hover, .ascii-demo:focus-visible { transform: translateY(-3px); border-color: rgba(99,102,241,.55); box-shadow: 0 16px 42px rgba(0,0,0,.35), 0 0 32px rgba(99,102,241,.10); outline: none; }
-  .ascii-demo__canvas { position: absolute; right: -10px; bottom: 22px; width: 72%; height: 55%; opacity: .98; transition: opacity .2s ease, filter .2s ease, transform .2s ease; }
+  .ascii-demo__canvas { position: absolute; right: -14px; bottom: 16px; width: 76%; height: 60%; opacity: 1; transition: opacity .2s ease, filter .2s ease, transform .2s ease; }
   .ascii-demo:hover .ascii-demo__canvas, .ascii-demo:focus-visible .ascii-demo__canvas { opacity: 1; filter: drop-shadow(0 0 20px rgba(129,140,248,.28)); transform: translateX(-4px); }
   .ascii-demo__content { position: relative; z-index: 2; display: block; }
   .ascii-demo__header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
