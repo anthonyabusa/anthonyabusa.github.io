@@ -59,7 +59,7 @@ const demos = [
       <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Visual system spike</p>
       <h1 class="text-4xl md:text-6xl font-bold text-[#F1F5F9] leading-tight mb-5">ASCII motion lab</h1>
       <p class="text-[#94A3B8] text-lg leading-relaxed">
-        This pass pushes the high-resolution textmode direction toward a more polished graphic system: smoother trails, layered depth, and more deliberate symbolic forms.
+        This pass applies the hero's richer atmospheric depth and gradient-field treatment across the skill cards, so the animations feel like part of one graphic system.
       </p>
     </div>
 
@@ -75,6 +75,7 @@ const demos = [
     <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
       {demos.map((demo) => (
         <a class={`ascii-demo ascii-demo--${demo.key}`} href={demo.href} data-ascii-demo={demo.key} aria-label={`View ${demo.title} work: ${demo.note}`}>
+          <canvas class="ascii-demo__backdrop" data-card-field={demo.key} width="420" height="260" aria-hidden="true"></canvas>
           <canvas class="ascii-demo__canvas" data-symbol-canvas={demo.key} width="420" height="260" aria-hidden="true"></canvas>
           <span class="ascii-demo__content">
             <span class="ascii-demo__header">
@@ -128,6 +129,7 @@ const demos = [
 
   function clear(tc: TextCanvas, alpha = 0.08) {
     tc.ctx.clearRect(0, 0, tc.canvas.width, tc.canvas.height);
+    if (alpha <= 0) return;
     tc.ctx.fillStyle = `rgba(11, 13, 20, ${alpha})`;
     tc.ctx.fillRect(0, 0, Number.parseFloat(tc.canvas.style.width), Number.parseFloat(tc.canvas.style.height));
   }
@@ -192,8 +194,31 @@ const demos = [
     });
   }
 
+  function renderCardField(tc: TextCanvas, tick: number, hover: boolean, seed: number) {
+    clear(tc, 0.018);
+    const cx = tc.cols * (0.58 + Math.sin((tick + seed) * 0.006) * 0.08);
+    const cy = tc.rows * (0.42 + Math.cos((tick + seed) * 0.005) * 0.07);
+    for (let y = 0; y < tc.rows; y += 1) {
+      for (let x = 0; x < tc.cols; x += 1) {
+        const dx = x - cx;
+        const dy = (y - cy) * 1.7;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const wave = Math.sin(x * 0.16 + y * 0.30 + tick * 0.018 + seed);
+        const signal = Math.max(0, 1 - dist / (hover ? 42 : 35)) + wave * 0.18;
+        if (signal < 0.11 && (x * 3 + y + seed + tick) % 31 !== 0) continue;
+        const gi = Math.max(0, Math.min(glyphs.length - 1, Math.floor(signal * glyphs.length)));
+        drawChar(tc, x, y, glyphs[gi], 0.06 + Math.max(0, signal) * (hover ? 0.34 : 0.24));
+      }
+    }
+    const anchors = [[20, 32], [48, 10], [82, 26], [112, 12]];
+    anchors.forEach(([x, y], i) => {
+      drawLine(tc, Math.round(cx), Math.round(cy), x, y, i % 2 ? ':' : '.', hover ? 0.16 : 0.10);
+      drawChar(tc, x, y, i % 2 ? 'o' : '+', hover ? 0.34 : 0.22);
+    });
+  }
+
   function renderCompass(tc: TextCanvas, tick: number, hover: boolean) {
-    clear(tc, 0.025);
+    clear(tc, 0);
     const cx = 70, cy = 21;
     const scale = hover ? 1.08 : 1;
     for (let i = 0; i < 220; i += 1) {
@@ -218,7 +243,7 @@ const demos = [
   }
 
   function renderGears(tc: TextCanvas, tick: number, hover: boolean) {
-    clear(tc, 0.025);
+    clear(tc, 0);
     const phase = tick * (hover ? 0.040 : 0.024);
     const gears = [[55, 21, 13, 1], [81, 21, 12, -1], [68, 32, 8, -1]];
     gears.forEach(([cx, cy, r, dir]) => {
@@ -239,7 +264,7 @@ const demos = [
   }
 
   function renderLoop(tc: TextCanvas, tick: number, hover: boolean) {
-    clear(tc, 0.025);
+    clear(tc, 0);
     const cx = 70, cy = 21;
     const speed = hover ? 0.012 : 0.007;
     for (let i = 0; i < 240; i += 1) {
@@ -258,7 +283,7 @@ const demos = [
   }
 
   function renderBrain(tc: TextCanvas, tick: number, hover: boolean) {
-    clear(tc, 0.025);
+    clear(tc, 0);
     const cx = 70;
     const pulse = Math.floor(tick / (hover ? 18 : 30)) % 8;
     for (let i = 0; i < 160; i += 1) {
@@ -289,7 +314,7 @@ const demos = [
   }
 
   function renderHub(tc: TextCanvas, tick: number, hover: boolean) {
-    clear(tc, 0.025);
+    clear(tc, 0);
     const cx = 70, cy = 21;
     const spokes = [[70, 4], [109, 10], [103, 35], [70, 40], [37, 34], [31, 9], [116, 23], [24, 23]];
     spokes.forEach(([x, y], i) => {
@@ -315,15 +340,17 @@ const demos = [
     marketplace: renderHub,
   };
 
-  const cards = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-ascii-demo]')).map((card) => {
+  const cards = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-ascii-demo]')).map((card, index) => {
     const canvas = card.querySelector<HTMLCanvasElement>('[data-symbol-canvas]');
+    const fieldCanvas = card.querySelector<HTMLCanvasElement>('[data-card-field]');
     const tc = canvas ? setupCanvas(canvas, 138, 44) : null;
+    const field = fieldCanvas ? setupCanvas(fieldCanvas, 138, 44) : null;
     let hover = false;
     card.addEventListener('pointerenter', () => { hover = true; });
     card.addEventListener('pointerleave', () => { hover = false; });
     card.addEventListener('focus', () => { hover = true; });
     card.addEventListener('blur', () => { hover = false; });
-    return { key: card.dataset.asciiDemo ?? 'strategy', tc, get hover() { return hover; } };
+    return { key: card.dataset.asciiDemo ?? 'strategy', tc, field, seed: index * 17, get hover() { return hover; } };
   });
 
   let tick = 0;
@@ -331,6 +358,7 @@ const demos = [
     tick += 1;
     renderHero(tick);
     cards.forEach((card) => {
+      if (card.field) renderCardField(card.field, tick, card.hover, card.seed);
       if (!card.tc) return;
       renderers[card.key]?.(card.tc, tick, card.hover);
     });
@@ -346,9 +374,11 @@ const demos = [
   .ascii-stage__eyebrow { color: #818CF8; font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
   .ascii-stage h2 { margin: 14px 0; color: #F1F5F9; font-size: clamp(2.25rem, 7vw, 5.5rem); line-height: .95; letter-spacing: -.08em; }
   .ascii-stage p, .ascii-demo__note { color: #94A3B8; line-height: 1.6; }
-  .ascii-demo { display: block; position: relative; min-height: 360px; padding: 24px; text-align: left; border: 1px solid #222538; border-top-color: rgba(255,255,255,.06); border-radius: 18px; background: radial-gradient(circle at 78% 34%, rgba(129,140,248,.13), transparent 34%), linear-gradient(145deg, rgba(255,255,255,.025), transparent 42%), #13161F; cursor: pointer; overflow: hidden; text-decoration: none; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+  .ascii-demo { display: block; position: relative; min-height: 360px; padding: 24px; text-align: left; border: 1px solid #222538; border-top-color: rgba(255,255,255,.07); border-radius: 18px; background: radial-gradient(circle at 78% 34%, rgba(129,140,248,.16), transparent 34%), radial-gradient(circle at 20% 88%, rgba(99,102,241,.08), transparent 38%), linear-gradient(145deg, rgba(255,255,255,.032), transparent 42%), #10131C; cursor: pointer; overflow: hidden; text-decoration: none; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
   .ascii-demo:hover, .ascii-demo:focus-visible { transform: translateY(-3px); border-color: rgba(99,102,241,.55); box-shadow: 0 16px 42px rgba(0,0,0,.35), 0 0 32px rgba(99,102,241,.10); outline: none; }
-  .ascii-demo__canvas { position: absolute; right: -10px; bottom: 22px; width: 72%; height: 55%; opacity: .96; transition: opacity .2s ease, filter .2s ease, transform .2s ease; }
+  .ascii-demo__backdrop { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .74; transition: opacity .2s ease, filter .2s ease; }
+  .ascii-demo__canvas { position: absolute; right: -10px; bottom: 22px; width: 72%; height: 55%; opacity: .92; transition: opacity .2s ease, filter .2s ease, transform .2s ease; }
+  .ascii-demo:hover .ascii-demo__backdrop, .ascii-demo:focus-visible .ascii-demo__backdrop { opacity: .92; filter: drop-shadow(0 0 20px rgba(129,140,248,.18)); }
   .ascii-demo:hover .ascii-demo__canvas, .ascii-demo:focus-visible .ascii-demo__canvas { opacity: 1; filter: drop-shadow(0 0 20px rgba(129,140,248,.28)); transform: translateX(-4px); }
   .ascii-demo__content { position: relative; z-index: 2; display: block; }
   .ascii-demo__header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
