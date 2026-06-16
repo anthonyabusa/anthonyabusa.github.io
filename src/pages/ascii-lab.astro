@@ -59,7 +59,7 @@ const demos = [
       <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Visual system spike</p>
       <h1 class="text-4xl md:text-6xl font-bold text-[#F1F5F9] leading-tight mb-5">ASCII motion lab</h1>
       <p class="text-[#94A3B8] text-lg leading-relaxed">
-        This pass keeps the card background restrained while making each symbol feel more dimensional: dense textmode fills, gradient shading, and bright edge highlights instead of line-only drawings.
+        This pass tests an image-to-ASCII pipeline: each card first draws a richer source graphic offscreen, then samples the pixels into high-resolution ASCII. This should feel closer to converted artwork than hand-built line drawings.
       </p>
     </div>
 
@@ -147,12 +147,7 @@ const demos = [
     drawChar(tc, col, row + 1, '.', opacity * 0.18);
   }
 
-  function shadeChar(tc: TextCanvas, col: number, row: number, char: string, level = 0.7) {
-    drawChar(tc, col + 1, row + 1, '.', level * 0.18, '99,102,241');
-    drawChar(tc, col, row, char, level, level > 0.78 ? '241,245,249' : '165,180,252');
-  }
-
-  function fillEllipse(tc: TextCanvas, cx: number, cy: number, rx: number, ry: number, intensity = 0.38) {
+function fillEllipse(tc: TextCanvas, cx: number, cy: number, rx: number, ry: number, intensity = 0.38) {
     const chars = ['.', ':', '+', '*', '#'];
     for (let y = Math.floor(cy - ry); y <= Math.ceil(cy + ry); y += 1) {
       for (let x = Math.floor(cx - rx); x <= Math.ceil(cx + rx); x += 1) {
@@ -167,24 +162,7 @@ const demos = [
     }
   }
 
-  function fillGear(tc: TextCanvas, cx: number, cy: number, r: number, phase: number, dir: number) {
-    const chars = ['.', ':', '+', '*', '#'];
-    for (let y = Math.floor(cy - r * 0.9); y <= Math.ceil(cy + r * 0.9); y += 1) {
-      for (let x = Math.floor(cx - r * 1.25); x <= Math.ceil(cx + r * 1.25); x += 1) {
-        const nx = (x - cx) / (r * 1.15);
-        const ny = (y - cy) / (r * 0.72);
-        const d = Math.sqrt(nx * nx + ny * ny);
-        if (d > 1 || d < 0.32) continue;
-        const angle = Math.atan2(ny, nx) + phase * dir;
-        const tooth = Math.max(0, Math.cos(angle * 10)) * 0.22;
-        const light = (1 - d) * 0.34 + tooth + Math.max(0, -nx - ny) * 0.16;
-        const idx = Math.max(0, Math.min(chars.length - 1, Math.floor(light * chars.length)));
-        drawChar(tc, x, y, chars[idx], 0.12 + light * 0.55, idx >= 3 ? '241,245,249' : '165,180,252');
-      }
-    }
-  }
-
-  function drawLine(tc: TextCanvas, x1: number, y1: number, x2: number, y2: number, char = '.', opacity = 0.55) {
+function drawLine(tc: TextCanvas, x1: number, y1: number, x2: number, y2: number, char = '.', opacity = 0.55) {
     const steps = Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1), 1);
     for (let i = 0; i <= steps; i += 1) {
       const t = i / steps;
@@ -230,126 +208,117 @@ const demos = [
     });
   }
 
-  function renderCompass(tc: TextCanvas, tick: number, hover: boolean) {
-    clear(tc, 0);
-    const cx = 70, cy = 21;
-    fillEllipse(tc, cx, cy, 25, 12, hover ? 0.34 : 0.26);
-    const scale = hover ? 1.08 : 1;
-    for (let i = 0; i < 220; i += 1) {
-      const a = (i / 220) * Math.PI * 2;
-      const r = 17 * scale;
-      const x = Math.round(cx + Math.cos(a) * r * 1.28);
-      const y = Math.round(cy + Math.sin(a) * r * 0.70);
-      drawChar(tc, x, y, i % 22 === 0 ? '+' : '.', i % 22 === 0 ? 0.78 : 0.24);
-    }
-    for (let i = 0; i < 72; i += 1) {
-      const a = (i / 72) * Math.PI * 2 + tick * 0.004;
-      drawChar(tc, Math.round(cx + Math.cos(a) * 9), Math.round(cy + Math.sin(a) * 3.9), '.', 0.16);
-    }
-    shadeChar(tc, cx, cy - 16, '^', 0.86);
-    drawChar(tc, cx, cy + 16, 'v', 0.38);
-    drawChar(tc, cx - 28, cy, '<', 0.38);
-    drawChar(tc, cx + 28, cy, '>', 0.48);
-    const breathe = Math.sin(tick * 0.014) * 1.4;
-    drawLine(tc, cx - 17, cy + 10, cx + 18 + breathe, cy - 10, '/', 0.72);
-    shadeChar(tc, cx + 20 + Math.round(breathe), cy - 11, '>', 0.98);
-    shadeChar(tc, cx, cy, 'o', 0.90);
-  }
+  function drawSource(kind: string, ctx: CanvasRenderingContext2D, w: number, h: number, tick: number, hover: boolean) {
+    ctx.clearRect(0, 0, w, h);
+    const g = ctx.createRadialGradient(w * 0.58, h * 0.42, 10, w * 0.58, h * 0.42, w * 0.42);
+    g.addColorStop(0, 'rgba(241,245,249,.98)');
+    g.addColorStop(.38, 'rgba(165,180,252,.72)');
+    g.addColorStop(1, 'rgba(99,102,241,.08)');
+    ctx.strokeStyle = g;
+    ctx.fillStyle = g;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.shadowColor = 'rgba(129,140,248,.38)';
+    ctx.shadowBlur = hover ? 22 : 14;
+    const t = tick * (hover ? 0.018 : 0.011);
+    const cx = w * .62, cy = h * .52;
 
-  function renderGears(tc: TextCanvas, tick: number, hover: boolean) {
-    clear(tc, 0);
-    const phase = tick * (hover ? 0.040 : 0.024);
-    const gears = [[55, 21, 13, 1], [81, 21, 12, -1], [68, 32, 8, -1]];
-    gears.forEach(([cx, cy, r, dir]) => fillGear(tc, cx, cy, r, phase, dir));
-    gears.forEach(([cx, cy, r, dir]) => {
-      for (let i = 0; i < 48; i += 1) {
-        const a = (i / 48) * Math.PI * 2 + phase * dir;
-        const tooth = i % 4 === 0;
-        const rr = r + (tooth ? 2.5 : 0);
-        drawChar(tc, Math.round(cx + Math.cos(a) * rr * 1.12), Math.round(cy + Math.sin(a) * rr * 0.70), tooth ? '+' : '.', tooth ? 0.82 : 0.28);
+    if (kind === 'strategy') {
+      ctx.lineWidth = 3;
+      for (let r of [36, 58, 82]) {
+        ctx.globalAlpha = r === 82 ? .24 : .42;
+        ctx.beginPath(); ctx.ellipse(cx, cy, r * 1.22, r * .70, 0, 0, Math.PI * 2); ctx.stroke();
       }
-      for (let i = 0; i < 16; i += 1) {
-        const a = (i / 16) * Math.PI * 2 - phase * dir;
-        drawLine(tc, cx, cy, Math.round(cx + Math.cos(a) * (r - 3) * 0.9), Math.round(cy + Math.sin(a) * (r - 3) * 0.55), '.', 0.20);
-      }
-      shadeChar(tc, cx, cy, '*', 0.94);
+      ctx.globalAlpha = .92;
+      ctx.lineWidth = 8;
+      ctx.beginPath(); ctx.moveTo(cx - 70, cy + 48); ctx.lineTo(cx + 78 + Math.sin(t) * 8, cy - 52); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx + 78 + Math.sin(t) * 8, cy - 52); ctx.lineTo(cx + 50, cy - 42); ctx.lineTo(cx + 61, cy - 18); ctx.closePath(); ctx.fill();
+      ctx.globalAlpha = .8;
+      ctx.beginPath(); ctx.arc(cx, cy, 10, 0, Math.PI * 2); ctx.fill();
+      return;
+    }
+
+    if (kind === 'operations') {
+      const gear = (x: number, y: number, r: number, dir: number) => {
+        ctx.save(); ctx.translate(x, y); ctx.rotate(t * dir); ctx.globalAlpha = .88; ctx.lineWidth = 5;
+        ctx.beginPath();
+        for (let i = 0; i < 24; i += 1) {
+          const a = (i / 24) * Math.PI * 2;
+          const rr = i % 2 === 0 ? r * 1.16 : r;
+          const px = Math.cos(a) * rr, py = Math.sin(a) * rr;
+          i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+        }
+        ctx.closePath(); ctx.stroke();
+        ctx.globalAlpha = .42; ctx.beginPath(); ctx.arc(0, 0, r * .55, 0, Math.PI * 2); ctx.stroke();
+        ctx.globalAlpha = .72; for (let i = 0; i < 8; i += 1) { const a = (i / 8) * Math.PI * 2; ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(Math.cos(a)*r*.82, Math.sin(a)*r*.82); ctx.stroke(); }
+        ctx.restore();
+      };
+      gear(w*.44, h*.48, 46, 1); gear(w*.66, h*.48, 40, -1); gear(w*.56, h*.70, 27, -1);
+      return;
+    }
+
+    if (kind === 'product') {
+      ctx.globalAlpha = .72; ctx.lineWidth = 5;
+      ctx.beginPath(); ctx.ellipse(cx, cy, 96, 58, 0, t, t + Math.PI * 1.74); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx + 88, cy - 26); ctx.lineTo(cx + 112, cy - 30); ctx.lineTo(cx + 98, cy - 8); ctx.closePath(); ctx.fill();
+      const nodes = [[cx,cy-58],[cx+96,cy],[cx,cy+58],[cx-96,cy]];
+      nodes.forEach(([x,y], i) => { ctx.globalAlpha = .34 + (((Math.floor(tick/52)%4)===i)? .56 : 0); ctx.beginPath(); ctx.roundRect(x-18,y-13,36,26,8); ctx.fill(); });
+      return;
+    }
+
+    if (kind === 'automation') {
+      ctx.globalAlpha = .78; ctx.lineWidth = 5;
+      ctx.beginPath(); ctx.moveTo(cx-72,cy-6); ctx.bezierCurveTo(cx-96,cy-72,cx-24,cy-102,cx-4,cy-48); ctx.bezierCurveTo(cx+28,cy-104,cx+110,cy-62,cx+84,cy+2); ctx.bezierCurveTo(cx+118,cy+64,cx+34,cy+90,cx+8,cy+48); ctx.bezierCurveTo(cx-28,cy+96,cx-108,cy+58,cx-72,cy-6); ctx.stroke();
+      ctx.globalAlpha = .45; ctx.lineWidth = 3;
+      const folds = [[-54,-24,-15,-38,8,-8],[18,-30,52,-42,68,-8],[-52,20,-12,10,6,32],[24,24,58,8,74,34],[-18,54,18,42,48,56]];
+      folds.forEach((f, i) => { ctx.globalAlpha = .28 + (Math.floor(tick/34)%folds.length===i ? .55 : 0); ctx.beginPath(); ctx.moveTo(cx+f[0],cy+f[1]); ctx.bezierCurveTo(cx+f[2],cy+f[3],cx+f[4],cy+f[5],cx+f[4],cy+f[5]); ctx.stroke(); });
+      return;
+    }
+
+    // stakeholder hub-spoke
+    ctx.globalAlpha = .72; ctx.lineWidth = 4;
+    const spokes = [[0,-88],[93,-42],[88,58],[0,92],[-88,58],[-96,-42],[112,10],[-112,10]];
+    spokes.forEach(([dx,dy], i) => {
+      ctx.globalAlpha = .34; ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+dx,cy+dy); ctx.stroke();
+      const travel = ((tick * (hover ? 0.018 : 0.012) + i * .13) % 1);
+      const pulse = travel < .5 ? travel * 2 : (1 - travel) * 2;
+      ctx.globalAlpha = .95; ctx.beginPath(); ctx.arc(cx+dx*pulse, cy+dy*pulse, 5, 0, Math.PI*2); ctx.fill();
+      ctx.globalAlpha = .58; ctx.beginPath(); ctx.arc(cx+dx, cy+dy, 10, 0, Math.PI*2); ctx.fill();
     });
-    drawLine(tc, 63, 21, 72, 21, '.', 0.26);
-    drawLine(tc, 66, 27, 70, 29, '.', 0.26);
+    ctx.globalAlpha = .95; ctx.beginPath(); ctx.arc(cx, cy, 18, 0, Math.PI*2); ctx.fill();
   }
 
-  function renderLoop(tc: TextCanvas, tick: number, hover: boolean) {
-    clear(tc, 0);
-    const cx = 70, cy = 21;
-    fillEllipse(tc, cx, cy, 32, 14, hover ? 0.26 : 0.20);
-    const speed = hover ? 0.012 : 0.007;
-    for (let i = 0; i < 240; i += 1) {
-      const a = (i / 240) * Math.PI * 2 - tick * speed;
-      const x = Math.round(cx + Math.cos(a) * 31);
-      const y = Math.round(cy + Math.sin(a) * 13);
-      drawChar(tc, x, y, i % 30 === 0 ? '+' : '.', i % 30 === 0 ? 0.70 : 0.22);
-    }
-    const nodes = [[70, 5, '?'], [104, 21, '{}'], [70, 38, '>'], [36, 21, '*']];
-    const active = Math.floor(tick / (hover ? 54 : 86)) % nodes.length;
-    nodes.forEach(([x, y, c], i) => i === active ? shadeChar(tc, x as number, y as number, String(c), 0.95) : drawChar(tc, x as number, y as number, String(c), 0.48));
-    shadeChar(tc, 93, 8, '>', 0.76);
-    shadeChar(tc, 96, 31, 'v', 0.76);
-    shadeChar(tc, 47, 33, '<', 0.76);
-    shadeChar(tc, 44, 10, '^', 0.76);
-  }
+  const sourceCanvas = document.createElement('canvas');
+  sourceCanvas.width = 420;
+  sourceCanvas.height = 260;
+  const sourceCtx = sourceCanvas.getContext('2d', { willReadFrequently: true });
 
-  function renderBrain(tc: TextCanvas, tick: number, hover: boolean) {
+  function renderFromSource(tc: TextCanvas, kind: string, tick: number, hover: boolean) {
     clear(tc, 0);
-    const cx = 70;
-    fillEllipse(tc, cx - 8, 21, 20, 14, hover ? 0.30 : 0.23);
-    fillEllipse(tc, cx + 10, 21, 20, 14, hover ? 0.30 : 0.23);
-    const pulse = Math.floor(tick / (hover ? 18 : 30)) % 8;
-    for (let i = 0; i < 160; i += 1) {
-      const a = (i / 160) * Math.PI * 2;
-      const leftX = Math.round(cx - 9 + Math.cos(a) * 18);
-      const rightX = Math.round(cx + 11 + Math.cos(-a) * 18);
-      const y = Math.round(21 + Math.sin(a) * 14);
-      drawChar(tc, leftX, y, i % 13 === 0 ? 'o' : '.', i % 13 === 0 ? 0.58 : 0.20);
-      drawChar(tc, rightX, y, i % 13 === 0 ? 'o' : '.', i % 13 === 0 ? 0.58 : 0.20);
-    }
-    const folds = [
-      [[52, 13], [62, 11], [68, 16]],
-      [[72, 14], [82, 11], [91, 15]],
-      [[49, 23], [60, 22], [67, 19]],
-      [[74, 25], [85, 22], [94, 25]],
-      [[59, 32], [70, 29], [82, 32]],
-      [[55, 18], [62, 18], [66, 22]],
-    ];
-    folds.forEach((line, i) => {
-      for (let j = 1; j < line.length; j += 1) {
-        const [x1, y1] = line[j - 1];
-        const [x2, y2] = line[j];
-        drawLine(tc, x1, y1, x2, y2, i === pulse % folds.length ? '*' : '.', i === pulse % folds.length ? 0.82 : 0.34);
+    if (!sourceCtx) return;
+    drawSource(kind, sourceCtx, sourceCanvas.width, sourceCanvas.height, tick, hover);
+    const data = sourceCtx.getImageData(0, 0, sourceCanvas.width, sourceCanvas.height).data;
+    const ramp = [' ', '.', ':', '+', '*', '#', '@'];
+    for (let row = 0; row < tc.rows; row += 1) {
+      for (let col = 0; col < tc.cols; col += 1) {
+        const sx = Math.floor((col + 0.5) / tc.cols * sourceCanvas.width);
+        const sy = Math.floor((row + 0.5) / tc.rows * sourceCanvas.height);
+        const idx = (sy * sourceCanvas.width + sx) * 4;
+        const a = data[idx + 3] / 255;
+        if (a < 0.035) continue;
+        const lum = (data[idx] * .2126 + data[idx+1] * .7152 + data[idx+2] * .0722) / 255;
+        const level = Math.max(0, Math.min(ramp.length - 1, Math.floor((lum * .65 + a * .75) * ramp.length)));
+        const color = level >= 5 ? '241,245,249' : level >= 3 ? '165,180,252' : '99,102,241';
+        drawChar(tc, col, row, ramp[level], Math.min(.95, .10 + a * .78), color);
       }
-    });
-    drawLine(tc, 70, 9, 70, 34, '|', 0.18);
-    shadeChar(tc, 70, 22, '*', 0.94);
+    }
   }
 
-  function renderHub(tc: TextCanvas, tick: number, hover: boolean) {
-    clear(tc, 0);
-    const cx = 70, cy = 21;
-    fillEllipse(tc, cx, cy, 16, 8, hover ? 0.28 : 0.21);
-    const spokes = [[70, 4], [109, 10], [103, 35], [70, 40], [37, 34], [31, 9], [116, 23], [24, 23]];
-    spokes.forEach(([x, y], i) => {
-      const steps = Math.max(Math.abs(x - cx), Math.abs(y - cy));
-      const cycle = (tick * (hover ? 0.28 : 0.18) + i * 5) % (steps * 2);
-      const pos = cycle < steps ? cycle : steps * 2 - cycle;
-      for (let j = 1; j < steps; j += 1) {
-        const active = Math.abs(j - pos) < 1.1;
-        drawChar(tc, Math.round(cx + ((x - cx) * j) / steps), Math.round(cy + ((y - cy) * j) / steps), active ? '*' : '.', active ? 0.88 : 0.22);
-      }
-      drawChar(tc, x, y, 'o', 0.68);
-    });
-    shadeChar(tc, cx - 1, cy, '[', 0.86);
-    shadeChar(tc, cx, cy, '*', 0.98);
-    shadeChar(tc, cx + 1, cy, ']', 0.86);
-  }
+  function renderCompass(tc: TextCanvas, tick: number, hover: boolean) { renderFromSource(tc, 'strategy', tick, hover); }
+  function renderGears(tc: TextCanvas, tick: number, hover: boolean) { renderFromSource(tc, 'operations', tick, hover); }
+  function renderLoop(tc: TextCanvas, tick: number, hover: boolean) { renderFromSource(tc, 'product', tick, hover); }
+  function renderBrain(tc: TextCanvas, tick: number, hover: boolean) { renderFromSource(tc, 'automation', tick, hover); }
+  function renderHub(tc: TextCanvas, tick: number, hover: boolean) { renderFromSource(tc, 'marketplace', tick, hover); }
 
   const renderers: Record<string, (tc: TextCanvas, tick: number, hover: boolean) => void> = {
     strategy: renderCompass,
