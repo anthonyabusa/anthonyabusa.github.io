@@ -59,7 +59,7 @@ const demos = [
       <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Visual system spike</p>
       <h1 class="text-4xl md:text-6xl font-bold text-[#F1F5F9] leading-tight mb-5">ASCII motion lab</h1>
       <p class="text-[#94A3B8] text-lg leading-relaxed">
-        This pass applies the hero's richer atmospheric depth and gradient-field treatment across the skill cards, so the animations feel like part of one graphic system.
+        This pass keeps the card background restrained and adds depth inside the symbols themselves: brighter foreground strokes, softer shadow strokes, and gradient-like text shading.
       </p>
     </div>
 
@@ -75,7 +75,6 @@ const demos = [
     <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
       {demos.map((demo) => (
         <a class={`ascii-demo ascii-demo--${demo.key}`} href={demo.href} data-ascii-demo={demo.key} aria-label={`View ${demo.title} work: ${demo.note}`}>
-          <canvas class="ascii-demo__backdrop" data-card-field={demo.key} width="420" height="260" aria-hidden="true"></canvas>
           <canvas class="ascii-demo__canvas" data-symbol-canvas={demo.key} width="420" height="260" aria-hidden="true"></canvas>
           <span class="ascii-demo__content">
             <span class="ascii-demo__header">
@@ -148,6 +147,11 @@ const demos = [
     drawChar(tc, col, row + 1, '.', opacity * 0.18);
   }
 
+  function shadeChar(tc: TextCanvas, col: number, row: number, char: string, level = 0.7) {
+    drawChar(tc, col + 1, row + 1, '.', level * 0.18, '99,102,241');
+    drawChar(tc, col, row, char, level, level > 0.78 ? '241,245,249' : '165,180,252');
+  }
+
   function drawLine(tc: TextCanvas, x1: number, y1: number, x2: number, y2: number, char = '.', opacity = 0.55) {
     const steps = Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1), 1);
     for (let i = 0; i <= steps; i += 1) {
@@ -194,29 +198,6 @@ const demos = [
     });
   }
 
-  function renderCardField(tc: TextCanvas, tick: number, hover: boolean, seed: number) {
-    clear(tc, 0.018);
-    const cx = tc.cols * (0.58 + Math.sin((tick + seed) * 0.006) * 0.08);
-    const cy = tc.rows * (0.42 + Math.cos((tick + seed) * 0.005) * 0.07);
-    for (let y = 0; y < tc.rows; y += 1) {
-      for (let x = 0; x < tc.cols; x += 1) {
-        const dx = x - cx;
-        const dy = (y - cy) * 1.7;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const wave = Math.sin(x * 0.16 + y * 0.30 + tick * 0.018 + seed);
-        const signal = Math.max(0, 1 - dist / (hover ? 42 : 35)) + wave * 0.18;
-        if (signal < 0.11 && (x * 3 + y + seed + tick) % 31 !== 0) continue;
-        const gi = Math.max(0, Math.min(glyphs.length - 1, Math.floor(signal * glyphs.length)));
-        drawChar(tc, x, y, glyphs[gi], 0.06 + Math.max(0, signal) * (hover ? 0.34 : 0.24));
-      }
-    }
-    const anchors = [[20, 32], [48, 10], [82, 26], [112, 12]];
-    anchors.forEach(([x, y], i) => {
-      drawLine(tc, Math.round(cx), Math.round(cy), x, y, i % 2 ? ':' : '.', hover ? 0.16 : 0.10);
-      drawChar(tc, x, y, i % 2 ? 'o' : '+', hover ? 0.34 : 0.22);
-    });
-  }
-
   function renderCompass(tc: TextCanvas, tick: number, hover: boolean) {
     clear(tc, 0);
     const cx = 70, cy = 21;
@@ -232,14 +213,14 @@ const demos = [
       const a = (i / 72) * Math.PI * 2 + tick * 0.004;
       drawChar(tc, Math.round(cx + Math.cos(a) * 9), Math.round(cy + Math.sin(a) * 3.9), '.', 0.16);
     }
-    glowChar(tc, cx, cy - 16, '^', 0.82);
+    shadeChar(tc, cx, cy - 16, '^', 0.86);
     drawChar(tc, cx, cy + 16, 'v', 0.38);
     drawChar(tc, cx - 28, cy, '<', 0.38);
     drawChar(tc, cx + 28, cy, '>', 0.48);
     const breathe = Math.sin(tick * 0.014) * 1.4;
     drawLine(tc, cx - 17, cy + 10, cx + 18 + breathe, cy - 10, '/', 0.72);
-    glowChar(tc, cx + 20 + Math.round(breathe), cy - 11, '>', 0.98);
-    glowChar(tc, cx, cy, 'o', 0.86);
+    shadeChar(tc, cx + 20 + Math.round(breathe), cy - 11, '>', 0.98);
+    shadeChar(tc, cx, cy, 'o', 0.90);
   }
 
   function renderGears(tc: TextCanvas, tick: number, hover: boolean) {
@@ -257,7 +238,7 @@ const demos = [
         const a = (i / 16) * Math.PI * 2 - phase * dir;
         drawLine(tc, cx, cy, Math.round(cx + Math.cos(a) * (r - 3) * 0.9), Math.round(cy + Math.sin(a) * (r - 3) * 0.55), '.', 0.20);
       }
-      glowChar(tc, cx, cy, '*', 0.92);
+      shadeChar(tc, cx, cy, '*', 0.94);
     });
     drawLine(tc, 63, 21, 72, 21, '.', 0.26);
     drawLine(tc, 66, 27, 70, 29, '.', 0.26);
@@ -275,11 +256,11 @@ const demos = [
     }
     const nodes = [[70, 5, '?'], [104, 21, '{}'], [70, 38, '>'], [36, 21, '*']];
     const active = Math.floor(tick / (hover ? 54 : 86)) % nodes.length;
-    nodes.forEach(([x, y, c], i) => i === active ? glowChar(tc, x as number, y as number, String(c), 0.95) : drawChar(tc, x as number, y as number, String(c), 0.48));
-    glowChar(tc, 93, 8, '>', 0.70);
-    glowChar(tc, 96, 31, 'v', 0.70);
-    glowChar(tc, 47, 33, '<', 0.70);
-    glowChar(tc, 44, 10, '^', 0.70);
+    nodes.forEach(([x, y, c], i) => i === active ? shadeChar(tc, x as number, y as number, String(c), 0.95) : drawChar(tc, x as number, y as number, String(c), 0.48));
+    shadeChar(tc, 93, 8, '>', 0.76);
+    shadeChar(tc, 96, 31, 'v', 0.76);
+    shadeChar(tc, 47, 33, '<', 0.76);
+    shadeChar(tc, 44, 10, '^', 0.76);
   }
 
   function renderBrain(tc: TextCanvas, tick: number, hover: boolean) {
@@ -310,7 +291,7 @@ const demos = [
       }
     });
     drawLine(tc, 70, 9, 70, 34, '|', 0.18);
-    glowChar(tc, 70, 22, '*', 0.94);
+    shadeChar(tc, 70, 22, '*', 0.94);
   }
 
   function renderHub(tc: TextCanvas, tick: number, hover: boolean) {
@@ -327,9 +308,9 @@ const demos = [
       }
       drawChar(tc, x, y, 'o', 0.68);
     });
-    glowChar(tc, cx - 1, cy, '[', 0.86);
-    glowChar(tc, cx, cy, '*', 0.98);
-    glowChar(tc, cx + 1, cy, ']', 0.86);
+    shadeChar(tc, cx - 1, cy, '[', 0.86);
+    shadeChar(tc, cx, cy, '*', 0.98);
+    shadeChar(tc, cx + 1, cy, ']', 0.86);
   }
 
   const renderers: Record<string, (tc: TextCanvas, tick: number, hover: boolean) => void> = {
@@ -340,17 +321,15 @@ const demos = [
     marketplace: renderHub,
   };
 
-  const cards = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-ascii-demo]')).map((card, index) => {
+  const cards = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-ascii-demo]')).map((card) => {
     const canvas = card.querySelector<HTMLCanvasElement>('[data-symbol-canvas]');
-    const fieldCanvas = card.querySelector<HTMLCanvasElement>('[data-card-field]');
     const tc = canvas ? setupCanvas(canvas, 138, 44) : null;
-    const field = fieldCanvas ? setupCanvas(fieldCanvas, 138, 44) : null;
     let hover = false;
     card.addEventListener('pointerenter', () => { hover = true; });
     card.addEventListener('pointerleave', () => { hover = false; });
     card.addEventListener('focus', () => { hover = true; });
     card.addEventListener('blur', () => { hover = false; });
-    return { key: card.dataset.asciiDemo ?? 'strategy', tc, field, seed: index * 17, get hover() { return hover; } };
+    return { key: card.dataset.asciiDemo ?? 'strategy', tc, get hover() { return hover; } };
   });
 
   let tick = 0;
@@ -358,7 +337,6 @@ const demos = [
     tick += 1;
     renderHero(tick);
     cards.forEach((card) => {
-      if (card.field) renderCardField(card.field, tick, card.hover, card.seed);
       if (!card.tc) return;
       renderers[card.key]?.(card.tc, tick, card.hover);
     });
@@ -374,11 +352,9 @@ const demos = [
   .ascii-stage__eyebrow { color: #818CF8; font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
   .ascii-stage h2 { margin: 14px 0; color: #F1F5F9; font-size: clamp(2.25rem, 7vw, 5.5rem); line-height: .95; letter-spacing: -.08em; }
   .ascii-stage p, .ascii-demo__note { color: #94A3B8; line-height: 1.6; }
-  .ascii-demo { display: block; position: relative; min-height: 360px; padding: 24px; text-align: left; border: 1px solid #222538; border-top-color: rgba(255,255,255,.07); border-radius: 18px; background: radial-gradient(circle at 78% 34%, rgba(129,140,248,.16), transparent 34%), radial-gradient(circle at 20% 88%, rgba(99,102,241,.08), transparent 38%), linear-gradient(145deg, rgba(255,255,255,.032), transparent 42%), #10131C; cursor: pointer; overflow: hidden; text-decoration: none; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+  .ascii-demo { display: block; position: relative; min-height: 360px; padding: 24px; text-align: left; border: 1px solid #222538; border-top-color: rgba(255,255,255,.07); border-radius: 18px; background: radial-gradient(circle at 82% 38%, rgba(99,102,241,.07), transparent 28%), linear-gradient(145deg, rgba(255,255,255,.026), transparent 42%), #13161F; cursor: pointer; overflow: hidden; text-decoration: none; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
   .ascii-demo:hover, .ascii-demo:focus-visible { transform: translateY(-3px); border-color: rgba(99,102,241,.55); box-shadow: 0 16px 42px rgba(0,0,0,.35), 0 0 32px rgba(99,102,241,.10); outline: none; }
-  .ascii-demo__backdrop { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .74; transition: opacity .2s ease, filter .2s ease; }
-  .ascii-demo__canvas { position: absolute; right: -10px; bottom: 22px; width: 72%; height: 55%; opacity: .92; transition: opacity .2s ease, filter .2s ease, transform .2s ease; }
-  .ascii-demo:hover .ascii-demo__backdrop, .ascii-demo:focus-visible .ascii-demo__backdrop { opacity: .92; filter: drop-shadow(0 0 20px rgba(129,140,248,.18)); }
+  .ascii-demo__canvas { position: absolute; right: -10px; bottom: 22px; width: 72%; height: 55%; opacity: .98; transition: opacity .2s ease, filter .2s ease, transform .2s ease; }
   .ascii-demo:hover .ascii-demo__canvas, .ascii-demo:focus-visible .ascii-demo__canvas { opacity: 1; filter: drop-shadow(0 0 20px rgba(129,140,248,.28)); transform: translateX(-4px); }
   .ascii-demo__content { position: relative; z-index: 2; display: block; }
   .ascii-demo__header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
