@@ -6,41 +6,41 @@ const demos = [
     key: 'strategy',
     mark: '/->',
     title: 'Strategy',
-    subtitle: 'Choose the path',
+    subtitle: 'Set direction',
     note: 'Market shape, positioning, tradeoffs, and where effort should go.',
-    concrete: ['market map', 'positioning', 'decision logic'],
+    concrete: ['north star', 'positioning', 'decision logic'],
   },
   {
     key: 'operations',
     mark: '[::]',
     title: 'Operations',
-    subtitle: 'Make the system run',
-    note: 'Workflows, metrics, handoffs, cadence, and execution rhythms.',
-    concrete: ['process rhythm', 'KPI loops', 'throughput'],
+    subtitle: 'Optimize the system',
+    note: 'Bottlenecks, constraints, leverage points, metrics, and better flow.',
+    concrete: ['constraints', 'leverage', 'flow'],
   },
   {
     key: 'product',
     mark: '{<>}',
     title: 'Product / Program',
-    subtitle: 'Turn ambiguity into releases',
-    note: 'Roadmaps, scoped work, feedback loops, and repeatable delivery.',
-    concrete: ['roadmap', 'scope', 'release loop'],
+    subtitle: 'Iterate to release',
+    note: 'Discovery, build, test, ship, learn, and repeatable delivery.',
+    concrete: ['discover', 'build/test', 'ship/learn'],
   },
   {
     key: 'automation',
     mark: '>*_',
     title: 'AI Automation',
-    subtitle: 'Reduce operational drag',
-    note: 'Agents, memory, queues, analytics, and useful automated action.',
-    concrete: ['agent mesh', 'memory', 'evaluation'],
+    subtitle: 'Think with machines',
+    note: 'Agents, memory, reasoning paths, analytics, and useful automated action.',
+    concrete: ['neurons', 'memory', 'reasoning'],
   },
   {
     key: 'marketplace',
     mark: '&lt;=&gt;',
-    title: 'Marketplace',
-    subtitle: 'Balance both sides',
-    note: 'Producer supply, buyer demand, hubs, incentives, and local growth loops.',
-    concrete: ['supply', 'demand', 'exchange'],
+    title: 'Stakeholder Networks',
+    subtitle: 'Align the network',
+    note: 'Stakeholders, hubs, relationships, trust, influence, and coordinated action.',
+    concrete: ['hub/spoke', 'alignment', 'influence'],
   },
 ];
 ---
@@ -54,7 +54,7 @@ const demos = [
       <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Visual system spike</p>
       <h1 class="text-4xl md:text-6xl font-bold text-[#F1F5F9] leading-tight mb-5">ASCII motion lab</h1>
       <p class="text-[#94A3B8] text-lg leading-relaxed">
-        The hero field is close. This version keeps the card copy concrete, while the animation layer becomes mostly wordless: visual sigils, orbiting fields, pulses, and abstract motion that supports rather than explains.
+        The hero field is close. This version locks a clearer symbol for each skill: compass, optimization curve, iteration loop, neural field, and stakeholder hub-spoke network.
       </p>
     </div>
 
@@ -157,85 +157,109 @@ const demos = [
   function toText(grid: string[][]) {
     return grid.map((row) => row.join('')).join('\n');
   }
-  function drawStrategy(symbolTick: number, active: number) {
-    const grid = emptyGrid(30, 10);
-    const cx = 15, cy = 5;
-    for (let i = 0; i < 32; i += 1) {
-      const angle = (i / 32) * Math.PI * 2 + symbolTick * 0.025;
-      const r = 2.5 + (i % 4) * 0.9 + active * 0.25;
-      put(grid, Math.round(cx + Math.cos(angle) * r * 1.45), Math.round(cy + Math.sin(angle) * r * 0.75), i % 8 === 0 ? '*' : '.');
+  function drawStrategy(symbolTick: number, _active: number) {
+    const grid = emptyGrid(32, 11);
+    const cx = 16, cy = 5;
+    const phase = symbolTick * 0.045;
+    // compass ring
+    for (let i = 0; i < 40; i += 1) {
+      const angle = (i / 40) * Math.PI * 2;
+      const x = Math.round(cx + Math.cos(angle) * 9.5);
+      const y = Math.round(cy + Math.sin(angle) * 4.2);
+      put(grid, x, y, i % 5 === 0 ? '+' : '.');
     }
-    const sweep = Math.sin(symbolTick * 0.06) * 7;
-    for (let i = -8; i <= 8; i += 1) put(grid, Math.round(cx + i), Math.round(cy - i * 0.28), i === 0 ? 'o' : '-');
-    put(grid, Math.round(cx + sweep), cy - 3, '/');
-    put(grid, Math.round(cx + sweep) + 1, cy - 3, '-');
-    put(grid, Math.round(cx + sweep) + 2, cy - 3, '>');
-    put(grid, cx, 1, '^'); put(grid, 27, cy, '>'); put(grid, cx, 9, 'v'); put(grid, 2, cy, '<');
+    // cardinal marks
+    put(grid, cx, 0, '^'); put(grid, cx, 10, 'v'); put(grid, 4, cy, '<'); put(grid, 28, cy, '>');
+    // steady north-east needle, slight intentional breathing
+    const tipX = 22 + Math.round(Math.sin(phase) * 1);
+    const tipY = 2;
+    const tailX = 10 - Math.round(Math.sin(phase) * 1);
+    const tailY = 8;
+    const dx = tipX - tailX;
+    const dy = tipY - tailY;
+    const steps = Math.max(Math.abs(dx), Math.abs(dy));
+    for (let i = 0; i <= steps; i += 1) {
+      const x = Math.round(tailX + (dx * i) / steps);
+      const y = Math.round(tailY + (dy * i) / steps);
+      put(grid, x, y, i === steps ? '>' : i === 0 ? '<' : '/');
+    }
+    put(grid, cx, cy, 'o');
     return toText(grid);
   }
   function drawOperations(symbolTick: number, active: number) {
-    const grid = emptyGrid(30, 10);
-    for (let x = 3; x < 28; x += 4) {
-      for (let y = 2; y < 9; y += 3) {
-        const phase = (x + y + symbolTick + active * 4) % 12;
-        put(grid, x, y, phase < 6 ? '[' : ']');
-        put(grid, x + 1, y, phase < 3 ? ':' : phase < 7 ? '.' : '+');
-        put(grid, x + 2, y, phase < 6 ? ']' : '[');
+    const grid = emptyGrid(32, 11);
+    const shift = Math.floor(symbolTick / 6) % 4;
+    // descending optimization contour / frontier
+    const points = [[3,8],[6,7],[9,7],[12,5],[15,5],[18,4],[21,3],[25,3],[29,2]];
+    points.forEach(([x,y], i) => {
+      put(grid, x, y, i === points.length - 1 ? '>' : '*');
+      if (i > 0) {
+        const [px, py] = points[i - 1];
+        const steps = Math.max(Math.abs(x - px), Math.abs(y - py));
+        for (let j = 1; j < steps; j += 1) put(grid, Math.round(px + ((x - px) * j) / steps), Math.round(py + ((y - py) * j) / steps), '-');
       }
+    });
+    // constraints tighten/relax around the path
+    for (let i = 0; i < 5; i += 1) {
+      const x = 5 + i * 5;
+      const top = 1 + ((i + shift + active) % 2);
+      const bottom = 9 - ((i + shift) % 2);
+      put(grid, x, top, '['); put(grid, x + 1, top, ']');
+      put(grid, x, bottom, '['); put(grid, x + 1, bottom, ']');
     }
-    for (let y = 1; y < 9; y += 2) {
-      for (let x = 1; x < 29; x += 1) {
-        if ((x + y + symbolTick) % 9 < 4) put(grid, x, y, x % 5 === 0 ? '+' : '-');
-      }
-    }
+    put(grid, 2, 9, '+'); put(grid, 29, 1, '+');
     return toText(grid);
   }
   function drawProduct(symbolTick: number, active: number) {
-    const grid = emptyGrid(30, 10);
-    const cx = 15, cy = 5;
-    const chars = ['{', '<', '*', '>', '}'];
-    for (let ring = 0; ring < 2; ring += 1) {
-      for (let i = 0; i < 20; i += 1) {
-        const angle = (i / 20) * Math.PI * 2 + symbolTick * (ring ? -0.025 : 0.035);
-        const rx = 5 + ring * 4 + active * 0.35;
-        const ry = 2 + ring * 1.2;
-        put(grid, Math.round(cx + Math.cos(angle) * rx), Math.round(cy + Math.sin(angle) * ry), chars[(i + ring) % chars.length]);
-      }
+    const grid = emptyGrid(32, 11);
+    const cx = 16, cy = 5;
+    const nodes = [[16,1,'?'],[25,5,'{'],[16,9,'>'],[7,5,'*']];
+    // cycle path
+    for (let i = 0; i < 44; i += 1) {
+      const angle = (i / 44) * Math.PI * 2 - symbolTick * 0.035;
+      put(grid, Math.round(cx + Math.cos(angle) * 9), Math.round(cy + Math.sin(angle) * 4), i % 11 === 0 ? '+' : '.');
     }
-    put(grid, cx - 2, cy, '{'); put(grid, cx - 1, cy, '<'); put(grid, cx, cy, '*'); put(grid, cx + 1, cy, '>'); put(grid, cx + 2, cy, '}');
+    nodes.forEach(([x,y,c], i) => put(grid, x as number, y as number, (Math.floor(symbolTick / 10) + active) % 4 === i ? String(c) : 'o'));
+    put(grid, 22, 2, '>'); put(grid, 24, 7, 'v'); put(grid, 9, 8, '<'); put(grid, 7, 3, '^');
+    put(grid, cx - 1, cy, '{'); put(grid, cx, cy, '}');
     return toText(grid);
   }
   function drawAutomation(symbolTick: number, active: number) {
-    const grid = emptyGrid(30, 10);
-    const cx = 15, cy = 5;
-    const points = [[5,2],[11,1],[20,2],[24,5],[20,8],[10,8],[5,6],[15,5]];
-    points.forEach(([x,y], i) => {
-      const pulse = (symbolTick + i * 5 + active * 4) % 24;
-      put(grid, x, y, pulse < 8 ? '*' : pulse < 15 ? 'o' : '.');
-      if (pulse < 13) {
-        const mx = Math.round((x + cx) / 2);
-        const my = Math.round((y + cy) / 2);
-        put(grid, mx, my, pulse < 6 ? '+' : '.');
+    const grid = emptyGrid(32, 11);
+    const cx = 16, cy = 5;
+    // two lobes of a brain/neural field
+    for (let i = 0; i < 34; i += 1) {
+      const angle = (i / 34) * Math.PI * 2;
+      put(grid, Math.round(12 + Math.cos(angle) * 5), Math.round(cy + Math.sin(angle) * 3.6), i % 6 === 0 ? 'o' : '.');
+      put(grid, Math.round(20 + Math.cos(-angle) * 5), Math.round(cy + Math.sin(-angle) * 3.6), i % 6 === 0 ? 'o' : '.');
+    }
+    const neurons = [[9,3],[13,2],[17,4],[22,3],[11,7],[16,8],[22,7],[16,5]];
+    neurons.forEach(([x,y], i) => {
+      const pulse = (symbolTick + i * 4 + active * 5) % 24;
+      put(grid, x, y, pulse < 8 ? '*' : 'o');
+      if (pulse < 12) {
+        put(grid, Math.round((x + cx) / 2), Math.round((y + cy) / 2), pulse < 6 ? '+' : '.');
       }
     });
-    put(grid, cx - 1, cy, '>'); put(grid, cx, cy, '*'); put(grid, cx + 1, cy, '_');
-    for (let i = 0; i < 18; i += 1) {
-      const angle = (i / 18) * Math.PI * 2 - symbolTick * 0.03;
-      put(grid, Math.round(cx + Math.cos(angle) * 3), Math.round(cy + Math.sin(angle) * 1.5), i % 6 === 0 ? ':' : '.');
-    }
+    put(grid, cx, cy, '*'); put(grid, cx - 1, cy, '<'); put(grid, cx + 1, cy, '>');
     return toText(grid);
   }
   function drawMarketplace(symbolTick: number, active: number) {
-    const grid = emptyGrid(30, 10);
-    const left = [8, 5], right = [22, 5], cx = 15, cy = 5;
-    for (let i = 0; i < 28; i += 1) {
-      const angle = (i / 28) * Math.PI * 2 + symbolTick * 0.025;
-      put(grid, Math.round(left[0] + Math.cos(angle) * 4), Math.round(left[1] + Math.sin(angle) * 2.2), i % 7 === 0 ? 'o' : '.');
-      put(grid, Math.round(right[0] + Math.cos(-angle) * 4), Math.round(right[1] + Math.sin(-angle) * 2.2), i % 7 === 0 ? 'o' : '.');
-    }
-    '<==>'.split('').forEach((c, i) => put(grid, 13 + i, cy, c));
-    put(grid, cx + Math.round(Math.sin(symbolTick * 0.08) * (2 + active)), cy, '*');
-    put(grid, left[0], left[1], '<'); put(grid, right[0], right[1], '>');
+    const grid = emptyGrid(32, 11);
+    const cx = 16, cy = 5;
+    const spokes = [[16,1],[27,3],[26,8],[16,10],[6,8],[5,3]];
+    spokes.forEach(([x,y], i) => {
+      const pulse = (symbolTick + i * 5 + active * 4) % 30;
+      const dx = x - cx;
+      const dy = y - cy;
+      const steps = Math.max(Math.abs(dx), Math.abs(dy));
+      for (let j = 1; j < steps; j += 1) {
+        const char = j === Math.floor((pulse / 30) * steps) ? '*' : '.';
+        put(grid, Math.round(cx + (dx * j) / steps), Math.round(cy + (dy * j) / steps), char);
+      }
+      put(grid, x, y, pulse < 10 ? '*' : 'o');
+    });
+    put(grid, cx - 1, cy, '['); put(grid, cx, cy, '*'); put(grid, cx + 1, cy, ']');
     return toText(grid);
   }
   function renderSymbol(kind: string, symbolTick: number, active: number) {
