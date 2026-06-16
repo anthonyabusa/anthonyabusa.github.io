@@ -52,49 +52,44 @@ const demos = [
 
 <BaseLayout
   title="ASCII Motion Lab"
-  description="Interactive ASCII motion directions for Anthony Busa's portfolio symbol and graphics system."
+  description="High-resolution textmode motion directions for Anthony Busa's portfolio symbol and graphics system."
 >
   <section class="max-w-6xl mx-auto px-6 pt-32 pb-24">
     <div class="max-w-3xl mb-12">
       <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Visual system spike</p>
       <h1 class="text-4xl md:text-6xl font-bold text-[#F1F5F9] leading-tight mb-5">ASCII motion lab</h1>
       <p class="text-[#94A3B8] text-lg leading-relaxed">
-        The hero field is close. This version locks a clearer symbol for each skill: compass, optimization curve, iteration loop, neural field, and stakeholder hub-spoke network.
+        This pass moves the symbols from low-res terminal doodles into higher-resolution textmode canvases. The hero is now an ambient signal field, not a literal tracker trying to hit skill labels.
       </p>
     </div>
 
     <div class="ascii-stage mb-10" data-ascii-stage>
+      <canvas class="ascii-stage__canvas" data-hero-canvas width="980" height="430" aria-hidden="true"></canvas>
       <div class="ascii-stage__copy">
         <span class="ascii-stage__eyebrow">hero candidate</span>
         <h2>systems in motion</h2>
-        <p>Move your cursor through the field. The signal follows, but stays quiet enough to sit behind real copy.</p>
+        <p>Move your cursor through the field. The graphic responds as an ambient signal layer, not a literal target tracker.</p>
       </div>
-      <pre class="ascii-stage__field" data-ascii-field aria-hidden="true">+------------------------------------------------+
-| strategy      ops      agents      market      |
-|                                                |
-|    . . .      . . .      . . .      . . .      |
-|      \          |          |          /        |
-|       +---------+----------+---------+         |
-|                 signal: idle                   |
-+------------------------------------------------+</pre>
     </div>
 
     <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
       {demos.map((demo) => (
         <a class={`ascii-demo ascii-demo--${demo.key}`} href={demo.href} data-ascii-demo={demo.key} aria-label={`View ${demo.title} work: ${demo.note}`}>
-          <span class="ascii-demo__header">
-            <span class="ascii-demo__mark" aria-hidden="true" set:html={demo.mark} />
-            <span>
-              <span class="ascii-demo__title">{demo.title}</span>
-              <span class="ascii-demo__subtitle">{demo.subtitle}</span>
+          <canvas class="ascii-demo__canvas" data-symbol-canvas={demo.key} width="420" height="260" aria-hidden="true"></canvas>
+          <span class="ascii-demo__content">
+            <span class="ascii-demo__header">
+              <span class="ascii-demo__mark" aria-hidden="true" set:html={demo.mark} />
+              <span>
+                <span class="ascii-demo__title">{demo.title}</span>
+                <span class="ascii-demo__subtitle">{demo.subtitle}</span>
+              </span>
             </span>
+            <span class="ascii-demo__note">{demo.note}</span>
+            <span class="ascii-demo__chips" aria-label={`${demo.title} examples`}>
+              {demo.concrete.map((item) => <span>{item}</span>)}
+            </span>
+            <span class="ascii-demo__cta">View related work →</span>
           </span>
-          <span class="ascii-demo__note">{demo.note}</span>
-          <span class="ascii-demo__chips" aria-label={`${demo.title} examples`}>
-            {demo.concrete.map((item) => <span>{item}</span>)}
-          </span>
-          <pre class="ascii-demo__frame" aria-hidden="true" data-symbol-frame={demo.key}></pre>
-          <span class="ascii-demo__cta">View related work →</span>
         </a>
       ))}
     </div>
@@ -103,36 +98,58 @@ const demos = [
 
 <script>
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const density = [' ', '.', ':', '+', '*', '#'];
+  const glyphs = ['.', ':', '+', '*', '#'];
 
-  function renderField(x: number, y: number, tick: number) {
-    const rows = ['+------------------------------------------------+'];
-    const labels = ['strategy', 'ops', 'agents', 'market'];
-    rows.push('| ' + labels.map((label) => label.padEnd(10, ' ')).join('  ') + ' |');
-    for (let row = 0; row < 8; row += 1) {
-      let line = '| ';
-      for (let col = 0; col < 46; col += 1) {
-        const dx = col / 46 - x;
-        const dy = row / 8 - y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const wave = Math.sin(col * 0.55 + row * 1.1 + tick * 0.15);
-        const index = Math.max(0, Math.min(density.length - 1, Math.floor((1 - dist * 2.5 + wave * 0.35) * density.length)));
-        const node = (col + row * 7 + tick) % 31 === 0;
-        line += node ? 'o' : density[index];
-      }
-      line += ' |';
-      rows.push(line);
-    }
-    rows.push('|                 signal: tracking              |');
-    rows.push('+------------------------------------------------+');
-    return rows.join('\n');
+  type TextCanvas = {
+    canvas: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
+    cols: number;
+    rows: number;
+    cw: number;
+    ch: number;
+  };
+
+  function setupCanvas(canvas: HTMLCanvasElement, cols: number, rows: number): TextCanvas | null {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+    const dpr = window.devicePixelRatio || 1;
+    const cssWidth = canvas.width;
+    const cssHeight = canvas.height;
+    canvas.width = Math.floor(cssWidth * dpr);
+    canvas.height = Math.floor(cssHeight * dpr);
+    canvas.style.width = `${cssWidth}px`;
+    canvas.style.height = `${cssHeight}px`;
+    ctx.scale(dpr, dpr);
+    ctx.font = '10px "JetBrains Mono", ui-monospace, monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    return { canvas, ctx, cols, rows, cw: cssWidth / cols, ch: cssHeight / rows };
   }
 
-  const stage = document.querySelector('[data-ascii-stage]');
-  const field = document.querySelector('[data-ascii-field]');
-  let pointer = { x: 0.5, y: 0.5 };
-  let tick = 0;
+  function clear(tc: TextCanvas, alpha = 0.08) {
+    tc.ctx.clearRect(0, 0, tc.canvas.width, tc.canvas.height);
+    tc.ctx.fillStyle = `rgba(11, 13, 20, ${alpha})`;
+    tc.ctx.fillRect(0, 0, Number.parseFloat(tc.canvas.style.width), Number.parseFloat(tc.canvas.style.height));
+  }
 
+  function drawChar(tc: TextCanvas, col: number, row: number, char: string, opacity = 0.72, color = '165,180,252') {
+    if (col < 0 || row < 0 || col >= tc.cols || row >= tc.rows) return;
+    tc.ctx.fillStyle = `rgba(${color}, ${opacity})`;
+    tc.ctx.fillText(char, (col + 0.5) * tc.cw, (row + 0.5) * tc.ch);
+  }
+
+  function drawLine(tc: TextCanvas, x1: number, y1: number, x2: number, y2: number, char = '.', opacity = 0.55) {
+    const steps = Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1), 1);
+    for (let i = 0; i <= steps; i += 1) {
+      const t = i / steps;
+      drawChar(tc, Math.round(x1 + (x2 - x1) * t), Math.round(y1 + (y2 - y1) * t), char, opacity);
+    }
+  }
+
+  const heroCanvas = document.querySelector<HTMLCanvasElement>('[data-hero-canvas]');
+  const hero = heroCanvas ? setupCanvas(heroCanvas, 88, 32) : null;
+  const stage = document.querySelector('[data-ascii-stage]');
+  let pointer = { x: 0.62, y: 0.42 };
   stage?.addEventListener('pointermove', (event) => {
     const pointerEvent = event as PointerEvent;
     const rect = stage.getBoundingClientRect();
@@ -142,180 +159,192 @@ const demos = [
     };
   });
 
-  function animateStage() {
-    if (!prefersReduced && field) {
-      tick += 1;
-      field.textContent = renderField(pointer.x, pointer.y, tick);
-      window.requestAnimationFrame(animateStage);
+  function renderHero(tick: number) {
+    if (!hero) return;
+    clear(hero, 0.02);
+    const px = pointer.x * hero.cols;
+    const py = pointer.y * hero.rows;
+    for (let y = 0; y < hero.rows; y += 1) {
+      for (let x = 0; x < hero.cols; x += 1) {
+        const dx = x - px;
+        const dy = (y - py) * 1.8;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const wave = Math.sin(x * 0.18 + y * 0.34 + tick * 0.025);
+        const signal = Math.max(0, 1 - dist / 34) + wave * 0.22;
+        if (signal < 0.16 && (x + y + tick) % 19 !== 0) continue;
+        const gi = Math.max(0, Math.min(glyphs.length - 1, Math.floor(signal * glyphs.length)));
+        drawChar(hero, x, y, glyphs[gi], 0.18 + Math.max(0, signal) * 0.55);
+      }
     }
+    // designed signal paths, not label tracking
+    const centers = [[16, 22], [32, 12], [51, 18], [70, 9]];
+    centers.forEach(([x, y], i) => {
+      drawLine(hero, Math.round(px), Math.round(py), x, y, i % 2 ? ':' : '.', 0.22);
+      drawChar(hero, x, y, i % 2 ? 'o' : '+', 0.64);
+    });
   }
-  animateStage();
 
-  const symbolFrames = document.querySelectorAll('[data-symbol-frame]');
+  function renderCompass(tc: TextCanvas, tick: number, hover: boolean) {
+    clear(tc, 0.03);
+    const cx = 57, cy = 18;
+    const scale = hover ? 1.06 : 1;
+    for (let i = 0; i < 160; i += 1) {
+      const a = (i / 160) * Math.PI * 2;
+      const r = 13 * scale;
+      const x = Math.round(cx + Math.cos(a) * r * 1.25);
+      const y = Math.round(cy + Math.sin(a) * r * 0.72);
+      drawChar(tc, x, y, i % 20 === 0 ? '+' : '.', i % 20 === 0 ? 0.72 : 0.28);
+    }
+    drawChar(tc, cx, cy - 12, '^', 0.75);
+    drawChar(tc, cx, cy + 12, 'v', 0.45);
+    drawChar(tc, cx - 20, cy, '<', 0.45);
+    drawChar(tc, cx + 20, cy, '>', 0.55);
+    const breathe = Math.sin(tick * 0.018) * 1.5;
+    drawLine(tc, cx - 12, cy + 7, cx + 13 + breathe, cy - 7, '/', 0.66);
+    drawChar(tc, cx + 14 + Math.round(breathe), cy - 8, '>', 0.94, '241,245,249');
+    drawChar(tc, cx, cy, 'o', 0.82, '241,245,249');
+  }
 
-  function emptyGrid(width: number, height: number) {
-    return Array.from({ length: height }, () => Array.from({ length: width }, () => ' '));
+  function renderGears(tc: TextCanvas, tick: number, hover: boolean) {
+    clear(tc, 0.03);
+    const phase = tick * (hover ? 0.045 : 0.028);
+    const gears = [[47, 18, 10, 1], [68, 18, 9, -1], [58, 27, 6, -1]];
+    gears.forEach(([cx, cy, r, dir]) => {
+      for (let i = 0; i < 32; i += 1) {
+        const a = (i / 32) * Math.PI * 2 + phase * dir;
+        const tooth = i % 4 === 0;
+        const rr = r + (tooth ? 2 : 0);
+        drawChar(tc, Math.round(cx + Math.cos(a) * rr * 1.15), Math.round(cy + Math.sin(a) * rr * 0.72), tooth ? '+' : '.', tooth ? 0.78 : 0.34);
+      }
+      for (let i = 0; i < 12; i += 1) {
+        const a = (i / 12) * Math.PI * 2 - phase * dir;
+        drawLine(tc, cx, cy, Math.round(cx + Math.cos(a) * (r - 2) * 0.85), Math.round(cy + Math.sin(a) * (r - 2) * 0.52), '.', 0.22);
+      }
+      drawChar(tc, cx, cy, '*', 0.9, '241,245,249');
+    });
   }
-  function put(grid: string[][], x: number, y: number, char: string) {
-    if (grid[y] && grid[y][x] !== undefined) grid[y][x] = char;
-  }
-  function toText(grid: string[][]) {
-    return grid.map((row) => row.join('')).join('\n');
-  }
-  function drawStrategy(symbolTick: number, _hover: number) {
-    const grid = emptyGrid(32, 11);
-    const cx = 16, cy = 5;
-    const phase = symbolTick * 0.028;
-    for (let i = 0; i < 40; i += 1) {
-      const angle = (i / 40) * Math.PI * 2;
-      put(grid, Math.round(cx + Math.cos(angle) * 9.5), Math.round(cy + Math.sin(angle) * 4.2), i % 5 === 0 ? '+' : '.');
+
+  function renderLoop(tc: TextCanvas, tick: number, hover: boolean) {
+    clear(tc, 0.03);
+    const cx = 58, cy = 18;
+    const speed = hover ? 0.016 : 0.009;
+    for (let i = 0; i < 180; i += 1) {
+      const a = (i / 180) * Math.PI * 2 - tick * speed;
+      const x = Math.round(cx + Math.cos(a) * 23);
+      const y = Math.round(cy + Math.sin(a) * 10);
+      drawChar(tc, x, y, i % 30 === 0 ? '+' : '.', i % 30 === 0 ? 0.68 : 0.28);
     }
-    put(grid, cx, 0, '^'); put(grid, cx, 10, 'v'); put(grid, 4, cy, '<'); put(grid, 28, cy, '>');
-    const breathe = Math.round(Math.sin(phase) * 1);
-    const tailX = 10 - breathe, tailY = 8;
-    const tipX = 23 + breathe, tipY = 2;
-    const steps = 14;
-    for (let i = 0; i <= steps; i += 1) {
-      const x = Math.round(tailX + ((tipX - tailX) * i) / steps);
-      const y = Math.round(tailY + ((tipY - tailY) * i) / steps);
-      put(grid, x, y, i === steps ? '>' : i === 0 ? '<' : '/');
-    }
-    put(grid, cx, cy, 'o');
-    return toText(grid);
+    const nodes = [[58, 6, '?'], [84, 18, '{}'], [58, 30, '>'], [32, 18, '*']];
+    const active = Math.floor(tick / (hover ? 40 : 70)) % nodes.length;
+    nodes.forEach(([x, y, c], i) => drawChar(tc, x as number, y as number, String(c), active === i ? 0.95 : 0.55, active === i ? '241,245,249' : '165,180,252'));
+    drawChar(tc, 76, 9, '>', 0.75);
+    drawChar(tc, 78, 25, 'v', 0.75);
+    drawChar(tc, 38, 27, '<', 0.75);
+    drawChar(tc, 36, 11, '^', 0.75);
   }
-  function drawOperations(symbolTick: number, hover: number) {
-    const grid = emptyGrid(32, 11);
-    const phase = Math.floor(symbolTick / (hover ? 10 : 16));
-    function gear(cx: number, cy: number, r: number, offset: number) {
-      const teeth = [[0,-r,'^'],[r,0,'>'],[0,r,'v'],[-r,0,'<'],[r-1,-r+1,'+'],[r-1,r-1,'+'],[-r+1,r-1,'+'],[-r+1,-r+1,'+']];
-      teeth.forEach((_, i) => {
-        const rotate = (i + phase + offset) % teeth.length;
-        const [rdx, rdy, rc] = teeth[rotate];
-        put(grid, cx + Number(rdx), cy + Number(rdy), String(rc));
-      });
-      put(grid, cx - 1, cy - 1, '/'); put(grid, cx + 1, cy - 1, '\\');
-      put(grid, cx - 1, cy + 1, '\\'); put(grid, cx + 1, cy + 1, '/');
-      put(grid, cx, cy, '*');
+
+  function renderBrain(tc: TextCanvas, tick: number, hover: boolean) {
+    clear(tc, 0.03);
+    const cx = 58;
+    const pulse = Math.floor(tick / (hover ? 16 : 26)) % 8;
+    for (let i = 0; i < 110; i += 1) {
+      const a = (i / 110) * Math.PI * 2;
+      const leftX = Math.round(cx - 7 + Math.cos(a) * 14);
+      const rightX = Math.round(cx + 9 + Math.cos(-a) * 14);
+      const y = Math.round(18 + Math.sin(a) * 11);
+      drawChar(tc, leftX, y, i % 11 === 0 ? 'o' : '.', i % 11 === 0 ? 0.58 : 0.24);
+      drawChar(tc, rightX, y, i % 11 === 0 ? 'o' : '.', i % 11 === 0 ? 0.58 : 0.24);
     }
-    gear(10, 5, 4, 0);
-    gear(21, 5, 4, 4);
-    gear(16, 8, 2, 2);
-    for (let x = 14; x <= 17; x += 1) put(grid, x, 5, phase % 2 ? '.' : '*');
-    for (let x = 16; x <= 19; x += 1) put(grid, x, 7, phase % 2 ? '*' : '.');
-    return toText(grid);
-  }
-  function drawProduct(symbolTick: number, hover: number) {
-    const grid = emptyGrid(32, 11);
-    const cx = 16, cy = 5;
-    const speed = hover ? 0.018 : 0.010;
-    const progress = symbolTick * speed;
-    for (let i = 0; i < 44; i += 1) {
-      const angle = (i / 44) * Math.PI * 2 - progress;
-      put(grid, Math.round(cx + Math.cos(angle) * 9), Math.round(cy + Math.sin(angle) * 4), i % 11 === 0 ? '+' : '.');
-    }
-    const nodes = [[16,1,'?'],[25,5,'{'],[16,9,'>'],[7,5,'*']];
-    const active = Math.floor(symbolTick / (hover ? 28 : 48)) % nodes.length;
-    nodes.forEach(([x,y,c], i) => put(grid, x as number, y as number, active === i ? String(c) : 'o'));
-    put(grid, 22, 2, '>'); put(grid, 24, 7, 'v'); put(grid, 9, 8, '<'); put(grid, 7, 3, '^');
-    put(grid, cx - 1, cy, '('); put(grid, cx, cy, '*'); put(grid, cx + 1, cy, ')');
-    return toText(grid);
-  }
-  function drawAutomation(symbolTick: number, hover: number) {
-    const grid = emptyGrid(32, 11);
-    const pulse = Math.floor(symbolTick / (hover ? 9 : 15)) % 6;
-    // clearer brain silhouette: two lobes + stem, with subtle internal thought pulse
-    const outline = [
-      [12,1],[10,2],[9,3],[8,5],[9,7],[11,8],[14,8],
-      [16,7],[18,8],[21,8],[23,7],[24,5],[23,3],[22,2],[20,1],[17,2],[16,3],[15,2]
-    ];
-    outline.forEach(([x,y], i) => put(grid, x, y, i % 4 === 0 ? 'o' : '.'));
-    // central fold
-    for (let y = 3; y <= 7; y += 1) put(grid, 16, y, y === 5 ? '*' : '|');
-    // gyri / thought lines
     const folds = [
-      [[11,3],[13,3],[14,4]],
-      [[19,3],[21,3],[22,4]],
-      [[10,6],[12,6],[13,5]],
-      [[19,6],[21,6],[22,5]],
-      [[13,7],[15,7],[17,7],[19,7]],
+      [[45, 12], [52, 10], [57, 14]],
+      [[61, 13], [68, 10], [75, 13]],
+      [[42, 20], [50, 19], [56, 17]],
+      [[62, 21], [70, 19], [78, 22]],
+      [[50, 26], [58, 24], [67, 26]],
     ];
     folds.forEach((line, i) => {
-      line.forEach(([x,y], j) => put(grid, x, y, (pulse + i) % 6 === j ? '*' : '~'));
-    });
-    put(grid, 15, 9, '\\'); put(grid, 16, 9, '|'); put(grid, 17, 9, '/');
-    return toText(grid);
-  }
-  function drawMarketplace(symbolTick: number, hover: number) {
-    const grid = emptyGrid(32, 11);
-    const cx = 16, cy = 5;
-    const spokes = [[16,1],[27,3],[26,8],[16,10],[6,8],[5,3]];
-    spokes.forEach(([x,y], i) => {
-      const dx = x - cx;
-      const dy = y - cy;
-      const steps = Math.max(Math.abs(dx), Math.abs(dy));
-      const outbound = (Math.floor(symbolTick / (hover ? 5 : 8)) + i) % (steps * 2);
-      const pos = outbound < steps ? outbound : (steps * 2 - outbound);
-      for (let j = 1; j < steps; j += 1) {
-        const char = j === pos ? '*' : '.';
-        put(grid, Math.round(cx + (dx * j) / steps), Math.round(cy + (dy * j) / steps), char);
+      for (let j = 1; j < line.length; j += 1) {
+        const [x1, y1] = line[j - 1];
+        const [x2, y2] = line[j];
+        drawLine(tc, x1, y1, x2, y2, i === pulse % folds.length ? '*' : '.', i === pulse % folds.length ? 0.78 : 0.38);
       }
-      put(grid, x, y, 'o');
     });
-    put(grid, cx - 1, cy, '['); put(grid, cx, cy, '*'); put(grid, cx + 1, cy, ']');
-    return toText(grid);
-  }
-  function renderSymbol(kind: string, symbolTick: number, hover: number) {
-    if (kind === 'strategy') return drawStrategy(symbolTick, hover);
-    if (kind === 'operations') return drawOperations(symbolTick, hover);
-    if (kind === 'product') return drawProduct(symbolTick, hover);
-    if (kind === 'automation') return drawAutomation(symbolTick, hover);
-    return drawMarketplace(symbolTick, hover);
+    drawLine(tc, 58, 9, 58, 28, '|', 0.22);
+    drawChar(tc, 58, 19, '*', 0.95, '241,245,249');
   }
 
-  const hoverState = new WeakMap<Element, number>();
-  document.querySelectorAll('[data-ascii-demo]').forEach((demo) => {
-    hoverState.set(demo, 0);
-    demo.addEventListener('pointerenter', () => hoverState.set(demo, 1));
-    demo.addEventListener('pointerleave', () => hoverState.set(demo, 0));
-    demo.addEventListener('focus', () => hoverState.set(demo, 1));
-    demo.addEventListener('blur', () => hoverState.set(demo, 0));
+  function renderHub(tc: TextCanvas, tick: number, hover: boolean) {
+    clear(tc, 0.03);
+    const cx = 58, cy = 18;
+    const spokes = [[58, 4], [88, 9], [84, 29], [58, 33], [32, 28], [28, 8]];
+    spokes.forEach(([x, y], i) => {
+      const steps = Math.max(Math.abs(x - cx), Math.abs(y - cy));
+      const cycle = (tick * (hover ? 0.28 : 0.18) + i * 5) % (steps * 2);
+      const pos = cycle < steps ? cycle : steps * 2 - cycle;
+      for (let j = 1; j < steps; j += 1) {
+        const active = Math.abs(j - pos) < 1.2;
+        drawChar(tc, Math.round(cx + ((x - cx) * j) / steps), Math.round(cy + ((y - cy) * j) / steps), active ? '*' : '.', active ? 0.86 : 0.28);
+      }
+      drawChar(tc, x, y, 'o', 0.72);
+    });
+    drawChar(tc, cx - 1, cy, '[', 0.86, '241,245,249');
+    drawChar(tc, cx, cy, '*', 0.96, '241,245,249');
+    drawChar(tc, cx + 1, cy, ']', 0.86, '241,245,249');
+  }
+
+  const renderers: Record<string, (tc: TextCanvas, tick: number, hover: boolean) => void> = {
+    strategy: renderCompass,
+    operations: renderGears,
+    product: renderLoop,
+    automation: renderBrain,
+    marketplace: renderHub,
+  };
+
+  const cards = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-ascii-demo]')).map((card) => {
+    const canvas = card.querySelector<HTMLCanvasElement>('[data-symbol-canvas]');
+    const tc = canvas ? setupCanvas(canvas, 116, 38) : null;
+    let hover = false;
+    card.addEventListener('pointerenter', () => { hover = true; });
+    card.addEventListener('pointerleave', () => { hover = false; });
+    card.addEventListener('focus', () => { hover = true; });
+    card.addEventListener('blur', () => { hover = false; });
+    return { key: card.dataset.asciiDemo ?? 'strategy', tc, get hover() { return hover; } };
   });
 
-  let symbolTick = 0;
-  function animateSymbols() {
-    symbolTick += 1;
-    symbolFrames.forEach((frame) => {
-      const kind = frame.getAttribute('data-symbol-frame') ?? 'strategy';
-      const demo = frame.closest('[data-ascii-demo]');
-      const hover = demo ? (hoverState.get(demo) ?? 0) : 0;
-      frame.textContent = renderSymbol(kind, symbolTick, hover);
+  let tick = 0;
+  function animate() {
+    tick += 1;
+    renderHero(tick);
+    cards.forEach((card) => {
+      if (!card.tc) return;
+      renderers[card.key]?.(card.tc, tick, card.hover);
     });
-    if (!prefersReduced) window.requestAnimationFrame(animateSymbols);
+    if (!prefersReduced) window.requestAnimationFrame(animate);
   }
-  animateSymbols();
+  animate();
 </script>
 
 <style>
   .ascii-stage { position: relative; overflow: hidden; min-height: 360px; border: 1px solid #222538; border-top-color: rgba(255,255,255,.07); border-radius: 24px; background: radial-gradient(circle at 60% 35%, rgba(99,102,241,.18), transparent 34%), #10131C; box-shadow: 0 18px 70px rgba(0,0,0,.35); }
+  .ascii-stage__canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .9; }
   .ascii-stage__copy { position: relative; z-index: 2; max-width: 430px; padding: 38px; }
-  .ascii-stage__eyebrow, .ascii-demo__status { color: #818CF8; font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+  .ascii-stage__eyebrow { color: #818CF8; font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
   .ascii-stage h2 { margin: 14px 0; color: #F1F5F9; font-size: clamp(2.25rem, 7vw, 5.5rem); line-height: .95; letter-spacing: -.08em; }
   .ascii-stage p, .ascii-demo__note { color: #94A3B8; line-height: 1.6; }
-  .ascii-stage__field { position: absolute; right: -20px; bottom: 20px; margin: 0; color: rgba(165, 180, 252, .72); font-size: clamp(9px, 1.25vw, 14px); line-height: 1.25; letter-spacing: -.08em; text-shadow: 0 0 24px rgba(99,102,241,.32); transition: color .2s ease; user-select: none; }
-  .ascii-stage:hover .ascii-stage__field { color: rgba(241,245,249,.88); }
-  .ascii-demo { display: block; position: relative; min-height: 330px; padding: 24px; text-align: left; border: 1px solid #222538; border-top-color: rgba(255,255,255,.06); border-radius: 18px; background: radial-gradient(circle at 80% 26%, rgba(99,102,241,.12), transparent 30%), #13161F; cursor: pointer; overflow: hidden; text-decoration: none; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+  .ascii-demo { display: block; position: relative; min-height: 360px; padding: 24px; text-align: left; border: 1px solid #222538; border-top-color: rgba(255,255,255,.06); border-radius: 18px; background: radial-gradient(circle at 78% 34%, rgba(99,102,241,.10), transparent 34%), #13161F; cursor: pointer; overflow: hidden; text-decoration: none; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
   .ascii-demo:hover, .ascii-demo:focus-visible { transform: translateY(-3px); border-color: rgba(99,102,241,.55); box-shadow: 0 16px 42px rgba(0,0,0,.35), 0 0 32px rgba(99,102,241,.10); outline: none; }
+  .ascii-demo__canvas { position: absolute; right: -10px; bottom: 22px; width: 72%; height: 55%; opacity: .92; transition: opacity .2s ease, filter .2s ease, transform .2s ease; }
+  .ascii-demo:hover .ascii-demo__canvas, .ascii-demo:focus-visible .ascii-demo__canvas { opacity: 1; filter: drop-shadow(0 0 16px rgba(99,102,241,.22)); transform: translateX(-4px); }
+  .ascii-demo__content { position: relative; z-index: 2; display: block; }
   .ascii-demo__header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
   .ascii-demo__mark { display: inline-flex; min-width: 3.8rem; min-height: 2.5rem; align-items: center; justify-content: center; border: 1px solid rgba(99,102,241,.34); border-radius: 12px; color: #A5B4FC; background: rgba(99,102,241,.10); font-weight: 800; box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+  .ascii-demo:hover .ascii-demo__mark, .ascii-demo:focus-visible .ascii-demo__mark { color: #F1F5F9; border-color: rgba(129,140,248,.75); }
   .ascii-demo__title { display: block; color: #F1F5F9; font-size: 1.05rem; font-weight: 800; margin-bottom: 2px; }
   .ascii-demo__subtitle { display: block; color: #818CF8; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
   .ascii-demo__note { display: block; max-width: 72%; font-size: .83rem; margin-bottom: 16px; }
   .ascii-demo__chips { display: flex; flex-wrap: wrap; gap: 6px; max-width: 72%; }
   .ascii-demo__chips span { border: 1px solid rgba(46,51,80,.85); border-radius: 999px; padding: 3px 8px; color: #CBD5E1; background: rgba(11,13,20,.36); font-size: 10px; font-weight: 700; }
-  .ascii-demo__frame { position: absolute; right: -8px; bottom: 34px; width: 48%; margin: 0; color: rgba(148,163,184,.68); font-size: 11px; line-height: 1.25; letter-spacing: -.07em; text-align: left; opacity: .88; transition: color .2s ease, transform .2s ease, text-shadow .2s ease, opacity .2s ease; }
-  .ascii-demo:hover .ascii-demo__frame, .ascii-demo:focus-visible .ascii-demo__frame { color: rgba(241,245,249,.82); opacity: 1; text-shadow: 0 0 18px rgba(99,102,241,.28); transform: translateX(-2px); }
-  .ascii-demo__cta { position: absolute; left: 24px; bottom: 18px; color: #818CF8; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; opacity: .74; }
-  .ascii-demo:hover .ascii-demo__mark, .ascii-demo:focus-visible .ascii-demo__mark { color: #F1F5F9; border-color: rgba(129,140,248,.75); }
-  @media (max-width: 720px) { .ascii-demo__note, .ascii-demo__chips { max-width: 100%; } .ascii-demo__frame { position: relative; right: auto; bottom: auto; width: 100%; margin-top: 18px; } }
-  @media (prefers-reduced-motion: reduce) { .ascii-demo, .ascii-demo__frame { transition: none; } }
+  .ascii-demo__cta { position: absolute; left: 0; top: 284px; color: #818CF8; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; opacity: .74; }
+  @media (max-width: 720px) { .ascii-demo__note, .ascii-demo__chips { max-width: 100%; } .ascii-demo__canvas { position: relative; right: auto; bottom: auto; width: 100%; height: 180px; margin-top: 18px; } .ascii-demo__cta { position: static; display: block; margin-top: 18px; } }
+  @media (prefers-reduced-motion: reduce) { .ascii-demo, .ascii-demo__canvas { transition: none; } }
 </style>
