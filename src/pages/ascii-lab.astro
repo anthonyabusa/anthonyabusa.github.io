@@ -2,11 +2,46 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const demos = [
-  { key: 'strategy', mark: '/->', title: 'Strategy', note: 'Compass / signal-lock energy. Hover to sharpen the vector.' },
-  { key: 'operations', mark: '[::]', title: 'Operations', note: 'Rhythm, cadence, throughput. Click to tighten the pulse.' },
-  { key: 'product', mark: '{<>}', title: 'Product / Program', note: 'Scope taking shape around a moving center.' },
-  { key: 'automation', mark: '>*_', title: 'AI Automation', note: 'A small agent constellation waking up.' },
-  { key: 'marketplace', mark: '&lt;=&gt;', title: 'Marketplace', note: 'Supply and demand as orbit, not pipeline.' },
+  {
+    key: 'strategy',
+    mark: '/->',
+    title: 'Strategy',
+    subtitle: 'Choose the path',
+    note: 'Market shape, positioning, tradeoffs, and where effort should go.',
+    concrete: ['market map', 'positioning', 'decision logic'],
+  },
+  {
+    key: 'operations',
+    mark: '[::]',
+    title: 'Operations',
+    subtitle: 'Make the system run',
+    note: 'Workflows, metrics, handoffs, cadence, and execution rhythms.',
+    concrete: ['process rhythm', 'KPI loops', 'throughput'],
+  },
+  {
+    key: 'product',
+    mark: '{<>}',
+    title: 'Product / Program',
+    subtitle: 'Turn ambiguity into releases',
+    note: 'Roadmaps, scoped work, feedback loops, and repeatable delivery.',
+    concrete: ['roadmap', 'scope', 'release loop'],
+  },
+  {
+    key: 'automation',
+    mark: '>*_',
+    title: 'AI Automation',
+    subtitle: 'Reduce operational drag',
+    note: 'Agents, memory, queues, analytics, and useful automated action.',
+    concrete: ['agent mesh', 'memory', 'evaluation'],
+  },
+  {
+    key: 'marketplace',
+    mark: '&lt;=&gt;',
+    title: 'Marketplace',
+    subtitle: 'Balance both sides',
+    note: 'Producer supply, buyer demand, hubs, incentives, and local growth loops.',
+    concrete: ['supply', 'demand', 'exchange'],
+  },
 ];
 ---
 
@@ -19,7 +54,7 @@ const demos = [
       <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Visual system spike</p>
       <h1 class="text-4xl md:text-6xl font-bold text-[#F1F5F9] leading-tight mb-5">ASCII motion lab</h1>
       <p class="text-[#94A3B8] text-lg leading-relaxed">
-        The hero field is close. For the skill cards, this version explores symbolic ASCII motion art: sigils, fields, pulses, and constellations instead of literal process maps.
+        The hero field is close. This version makes the skill cards more direct: the words carry the meaning, while the ASCII motion adds a small visual signature that supports the concrete information.
       </p>
     </div>
 
@@ -42,9 +77,17 @@ const demos = [
     <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
       {demos.map((demo) => (
         <button class={`ascii-demo ascii-demo--${demo.key}`} type="button" data-ascii-demo={demo.key} aria-label={`${demo.title}: ${demo.note}`}>
-          <span class="ascii-demo__mark" aria-hidden="true" set:html={demo.mark} />
-          <span class="ascii-demo__title">{demo.title}</span>
+          <span class="ascii-demo__header">
+            <span class="ascii-demo__mark" aria-hidden="true" set:html={demo.mark} />
+            <span>
+              <span class="ascii-demo__title">{demo.title}</span>
+              <span class="ascii-demo__subtitle">{demo.subtitle}</span>
+            </span>
+          </span>
           <span class="ascii-demo__note">{demo.note}</span>
+          <span class="ascii-demo__chips" aria-label={`${demo.title} examples`}>
+            {demo.concrete.map((item) => <span>{item}</span>)}
+          </span>
           <pre class="ascii-demo__frame" aria-hidden="true" data-symbol-frame={demo.key}></pre>
           <span class="ascii-demo__status" data-status>idle</span>
         </button>
@@ -115,60 +158,67 @@ const demos = [
     return grid.map((row) => row.join('')).join('\n');
   }
   function drawStrategy(symbolTick: number, active: number) {
-    const grid = emptyGrid(25, 11);
-    const cx = 12, cy = 5;
-    for (let i = 0; i < 25; i += 1) {
-      const angle = (i / 25) * Math.PI * 2 + symbolTick * 0.06;
-      const r = 2.5 + ((i + active) % 4);
-      put(grid, Math.round(cx + Math.cos(angle) * r), Math.round(cy + Math.sin(angle) * r), i % 5 === 0 ? '*' : '.');
+    const grid = emptyGrid(28, 9);
+    const cx = 13, cy = 4;
+    for (let i = -10; i <= 10; i += 1) put(grid, cx + i, cy, i === 0 ? 'o' : '-');
+    const sweep = (symbolTick % 16) - 8;
+    put(grid, cx + sweep, cy - 2, '/'); put(grid, cx + sweep + 1, cy - 2, '-'); put(grid, cx + sweep + 2, cy - 2, '>');
+    ['N','E','S','W'].forEach((c, i) => {
+      const pts = [[cx,0],[25,cy],[cx,8],[1,cy]][i];
+      put(grid, pts[0], pts[1], c);
+    });
+    for (let i = 0; i < 18; i += 1) {
+      const angle = (i / 18) * Math.PI * 2 + symbolTick * 0.035;
+      put(grid, Math.round(cx + Math.cos(angle) * (3 + active)), Math.round(cy + Math.sin(angle) * 2), i % 3 === 0 ? '*' : '.');
     }
-    for (let i = -7; i <= 7; i += 1) put(grid, cx + i, cy - Math.round(i * 0.35), i === 0 ? 'o' : '-');
-    put(grid, 19, 3, '>'); put(grid, 18, 3, '-'); put(grid, 17, 3, '-');
     return toText(grid);
   }
   function drawOperations(symbolTick: number, active: number) {
-    const grid = emptyGrid(25, 11);
-    for (let x = 2; x < 23; x += 4) {
-      for (let y = 1; y < 10; y += 2) {
-        const phase = (x + y + symbolTick + active * 3) % 8;
-        put(grid, x, y, phase < 4 ? '[' : ']');
-        put(grid, x + 1, y, phase < 2 ? ':' : '.');
-        put(grid, x + 2, y, phase < 4 ? ']' : '[');
-      }
+    const grid = emptyGrid(28, 9);
+    const y = 4;
+    for (let x = 2; x < 26; x += 4) {
+      put(grid, x, y - 2, '['); put(grid, x + 1, y - 2, symbolTick % 8 < 4 ? ':' : '.'); put(grid, x + 2, y - 2, ']');
+      put(grid, x, y + 2, '['); put(grid, x + 1, y + 2, (symbolTick + active * 2) % 8 < 4 ? ':' : '.'); put(grid, x + 2, y + 2, ']');
     }
-    for (let x = 1; x < 24; x += 1) put(grid, x, 5, (x + symbolTick) % 6 < 3 ? '-' : '=');
+    for (let x = 1; x < 27; x += 1) put(grid, x, y, (x + symbolTick) % 6 < 3 ? '-' : '=');
+    put(grid, 24, y, '>');
     return toText(grid);
   }
   function drawProduct(symbolTick: number, active: number) {
-    const grid = emptyGrid(25, 11);
-    const cx = 12, cy = 5;
-    const braces = ['{', '}', '<', '>'];
-    for (let i = 0; i < 18; i += 1) {
-      const angle = (i / 18) * Math.PI * 2 + symbolTick * 0.045;
-      put(grid, Math.round(cx + Math.cos(angle) * (8 - active)), Math.round(cy + Math.sin(angle) * (3 + (active % 2))), braces[i % braces.length]);
-    }
-    put(grid, cx - 2, cy, '{'); put(grid, cx, cy, '*'); put(grid, cx + 2, cy, '}');
+    const grid = emptyGrid(28, 9);
+    const cx = 14, cy = 4;
+    const labels = ['idea', 'ship', 'learn'];
+    labels.forEach((label, i) => {
+      const angle = (i / 3) * Math.PI * 2 + symbolTick * 0.018;
+      const x = Math.round(cx + Math.cos(angle) * (7 + active));
+      const y = Math.round(cy + Math.sin(angle) * 3);
+      label.split('').forEach((c, j) => put(grid, x + j - 2, y, c));
+    });
+    put(grid, cx - 2, cy, '{'); put(grid, cx - 1, cy, '<'); put(grid, cx, cy, '*'); put(grid, cx + 1, cy, '>'); put(grid, cx + 2, cy, '}');
     return toText(grid);
   }
   function drawAutomation(symbolTick: number, active: number) {
-    const grid = emptyGrid(25, 11);
-    const points = [[4,2],[11,1],[18,3],[6,7],[13,8],[20,7],[12,5]];
+    const grid = emptyGrid(28, 9);
+    const points = [[4,2],[11,1],[20,2],[7,6],[15,7],[23,6],[14,4]];
     points.forEach(([x,y], i) => {
-      const pulse = (symbolTick + i * 5 + active * 4) % 18;
-      put(grid, x, y, pulse < 6 ? '*' : 'o');
-      if (pulse < 9) put(grid, Math.round((x + 12) / 2), Math.round((y + 5) / 2), pulse < 4 ? '+' : '.');
+      const pulse = (symbolTick + i * 5 + active * 4) % 20;
+      put(grid, x, y, pulse < 7 ? '*' : 'o');
+      if (pulse < 10) put(grid, Math.round((x + 14) / 2), Math.round((y + 4) / 2), pulse < 5 ? '+' : '.');
     });
-    put(grid, 10, 5, '>'); put(grid, 11, 5, '*'); put(grid, 12, 5, '_');
+    '>agent'.split('').forEach((c, i) => put(grid, 11 + i, 4, c));
     return toText(grid);
   }
   function drawMarketplace(symbolTick: number, active: number) {
-    const grid = emptyGrid(25, 11);
-    const cx = 12, cy = 5;
-    for (let i = 0; i < 28; i += 1) {
-      const angle = (i / 28) * Math.PI * 2 + symbolTick * 0.035 * (active % 2 ? -1 : 1);
-      put(grid, Math.round(cx + Math.cos(angle) * (4 + (i % 2)) * 1.8), Math.round(cy + Math.sin(angle) * (4 + (i % 2)) * 0.8), i % 7 === 0 ? 'o' : '.');
+    const grid = emptyGrid(28, 9);
+    'SUPPLY'.split('').forEach((c, i) => put(grid, 2 + i, 2, c));
+    'DEMAND'.split('').forEach((c, i) => put(grid, 20 + i, 6, c));
+    const mid = 13 + Math.round(Math.sin(symbolTick * 0.08) * (2 + active));
+    '<==>'.split('').forEach((c, i) => put(grid, 11 + i, 4, c));
+    put(grid, mid, 4, '*');
+    for (let i = 0; i < 20; i += 1) {
+      const angle = (i / 20) * Math.PI * 2 + symbolTick * 0.025;
+      put(grid, Math.round(14 + Math.cos(angle) * 8), Math.round(4 + Math.sin(angle) * 3), i % 5 === 0 ? 'o' : '.');
     }
-    put(grid, 7, 5, '<'); put(grid, 8, 5, '='); put(grid, 12, 5, '*'); put(grid, 16, 5, '='); put(grid, 17, 5, '>');
     return toText(grid);
   }
   function renderSymbol(kind: string, symbolTick: number, active: number) {
@@ -187,7 +237,7 @@ const demos = [
       const next = ((demoState.get(demo) ?? 0) + 1) % 4;
       demoState.set(demo, next);
       demo.setAttribute('data-active-step', String(next));
-      if (status) status.textContent = ['idle', 'charged', 'focused', 'alive'][next];
+      if (status) status.textContent = ['idle', 'active', 'clear', 'alive'][next];
     });
   });
 
@@ -213,16 +263,21 @@ const demos = [
   .ascii-stage p, .ascii-demo__note { color: #94A3B8; line-height: 1.6; }
   .ascii-stage__field { position: absolute; right: -20px; bottom: 20px; margin: 0; color: rgba(165, 180, 252, .72); font-size: clamp(9px, 1.25vw, 14px); line-height: 1.25; letter-spacing: -.08em; text-shadow: 0 0 24px rgba(99,102,241,.32); transition: color .2s ease; user-select: none; }
   .ascii-stage:hover .ascii-stage__field { color: rgba(241,245,249,.88); }
-  .ascii-demo { position: relative; min-height: 310px; padding: 24px; text-align: left; border: 1px solid #222538; border-top-color: rgba(255,255,255,.06); border-radius: 18px; background: #13161F; cursor: pointer; overflow: hidden; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+  .ascii-demo { position: relative; min-height: 330px; padding: 24px; text-align: left; border: 1px solid #222538; border-top-color: rgba(255,255,255,.06); border-radius: 18px; background: radial-gradient(circle at 80% 26%, rgba(99,102,241,.12), transparent 30%), #13161F; cursor: pointer; overflow: hidden; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
   .ascii-demo:hover, .ascii-demo:focus-visible { transform: translateY(-3px); border-color: rgba(99,102,241,.55); box-shadow: 0 16px 42px rgba(0,0,0,.35), 0 0 32px rgba(99,102,241,.10); outline: none; }
-  .ascii-demo__mark { display: inline-flex; min-width: 3.8rem; min-height: 2.5rem; align-items: center; justify-content: center; border: 1px solid rgba(99,102,241,.28); border-radius: 12px; color: #A5B4FC; background: rgba(99,102,241,.08); font-weight: 800; margin-bottom: 18px; }
-  .ascii-demo__title { display: block; color: #F1F5F9; font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; }
-  .ascii-demo__note { display: block; font-size: .83rem; margin-bottom: 22px; }
-  .ascii-demo__frame { margin: 0; color: rgba(148,163,184,.82); font-size: 12px; line-height: 1.35; letter-spacing: -.055em; transition: color .2s ease, transform .2s ease, text-shadow .2s ease; }
-  .ascii-demo:hover .ascii-demo__frame, .ascii-demo[data-active-step] .ascii-demo__frame { color: rgba(241,245,249,.92); text-shadow: 0 0 18px rgba(99,102,241,.28); transform: translateX(2px); }
+  .ascii-demo__header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .ascii-demo__mark { display: inline-flex; min-width: 3.8rem; min-height: 2.5rem; align-items: center; justify-content: center; border: 1px solid rgba(99,102,241,.34); border-radius: 12px; color: #A5B4FC; background: rgba(99,102,241,.10); font-weight: 800; box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+  .ascii-demo__title { display: block; color: #F1F5F9; font-size: 1.05rem; font-weight: 800; margin-bottom: 2px; }
+  .ascii-demo__subtitle { display: block; color: #818CF8; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .ascii-demo__note { display: block; max-width: 72%; font-size: .83rem; margin-bottom: 16px; }
+  .ascii-demo__chips { display: flex; flex-wrap: wrap; gap: 6px; max-width: 72%; }
+  .ascii-demo__chips span { border: 1px solid rgba(46,51,80,.85); border-radius: 999px; padding: 3px 8px; color: #CBD5E1; background: rgba(11,13,20,.36); font-size: 10px; font-weight: 700; }
+  .ascii-demo__frame { position: absolute; right: -8px; bottom: 34px; width: 48%; margin: 0; color: rgba(148,163,184,.68); font-size: 11px; line-height: 1.25; letter-spacing: -.07em; text-align: left; opacity: .88; transition: color .2s ease, transform .2s ease, text-shadow .2s ease, opacity .2s ease; }
+  .ascii-demo:hover .ascii-demo__frame, .ascii-demo[data-active-step] .ascii-demo__frame { color: rgba(241,245,249,.82); opacity: 1; text-shadow: 0 0 18px rgba(99,102,241,.28); transform: translateX(-2px); }
   .ascii-demo__status { position: absolute; right: 20px; bottom: 18px; color: #64748B; }
   .ascii-demo[data-active-step="1"] .ascii-demo__mark { color: #F1F5F9; border-color: rgba(129,140,248,.75); }
   .ascii-demo[data-active-step="2"] .ascii-demo__mark { color: #1F9D6B; border-color: rgba(31,157,107,.65); }
   .ascii-demo[data-active-step="3"] .ascii-demo__mark { color: #E0A100; border-color: rgba(224,161,0,.65); }
+  @media (max-width: 720px) { .ascii-demo__note, .ascii-demo__chips { max-width: 100%; } .ascii-demo__frame { position: relative; right: auto; bottom: auto; width: 100%; margin-top: 18px; } }
   @media (prefers-reduced-motion: reduce) { .ascii-demo, .ascii-demo__frame { transition: none; } }
 </style>
