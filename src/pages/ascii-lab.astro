@@ -54,7 +54,7 @@ const demos = [
       <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Visual system spike</p>
       <h1 class="text-4xl md:text-6xl font-bold text-[#F1F5F9] leading-tight mb-5">ASCII motion lab</h1>
       <p class="text-[#94A3B8] text-lg leading-relaxed">
-        The hero field is close. This version makes the skill cards more direct: the words carry the meaning, while the ASCII motion adds a small visual signature that supports the concrete information.
+        The hero field is close. This version keeps the card copy concrete, while the animation layer becomes mostly wordless: visual sigils, orbiting fields, pulses, and abstract motion that supports rather than explains.
       </p>
     </div>
 
@@ -158,67 +158,84 @@ const demos = [
     return grid.map((row) => row.join('')).join('\n');
   }
   function drawStrategy(symbolTick: number, active: number) {
-    const grid = emptyGrid(28, 9);
-    const cx = 13, cy = 4;
-    for (let i = -10; i <= 10; i += 1) put(grid, cx + i, cy, i === 0 ? 'o' : '-');
-    const sweep = (symbolTick % 16) - 8;
-    put(grid, cx + sweep, cy - 2, '/'); put(grid, cx + sweep + 1, cy - 2, '-'); put(grid, cx + sweep + 2, cy - 2, '>');
-    ['N','E','S','W'].forEach((c, i) => {
-      const pts = [[cx,0],[25,cy],[cx,8],[1,cy]][i];
-      put(grid, pts[0], pts[1], c);
-    });
-    for (let i = 0; i < 18; i += 1) {
-      const angle = (i / 18) * Math.PI * 2 + symbolTick * 0.035;
-      put(grid, Math.round(cx + Math.cos(angle) * (3 + active)), Math.round(cy + Math.sin(angle) * 2), i % 3 === 0 ? '*' : '.');
+    const grid = emptyGrid(30, 10);
+    const cx = 15, cy = 5;
+    for (let i = 0; i < 32; i += 1) {
+      const angle = (i / 32) * Math.PI * 2 + symbolTick * 0.025;
+      const r = 2.5 + (i % 4) * 0.9 + active * 0.25;
+      put(grid, Math.round(cx + Math.cos(angle) * r * 1.45), Math.round(cy + Math.sin(angle) * r * 0.75), i % 8 === 0 ? '*' : '.');
     }
+    const sweep = Math.sin(symbolTick * 0.06) * 7;
+    for (let i = -8; i <= 8; i += 1) put(grid, Math.round(cx + i), Math.round(cy - i * 0.28), i === 0 ? 'o' : '-');
+    put(grid, Math.round(cx + sweep), cy - 3, '/');
+    put(grid, Math.round(cx + sweep) + 1, cy - 3, '-');
+    put(grid, Math.round(cx + sweep) + 2, cy - 3, '>');
+    put(grid, cx, 1, '^'); put(grid, 27, cy, '>'); put(grid, cx, 9, 'v'); put(grid, 2, cy, '<');
     return toText(grid);
   }
   function drawOperations(symbolTick: number, active: number) {
-    const grid = emptyGrid(28, 9);
-    const y = 4;
-    for (let x = 2; x < 26; x += 4) {
-      put(grid, x, y - 2, '['); put(grid, x + 1, y - 2, symbolTick % 8 < 4 ? ':' : '.'); put(grid, x + 2, y - 2, ']');
-      put(grid, x, y + 2, '['); put(grid, x + 1, y + 2, (symbolTick + active * 2) % 8 < 4 ? ':' : '.'); put(grid, x + 2, y + 2, ']');
+    const grid = emptyGrid(30, 10);
+    for (let x = 3; x < 28; x += 4) {
+      for (let y = 2; y < 9; y += 3) {
+        const phase = (x + y + symbolTick + active * 4) % 12;
+        put(grid, x, y, phase < 6 ? '[' : ']');
+        put(grid, x + 1, y, phase < 3 ? ':' : phase < 7 ? '.' : '+');
+        put(grid, x + 2, y, phase < 6 ? ']' : '[');
+      }
     }
-    for (let x = 1; x < 27; x += 1) put(grid, x, y, (x + symbolTick) % 6 < 3 ? '-' : '=');
-    put(grid, 24, y, '>');
+    for (let y = 1; y < 9; y += 2) {
+      for (let x = 1; x < 29; x += 1) {
+        if ((x + y + symbolTick) % 9 < 4) put(grid, x, y, x % 5 === 0 ? '+' : '-');
+      }
+    }
     return toText(grid);
   }
   function drawProduct(symbolTick: number, active: number) {
-    const grid = emptyGrid(28, 9);
-    const cx = 14, cy = 4;
-    const labels = ['idea', 'ship', 'learn'];
-    labels.forEach((label, i) => {
-      const angle = (i / 3) * Math.PI * 2 + symbolTick * 0.018;
-      const x = Math.round(cx + Math.cos(angle) * (7 + active));
-      const y = Math.round(cy + Math.sin(angle) * 3);
-      label.split('').forEach((c, j) => put(grid, x + j - 2, y, c));
-    });
+    const grid = emptyGrid(30, 10);
+    const cx = 15, cy = 5;
+    const chars = ['{', '<', '*', '>', '}'];
+    for (let ring = 0; ring < 2; ring += 1) {
+      for (let i = 0; i < 20; i += 1) {
+        const angle = (i / 20) * Math.PI * 2 + symbolTick * (ring ? -0.025 : 0.035);
+        const rx = 5 + ring * 4 + active * 0.35;
+        const ry = 2 + ring * 1.2;
+        put(grid, Math.round(cx + Math.cos(angle) * rx), Math.round(cy + Math.sin(angle) * ry), chars[(i + ring) % chars.length]);
+      }
+    }
     put(grid, cx - 2, cy, '{'); put(grid, cx - 1, cy, '<'); put(grid, cx, cy, '*'); put(grid, cx + 1, cy, '>'); put(grid, cx + 2, cy, '}');
     return toText(grid);
   }
   function drawAutomation(symbolTick: number, active: number) {
-    const grid = emptyGrid(28, 9);
-    const points = [[4,2],[11,1],[20,2],[7,6],[15,7],[23,6],[14,4]];
+    const grid = emptyGrid(30, 10);
+    const cx = 15, cy = 5;
+    const points = [[5,2],[11,1],[20,2],[24,5],[20,8],[10,8],[5,6],[15,5]];
     points.forEach(([x,y], i) => {
-      const pulse = (symbolTick + i * 5 + active * 4) % 20;
-      put(grid, x, y, pulse < 7 ? '*' : 'o');
-      if (pulse < 10) put(grid, Math.round((x + 14) / 2), Math.round((y + 4) / 2), pulse < 5 ? '+' : '.');
+      const pulse = (symbolTick + i * 5 + active * 4) % 24;
+      put(grid, x, y, pulse < 8 ? '*' : pulse < 15 ? 'o' : '.');
+      if (pulse < 13) {
+        const mx = Math.round((x + cx) / 2);
+        const my = Math.round((y + cy) / 2);
+        put(grid, mx, my, pulse < 6 ? '+' : '.');
+      }
     });
-    '>agent'.split('').forEach((c, i) => put(grid, 11 + i, 4, c));
+    put(grid, cx - 1, cy, '>'); put(grid, cx, cy, '*'); put(grid, cx + 1, cy, '_');
+    for (let i = 0; i < 18; i += 1) {
+      const angle = (i / 18) * Math.PI * 2 - symbolTick * 0.03;
+      put(grid, Math.round(cx + Math.cos(angle) * 3), Math.round(cy + Math.sin(angle) * 1.5), i % 6 === 0 ? ':' : '.');
+    }
     return toText(grid);
   }
   function drawMarketplace(symbolTick: number, active: number) {
-    const grid = emptyGrid(28, 9);
-    'SUPPLY'.split('').forEach((c, i) => put(grid, 2 + i, 2, c));
-    'DEMAND'.split('').forEach((c, i) => put(grid, 20 + i, 6, c));
-    const mid = 13 + Math.round(Math.sin(symbolTick * 0.08) * (2 + active));
-    '<==>'.split('').forEach((c, i) => put(grid, 11 + i, 4, c));
-    put(grid, mid, 4, '*');
-    for (let i = 0; i < 20; i += 1) {
-      const angle = (i / 20) * Math.PI * 2 + symbolTick * 0.025;
-      put(grid, Math.round(14 + Math.cos(angle) * 8), Math.round(4 + Math.sin(angle) * 3), i % 5 === 0 ? 'o' : '.');
+    const grid = emptyGrid(30, 10);
+    const left = [8, 5], right = [22, 5], cx = 15, cy = 5;
+    for (let i = 0; i < 28; i += 1) {
+      const angle = (i / 28) * Math.PI * 2 + symbolTick * 0.025;
+      put(grid, Math.round(left[0] + Math.cos(angle) * 4), Math.round(left[1] + Math.sin(angle) * 2.2), i % 7 === 0 ? 'o' : '.');
+      put(grid, Math.round(right[0] + Math.cos(-angle) * 4), Math.round(right[1] + Math.sin(-angle) * 2.2), i % 7 === 0 ? 'o' : '.');
     }
+    '<==>'.split('').forEach((c, i) => put(grid, 13 + i, cy, c));
+    put(grid, cx + Math.round(Math.sin(symbolTick * 0.08) * (2 + active)), cy, '*');
+    put(grid, left[0], left[1], '<'); put(grid, right[0], right[1], '>');
     return toText(grid);
   }
   function renderSymbol(kind: string, symbolTick: number, active: number) {
