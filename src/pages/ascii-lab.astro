@@ -16,9 +16,9 @@ const demos = [
     href: '/work/operations',
     mark: '[::]',
     title: 'Operations',
-    subtitle: 'Optimize the system',
-    note: 'Bottlenecks, constraints, leverage points, metrics, and better flow.',
-    concrete: ['constraints', 'leverage', 'flow'],
+    subtitle: 'Tune the machine',
+    note: 'Operating rhythm, handoffs, leverage points, metrics, and better flow.',
+    concrete: ['gears', 'cadence', 'flow'],
   },
   {
     key: 'product',
@@ -36,7 +36,7 @@ const demos = [
     title: 'AI Automation',
     subtitle: 'Think with machines',
     note: 'Agents, memory, reasoning paths, analytics, and useful automated action.',
-    concrete: ['neurons', 'memory', 'reasoning'],
+    concrete: ['brain', 'memory', 'reasoning'],
   },
   {
     key: 'marketplace',
@@ -185,23 +185,23 @@ const demos = [
   }
   function drawOperations(symbolTick: number, hover: number) {
     const grid = emptyGrid(32, 11);
-    const bars = [8, 7, 6, 5, 4, 3];
-    const highlight = Math.floor(symbolTick / (hover ? 18 : 28)) % bars.length;
-    bars.forEach((height, i) => {
-      const x = 4 + i * 4;
-      for (let y = 9; y >= 10 - height; y -= 1) put(grid, x, y, i === highlight ? '*' : '|');
-      put(grid, x - 1, 10 - height, '['); put(grid, x + 1, 10 - height, ']');
-    });
-    const points = [[4,2],[8,3],[12,3],[16,4],[20,5],[24,6]];
-    points.forEach(([x,y], i) => {
-      put(grid, x, y, i === highlight ? '*' : '+');
-      if (i > 0) {
-        const [px, py] = points[i - 1];
-        const steps = Math.max(Math.abs(x - px), Math.abs(y - py));
-        for (let j = 1; j < steps; j += 1) put(grid, Math.round(px + ((x - px) * j) / steps), Math.round(py + ((y - py) * j) / steps), '-');
-      }
-    });
-    put(grid, 27, 6, '>');
+    const phase = Math.floor(symbolTick / (hover ? 10 : 16));
+    function gear(cx: number, cy: number, r: number, offset: number) {
+      const teeth = [[0,-r,'^'],[r,0,'>'],[0,r,'v'],[-r,0,'<'],[r-1,-r+1,'+'],[r-1,r-1,'+'],[-r+1,r-1,'+'],[-r+1,-r+1,'+']];
+      teeth.forEach((_, i) => {
+        const rotate = (i + phase + offset) % teeth.length;
+        const [rdx, rdy, rc] = teeth[rotate];
+        put(grid, cx + Number(rdx), cy + Number(rdy), String(rc));
+      });
+      put(grid, cx - 1, cy - 1, '/'); put(grid, cx + 1, cy - 1, '\\');
+      put(grid, cx - 1, cy + 1, '\\'); put(grid, cx + 1, cy + 1, '/');
+      put(grid, cx, cy, '*');
+    }
+    gear(10, 5, 4, 0);
+    gear(21, 5, 4, 4);
+    gear(16, 8, 2, 2);
+    for (let x = 14; x <= 17; x += 1) put(grid, x, 5, phase % 2 ? '.' : '*');
+    for (let x = 16; x <= 19; x += 1) put(grid, x, 7, phase % 2 ? '*' : '.');
     return toText(grid);
   }
   function drawProduct(symbolTick: number, hover: number) {
@@ -222,18 +222,27 @@ const demos = [
   }
   function drawAutomation(symbolTick: number, hover: number) {
     const grid = emptyGrid(32, 11);
-    const cx = 16, cy = 5;
-    const outline = [[12,2],[10,3],[9,5],[10,7],[13,8],[16,7],[19,8],[22,7],[23,5],[22,3],[20,2],[17,3],[15,2]];
-    outline.forEach(([x,y], i) => put(grid, x, y, i % 3 === 0 ? 'o' : '.'));
-    const neurons = [[12,4],[15,3],[19,4],[13,6],[17,6],[20,6],[16,5]];
-    const pulse = Math.floor(symbolTick / (hover ? 10 : 16)) % neurons.length;
-    neurons.forEach(([x,y], i) => {
-      put(grid, x, y, i === pulse ? '*' : 'o');
-      if (i !== pulse) return;
-      const steps = Math.max(Math.abs(x - cx), Math.abs(y - cy));
-      for (let j = 1; j < steps; j += 1) put(grid, Math.round(cx + ((x - cx) * j) / steps), Math.round(cy + ((y - cy) * j) / steps), '+');
+    const pulse = Math.floor(symbolTick / (hover ? 9 : 15)) % 6;
+    // clearer brain silhouette: two lobes + stem, with subtle internal thought pulse
+    const outline = [
+      [12,1],[10,2],[9,3],[8,5],[9,7],[11,8],[14,8],
+      [16,7],[18,8],[21,8],[23,7],[24,5],[23,3],[22,2],[20,1],[17,2],[16,3],[15,2]
+    ];
+    outline.forEach(([x,y], i) => put(grid, x, y, i % 4 === 0 ? 'o' : '.'));
+    // central fold
+    for (let y = 3; y <= 7; y += 1) put(grid, 16, y, y === 5 ? '*' : '|');
+    // gyri / thought lines
+    const folds = [
+      [[11,3],[13,3],[14,4]],
+      [[19,3],[21,3],[22,4]],
+      [[10,6],[12,6],[13,5]],
+      [[19,6],[21,6],[22,5]],
+      [[13,7],[15,7],[17,7],[19,7]],
+    ];
+    folds.forEach((line, i) => {
+      line.forEach(([x,y], j) => put(grid, x, y, (pulse + i) % 6 === j ? '*' : '~'));
     });
-    put(grid, cx - 1, cy, '<'); put(grid, cx, cy, '*'); put(grid, cx + 1, cy, '>');
+    put(grid, 15, 9, '\\'); put(grid, 16, 9, '|'); put(grid, 17, 9, '/');
     return toText(grid);
   }
   function drawMarketplace(symbolTick: number, hover: number) {
