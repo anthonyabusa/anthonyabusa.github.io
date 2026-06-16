@@ -59,7 +59,7 @@ const demos = [
       <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Visual system spike</p>
       <h1 class="text-4xl md:text-6xl font-bold text-[#F1F5F9] leading-tight mb-5">ASCII motion lab</h1>
       <p class="text-[#94A3B8] text-lg leading-relaxed">
-        This pass tests an image-to-ASCII pipeline: each card first draws a richer source graphic offscreen, then samples the pixels into high-resolution ASCII. This should feel closer to converted artwork than hand-built line drawings.
+        This pass pivots toward the AVATR-style reference: crisp typographic raster forms, high contrast, repeated glyph strings, and scanline density instead of blurry soft image conversion.
       </p>
     </div>
 
@@ -99,6 +99,13 @@ const demos = [
 <script>
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const glyphs = ['.', ':', '+', '*', '#'];
+  const textureTokens: Record<string, string> = {
+    strategy: 'NORTHSTARVECTOR',
+    operations: 'GEARSFLOWCADENCE',
+    product: 'BUILDTESTSHIP',
+    automation: 'BRAINAIMEMORY',
+    marketplace: 'HUBSPOKEALIGN',
+  };
 
   type TextCanvas = {
     canvas: HTMLCanvasElement;
@@ -120,7 +127,7 @@ const demos = [
     canvas.style.width = `${cssWidth}px`;
     canvas.style.height = `${cssHeight}px`;
     ctx.scale(dpr, dpr);
-    ctx.font = '9px "JetBrains Mono", ui-monospace, monospace';
+    ctx.font = '8px "JetBrains Mono", ui-monospace, monospace';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     return { canvas, ctx, cols, rows, cw: cssWidth / cols, ch: cssHeight / rows };
@@ -145,21 +152,6 @@ const demos = [
     drawChar(tc, col + 1, row, '.', opacity * 0.22);
     drawChar(tc, col, row - 1, '.', opacity * 0.18);
     drawChar(tc, col, row + 1, '.', opacity * 0.18);
-  }
-
-function fillEllipse(tc: TextCanvas, cx: number, cy: number, rx: number, ry: number, intensity = 0.38) {
-    const chars = ['.', ':', '+', '*', '#'];
-    for (let y = Math.floor(cy - ry); y <= Math.ceil(cy + ry); y += 1) {
-      for (let x = Math.floor(cx - rx); x <= Math.ceil(cx + rx); x += 1) {
-        const nx = (x - cx) / rx;
-        const ny = (y - cy) / ry;
-        const d = nx * nx + ny * ny;
-        if (d > 1) continue;
-        const light = (1 - d) * intensity + Math.max(0, (cx - x) / rx) * 0.16 + Math.max(0, (cy - y) / ry) * 0.12;
-        const idx = Math.max(0, Math.min(chars.length - 1, Math.floor(light * chars.length)));
-        drawChar(tc, x, y, chars[idx], 0.10 + light * 0.58, idx >= 3 ? '241,245,249' : '165,180,252');
-      }
-    }
   }
 
 function drawLine(tc: TextCanvas, x1: number, y1: number, x2: number, y2: number, char = '.', opacity = 0.55) {
@@ -210,16 +202,12 @@ function drawLine(tc: TextCanvas, x1: number, y1: number, x2: number, y2: number
 
   function drawSource(kind: string, ctx: CanvasRenderingContext2D, w: number, h: number, tick: number, hover: boolean) {
     ctx.clearRect(0, 0, w, h);
-    const g = ctx.createRadialGradient(w * 0.58, h * 0.42, 10, w * 0.58, h * 0.42, w * 0.42);
-    g.addColorStop(0, 'rgba(241,245,249,.98)');
-    g.addColorStop(.38, 'rgba(165,180,252,.72)');
-    g.addColorStop(1, 'rgba(99,102,241,.08)');
-    ctx.strokeStyle = g;
-    ctx.fillStyle = g;
+    ctx.strokeStyle = 'rgba(245,247,255,.96)';
+    ctx.fillStyle = 'rgba(245,247,255,.96)';
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-    ctx.shadowColor = 'rgba(129,140,248,.38)';
-    ctx.shadowBlur = hover ? 22 : 14;
+    ctx.shadowColor = 'rgba(165,180,252,.18)';
+    ctx.shadowBlur = hover ? 7 : 3;
     const t = tick * (hover ? 0.018 : 0.011);
     const cx = w * .62, cy = h * .52;
 
@@ -249,7 +237,7 @@ function drawLine(tc: TextCanvas, x1: number, y1: number, x2: number, y2: number
           i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
         }
         ctx.closePath(); ctx.stroke();
-        ctx.globalAlpha = .42; ctx.beginPath(); ctx.arc(0, 0, r * .55, 0, Math.PI * 2); ctx.stroke();
+        ctx.globalAlpha = .58; ctx.beginPath(); ctx.arc(0, 0, r * .55, 0, Math.PI * 2); ctx.stroke();
         ctx.globalAlpha = .72; for (let i = 0; i < 8; i += 1) { const a = (i / 8) * Math.PI * 2; ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(Math.cos(a)*r*.82, Math.sin(a)*r*.82); ctx.stroke(); }
         ctx.restore();
       };
@@ -262,16 +250,16 @@ function drawLine(tc: TextCanvas, x1: number, y1: number, x2: number, y2: number
       ctx.beginPath(); ctx.ellipse(cx, cy, 96, 58, 0, t, t + Math.PI * 1.74); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(cx + 88, cy - 26); ctx.lineTo(cx + 112, cy - 30); ctx.lineTo(cx + 98, cy - 8); ctx.closePath(); ctx.fill();
       const nodes = [[cx,cy-58],[cx+96,cy],[cx,cy+58],[cx-96,cy]];
-      nodes.forEach(([x,y], i) => { ctx.globalAlpha = .34 + (((Math.floor(tick/52)%4)===i)? .56 : 0); ctx.beginPath(); ctx.roundRect(x-18,y-13,36,26,8); ctx.fill(); });
+      nodes.forEach(([x,y], i) => { ctx.globalAlpha = .58 + (((Math.floor(tick/52)%4)===i)? .56 : 0); ctx.beginPath(); ctx.roundRect(x-18,y-13,36,26,8); ctx.fill(); });
       return;
     }
 
     if (kind === 'automation') {
       ctx.globalAlpha = .78; ctx.lineWidth = 5;
       ctx.beginPath(); ctx.moveTo(cx-72,cy-6); ctx.bezierCurveTo(cx-96,cy-72,cx-24,cy-102,cx-4,cy-48); ctx.bezierCurveTo(cx+28,cy-104,cx+110,cy-62,cx+84,cy+2); ctx.bezierCurveTo(cx+118,cy+64,cx+34,cy+90,cx+8,cy+48); ctx.bezierCurveTo(cx-28,cy+96,cx-108,cy+58,cx-72,cy-6); ctx.stroke();
-      ctx.globalAlpha = .45; ctx.lineWidth = 3;
+      ctx.globalAlpha = .62; ctx.lineWidth = 3;
       const folds = [[-54,-24,-15,-38,8,-8],[18,-30,52,-42,68,-8],[-52,20,-12,10,6,32],[24,24,58,8,74,34],[-18,54,18,42,48,56]];
-      folds.forEach((f, i) => { ctx.globalAlpha = .28 + (Math.floor(tick/34)%folds.length===i ? .55 : 0); ctx.beginPath(); ctx.moveTo(cx+f[0],cy+f[1]); ctx.bezierCurveTo(cx+f[2],cy+f[3],cx+f[4],cy+f[5],cx+f[4],cy+f[5]); ctx.stroke(); });
+      folds.forEach((f, i) => { ctx.globalAlpha = .48 + (Math.floor(tick/34)%folds.length===i ? .55 : 0); ctx.beginPath(); ctx.moveTo(cx+f[0],cy+f[1]); ctx.bezierCurveTo(cx+f[2],cy+f[3],cx+f[4],cy+f[5],cx+f[4],cy+f[5]); ctx.stroke(); });
       return;
     }
 
@@ -279,7 +267,7 @@ function drawLine(tc: TextCanvas, x1: number, y1: number, x2: number, y2: number
     ctx.globalAlpha = .72; ctx.lineWidth = 4;
     const spokes = [[0,-88],[93,-42],[88,58],[0,92],[-88,58],[-96,-42],[112,10],[-112,10]];
     spokes.forEach(([dx,dy], i) => {
-      ctx.globalAlpha = .34; ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+dx,cy+dy); ctx.stroke();
+      ctx.globalAlpha = .58; ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+dx,cy+dy); ctx.stroke();
       const travel = ((tick * (hover ? 0.018 : 0.012) + i * .13) % 1);
       const pulse = travel < .5 ? travel * 2 : (1 - travel) * 2;
       ctx.globalAlpha = .95; ctx.beginPath(); ctx.arc(cx+dx*pulse, cy+dy*pulse, 5, 0, Math.PI*2); ctx.fill();
@@ -289,8 +277,8 @@ function drawLine(tc: TextCanvas, x1: number, y1: number, x2: number, y2: number
   }
 
   const sourceCanvas = document.createElement('canvas');
-  sourceCanvas.width = 420;
-  sourceCanvas.height = 260;
+  sourceCanvas.width = 620;
+  sourceCanvas.height = 360;
   const sourceCtx = sourceCanvas.getContext('2d', { willReadFrequently: true });
 
   function renderFromSource(tc: TextCanvas, kind: string, tick: number, hover: boolean) {
@@ -298,18 +286,24 @@ function drawLine(tc: TextCanvas, x1: number, y1: number, x2: number, y2: number
     if (!sourceCtx) return;
     drawSource(kind, sourceCtx, sourceCanvas.width, sourceCanvas.height, tick, hover);
     const data = sourceCtx.getImageData(0, 0, sourceCanvas.width, sourceCanvas.height).data;
-    const ramp = [' ', '.', ':', '+', '*', '#', '@'];
+    const token = textureTokens[kind] ?? 'SYSTEM';
+    const phase = Math.floor(tick / (hover ? 5 : 9));
     for (let row = 0; row < tc.rows; row += 1) {
       for (let col = 0; col < tc.cols; col += 1) {
         const sx = Math.floor((col + 0.5) / tc.cols * sourceCanvas.width);
         const sy = Math.floor((row + 0.5) / tc.rows * sourceCanvas.height);
         const idx = (sy * sourceCanvas.width + sx) * 4;
         const a = data[idx + 3] / 255;
-        if (a < 0.035) continue;
+        if (a < 0.10) continue;
         const lum = (data[idx] * .2126 + data[idx+1] * .7152 + data[idx+2] * .0722) / 255;
-        const level = Math.max(0, Math.min(ramp.length - 1, Math.floor((lum * .65 + a * .75) * ramp.length)));
-        const color = level >= 5 ? '241,245,249' : level >= 3 ? '165,180,252' : '99,102,241';
-        drawChar(tc, col, row, ramp[level], Math.min(.95, .10 + a * .78), color);
+        const edge = a > 0.68 || lum > 0.74;
+        const scanline = row % 2 === 0;
+        const char = edge
+          ? token[(col + row * 2 + phase) % token.length]
+          : (scanline ? '.' : ':');
+        const opacity = edge ? (scanline ? 0.88 : 0.62) : 0.24;
+        const color = edge ? (scanline ? '241,245,249' : '165,180,252') : '99,102,241';
+        drawChar(tc, col, row, char, opacity, color);
       }
     }
   }
@@ -330,7 +324,7 @@ function drawLine(tc: TextCanvas, x1: number, y1: number, x2: number, y2: number
 
   const cards = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-ascii-demo]')).map((card) => {
     const canvas = card.querySelector<HTMLCanvasElement>('[data-symbol-canvas]');
-    const tc = canvas ? setupCanvas(canvas, 138, 44) : null;
+    const tc = canvas ? setupCanvas(canvas, 168, 54) : null;
     let hover = false;
     card.addEventListener('pointerenter', () => { hover = true; });
     card.addEventListener('pointerleave', () => { hover = false; });
