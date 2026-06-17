@@ -59,7 +59,7 @@ const demos = [
       <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Visual system spike</p>
       <h1 class="text-4xl md:text-6xl font-bold text-[#F1F5F9] leading-tight mb-5">ASCII motion lab</h1>
       <p class="text-[#94A3B8] text-lg leading-relaxed">
-        This pass uses real source image assets for the card graphics before typographic rasterization. Brain/gears/cycle are rasterized from downloaded SVG sources; compass/network use local SVG sources while public-domain downloads are retried.
+        This pass uses public-domain source image assets for the card graphics before typographic rasterization, then adds gradient lighting and motion so the symbols feel like image-derived text art instead of line drawings.
       </p>
     </div>
 
@@ -107,11 +107,11 @@ const demos = [
     marketplace: 'HUBSPOKEALIGN',
   };
   const sourcePaths: Record<string, string> = {
-    strategy: '/ascii-sources/compass-source.svg',
+    strategy: '/ascii-sources/compass-rose-black.svg',
     operations: '/ascii-sources/icon-gears2.svg',
     product: '/ascii-sources/recycling-symbol.svg',
     automation: '/ascii-sources/brain-outline-lateral.svg',
-    marketplace: '/ascii-sources/stakeholder-network-source.svg',
+    marketplace: '/ascii-sources/social-network.svg',
   };
   const sourceImages: Record<string, HTMLImageElement> = {};
   Object.entries(sourcePaths).forEach(([key, path]) => {
