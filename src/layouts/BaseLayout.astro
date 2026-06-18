@@ -55,12 +55,21 @@ const breadcrumbSchema = crumbSegments.length
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).href },
-        ...crumbSegments.map((seg, i) => ({
-          '@type': 'ListItem',
-          position: i + 2,
-          name: decodeURIComponent(seg).replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
-          item: new URL('/' + crumbSegments.slice(0, i + 1).join('/') + '/', Astro.site).href,
-        })),
+        ...crumbSegments.map((seg, i) => {
+          const isLeaf = i === crumbSegments.length - 1;
+          const slugName = decodeURIComponent(seg)
+            .replace(/-/g, ' ')
+            .replace(/\b\w/g, (c) => c.toUpperCase());
+          // Leaf (current page): use the real page title, not the title-cased slug
+          // ("Healthrise Ehr ..." reads poorly in Google's breadcrumb). Strip the suffix.
+          const leafName = title.replace(/\s*\|\s*Anthony Busa\s*$/i, '').trim();
+          return {
+            '@type': 'ListItem',
+            position: i + 2,
+            name: isLeaf && leafName ? leafName : slugName,
+            item: new URL('/' + crumbSegments.slice(0, i + 1).join('/') + '/', Astro.site).href,
+          };
+        }),
       ],
     }
   : null;

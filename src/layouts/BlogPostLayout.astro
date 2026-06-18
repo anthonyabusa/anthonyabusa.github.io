@@ -45,7 +45,7 @@ const postSchema = {
       <h1 class="text-3xl md:text-4xl font-bold text-[#F1F5F9] leading-tight mb-4">
         {title}
       </h1>
-      <p class="text-[#64748B] text-sm">
+      <p class="text-[#94A3B8] text-sm">
         <time datetime={pubDate.toISOString()}>{formattedDate}</time>
         {updatedDate && (
           <span> · Updated {updatedDate.toLocaleDateString('en-US', { dateStyle: 'medium', timeZone: 'UTC' })}</span>
@@ -59,7 +59,7 @@ const postSchema = {
       prose-a:text-[#6366F1] prose-a:no-underline hover:prose-a:underline
       prose-code:text-[#6366F1] prose-code:bg-[#13161F] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
       prose-pre:bg-[#13161F] prose-pre:border prose-pre:border-[#222538]
-      prose-blockquote:border-[#6366F1] prose-blockquote:text-[#64748B]">
+      prose-blockquote:border-[#6366F1] prose-blockquote:text-[#94A3B8]">
       <slot />
     </div>
 

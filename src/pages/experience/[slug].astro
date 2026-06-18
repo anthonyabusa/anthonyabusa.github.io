@@ -19,7 +19,7 @@ const { project } = Astro.props;
       <p class="text-lg md:text-xl text-[#94A3B8] leading-relaxed max-w-3xl">{project.description}</p>
     </header>
     <section class="reveal grid sm:grid-cols-3 gap-4 mb-16">
-      {project.metrics?.map((metric: { value: string; label: string }) => <div class="p-6 rounded-xl border border-[#222538] border-t-white/5 bg-[#13161F]"><p class="text-2xl font-bold text-[#818CF8] mb-2">{metric.value}</p><p class="text-xs text-[#64748B] leading-relaxed">{metric.label}</p></div>)}
+      {project.metrics?.map((metric: { value: string; label: string }) => <div class="p-6 rounded-xl border border-[#222538] border-t-white/5 bg-[#13161F]"><p class="text-2xl font-bold text-[#818CF8] mb-2">{metric.value}</p><p class="text-xs text-[#94A3B8] leading-relaxed">{metric.label}</p></div>)}
     </section>
     <div class="grid md:grid-cols-[1fr_2fr] gap-12">
       <aside class="reveal space-y-7">
