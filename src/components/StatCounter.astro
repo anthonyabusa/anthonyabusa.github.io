@@ -17,14 +17,22 @@ const { value, prefix = '', suffix = '', label } = Astro.props;
   >
     {prefix}0{suffix}
   </div>
-  <p class="text-sm text-[#64748B]">{label}</p>
+  <p class="text-sm text-[#94A3B8]">{label}</p>
 </div>
 
 <script>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   document.querySelectorAll('[data-target]').forEach((el) => {
     const target = parseInt(el.getAttribute('data-target') ?? '0', 10);
     const prefix = el.getAttribute('data-prefix') ?? '';
     const suffix = el.getAttribute('data-suffix') ?? '';
+
+    // Reduced-motion: skip the count-up, show the final value immediately.
+    if (reduceMotion) {
+      el.textContent = prefix + target + suffix;
+      return;
+    }
 
     const observer = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
