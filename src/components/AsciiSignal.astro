@@ -4,65 +4,261 @@ interface Props {
   class?: string;
 }
 
-const { label = 'Animated system signal field', class: className = '' } = Astro.props;
+const { label = 'Live system readout', class: className = '' } = Astro.props;
 ---
 
 <div class={`ascii-signal ${className}`} aria-hidden="true" data-ascii-signal>
-  <pre data-ascii-frame aria-label={label}>{`+-- SYSTEM MAP -----------+
-| strategy  -> product   |
-| ops       -> rhythm    |
-| agents    -> leverage  |
-+-------------------------+`}</pre>
+  <pre data-ascii-frame aria-label={label}></pre>
 </div>
 
-<script>
-  const density = [' ', '.', ':', '+', '*', '#'];
-  const nodes = ['strategy', 'ops', 'product', 'agents', 'market', 'signal'];
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+<style>
+  /* This component owns its appearance. Override the generic .ascii-signal
+     defaults (mix-blend screen + edge mask) from global.css: the readout is a
+     defined box with authored per-cell colors, so screen-blend would wash out
+     the dim lattice and the mask would clip the right border. letter-spacing 0
+     keeps the box-drawing frame perfectly aligned. */
+  .ascii-signal {
+    pointer-events: none;
+    user-select: none;
+    mix-blend-mode: normal;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .ascii-signal pre {
+    margin: 0;
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 0;
+    white-space: pre;
+    color: #94A3B8;
+    text-shadow: 0 0 14px rgba(99, 102, 241, 0.16);
+  }
+</style>
 
-  function frame(t: number) {
-    const tick = Math.floor(t / 180);
-    const rows = [];
-    rows.push('┌─ SYSTEM MAP ─────────────┐');
-    for (let y = 0; y < 9; y += 1) {
-      let line = '| ';
-      for (let x = 0; x < 26; x += 1) {
-        const wave = Math.sin((x * 0.7) + (y * 1.15) + (tick * 0.28));
-        const pulse = Math.cos((x - tick * 0.6) * 0.45) + Math.sin((y + tick * 0.3) * 0.9);
-        const index = Math.max(0, Math.min(density.length - 1, Math.floor((wave + pulse + 2) * 1.25)));
-        const isNode = (x + tick + y * 3) % 23 === 0;
-        const isLink = (x + tick) % 9 === y % 5;
-        line += isNode ? '◦' : isLink ? '─' : density[index];
-      }
-      line += ' │';
-      rows.push(line);
-    }
-    rows.push('├───────────────────────────┤');
-    rows.push(`│ ${nodes[tick % nodes.length].padEnd(8, ' ')} :: ${String(tick % 100).padStart(2, '0')} :: live │`);
-    rows.push('└───────────────────────────┘');
-    return rows.join('\n');
+<script>
+  type Tier = 'frame' | 'label' | 'field';
+
+  // Resolve gradient (dim -> bright). Tuned to read on the #0B0D14 hero under
+  // normal blend: SHADE[0..1] are the faint resting lattice, SHADE[4..5] the
+  // fully resolved word under the beam.
+  const SHADE = ['#2A2F45', '#3A4060', '#5A608A', '#818CF8', '#A5B4FC', '#F1F5F9'];
+  const FRAME_DIM = '#3A4060';
+  const FRAME_LIT = '#818CF8';
+  const FIELD_GLYPHS = ['.', ':', '+'];
+
+  // Authored readout. Frame + literal labels echo the system (strategy ->
+  // product, ops -> rhythm, agents -> leverage). Interior blanks become a
+  // generated lattice in code, so every row is guaranteed the same width and
+  // the box stays rectangular regardless of hand-spacing.
+  const W = 31; // interior width between the two border columns
+  const pad = (s: string) => (s + ' '.repeat(W)).slice(0, W);
+  const border = '+' + '-'.repeat(W) + '+';
+  const rowOf = (s: string) => '|' + pad(s) + '|';
+  const SOURCE = [
+    border,
+    rowOf('  SYSTEM READOUT          live'),
+    rowOf(''),
+    rowOf('  strategy   ->   product'),
+    rowOf('  ops        ->   rhythm'),
+    rowOf('  agents     ->   leverage'),
+    rowOf('  signal     ->   resolving'),
+    rowOf(''),
+    rowOf('  scan ::'),
+    border,
+  ];
+
+  const COLS = SOURCE[0].length;
+  const ROWS = SOURCE.length;
+
+  function classify(ch: string): Tier {
+    if (ch === '+' || ch === '-' || ch === '|') return 'frame';
+    if (ch === ' ') return 'field';
+    return 'label';
   }
 
+  // Static tier + char grids, built once.
+  const tiers: Tier[][] = SOURCE.map((line) => Array.from(line, classify));
+  const chars: string[][] = SOURCE.map((line) => Array.from(line));
+
+  // Smooth radial falloff. y weighted heavier than x so the beam reads as a
+  // horizontal scan band sweeping vertically, like a flashlight on a console.
+  function resolveAt(col: number, r: number, fx: number, fy: number): number {
+    const dx = (col - fx) / COLS;
+    const dy = (r - fy) / ROWS;
+    const d = Math.sqrt(dx * dx * 0.55 + dy * dy * 2.6);
+    const v = 1 - d * 1.85;
+    return v < 0 ? 0 : v > 1 ? 1 : v;
+  }
+
+  // Resolve one cell to [glyph, color]. Returns null for a truly empty cell
+  // (rendered as a plain space, no span).
+  function cellAt(col: number, r: number, fx: number, fy: number): [string, string] | null {
+    const tier = tiers[r][col];
+    const ch = chars[r][col];
+    const res = resolveAt(col, r, fx, fy);
+
+    if (tier === 'frame') {
+      return [ch, res > 0.45 ? FRAME_LIT : FRAME_DIM];
+    }
+    if (tier === 'field') {
+      // Stable positional lattice that briefly densifies under the beam.
+      const lit = (col + r) % 4 === 0;
+      if (!lit && res < 0.5) return null;
+      const idx = Math.min(FIELD_GLYPHS.length - 1, Math.floor(res * 2.4));
+      const glyph = res < 0.14 ? '.' : FIELD_GLYPHS[idx];
+      const shade = res < 0.14 ? SHADE[0] : SHADE[Math.min(2, idx + 1)];
+      return [glyph, shade];
+    }
+    // Label: crisp word under the beam, decays to a dot then faint behind it.
+    if (res > 0.62) return [ch, SHADE[5]];
+    if (res > 0.42) return [ch, SHADE[4]];
+    if (res > 0.24) return [ch, SHADE[3]];
+    if (res > 0.1) return ['.', SHADE[2]];
+    return ['.', SHADE[1]];
+  }
+
+  const escape = (s: string) =>
+    s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  // Build HTML, batching contiguous same-color cells into one span to keep the
+  // DOM small (a few dozen spans per repaint instead of ~190).
+  function buildHtml(fx: number, fy: number): string {
+    let out = '';
+    for (let r = 0; r < ROWS; r += 1) {
+      let runColor = '';
+      let runText = '';
+      const flush = () => {
+        if (runText) out += `<span style="color:${runColor}">${escape(runText)}</span>`;
+        runText = '';
+      };
+      for (let c = 0; c < COLS; c += 1) {
+        const res = cellAt(c, r, fx, fy);
+        if (!res) {
+          flush();
+          out += ' ';
+          continue;
+        }
+        const [glyph, color] = res;
+        if (color !== runColor) {
+          flush();
+          runColor = color;
+        }
+        runText += glyph;
+      }
+      flush();
+      if (r < ROWS - 1) out += '\n';
+    }
+    return out;
+  }
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const STATIC_FX = COLS * 0.36;
+  const STATIC_FY = ROWS * 0.52;
+
   document.querySelectorAll('[data-ascii-signal]').forEach((root) => {
-    const pre = root.querySelector('[data-ascii-frame]');
+    const pre = root.querySelector('[data-ascii-frame]') as HTMLElement | null;
     if (!pre) return;
 
-    if (prefersReduced.matches) {
-      pre.textContent = frame(0);
+    // Drive from the whole hero so moving the mouse anywhere reveals the map.
+    const surface = (root.closest('section') as HTMLElement) || (root as HTMLElement);
+
+    let focusX = STATIC_FX;
+    let focusY = STATIC_FY;
+    let targetX = focusX;
+    let targetY = focusY;
+    let rect = surface.getBoundingClientRect();
+    let lastMove = -Infinity;
+    let lastDraw = 0;
+    let prevT = 0;
+    let raf = 0;
+    let prevKey = '';
+
+    const renderStatic = () => {
+      pre.innerHTML = buildHtml(STATIC_FX, STATIC_FY);
+    };
+
+    if (reduced.matches) {
+      renderStatic();
       return;
     }
 
-    let raf = 0;
-    let last = 0;
-    const draw = (time: number) => {
-      if (time - last > 120) {
-        pre.textContent = frame(time);
-        last = time;
-      }
-      raf = window.requestAnimationFrame(draw);
+    const refreshRect = () => {
+      rect = surface.getBoundingClientRect();
     };
 
-    raf = window.requestAnimationFrame(draw);
-    window.addEventListener('pagehide', () => window.cancelAnimationFrame(raf), { once: true });
+    const onMove = (event: PointerEvent) => {
+      lastMove = performance.now();
+      const nx = (event.clientX - rect.left) / Math.max(1, rect.width);
+      const ny = (event.clientY - rect.top) / Math.max(1, rect.height);
+      targetX = Math.max(-2, Math.min(COLS + 2, nx * COLS));
+      targetY = Math.max(-1, Math.min(ROWS + 1, ny * ROWS));
+    };
+
+    surface.addEventListener('pointermove', onMove, { passive: true });
+    window.addEventListener('resize', refreshRect, { passive: true });
+    window.addEventListener('scroll', refreshRect, { passive: true });
+    // A late font load can shift hero layout without firing resize/scroll.
+    const fonts = (document as unknown as { fonts?: { ready?: Promise<unknown> } }).fonts;
+    if (fonts?.ready) fonts.ready.then(refreshRect);
+
+    const IDLE_MS = 1800;
+    const REST_MS = 11000; // after this much idle, park and stop repainting
+
+    const tick = (now: number) => {
+      raf = window.requestAnimationFrame(tick);
+      const dt = prevT ? (now - prevT) / 1000 : 0.016;
+      prevT = now;
+      if (now - lastDraw < 33) return; // cap ~30fps
+      lastDraw = now;
+
+      const sinceMove = now - lastMove;
+      const idle = sinceMove > IDLE_MS;
+      const resting = sinceMove > REST_MS;
+
+      if (idle) {
+        // Calm scanline reading slowly down the map; scroll nudges the phase.
+        const phase = (now / 16000 + window.scrollY / 2800) % 1;
+        targetY = phase * (ROWS + 2) - 1;
+        targetX = COLS * 0.34;
+      }
+
+      // Frame-rate-independent easing toward the target.
+      const k = 1 - Math.exp(-dt * 7);
+      focusX += (targetX - focusX) * k;
+      focusY += (targetY - focusY) * k;
+
+      // Once fully rested and settled, freeze: stop repainting so the tab idles.
+      const key = Math.round(focusX * 3) + ':' + Math.round(focusY * 3);
+      if (key === prevKey) {
+        if (resting) { window.cancelAnimationFrame(raf); raf = 0; }
+        return;
+      }
+      prevKey = key;
+      pre.innerHTML = buildHtml(focusX, focusY);
+    };
+
+    const start = () => { if (!raf) { prevT = 0; raf = window.requestAnimationFrame(tick); } };
+    const stop = () => { if (raf) { window.cancelAnimationFrame(raf); raf = 0; } };
+    start();
+
+    // Honor a mid-session reduced-motion toggle.
+    reduced.addEventListener('change', () => {
+      if (reduced.matches) { stop(); renderStatic(); }
+      else { lastMove = performance.now(); start(); }
+    });
+
+    // Pause on a backgrounded tab; resume (with a fresh rect) when visible.
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stop();
+      else if (!reduced.matches) { refreshRect(); lastMove = performance.now(); start(); }
+    });
+
+    window.addEventListener('pagehide', () => {
+      stop();
+      surface.removeEventListener('pointermove', onMove);
+      window.removeEventListener('resize', refreshRect);
+      window.removeEventListener('scroll', refreshRect);
+    }, { once: true });
   });
 </script>
