@@ -17,14 +17,14 @@ const formattedDate = pubDate.toLocaleDateString('en-US', {
 
 <a
   href={`/blog/${slug}`}
-  class="reveal block p-6 rounded-xl border border-[#222538] bg-[#13161F] card-hover group"
+  class="reveal block p-6 rounded-xl border border-border bg-surface card-hover group"
 >
   <div class="flex flex-wrap gap-2 mb-3">
     {tags.slice(0, 3).map((tag) => <span class="tag">{tag}</span>)}
   </div>
-  <h3 class="text-lg font-semibold text-[#F1F5F9] group-hover:text-[#A5B4FC] transition-colors mb-2 leading-snug">
+  <h3 class="text-lg font-semibold text-ink group-hover:text-accent-lighter transition-colors mb-2 leading-snug">
     {title}
   </h3>
-  <p class="text-[#94A3B8] text-sm leading-relaxed mb-4 line-clamp-2">{description}</p>
-  <time class="text-xs text-[#475569] font-mono">{formattedDate}</time>
+  <p class="text-ink-muted text-sm leading-relaxed mb-4 line-clamp-2">{description}</p>
+  <time class="text-xs text-ink-faint font-mono">{formattedDate}</time>
 </a>

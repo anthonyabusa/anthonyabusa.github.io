@@ -31,27 +31,27 @@ const recentPosts = posts
 >
   <!-- Hero -->
   <section class="relative min-h-screen flex items-center hero-grid overflow-hidden">
-    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#6366F1]/5 rounded-full blur-3xl pointer-events-none" />
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
     <AsciiSignal class="absolute right-[-32px] top-28 hidden lg:block w-[420px] opacity-70" />
 
     <div class="relative max-w-5xl mx-auto px-6 pt-28 pb-20 w-full">
-      <p class="text-[#6366F1] font-mono text-sm tracking-widest uppercase mb-6 opacity-0 animate-[fadeUp_0.6s_ease_0.1s_forwards]">
+      <p class="text-accent font-mono text-sm tracking-widest uppercase mb-6 opacity-0 animate-[fadeUp_0.6s_ease_0.1s_forwards]">
         San Diego strategist · transformation leader · systems builder
       </p>
 
       <h1 class="text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight mb-6 opacity-0 animate-[fadeUp_0.6s_ease_0.25s_forwards]">
-        <span class="text-[#F1F5F9]">Building high-impact</span><br />
+        <span class="text-ink">Building high-impact</span><br />
         <span class="gradient-text">systems.</span>
       </h1>
 
-      <p class="text-xl md:text-2xl text-[#94A3B8] max-w-2xl leading-relaxed mb-10 opacity-0 animate-[fadeUp_0.6s_ease_0.4s_forwards]">
+      <p class="text-xl md:text-2xl text-ink-muted max-w-2xl leading-relaxed mb-10 opacity-0 animate-[fadeUp_0.6s_ease_0.4s_forwards]">
         I'm Anthony Busa, Director of Strategy and Operations at Navore Market and builder of a private, personal AI operations system. I work where strategy, product, and automation meet.
       </p>
 
       <div class="flex flex-wrap gap-2 mb-10 opacity-0 animate-[fadeUp_0.6s_ease_0.5s_forwards]" aria-label="Selected proof points">
         {proofPoints.map((point) => (
-          <span class="inline-flex items-center gap-2 rounded-full border border-[#2E3350] bg-[#13161F]/80 px-3 py-2 text-xs text-[#CBD5E1] shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
-            <span class="h-1.5 w-1.5 rounded-full bg-[#818CF8]" />
+          <span class="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface/80 px-3 py-2 text-xs text-ink-soft shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
+            <span class="h-1.5 w-1.5 rounded-full bg-accent-light" />
             {point}
           </span>
         ))}
@@ -60,14 +60,14 @@ const recentPosts = posts
       <div class="flex flex-wrap gap-4 opacity-0 animate-[fadeUp_0.6s_ease_0.55s_forwards]">
         <a
           href="/projects"
-          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#6366F1] text-[#0B0D14] font-semibold text-sm hover:bg-[#4F46E5] transition-colors"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-accent text-background font-semibold text-sm hover:bg-accent-hover transition-colors"
         >
           View Projects
           <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <a
           href="/contact"
-          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-[#222538] text-[#94A3B8] text-sm hover:border-[#6366F1] hover:text-[#6366F1] transition-colors"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-border text-ink-muted text-sm hover:border-accent hover:text-accent transition-colors"
         >
           Start a Conversation
         </a>
@@ -81,19 +81,19 @@ const recentPosts = posts
 
   <!-- About teaser -->
   <section class="max-w-5xl mx-auto px-6 py-20">
-    <div class="reveal flex flex-col md:flex-row items-center gap-10 p-8 rounded-2xl border border-[#222538] bg-[#13161F]">
+    <div class="reveal flex flex-col md:flex-row items-center gap-10 p-8 rounded-2xl border border-border bg-surface">
       <img
         src="/anthony-abusa-headshot.jpg"
         alt="Anthony A. Busa"
-        class="shrink-0 w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border border-[#363B58] border-t-white/10"
+        class="shrink-0 w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border border-border-strong border-t-white/10"
         loading="lazy"
       />
       <div>
-        <h2 class="text-xl font-semibold text-[#F1F5F9] mb-3">I turn complex challenges into clear strategy and measurable progress.</h2>
-        <p class="text-[#94A3B8] leading-relaxed mb-4">
+        <h2 class="text-xl font-semibold text-ink mb-3">I turn complex challenges into clear strategy and measurable progress.</h2>
+        <p class="text-ink-muted leading-relaxed mb-4">
           Across venture leadership, enterprise transformation, and technology-enabled growth, the pattern is the same: clarify what matters, align people around the path forward, and deliver durable results.
         </p>
-        <a href="/about" class="text-sm text-[#6366F1] hover:text-[#4F46E5] transition-colors font-medium">
+        <a href="/about" class="text-sm text-accent hover:text-accent-hover transition-colors font-medium">
           More about me →
         </a>
       </div>
@@ -114,10 +114,10 @@ const recentPosts = posts
   <section class="max-w-5xl mx-auto px-6 pb-24">
     <div class="flex items-end justify-between mb-10">
       <div>
-        <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-2">Current Builds</p>
-        <h2 class="text-3xl font-bold text-[#F1F5F9]">What I'm building</h2>
+        <p class="text-accent font-mono text-xs tracking-widest uppercase mb-2">Current Builds</p>
+        <h2 class="text-3xl font-bold text-ink">What I'm building</h2>
       </div>
-      <a href="/projects" class="text-sm text-[#64748B] hover:text-[#6366F1] transition-colors">
+      <a href="/projects" class="text-sm text-ink-subtle hover:text-accent transition-colors">
         View all →
       </a>
     </div>
@@ -133,10 +133,10 @@ const recentPosts = posts
     <section class="max-w-5xl mx-auto px-6 pb-24">
       <div class="flex items-end justify-between mb-10">
         <div>
-          <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-2">Latest</p>
-          <h2 class="text-3xl font-bold text-[#F1F5F9]">Writing</h2>
+          <p class="text-accent font-mono text-xs tracking-widest uppercase mb-2">Latest</p>
+          <h2 class="text-3xl font-bold text-ink">Writing</h2>
         </div>
-        <a href="/blog" class="text-sm text-[#64748B] hover:text-[#6366F1] transition-colors">
+        <a href="/blog" class="text-sm text-ink-subtle hover:text-accent transition-colors">
           Read all →
         </a>
       </div>
@@ -156,17 +156,17 @@ const recentPosts = posts
 
   <!-- CTA -->
   <section class="max-w-5xl mx-auto px-6 pb-32">
-    <div class="reveal text-center p-14 rounded-2xl border border-[#222538] bg-[#13161F] relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-br from-[#6366F1]/5 via-transparent to-transparent pointer-events-none" />
-      <h2 class="relative text-3xl md:text-4xl font-bold text-[#F1F5F9] mb-4">
+    <div class="reveal text-center p-14 rounded-2xl border border-border bg-surface relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-transparent pointer-events-none" />
+      <h2 class="relative text-3xl md:text-4xl font-bold text-ink mb-4">
         Have something worth building?
       </h2>
-      <p class="relative text-[#94A3B8] mb-8 max-w-sm mx-auto">
+      <p class="relative text-ink-muted mb-8 max-w-sm mx-auto">
         Worst case, we trade a few good ideas. Best case, we build something worth talking about.
       </p>
       <a
         href="/contact"
-        class="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-[#6366F1] text-[#0B0D14] font-semibold hover:bg-[#4F46E5] transition-colors"
+        class="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-accent text-background font-semibold hover:bg-accent-hover transition-colors"
       >
         Get in touch
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>

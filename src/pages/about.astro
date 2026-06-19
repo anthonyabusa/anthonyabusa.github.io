@@ -28,21 +28,21 @@ const asciiKeyByFocus = {
 
     <div class="reveal mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
       <div>
-        <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">About Me</p>
-        <h1 class="text-4xl md:text-5xl font-bold text-[#F1F5F9] leading-tight">
+        <p class="text-accent font-mono text-xs tracking-widest uppercase mb-4">About Me</p>
+        <h1 class="text-4xl md:text-5xl font-bold text-ink leading-tight">
           Strategist.<br/>Builder.<br/>Transformation Leader.
         </h1>
       </div>
       <img
         src="/anthony-abusa-headshot.jpg"
         alt="Anthony A. Busa"
-        class="w-40 h-40 md:w-48 md:h-48 rounded-2xl object-cover border border-[#363B58] border-t-white/10 shadow-[0_1px_3px_rgba(0,0,0,0.6),0_6px_24px_rgba(0,0,0,0.35)]"
+        class="w-40 h-40 md:w-48 md:h-48 rounded-2xl object-cover border border-border-strong border-t-white/10 shadow-[0_1px_3px_rgba(0,0,0,0.6),0_6px_24px_rgba(0,0,0,0.35)]"
         loading="eager"
       />
     </div>
 
     <div class="reveal mb-20">
-      <div class="max-w-3xl space-y-5 text-[#94A3B8] leading-relaxed">
+      <div class="max-w-3xl space-y-5 text-ink-muted leading-relaxed">
         <p>
           I'm Anthony Busa, a San Diego-based strategist and operator working at the intersection of business strategy, product execution, and automation.
         </p>
@@ -66,8 +66,8 @@ const asciiKeyByFocus = {
     </div>
 
     <div class="mb-20">
-      <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-3">What I Do</p>
-      <h2 class="text-2xl font-bold text-[#F1F5F9] mb-8">Areas of Expertise</h2>
+      <p class="text-accent font-mono text-xs tracking-widest uppercase mb-3">What I Do</p>
+      <h2 class="text-2xl font-bold text-ink mb-8">Areas of Expertise</h2>
       <div class="reveal-group grid sm:grid-cols-2 gap-5">
         {focusAreas.map((item) => (
           <AsciiFocusCard item={item} asciiKey={asciiKeyByFocus[item.slug]} />
@@ -77,31 +77,31 @@ const asciiKeyByFocus = {
     </div>
 
     <div class="reveal mb-20">
-      <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-3">Recognition</p>
-      <h2 class="text-2xl font-bold text-[#F1F5F9] mb-8">Background & Honors</h2>
-      <div class="space-y-4 text-[#94A3B8] text-sm leading-relaxed">
+      <p class="text-accent font-mono text-xs tracking-widest uppercase mb-3">Recognition</p>
+      <h2 class="text-2xl font-bold text-ink mb-8">Background & Honors</h2>
+      <div class="space-y-4 text-ink-muted text-sm leading-relaxed">
         <div class="flex gap-4 items-start">
-          <span class="text-[#6366F1] font-mono text-xs mt-1 shrink-0 w-32">2018</span>
-          <p><strong class="text-[#F1F5F9]">Forbes 30 Under 30 Scholar</strong>, JPMorgan Chase, Consumer & Retail track. Selected from a national applicant pool.</p>
+          <span class="text-accent font-mono text-xs mt-1 shrink-0 w-32">2018</span>
+          <p><strong class="text-ink">Forbes 30 Under 30 Scholar</strong>, JPMorgan Chase, Consumer & Retail track. Selected from a national applicant pool.</p>
         </div>
         <div class="flex gap-4 items-start">
-          <span class="text-[#6366F1] font-mono text-xs mt-1 shrink-0 w-32">Education</span>
-          <p><strong class="text-[#F1F5F9]">Carnegie Mellon University</strong>, MBA, Tepper School (quantitative focus).<br /><strong class="text-[#F1F5F9]">Villanova University</strong>, B.S. Chemical Engineering (Student Body President; built student government structure from the ground up).</p>
+          <span class="text-accent font-mono text-xs mt-1 shrink-0 w-32">Education</span>
+          <p><strong class="text-ink">Carnegie Mellon University</strong>, MBA, Tepper School (quantitative focus).<br /><strong class="text-ink">Villanova University</strong>, B.S. Chemical Engineering (Student Body President; built student government structure from the ground up).</p>
         </div>
         <div class="flex gap-4 items-start">
-          <span class="text-[#6366F1] font-mono text-xs mt-1 shrink-0 w-32">Interests</span>
+          <span class="text-accent font-mono text-xs mt-1 shrink-0 w-32">Interests</span>
           <p>AI systems architecture · backpacking · 3D printing · swimming · strategy writing</p>
         </div>
       </div>
     </div>
 
     <div class="reveal">
-      <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-3">Toolkit</p>
-      <h2 class="text-2xl font-bold text-[#F1F5F9] mb-8">Skills & Tools</h2>
+      <p class="text-accent font-mono text-xs tracking-widest uppercase mb-3">Toolkit</p>
+      <h2 class="text-2xl font-bold text-ink mb-8">Skills & Tools</h2>
       <div class="space-y-5">
         {Object.entries(skills).map(([category, items]) => (
           <div class="flex flex-wrap items-center gap-3">
-            <span class="text-xs text-[#475569] font-mono w-20 shrink-0">{category}</span>
+            <span class="text-xs text-ink-faint font-mono w-20 shrink-0">{category}</span>
             <div class="flex flex-wrap gap-2">
               {items.map((skill) => <span class="tag">{skill}</span>)}
             </div>
