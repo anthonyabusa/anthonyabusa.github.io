@@ -24,6 +24,6 @@ This is the part I keep coming back to, because it isn't really about models. It
 
 Goals don't get you there; systems do. "Use the expensive model less" is a goal, and goals decay the moment you're busy. An architecture that makes the cheap path the default and routes to the expensive one only when judgment is genuinely required holds, because it does not depend on your discipline at 11pm. You built the discipline into the walls.
 
-So the smartest thing you can do with the smartest model is to guard it: not about how much the best mind in the room can do, but about how little you can afford to waste it on. The question for anyone building with these tools isn't "how powerful is your model?"
+So the smartest thing you can do with the smartest model is to guard it. The point was never how much the best mind in the room can do, but how little you can afford to waste it on. The question for anyone building with these tools isn't "how powerful is your model?"
 
 It's: what is it doing right now that something cheaper should be doing instead?
