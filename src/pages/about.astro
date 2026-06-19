@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SocialLinks from '../components/SocialLinks.astro';
+import AsciiFocusCard from '../components/AsciiFocusCard.astro';
+import AsciiRasterScript from '../components/AsciiRasterScript.astro';
 import { focusAreas } from '../data/focusAreas';
 
 const skills = {
@@ -8,6 +10,14 @@ const skills = {
   Technical: ['Python', 'TypeScript', 'Node.js', 'Astro', 'AI Agents', 'APIs'],
   Tools: ['GitHub', 'ClickUp', 'FastAPI', 'Ollama', 'Discord Bots', 'Kraken API'],
 };
+
+const asciiKeyByFocus = {
+  strategy: 'strategy',
+  operations: 'operations',
+  'product-program-leadership': 'product',
+  'ai-automation': 'automation',
+  'marketplace-venture-building': 'marketplace',
+} as const;
 ---
 
 <BaseLayout
@@ -60,21 +70,10 @@ const skills = {
       <h2 class="text-2xl font-bold text-[#F1F5F9] mb-8">Areas of Expertise</h2>
       <div class="reveal-group grid sm:grid-cols-2 gap-5">
         {focusAreas.map((item) => (
-          <a
-            href={`/work/${item.slug}`}
-            aria-label={`View ${item.title} projects and experience`}
-            class="reveal group block p-6 rounded-xl border border-[#222538] bg-[#13161F] card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6366F1]"
-          >
-            <div class="text-2xl mb-3">{item.icon}</div>
-            <h3 class="text-[#F1F5F9] group-hover:text-[#A5B4FC] transition-colors font-semibold mb-2">{item.title}</h3>
-            <p class="text-[#94A3B8] text-sm leading-relaxed">{item.description}</p>
-            <span class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-[#818CF8] opacity-80 group-hover:opacity-100 transition-opacity">
-              View related work
-              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </span>
-          </a>
+          <AsciiFocusCard item={item} asciiKey={asciiKeyByFocus[item.slug]} />
         ))}
       </div>
+      <AsciiRasterScript />
     </div>
 
     <div class="reveal mb-20">

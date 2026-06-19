@@ -1,0 +1,155 @@
+<script>
+  const prefersReducedAsciiRaster = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const textureTokens: Record<string, string> = {
+    strategy: 'NORTHSTARVECTOR',
+    operations: 'GEARSFLOWCADENCE',
+    product: 'BUILDTESTSHIP',
+    automation: 'BRAINAIMEMORY',
+    marketplace: 'HUBSPOKEALIGN',
+  };
+  const sourcePaths: Record<string, string> = {
+    strategy: '/ascii-sources/compass-rose-black.svg',
+    operations: '/ascii-sources/icon-gears2.svg',
+    product: '/ascii-sources/recycling-symbol.svg',
+    automation: '/ascii-sources/brain-outline-lateral.svg',
+    marketplace: '/ascii-sources/social-network.svg',
+  };
+  const sourceImages: Record<string, HTMLImageElement> = {};
+  Object.entries(sourcePaths).forEach(([key, path]) => {
+    const image = new Image();
+    image.decoding = 'async';
+    image.src = path;
+    sourceImages[key] = image;
+  });
+
+  type TextCanvas = {
+    canvas: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
+    cols: number;
+    rows: number;
+    cw: number;
+    ch: number;
+  };
+
+  function setupCanvas(canvas: HTMLCanvasElement, cols: number, rows: number): TextCanvas | null {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+    const dpr = window.devicePixelRatio || 1;
+    const cssWidth = canvas.width;
+    const cssHeight = canvas.height;
+    canvas.width = Math.floor(cssWidth * dpr);
+    canvas.height = Math.floor(cssHeight * dpr);
+    canvas.style.width = `${cssWidth}px`;
+    canvas.style.height = `${cssHeight}px`;
+    ctx.scale(dpr, dpr);
+    ctx.font = '8px "JetBrains Mono", ui-monospace, monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    return { canvas, ctx, cols, rows, cw: cssWidth / cols, ch: cssHeight / rows };
+  }
+
+  function drawChar(tc: TextCanvas, col: number, row: number, char: string, opacity = 0.72, color = '165,180,252') {
+    if (col < 0 || row < 0 || col >= tc.cols || row >= tc.rows) return;
+    tc.ctx.fillStyle = `rgba(${color}, ${opacity})`;
+    tc.ctx.fillText(char, (col + 0.5) * tc.cw, (row + 0.5) * tc.ch);
+  }
+
+  function drawSource(kind: string, ctx: CanvasRenderingContext2D, w: number, h: number, tick: number, hover: boolean) {
+    ctx.clearRect(0, 0, w, h);
+    const image = sourceImages[kind];
+    if (!image || !image.complete || !image.naturalWidth) return;
+    const t = tick * (hover ? 0.018 : 0.011);
+    const cx = w * .52;
+    const cy = h * .52;
+    const fit = Math.min((w * .78) / image.naturalWidth, (h * .78) / image.naturalHeight);
+    const drawW = image.naturalWidth * fit;
+    const drawH = image.naturalHeight * fit;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(Math.sin(t) * (kind === 'operations' ? 0.07 : kind === 'product' ? 0.052 : 0.025));
+    const scale = hover ? 1.06 : 1;
+    ctx.scale(scale, scale);
+    ctx.shadowColor = 'rgba(5,7,16,.62)';
+    ctx.shadowBlur = 18;
+    ctx.shadowOffsetX = 13;
+    ctx.shadowOffsetY = 15;
+    ctx.drawImage(image, -drawW / 2, -drawH / 2, drawW, drawH);
+    ctx.restore();
+
+    ctx.globalCompositeOperation = 'source-atop';
+    const g = ctx.createLinearGradient(w * .25, h * .18, w * .82, h * .88);
+    g.addColorStop(0, 'rgba(255,255,255,1)');
+    g.addColorStop(.34, 'rgba(205,216,255,.92)');
+    g.addColorStop(.68, 'rgba(108,118,216,.58)');
+    g.addColorStop(1, 'rgba(24,28,58,.36)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'source-over';
+
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    const sweep = (Math.sin(t * 1.8) * .5 + .5) * w;
+    const hg = ctx.createLinearGradient(sweep - 90, 0, sweep + 90, h);
+    hg.addColorStop(0, 'rgba(255,255,255,0)');
+    hg.addColorStop(.48, 'rgba(255,255,255,.20)');
+    hg.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = hg;
+    ctx.fillRect(0, 0, w, h);
+    ctx.restore();
+  }
+
+  const sourceCanvas = document.createElement('canvas');
+  sourceCanvas.width = 620;
+  sourceCanvas.height = 360;
+  const sourceCtx = sourceCanvas.getContext('2d', { willReadFrequently: true });
+
+  function renderFromSource(tc: TextCanvas, kind: string, tick: number, hover: boolean) {
+    tc.ctx.clearRect(0, 0, Number.parseFloat(tc.canvas.style.width), Number.parseFloat(tc.canvas.style.height));
+    if (!sourceCtx) return;
+    drawSource(kind, sourceCtx, sourceCanvas.width, sourceCanvas.height, tick, hover);
+    const data = sourceCtx.getImageData(0, 0, sourceCanvas.width, sourceCanvas.height).data;
+    const token = textureTokens[kind] ?? 'SYSTEM';
+    const ramp = [' ', '.', ':', '-', '+', '*', '#', '@'];
+    const phase = Math.floor(tick / (hover ? 5 : 9));
+    for (let row = 0; row < tc.rows; row += 1) {
+      for (let col = 0; col < tc.cols; col += 1) {
+        const sx = Math.floor((col + 0.5) / tc.cols * sourceCanvas.width);
+        const sy = Math.floor((row + 0.5) / tc.rows * sourceCanvas.height);
+        const idx = (sy * sourceCanvas.width + sx) * 4;
+        const a = data[idx + 3] / 255;
+        if (a < 0.045) continue;
+        const lum = (data[idx] * .2126 + data[idx+1] * .7152 + data[idx+2] * .0722) / 255;
+        const value = Math.max(a * .55, lum * a);
+        const level = Math.max(1, Math.min(ramp.length - 1, Math.floor(value * ramp.length)));
+        const textured = level >= 5;
+        const char = textured ? token[(col + row * 2 + phase) % token.length] : ramp[level];
+        const opacity = Math.min(.96, .10 + value * .92);
+        const color = level >= 6 ? '241,245,249' : level >= 4 ? '165,180,252' : '99,102,241';
+        drawChar(tc, col, row, char, opacity, color);
+      }
+    }
+  }
+
+  const cards = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-ascii-card]')).map((card) => {
+    const canvas = card.querySelector<HTMLCanvasElement>('[data-ascii-raster]');
+    const tc = canvas ? setupCanvas(canvas, 168, 54) : null;
+    let hover = false;
+    card.addEventListener('pointerenter', () => { hover = true; });
+    card.addEventListener('pointerleave', () => { hover = false; });
+    card.addEventListener('focus', () => { hover = true; });
+    card.addEventListener('blur', () => { hover = false; });
+    return { key: card.dataset.asciiCard ?? 'strategy', tc, get hover() { return hover; } };
+  });
+
+  let asciiRasterTick = 0;
+  function animateAsciiRaster() {
+    asciiRasterTick += 1;
+    cards.forEach((card) => {
+      if (!card.tc) return;
+      renderFromSource(card.tc, card.key, asciiRasterTick, card.hover);
+    });
+    if (!prefersReducedAsciiRaster) window.requestAnimationFrame(animateAsciiRaster);
+  }
+  animateAsciiRaster();
+</script>

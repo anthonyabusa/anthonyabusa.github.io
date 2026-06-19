@@ -32,7 +32,7 @@ const experienceWork = related.filter((project) => project.placement === 'experi
     <header class="reveal max-w-3xl mt-10 mb-14">
       <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Filtered work</p>
       <div class="flex items-center gap-4 mb-5">
-        <span class="text-3xl text-[#A5B4FC]">{focus.icon}</span>
+        <span class="ascii-icon ascii-icon--hero" aria-hidden="true">{focus.icon}</span>
         <h1 class="text-4xl md:text-5xl font-bold text-[#F1F5F9] leading-tight">{focus.title}</h1>
       </div>
       <p class="text-[#94A3B8] text-lg leading-relaxed">{focus.description}</p>
@@ -76,7 +76,7 @@ const experienceWork = related.filter((project) => project.placement === 'experi
                   <h3 class="text-xl font-semibold text-[#F1F5F9] group-hover:text-[#A5B4FC] transition-colors">{role.title}</h3>
                   <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#818CF8] mt-2">{role.role}</p>
                 </div>
-                <span class="text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono whitespace-nowrap">{role.year}; {role.endYear}</span>
+                <span class="text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono whitespace-nowrap">{role.year}–{role.endYear}</span>
               </div>
               <div class="flex flex-wrap gap-2 mb-5">{role.tags.map((tag: string) => <span class="tag">{tag}</span>)}</div>
               <p class="text-[#94A3B8] text-sm leading-relaxed max-w-3xl">{role.focusNarratives?.[focus.slug] ?? role.description}</p>

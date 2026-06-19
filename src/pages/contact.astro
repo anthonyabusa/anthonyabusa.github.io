@@ -69,13 +69,24 @@ const contactLinks = [
         <span class="text-xs text-green-400 font-mono uppercase tracking-widest">Available</span>
       </div>
       <h2 class="text-[#F1F5F9] font-semibold text-lg mb-2">Currently open to:</h2>
-      <ul class="text-[#94A3B8] text-sm space-y-1.5">
-        <li>→ Consulting engagements (strategy, product, AI)</li>
-        <li>→ Advisory roles with early-stage startups</li>
-        <li>→ Co-founder conversations</li>
-        <li>→ Speaking or podcast appearances</li>
+      <ul class="contact-list text-[#94A3B8] text-sm space-y-1.5">
+        <li>Consulting engagements (strategy, product, AI)</li>
+        <li>Advisory roles with early-stage startups</li>
+        <li>Co-founder conversations</li>
+        <li>Speaking or podcast appearances</li>
       </ul>
     </div>
 
   </div>
 </BaseLayout>
+
+<style>
+  .contact-list { list-style: none; padding-left: 0; }
+  .contact-list li { position: relative; padding-left: 1.25rem; }
+  .contact-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #818CF8;
+  }
+</style>

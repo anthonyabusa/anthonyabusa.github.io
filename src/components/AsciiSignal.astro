@@ -1,0 +1,68 @@
+---
+interface Props {
+  label?: string;
+  class?: string;
+}
+
+const { label = 'Animated system signal field', class: className = '' } = Astro.props;
+---
+
+<div class={`ascii-signal ${className}`} aria-hidden="true" data-ascii-signal>
+  <pre data-ascii-frame aria-label={label}>{`+-- SYSTEM MAP -----------+
+| strategy  -> product   |
+| ops       -> rhythm    |
+| agents    -> leverage  |
++-------------------------+`}</pre>
+</div>
+
+<script>
+  const density = [' ', '.', ':', '+', '*', '#'];
+  const nodes = ['strategy', 'ops', 'product', 'agents', 'market', 'signal'];
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function frame(t: number) {
+    const tick = Math.floor(t / 180);
+    const rows = [];
+    rows.push('┌─ SYSTEM MAP ─────────────┐');
+    for (let y = 0; y < 9; y += 1) {
+      let line = '| ';
+      for (let x = 0; x < 26; x += 1) {
+        const wave = Math.sin((x * 0.7) + (y * 1.15) + (tick * 0.28));
+        const pulse = Math.cos((x - tick * 0.6) * 0.45) + Math.sin((y + tick * 0.3) * 0.9);
+        const index = Math.max(0, Math.min(density.length - 1, Math.floor((wave + pulse + 2) * 1.25)));
+        const isNode = (x + tick + y * 3) % 23 === 0;
+        const isLink = (x + tick) % 9 === y % 5;
+        line += isNode ? '◦' : isLink ? '─' : density[index];
+      }
+      line += ' │';
+      rows.push(line);
+    }
+    rows.push('├───────────────────────────┤');
+    rows.push(`│ ${nodes[tick % nodes.length].padEnd(8, ' ')} :: ${String(tick % 100).padStart(2, '0')} :: live │`);
+    rows.push('└───────────────────────────┘');
+    return rows.join('\n');
+  }
+
+  document.querySelectorAll('[data-ascii-signal]').forEach((root) => {
+    const pre = root.querySelector('[data-ascii-frame]');
+    if (!pre) return;
+
+    if (prefersReduced.matches) {
+      pre.textContent = frame(0);
+      return;
+    }
+
+    let raf = 0;
+    let last = 0;
+    const draw = (time: number) => {
+      if (time - last > 120) {
+        pre.textContent = frame(time);
+        last = time;
+      }
+      raf = window.requestAnimationFrame(draw);
+    };
+
+    raf = window.requestAnimationFrame(draw);
+    window.addEventListener('pagehide', () => window.cancelAnimationFrame(raf), { once: true });
+  });
+</script>

@@ -1,0 +1,357 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const demos = [
+  {
+    key: 'strategy',
+    href: '/work/strategy',
+    mark: '/->',
+    title: 'Strategy',
+    subtitle: 'Set direction',
+    note: 'Market shape, positioning, tradeoffs, and where effort should go.',
+    concrete: ['north star', 'positioning', 'decision logic'],
+  },
+  {
+    key: 'operations',
+    href: '/work/operations',
+    mark: '[::]',
+    title: 'Operations',
+    subtitle: 'Tune the machine',
+    note: 'Operating rhythm, handoffs, leverage points, metrics, and better flow.',
+    concrete: ['gears', 'cadence', 'flow'],
+  },
+  {
+    key: 'product',
+    href: '/work/product-program-leadership',
+    mark: '{<>}',
+    title: 'Product / Program',
+    subtitle: 'Iterate to release',
+    note: 'Discovery, build, test, ship, learn, and repeatable delivery.',
+    concrete: ['discover', 'build/test', 'ship/learn'],
+  },
+  {
+    key: 'automation',
+    href: '/work/ai-automation',
+    mark: '>*_',
+    title: 'AI Automation',
+    subtitle: 'Think with machines',
+    note: 'Agents, memory, reasoning paths, analytics, and useful automated action.',
+    concrete: ['brain', 'memory', 'reasoning'],
+  },
+  {
+    key: 'marketplace',
+    href: '/work/marketplace-venture-building',
+    mark: '&lt;=&gt;',
+    title: 'Stakeholder Networks',
+    subtitle: 'Align the network',
+    note: 'Stakeholders, hubs, relationships, trust, influence, and coordinated action.',
+    concrete: ['hub/spoke', 'alignment', 'influence'],
+  },
+];
+---
+
+<BaseLayout
+  title="ASCII Motion Lab"
+  description="High-resolution textmode motion directions for Anthony Busa's portfolio symbol and graphics system."
+>
+  <section class="max-w-6xl mx-auto px-6 pt-32 pb-24">
+    <div class="max-w-3xl mb-12">
+      <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Visual system spike</p>
+      <h1 class="text-4xl md:text-6xl font-bold text-[#F1F5F9] leading-tight mb-5">ASCII motion lab</h1>
+      <p class="text-[#94A3B8] text-lg leading-relaxed">
+        This pass uses public-domain source image assets for the card graphics before typographic rasterization, then adds gradient lighting and motion so the symbols feel like image-derived text art instead of line drawings.
+      </p>
+    </div>
+
+    <div class="ascii-stage mb-10" data-ascii-stage>
+      <canvas class="ascii-stage__canvas" data-hero-canvas width="980" height="430" aria-hidden="true"></canvas>
+      <div class="ascii-stage__copy">
+        <span class="ascii-stage__eyebrow">hero candidate</span>
+        <h2>systems in motion</h2>
+        <p>Move your cursor through the field. The graphic responds as an ambient signal layer, not a literal target tracker.</p>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+      {demos.map((demo) => (
+        <a class={`ascii-demo ascii-demo--${demo.key}`} href={demo.href} data-ascii-demo={demo.key} aria-label={`View ${demo.title} work: ${demo.note}`}>
+          <canvas class="ascii-demo__canvas" data-symbol-canvas={demo.key} width="420" height="260" aria-hidden="true"></canvas>
+          <span class="ascii-demo__content">
+            <span class="ascii-demo__header">
+              <span class="ascii-demo__mark" aria-hidden="true" set:html={demo.mark} />
+              <span>
+                <span class="ascii-demo__title">{demo.title}</span>
+                <span class="ascii-demo__subtitle">{demo.subtitle}</span>
+              </span>
+            </span>
+            <span class="ascii-demo__note">{demo.note}</span>
+            <span class="ascii-demo__chips" aria-label={`${demo.title} examples`}>
+              {demo.concrete.map((item) => <span>{item}</span>)}
+            </span>
+            <span class="ascii-demo__cta">View related work →</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const glyphs = ['.', ':', '+', '*', '#'];
+  const textureTokens: Record<string, string> = {
+    strategy: 'NORTHSTARVECTOR',
+    operations: 'GEARSFLOWCADENCE',
+    product: 'BUILDTESTSHIP',
+    automation: 'BRAINAIMEMORY',
+    marketplace: 'HUBSPOKEALIGN',
+  };
+  const sourcePaths: Record<string, string> = {
+    strategy: '/ascii-sources/compass-rose-black.svg',
+    operations: '/ascii-sources/icon-gears2.svg',
+    product: '/ascii-sources/recycling-symbol.svg',
+    automation: '/ascii-sources/brain-outline-lateral.svg',
+    marketplace: '/ascii-sources/social-network.svg',
+  };
+  const sourceImages: Record<string, HTMLImageElement> = {};
+  Object.entries(sourcePaths).forEach(([key, path]) => {
+    const image = new Image();
+    image.decoding = 'async';
+    image.src = path;
+    sourceImages[key] = image;
+  });
+
+  type TextCanvas = {
+    canvas: HTMLCanvasElement;
+    ctx: CanvasRenderingContext2D;
+    cols: number;
+    rows: number;
+    cw: number;
+    ch: number;
+  };
+
+  function setupCanvas(canvas: HTMLCanvasElement, cols: number, rows: number): TextCanvas | null {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+    const dpr = window.devicePixelRatio || 1;
+    const cssWidth = canvas.width;
+    const cssHeight = canvas.height;
+    canvas.width = Math.floor(cssWidth * dpr);
+    canvas.height = Math.floor(cssHeight * dpr);
+    canvas.style.width = `${cssWidth}px`;
+    canvas.style.height = `${cssHeight}px`;
+    ctx.scale(dpr, dpr);
+    ctx.font = '8px "JetBrains Mono", ui-monospace, monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    return { canvas, ctx, cols, rows, cw: cssWidth / cols, ch: cssHeight / rows };
+  }
+
+  function clear(tc: TextCanvas, alpha = 0.08) {
+    tc.ctx.clearRect(0, 0, tc.canvas.width, tc.canvas.height);
+    if (alpha <= 0) return;
+    tc.ctx.fillStyle = `rgba(11, 13, 20, ${alpha})`;
+    tc.ctx.fillRect(0, 0, Number.parseFloat(tc.canvas.style.width), Number.parseFloat(tc.canvas.style.height));
+  }
+
+  function drawChar(tc: TextCanvas, col: number, row: number, char: string, opacity = 0.72, color = '165,180,252') {
+    if (col < 0 || row < 0 || col >= tc.cols || row >= tc.rows) return;
+    tc.ctx.fillStyle = `rgba(${color}, ${opacity})`;
+    tc.ctx.fillText(char, (col + 0.5) * tc.cw, (row + 0.5) * tc.ch);
+  }
+
+  function glowChar(tc: TextCanvas, col: number, row: number, char: string, opacity = 0.9) {
+    drawChar(tc, col, row, char, opacity, '241,245,249');
+    drawChar(tc, col - 1, row, '.', opacity * 0.22);
+    drawChar(tc, col + 1, row, '.', opacity * 0.22);
+    drawChar(tc, col, row - 1, '.', opacity * 0.18);
+    drawChar(tc, col, row + 1, '.', opacity * 0.18);
+  }
+
+function drawLine(tc: TextCanvas, x1: number, y1: number, x2: number, y2: number, char = '.', opacity = 0.55) {
+    const steps = Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1), 1);
+    for (let i = 0; i <= steps; i += 1) {
+      const t = i / steps;
+      drawChar(tc, Math.round(x1 + (x2 - x1) * t), Math.round(y1 + (y2 - y1) * t), char, opacity);
+    }
+  }
+
+  const heroCanvas = document.querySelector<HTMLCanvasElement>('[data-hero-canvas]');
+  const hero = heroCanvas ? setupCanvas(heroCanvas, 112, 40) : null;
+  const stage = document.querySelector('[data-ascii-stage]');
+  let pointer = { x: 0.62, y: 0.42 };
+  stage?.addEventListener('pointermove', (event) => {
+    const pointerEvent = event as PointerEvent;
+    const rect = stage.getBoundingClientRect();
+    pointer = {
+      x: Math.max(0, Math.min(1, (pointerEvent.clientX - rect.left) / rect.width)),
+      y: Math.max(0, Math.min(1, (pointerEvent.clientY - rect.top) / rect.height)),
+    };
+  });
+
+  function renderHero(tick: number) {
+    if (!hero) return;
+    clear(hero, 0.02);
+    const px = pointer.x * hero.cols;
+    const py = pointer.y * hero.rows;
+    for (let y = 0; y < hero.rows; y += 1) {
+      for (let x = 0; x < hero.cols; x += 1) {
+        const dx = x - px;
+        const dy = (y - py) * 1.8;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const wave = Math.sin(x * 0.18 + y * 0.34 + tick * 0.025);
+        const signal = Math.max(0, 1 - dist / 34) + wave * 0.22;
+        if (signal < 0.12 && (x + y + tick) % 23 !== 0) continue;
+        const gi = Math.max(0, Math.min(glyphs.length - 1, Math.floor(signal * glyphs.length)));
+        drawChar(hero, x, y, glyphs[gi], 0.12 + Math.max(0, signal) * 0.62);
+      }
+    }
+    // designed signal paths, not label tracking
+    const centers = [[18, 28], [40, 13], [66, 22], [91, 10]];
+    centers.forEach(([x, y], i) => {
+      drawLine(hero, Math.round(px), Math.round(py), x, y, i % 2 ? ':' : '.', 0.22);
+      glowChar(hero, x, y, i % 2 ? 'o' : '+', 0.72);
+    });
+  }
+
+  function drawSource(kind: string, ctx: CanvasRenderingContext2D, w: number, h: number, tick: number, hover: boolean) {
+    ctx.clearRect(0, 0, w, h);
+    const image = sourceImages[kind];
+    if (!image || !image.complete || !image.naturalWidth) return;
+    const t = tick * (hover ? 0.018 : 0.011);
+    const cx = w * .52;
+    const cy = h * .52;
+    const fit = Math.min((w * .78) / image.naturalWidth, (h * .78) / image.naturalHeight);
+    const drawW = image.naturalWidth * fit;
+    const drawH = image.naturalHeight * fit;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(Math.sin(t) * (kind === 'operations' ? 0.07 : kind === 'product' ? 0.06 : 0.025));
+    const scale = hover ? 1.06 : 1;
+    ctx.scale(scale, scale);
+    ctx.shadowColor = 'rgba(5,7,16,.62)';
+    ctx.shadowBlur = 18;
+    ctx.shadowOffsetX = 13;
+    ctx.shadowOffsetY = 15;
+    ctx.drawImage(image, -drawW / 2, -drawH / 2, drawW, drawH);
+    ctx.restore();
+
+    // Convert flat source SVGs into dimensional image inputs before text rasterization.
+    ctx.globalCompositeOperation = 'source-atop';
+    const g = ctx.createLinearGradient(w * .25, h * .18, w * .82, h * .88);
+    g.addColorStop(0, 'rgba(255,255,255,1)');
+    g.addColorStop(.34, 'rgba(205,216,255,.92)');
+    g.addColorStop(.68, 'rgba(108,118,216,.58)');
+    g.addColorStop(1, 'rgba(24,28,58,.36)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'source-over';
+
+    // Moving highlight pass.
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    const sweep = (Math.sin(t * 1.8) * .5 + .5) * w;
+    const hg = ctx.createLinearGradient(sweep - 90, 0, sweep + 90, h);
+    hg.addColorStop(0, 'rgba(255,255,255,0)');
+    hg.addColorStop(.48, 'rgba(255,255,255,.20)');
+    hg.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = hg;
+    ctx.fillRect(0, 0, w, h);
+    ctx.restore();
+  }
+
+  const sourceCanvas = document.createElement('canvas');
+  sourceCanvas.width = 620;
+  sourceCanvas.height = 360;
+  const sourceCtx = sourceCanvas.getContext('2d', { willReadFrequently: true });
+
+  function renderFromSource(tc: TextCanvas, kind: string, tick: number, hover: boolean) {
+    clear(tc, 0);
+    if (!sourceCtx) return;
+    drawSource(kind, sourceCtx, sourceCanvas.width, sourceCanvas.height, tick, hover);
+    const data = sourceCtx.getImageData(0, 0, sourceCanvas.width, sourceCanvas.height).data;
+    const token = textureTokens[kind] ?? 'SYSTEM';
+    const ramp = [' ', '.', ':', '-', '+', '*', '#', '@'];
+    const phase = Math.floor(tick / (hover ? 5 : 9));
+    for (let row = 0; row < tc.rows; row += 1) {
+      for (let col = 0; col < tc.cols; col += 1) {
+        const sx = Math.floor((col + 0.5) / tc.cols * sourceCanvas.width);
+        const sy = Math.floor((row + 0.5) / tc.rows * sourceCanvas.height);
+        const idx = (sy * sourceCanvas.width + sx) * 4;
+        const a = data[idx + 3] / 255;
+        if (a < 0.045) continue;
+        const lum = (data[idx] * .2126 + data[idx+1] * .7152 + data[idx+2] * .0722) / 255;
+        const value = Math.max(a * .55, lum * a);
+        const level = Math.max(1, Math.min(ramp.length - 1, Math.floor(value * ramp.length)));
+        const textured = level >= 5;
+        const char = textured ? token[(col + row * 2 + phase) % token.length] : ramp[level];
+        const opacity = Math.min(.96, .10 + value * .92);
+        const color = level >= 6 ? '241,245,249' : level >= 4 ? '165,180,252' : '99,102,241';
+        drawChar(tc, col, row, char, opacity, color);
+      }
+    }
+  }
+
+  function renderCompass(tc: TextCanvas, tick: number, hover: boolean) { renderFromSource(tc, 'strategy', tick, hover); }
+  function renderGears(tc: TextCanvas, tick: number, hover: boolean) { renderFromSource(tc, 'operations', tick, hover); }
+  function renderLoop(tc: TextCanvas, tick: number, hover: boolean) { renderFromSource(tc, 'product', tick, hover); }
+  function renderBrain(tc: TextCanvas, tick: number, hover: boolean) { renderFromSource(tc, 'automation', tick, hover); }
+  function renderHub(tc: TextCanvas, tick: number, hover: boolean) { renderFromSource(tc, 'marketplace', tick, hover); }
+
+  const renderers: Record<string, (tc: TextCanvas, tick: number, hover: boolean) => void> = {
+    strategy: renderCompass,
+    operations: renderGears,
+    product: renderLoop,
+    automation: renderBrain,
+    marketplace: renderHub,
+  };
+
+  const cards = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-ascii-demo]')).map((card) => {
+    const canvas = card.querySelector<HTMLCanvasElement>('[data-symbol-canvas]');
+    const tc = canvas ? setupCanvas(canvas, 168, 54) : null;
+    let hover = false;
+    card.addEventListener('pointerenter', () => { hover = true; });
+    card.addEventListener('pointerleave', () => { hover = false; });
+    card.addEventListener('focus', () => { hover = true; });
+    card.addEventListener('blur', () => { hover = false; });
+    return { key: card.dataset.asciiDemo ?? 'strategy', tc, get hover() { return hover; } };
+  });
+
+  let tick = 0;
+  function animate() {
+    tick += 1;
+    renderHero(tick);
+    cards.forEach((card) => {
+      if (!card.tc) return;
+      renderers[card.key]?.(card.tc, tick, card.hover);
+    });
+    if (!prefersReduced) window.requestAnimationFrame(animate);
+  }
+  animate();
+</script>
+
+<style>
+  .ascii-stage { position: relative; overflow: hidden; min-height: 360px; border: 1px solid #222538; border-top-color: rgba(255,255,255,.07); border-radius: 24px; background: radial-gradient(circle at 70% 28%, rgba(129,140,248,.20), transparent 28%), radial-gradient(circle at 30% 80%, rgba(99,102,241,.10), transparent 34%), #10131C; box-shadow: 0 18px 70px rgba(0,0,0,.35); }
+  .ascii-stage__canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .9; }
+  .ascii-stage__copy { position: relative; z-index: 2; max-width: 430px; padding: 38px; }
+  .ascii-stage__eyebrow { color: #818CF8; font-size: 10px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+  .ascii-stage h2 { margin: 14px 0; color: #F1F5F9; font-size: clamp(2.25rem, 7vw, 5.5rem); line-height: .95; letter-spacing: -.08em; }
+  .ascii-stage p, .ascii-demo__note { color: #94A3B8; line-height: 1.6; }
+  .ascii-demo { display: block; position: relative; min-height: 360px; padding: 24px; text-align: left; border: 1px solid #222538; border-top-color: rgba(255,255,255,.07); border-radius: 18px; background: radial-gradient(circle at 82% 38%, rgba(99,102,241,.07), transparent 28%), linear-gradient(145deg, rgba(255,255,255,.026), transparent 42%), #13161F; cursor: pointer; overflow: hidden; text-decoration: none; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+  .ascii-demo:hover, .ascii-demo:focus-visible { transform: translateY(-3px); border-color: rgba(99,102,241,.55); box-shadow: 0 16px 42px rgba(0,0,0,.35), 0 0 32px rgba(99,102,241,.10); outline: none; }
+  .ascii-demo__canvas { position: absolute; right: -14px; bottom: 16px; width: 76%; height: 60%; opacity: 1; transition: opacity .2s ease, filter .2s ease, transform .2s ease; }
+  .ascii-demo:hover .ascii-demo__canvas, .ascii-demo:focus-visible .ascii-demo__canvas { opacity: 1; filter: drop-shadow(0 0 20px rgba(129,140,248,.28)); transform: translateX(-4px); }
+  .ascii-demo__content { position: relative; z-index: 2; display: block; }
+  .ascii-demo__header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .ascii-demo__mark { display: inline-flex; min-width: 3.8rem; min-height: 2.5rem; align-items: center; justify-content: center; border: 1px solid rgba(99,102,241,.34); border-radius: 12px; color: #A5B4FC; background: rgba(99,102,241,.10); font-weight: 800; box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+  .ascii-demo:hover .ascii-demo__mark, .ascii-demo:focus-visible .ascii-demo__mark { color: #F1F5F9; border-color: rgba(129,140,248,.75); }
+  .ascii-demo__title { display: block; color: #F1F5F9; font-size: 1.05rem; font-weight: 800; margin-bottom: 2px; }
+  .ascii-demo__subtitle { display: block; color: #818CF8; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .ascii-demo__note { display: block; max-width: 72%; font-size: .83rem; margin-bottom: 16px; }
+  .ascii-demo__chips { display: flex; flex-wrap: wrap; gap: 6px; max-width: 72%; }
+  .ascii-demo__chips span { border: 1px solid rgba(46,51,80,.85); border-radius: 999px; padding: 3px 8px; color: #CBD5E1; background: rgba(11,13,20,.36); font-size: 10px; font-weight: 700; }
+  .ascii-demo__cta { position: absolute; left: 0; top: 284px; color: #818CF8; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; opacity: .74; }
+  @media (max-width: 720px) { .ascii-demo__note, .ascii-demo__chips { max-width: 100%; } .ascii-demo__canvas { position: relative; right: auto; bottom: auto; width: 100%; height: 180px; margin-top: 18px; } .ascii-demo__cta { position: static; display: block; margin-top: 18px; } }
+  @media (prefers-reduced-motion: reduce) { .ascii-demo, .ascii-demo__canvas { transition: none; } }
+</style>
