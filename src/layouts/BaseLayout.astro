@@ -114,11 +114,32 @@ const breadcrumbSchema = crumbSegments.length
     )}
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <Nav />
-    <main>
+    <main id="main-content">
       <slot />
     </main>
     <Footer />
     <RevealScript />
   </body>
 </html>
+
+<style is:global>
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 200;
+    padding: 8px 16px;
+    background: #13161F;
+    color: #F1F5F9;
+    border: 1px solid #6366F1;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+  }
+  .skip-link:focus {
+    left: 16px;
+    top: 16px;
+  }
+</style>

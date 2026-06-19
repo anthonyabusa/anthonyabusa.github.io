@@ -24,7 +24,7 @@ const { project } = Astro.props;
     <div class="grid md:grid-cols-[1fr_2fr] gap-12">
       <aside class="reveal space-y-7">
         <div><p class="case-label">Role</p><p class="text-sm text-[#94A3B8]">{project.role}</p></div>
-        <div><p class="case-label">Timeline</p><p class="text-sm text-[#94A3B8]">{project.year}; {project.endYear ?? 'Present'}</p></div>
+        <div><p class="case-label">Timeline</p><p class="text-sm text-[#94A3B8]">{project.year}–{project.endYear ?? 'Present'}</p></div>
         <FocusAreaLinks areaSlugs={project.focusAreas} />
         {project.url && <a href={project.url} target="_blank" rel="noopener noreferrer" class="inline-flex px-5 py-2.5 rounded-lg border border-[#6366F1]/40 text-sm text-[#818CF8] hover:bg-[#6366F1]/10 transition-colors">Open project ↗</a>}
       </aside>
