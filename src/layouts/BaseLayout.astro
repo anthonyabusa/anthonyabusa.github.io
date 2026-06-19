@@ -8,12 +8,14 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  ogType?: string;
 }
 
 const {
   title,
   description = 'Anthony Busa: strategy and operations leader building technology-enabled systems across startups, marketplaces, AI workflows, and business strategy.',
   ogImage = '/og-image.png',
+  ogType = 'website',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -88,7 +90,7 @@ const breadcrumbSchema = crumbSegments.length
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={`${title} | Anthony Busa`} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(ogImage, Astro.site)} />

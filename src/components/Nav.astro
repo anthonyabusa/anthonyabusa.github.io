@@ -36,9 +36,9 @@ const links = [
 
     <!-- Mobile nav toggle -->
     <details class="md:hidden group">
-      <summary class="list-none cursor-pointer text-[#64748B] hover:text-[#F1F5F9]">
-        <svg class="group-open:hidden" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
-        <svg class="hidden group-open:block" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <summary class="list-none cursor-pointer text-[#64748B] hover:text-[#F1F5F9]" aria-label="Menu">
+        <svg aria-hidden="true" class="group-open:hidden" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+        <svg aria-hidden="true" class="hidden group-open:block" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </summary>
       <nav class="absolute top-full left-3 right-3 bg-[#212435]/95 backdrop-blur-xl border border-[#363B58] border-t-white/10 rounded-xl p-3 flex flex-col gap-1 shadow-[0_18px_50px_rgba(0,0,0,0.7)]">
         {links.map(({ href, label }) => (
