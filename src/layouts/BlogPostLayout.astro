@@ -35,7 +35,7 @@ const postSchema = {
 };
 ---
 
-<BaseLayout title={title} description={description} ogImage={ogImage}>
+<BaseLayout title={title} description={description} ogImage={ogImage} ogType="article">
   <script type="application/ld+json" set:html={JSON.stringify(postSchema)} />
   <article class="max-w-2xl mx-auto px-6 pt-32 pb-24">
     <header class="mb-10">
