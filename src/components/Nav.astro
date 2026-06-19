@@ -12,7 +12,7 @@ const links = [
 
 <header id="site-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
   <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="/" class="text-[#F1F5F9] font-semibold tracking-tight hover:text-[#6366F1] transition-colors">
+    <a href="/" class="text-ink font-semibold tracking-tight hover:text-accent transition-colors">
       Anthony A. Busa
     </a>
 
@@ -25,8 +25,8 @@ const links = [
           class:list={[
             "text-sm transition-colors duration-200",
             pathname.startsWith(href)
-              ? "text-[#6366F1]"
-              : "text-[#64748B] hover:text-[#F1F5F9]"
+              ? "text-accent"
+              : "text-ink-subtle hover:text-ink"
           ]}
         >
           {label}
@@ -36,19 +36,19 @@ const links = [
 
     <!-- Mobile nav toggle -->
     <details class="md:hidden group">
-      <summary class="list-none cursor-pointer text-[#64748B] hover:text-[#F1F5F9]" aria-label="Menu">
+      <summary class="list-none cursor-pointer text-ink-subtle hover:text-ink" aria-label="Menu">
         <svg aria-hidden="true" class="group-open:hidden" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
         <svg aria-hidden="true" class="hidden group-open:block" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </summary>
-      <nav class="absolute top-full left-3 right-3 bg-[#212435]/95 backdrop-blur-xl border border-[#363B58] border-t-white/10 rounded-xl p-3 flex flex-col gap-1 shadow-[0_18px_50px_rgba(0,0,0,0.7)]">
+      <nav class="absolute top-full left-3 right-3 bg-[#212435]/95 backdrop-blur-xl border border-border-strong border-t-white/10 rounded-xl p-3 flex flex-col gap-1 shadow-[0_18px_50px_rgba(0,0,0,0.7)]">
         {links.map(({ href, label }) => (
           <a
             href={href}
             class:list={[
               "text-sm font-semibold px-4 py-3 rounded-lg border transition-colors",
               pathname.startsWith(href)
-                ? "text-[#A5B4FC] bg-[#6366F1]/15 border-[#6366F1]/40"
-                : "text-[#CBD5E1] border-transparent hover:text-[#F1F5F9] hover:bg-white/5 hover:border-white/10"
+                ? "text-accent-lighter bg-accent/15 border-accent/40"
+                : "text-ink-soft border-transparent hover:text-ink hover:bg-white/5 hover:border-white/10"
             ]}
           >
             {label}
@@ -63,9 +63,9 @@ const links = [
   const nav = document.getElementById('site-nav');
   const onScroll = () => {
     if (window.scrollY > 20) {
-      nav?.classList.add('bg-[#0B0D14]/90', 'backdrop-blur-md', 'border-b', 'border-[#222538]');
+      nav?.classList.add('bg-background/90', 'backdrop-blur-md', 'border-b', 'border-border');
     } else {
-      nav?.classList.remove('bg-[#0B0D14]/90', 'backdrop-blur-md', 'border-b', 'border-[#222538]');
+      nav?.classList.remove('bg-background/90', 'backdrop-blur-md', 'border-b', 'border-border');
     }
   };
   window.addEventListener('scroll', onScroll, { passive: true });

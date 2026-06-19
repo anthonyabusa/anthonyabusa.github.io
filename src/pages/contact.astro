@@ -34,11 +34,11 @@ const contactLinks = [
   <div class="max-w-5xl mx-auto px-6 pt-32 pb-24">
 
     <div class="reveal max-w-2xl mb-16">
-      <p class="text-[#6366F1] font-mono text-xs tracking-widest uppercase mb-4">Get in Touch</p>
-      <h1 class="text-4xl md:text-5xl font-bold text-[#F1F5F9] mb-6 leading-tight">
+      <p class="text-accent font-mono text-xs tracking-widest uppercase mb-4">Get in Touch</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-ink mb-6 leading-tight">
         Let's talk.
       </h1>
-      <p class="text-[#94A3B8] text-lg leading-relaxed">
+      <p class="text-ink-muted text-lg leading-relaxed">
         I'm open to consulting engagements, co-founder conversations, and interesting ideas. If you're building something ambitious, reach out.
       </p>
     </div>
@@ -50,26 +50,26 @@ const contactLinks = [
           href={link.href}
           target={link.href.startsWith('mailto') ? undefined : '_blank'}
           rel={link.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-          class="reveal group flex flex-col gap-4 p-6 rounded-xl border border-[#222538] bg-[#13161F] card-hover"
+          class="reveal group flex flex-col gap-4 p-6 rounded-xl border border-border bg-surface card-hover"
         >
-          <div class="text-[#64748B] group-hover:text-[#A5B4FC] transition-colors" set:html={link.icon} />
+          <div class="text-ink-subtle group-hover:text-accent-lighter transition-colors" set:html={link.icon} />
           <div>
-            <p class="text-[#F1F5F9] font-semibold text-sm mb-1">{link.label}</p>
-            <p class="text-[#475569] text-xs font-mono truncate">{link.value}</p>
+            <p class="text-ink font-semibold text-sm mb-1">{link.label}</p>
+            <p class="text-ink-faint text-xs font-mono truncate">{link.value}</p>
           </div>
-          <p class="text-[#94A3B8] text-xs leading-relaxed mt-auto">{link.description}</p>
+          <p class="text-ink-muted text-xs leading-relaxed mt-auto">{link.description}</p>
         </a>
       ))}
     </div>
 
     <!-- Availability note -->
-    <div class="reveal p-8 rounded-2xl border border-[#222538] bg-[#13161F]">
+    <div class="reveal p-8 rounded-2xl border border-border bg-surface">
       <div class="flex items-center gap-2 mb-3">
         <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
         <span class="text-xs text-green-400 font-mono uppercase tracking-widest">Available</span>
       </div>
-      <h2 class="text-[#F1F5F9] font-semibold text-lg mb-2">Currently open to:</h2>
-      <ul class="contact-list text-[#94A3B8] text-sm space-y-1.5">
+      <h2 class="text-ink font-semibold text-lg mb-2">Currently open to:</h2>
+      <ul class="contact-list text-ink-muted text-sm space-y-1.5">
         <li>Consulting engagements (strategy, product, AI)</li>
         <li>Advisory roles with early-stage startups</li>
         <li>Co-founder conversations</li>

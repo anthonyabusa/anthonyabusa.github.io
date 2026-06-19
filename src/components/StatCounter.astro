@@ -8,16 +8,16 @@ interface Props {
 const { value, prefix = '', suffix = '', label } = Astro.props;
 ---
 
-<div class="reveal text-center p-6 rounded-xl border border-[#222538] bg-[#13161F]">
+<div class="reveal text-center p-6 rounded-xl border border-border bg-surface">
   <div
-    class="text-4xl font-bold text-[#6366F1] mb-2 tabular-nums"
+    class="text-4xl font-bold text-accent mb-2 tabular-nums"
     data-target={value}
     data-prefix={prefix}
     data-suffix={suffix}
   >
     {prefix}0{suffix}
   </div>
-  <p class="text-sm text-[#94A3B8]">{label}</p>
+  <p class="text-sm text-ink-muted">{label}</p>
 </div>
 
 <script>

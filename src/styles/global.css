@@ -14,6 +14,18 @@
   --color-accent-hover: #4F46E5;
   --color-text: #F1F5F9;
   --color-muted: #64748B;
+  /* Accent ramp (indigo) */
+  --color-accent-light: #818CF8;
+  --color-accent-lighter: #A5B4FC;
+  /* Ink ramp (text) */
+  --color-ink: #F1F5F9;
+  --color-ink-muted: #94A3B8;
+  --color-ink-subtle: #64748B;
+  --color-ink-faint: #475569;
+  --color-ink-soft: #CBD5E1;
+  /* Border ramp */
+  --color-border-subtle: #2E3350;
+  --color-border-strong: #363B58;
 
   /* Terminal aesthetic: monospace is the primary UI face (chrome, headings, labels) */
   --font-sans: 'JetBrains Mono', ui-monospace, monospace;

@@ -243,22 +243,26 @@ const { label = 'Live system readout', class: className = '' } = Astro.props;
     start();
 
     // Honor a mid-session reduced-motion toggle.
-    reduced.addEventListener('change', () => {
+    const onReducedChange = () => {
       if (reduced.matches) { stop(); renderStatic(); }
       else { lastMove = performance.now(); start(); }
-    });
+    };
+    reduced.addEventListener('change', onReducedChange);
 
     // Pause on a backgrounded tab; resume (with a fresh rect) when visible.
-    document.addEventListener('visibilitychange', () => {
+    const onVisibility = () => {
       if (document.hidden) stop();
       else if (!reduced.matches) { refreshRect(); lastMove = performance.now(); start(); }
-    });
+    };
+    document.addEventListener('visibilitychange', onVisibility);
 
     window.addEventListener('pagehide', () => {
       stop();
       surface.removeEventListener('pointermove', onMove);
       window.removeEventListener('resize', refreshRect);
       window.removeEventListener('scroll', refreshRect);
+      reduced.removeEventListener('change', onReducedChange);
+      document.removeEventListener('visibilitychange', onVisibility);
     }, { once: true });
   });
 </script>

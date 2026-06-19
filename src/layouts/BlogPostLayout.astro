@@ -42,10 +42,10 @@ const postSchema = {
       <div class="flex flex-wrap gap-2 mb-4">
         {tags.map((tag) => <span class="tag">{tag}</span>)}
       </div>
-      <h1 class="text-3xl md:text-4xl font-bold text-[#F1F5F9] leading-tight mb-4">
+      <h1 class="text-3xl md:text-4xl font-bold text-ink leading-tight mb-4">
         {title}
       </h1>
-      <p class="text-[#94A3B8] text-sm">
+      <p class="text-ink-muted text-sm">
         <time datetime={pubDate.toISOString()}>{formattedDate}</time>
         {updatedDate && (
           <span> · Updated {updatedDate.toLocaleDateString('en-US', { dateStyle: 'medium', timeZone: 'UTC' })}</span>
@@ -54,17 +54,17 @@ const postSchema = {
     </header>
 
     <div class="prose prose-invert prose-amber max-w-none
-      prose-headings:text-[#F1F5F9] prose-headings:font-semibold
-      prose-p:text-[#94A3B8] prose-p:leading-relaxed
-      prose-a:text-[#6366F1] prose-a:no-underline hover:prose-a:underline
-      prose-code:text-[#6366F1] prose-code:bg-[#13161F] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-      prose-pre:bg-[#13161F] prose-pre:border prose-pre:border-[#222538]
-      prose-blockquote:border-[#6366F1] prose-blockquote:text-[#94A3B8]">
+      prose-headings:text-ink prose-headings:font-semibold
+      prose-p:text-ink-muted prose-p:leading-relaxed
+      prose-a:text-accent prose-a:no-underline hover:prose-a:underline
+      prose-code:text-accent prose-code:bg-surface prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
+      prose-pre:bg-surface prose-pre:border prose-pre:border-border
+      prose-blockquote:border-accent prose-blockquote:text-ink-muted">
       <slot />
     </div>
 
-    <div class="mt-12 pt-8 border-t border-[#222538]">
-      <a href="/blog" class="text-sm text-[#64748B] hover:text-[#6366F1] transition-colors">
+    <div class="mt-12 pt-8 border-t border-border">
+      <a href="/blog" class="text-sm text-ink-subtle hover:text-accent transition-colors">
         &larr; Back to Writing
       </a>
     </div>
