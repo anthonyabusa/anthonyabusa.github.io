@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0" viewBox="0 0 430 260">
+<defs>
+<linearGradient id="b">
+<stop stop-color="#1e71ff" offset="0"/>
+<stop stop-color="#679fff" offset="1"/>
+</linearGradient>
+<radialGradient id="a" cx="267.89" cy="87.999" r="16.5" gradientTransform="matrix(1.6639 -.014565 .013261 1.5148 -178.45 -42.37)" gradientUnits="userSpaceOnUse" xlink:href="#b"/>
+</defs>
+<metadata>
+<rdf:RDF>
+<cc:Work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+</cc:Work>
+</rdf:RDF>
+</metadata>
+<g>
+<path transform="matrix(.90625 0 0 .90625 -137.59 -42.435)" d="m271 75.362a16 16 0 1 1-32 0 16 16 0 1 1 32 0z" color="black" fill="url(#a)" stroke="#000" stroke-width="1.1034px"/>
+<path transform="matrix(.90625 0 0 .90625 -123.59 59.565)" d="m271 75.362a16 16 0 1 1-32 0 16 16 0 1 1 32 0z" color="black" fill="url(#a)" stroke="#000" stroke-width="1.1034px"/>
+<path transform="matrix(.90625 0 0 .90625 -142.59 167.57)" d="m271 75.362a16 16 0 1 1-32 0 16 16 0 1 1 32 0z" color="black" fill="url(#a)" stroke="#000" stroke-width="1.1034px"/>
+<path transform="matrix(.90625 0 0 .90625 -208.59 112.57)" d="m271 75.362a16 16 0 1 1-32 0 16 16 0 1 1 32 0z" color="black" fill="url(#a)" stroke="#000" stroke-width="1.1034px"/>
+<path transform="matrix(.90625 0 0 .90625 -45.594 155.57)" d="m271 75.362a16 16 0 1 1-32 0 16 16 0 1 1 32 0z" color="black" fill="url(#a)" stroke="#000" stroke-width="1.1034px"/>
+<path transform="matrix(.90625 0 0 .90625 -35.594 19.565)" d="m271 75.362a16 16 0 1 1-32 0 16 16 0 1 1 32 0z" color="black" fill="url(#a)" stroke="#000" stroke-width="1.1034px"/>
+<path transform="matrix(.90625 0 0 .90625 32.406 85.565)" d="m271 75.362a16 16 0 1 1-32 0 16 16 0 1 1 32 0z" color="black" fill="url(#a)" stroke="#000" stroke-width="1.1034px"/>
+<path transform="matrix(.90625 0 0 .90625 89.406 23.565)" d="m271 75.362a16 16 0 1 1-32 0 16 16 0 1 1 32 0z" color="black" fill="url(#a)" stroke="#000" stroke-width="1.1034px"/>
+<path transform="matrix(.90625 0 0 .90625 174.41 72.565)" d="m271 75.362a16 16 0 1 1-32 0 16 16 0 1 1 32 0z" color="black" fill="url(#a)" stroke="#000" stroke-width="1.1034px"/>
+<path transform="matrix(.90625 0 0 .90625 180.41 131.57)" d="m271 75.362a16 16 0 1 1-32 0 16 16 0 1 1 32 0z" color="black" fill="url(#a)" stroke="#000" stroke-width="1.1034px"/>
+<path transform="matrix(.90625 0 0 .90625 122.41 133.57)" d="m271 75.362a16 16 0 1 1-32 0 16 16 0 1 1 32 0z" color="black" fill="url(#a)" stroke="#000" stroke-width="1.1034px"/>
+<switch><text x="133" y="29.362183" fill="black" font-family="Bitstream Vera Sans" font-size="12px" stroke-width="1px" xml:space="preserve" id="trsvg2-mk" systemLanguage="mk"><tspan x="133" y="29.362183" font-size="18px" id="trsvg1-mk">Поединец</tspan></text><text x="133" y="29.362183" fill="black" font-family="Bitstream Vera Sans" font-size="12px" stroke-width="1px" xml:space="preserve" id="trsvg2"><tspan x="133" y="29.362183" font-size="18px" id="trsvg1">Individual</tspan></text></switch>
+<path d="m92.5 137.22-55 34.294" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m37.5 193.36 36 30" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m91.139 220.86 13.722-78" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m99.345 220.86 85.311-118" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m119.69 142.86 53.625 66" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m200.5 210.4 48-43.077" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m248.5 139.3-38-36.882" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m210.5 88.342 95 3.04" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m335.5 100.51 55 31.706" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m407.03 155.86 2.9492 29" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m396.5 200.38-28 0.96552" fill="none" stroke="#000" stroke-width="1px"/>
+<path d="m366.29 186.86 26.426-31" fill="none" stroke="#000" stroke-width="1px"/>
+</g>
+</svg>
