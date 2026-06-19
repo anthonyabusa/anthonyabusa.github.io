@@ -31,7 +31,7 @@ const isExternal = !slug && Boolean(url);
       {tags.map((tag) => <span class="tag">{tag}</span>)}
     </div>
     <p class="text-[#64748B] text-sm leading-relaxed flex-1 mb-6">{description}</p>
-    <span class="mt-auto pt-1 text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono">{year}; {endYear}</span>
+    <span class="mt-auto pt-1 text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono">{year}–{endYear}</span>
   </a>
 ) : (
   <article class="reveal flex flex-col p-6 rounded-xl border border-[#222538] bg-[#13161F]">
@@ -39,6 +39,6 @@ const isExternal = !slug && Boolean(url);
     {status && <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#818CF8] mb-3">{status}</p>}
     <div class="flex flex-wrap gap-2 mb-4">{tags.map((tag) => <span class="tag">{tag}</span>)}</div>
     <p class="text-[#64748B] text-sm leading-relaxed flex-1 mb-6">{description}</p>
-    <span class="mt-auto pt-1 text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono">{year}; {endYear}</span>
+    <span class="mt-auto pt-1 text-[10px] uppercase tracking-[0.14em] text-[#475569] font-mono">{year}–{endYear}</span>
   </article>
 )}
