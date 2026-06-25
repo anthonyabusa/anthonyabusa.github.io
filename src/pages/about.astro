@@ -4,6 +4,7 @@ import SocialLinks from '../components/SocialLinks.astro';
 import AsciiFocusCard from '../components/AsciiFocusCard.astro';
 import AsciiRasterScript from '../components/AsciiRasterScript.astro';
 import { focusAreas } from '../data/focusAreas';
+import { flags } from '../data/flags';
 
 const skills = {
   Business: ['Marketplaces', 'GTM Planning', 'Financial Modeling', 'Operations', 'Fundraising'],
@@ -70,10 +71,10 @@ const asciiKeyByFocus = {
       <h2 class="text-2xl font-bold text-ink mb-8">Areas of Expertise</h2>
       <div class="reveal-group grid sm:grid-cols-2 gap-5">
         {focusAreas.map((item) => (
-          <AsciiFocusCard item={item} asciiKey={asciiKeyByFocus[item.slug]} />
+          <AsciiFocusCard item={item} asciiKey={asciiKeyByFocus[item.slug]} showAscii={flags.asciiArt} />
         ))}
       </div>
-      <AsciiRasterScript />
+      {flags.asciiArt && <AsciiRasterScript />}
     </div>
 
     <div class="reveal mb-20">

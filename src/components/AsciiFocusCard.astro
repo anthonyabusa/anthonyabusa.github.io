@@ -4,24 +4,27 @@ import type { FocusArea } from '../data/focusAreas';
 interface Props {
   item: FocusArea;
   asciiKey: 'strategy' | 'operations' | 'product' | 'automation' | 'marketplace';
+  showAscii?: boolean;
 }
 
-const { item, asciiKey } = Astro.props;
+const { item, asciiKey, showAscii = true } = Astro.props;
 ---
 
 <a
   href={`/work/${item.slug}`}
   aria-label={`View ${item.title} projects and experience`}
-  class={`ascii-focus-card ascii-focus-card--${asciiKey} reveal group`}
+  class={`ascii-focus-card ascii-focus-card--${asciiKey} reveal group ${showAscii ? '' : 'ascii-focus-card--plain'}`}
   data-ascii-card={asciiKey}
 >
-  <canvas
-    class="ascii-focus-card__canvas"
-    data-ascii-raster={asciiKey}
-    width="420"
-    height="260"
-    aria-hidden="true"
-  ></canvas>
+  {showAscii && (
+    <canvas
+      class="ascii-focus-card__canvas"
+      data-ascii-raster={asciiKey}
+      width="420"
+      height="260"
+      aria-hidden="true"
+    ></canvas>
+  )}
   <span class="ascii-focus-card__content">
     <span class="ascii-focus-card__kicker">{item.title === 'Marketplace & Venture Building' ? 'Stakeholder Networks' : item.title}</span>
     <span class="ascii-focus-card__title">{item.title}</span>
@@ -86,6 +89,13 @@ const { item, asciiKey } = Astro.props;
     z-index: 2;
     display: block;
     max-width: 76%;
+  }
+  /* No ASCII art: let the copy use the full card and drop the height the art needed. */
+  .ascii-focus-card--plain {
+    min-height: auto;
+  }
+  .ascii-focus-card--plain .ascii-focus-card__content {
+    max-width: 100%;
   }
   .ascii-focus-card__kicker {
     display: inline-flex;
