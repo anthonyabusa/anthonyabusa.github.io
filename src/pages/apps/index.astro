@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { apps, type AppEntry } from '../../data/apps';
+
+const arrow = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+const arrowOut = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8"/></svg>`;
+
+// Per-status presentation: badge text + the default call-to-action label.
+const statusMeta: Record<AppEntry['status'], { badge: string; dot: string; cta: string }> = {
+  live: { badge: 'Live', dot: 'bg-emerald-400', cta: 'Open app' },
+  desktop: { badge: 'Desktop app', dot: 'bg-accent-light', cta: 'Get the app' },
+  soon: { badge: 'Coming soon', dot: 'bg-ink-faint', cta: 'Coming soon' },
+};
+
+const isExternal = (href?: string) => Boolean(href && href.startsWith('http'));
+---
+
+<BaseLayout
+  title="Apps"
+  description="Apps and products by Anthony Busa that you can use directly: no GitHub account required."
+>
+  <div class="max-w-5xl mx-auto px-6 pt-32 pb-24">
+    <!-- Header -->
+    <div class="reveal mb-14">
+      <p class="text-accent font-mono text-xs tracking-widest uppercase mb-4">Use them</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-ink mb-4">Apps &amp; products</h1>
+      <p class="text-ink-muted max-w-xl leading-relaxed">
+        Things I've built that you can actually use. No GitHub account, no setup. Open one and go.
+      </p>
+    </div>
+
+    <!-- Storefront grid -->
+    <div class="reveal-group grid sm:grid-cols-2 gap-6">
+      {apps.map((app) => {
+        const meta = statusMeta[app.status];
+        const ext = isExternal(app.useUrl);
+        return (
+          <article class="reveal group flex flex-col p-6 rounded-xl border border-border bg-surface card-hover">
+            <div class="flex items-center justify-between mb-5">
+              <span class="ascii-icon" aria-hidden="true">{app.icon}</span>
+              <span class="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] text-ink-soft">
+                <span class={`h-1.5 w-1.5 rounded-full ${meta.dot}`} />
+                {meta.badge}
+              </span>
+            </div>
+
+            <h2 class="text-lg font-semibold text-ink mb-1.5 leading-snug">{app.name}</h2>
+            <p class="text-sm text-accent-lighter mb-4">{app.tagline}</p>
+            <p class="text-ink-muted text-sm leading-relaxed flex-1 mb-5">{app.description}</p>
+
+            <div class="flex flex-wrap gap-2 mb-6">
+              {app.tags.map((tag) => <span class="tag">{tag}</span>)}
+            </div>
+
+            <div class="mt-auto flex items-center gap-5">
+              {app.status === 'soon' || !app.useUrl ? (
+                <span class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-border text-ink-subtle text-sm font-semibold cursor-default">
+                  {meta.cta}
+                </span>
+              ) : (
+                <a
+                  href={app.useUrl}
+                  target={ext ? '_blank' : undefined}
+                  rel={ext ? 'noopener noreferrer' : undefined}
+                  class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-accent text-background font-semibold text-sm hover:bg-accent-hover transition-colors"
+                >
+                  {app.useLabel ?? meta.cta}
+                  <span set:html={ext ? arrowOut : arrow} />
+                </a>
+              )}
+
+              {app.sourceUrl && (
+                <a
+                  href={app.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xs font-mono uppercase tracking-wider text-ink-faint hover:text-accent transition-colors"
+                >
+                  View source
+                </a>
+              )}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+
+    <!-- Direction note -->
+    <p class="reveal mt-12 text-sm text-ink-subtle max-w-xl leading-relaxed">
+      More apps are coming online. I'm moving everything to the web, so you'll be
+      able to sign in and use it from any device. The deeper technical breakdowns
+      live under <a href="/projects" class="text-accent hover:text-accent-hover transition-colors">projects</a>.
+    </p>
+  </div>
+</BaseLayout>

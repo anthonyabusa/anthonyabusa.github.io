@@ -21,17 +21,16 @@ export const hubLinks: HubLink[] = [
     icon: '~/',
   },
   {
-    label: 'Projects & apps',
-    sublabel: 'Ventures, AI systems & open source',
-    href: '/projects',
-    icon: '{ }',
+    label: 'Apps & products',
+    sublabel: 'Tools you can open and use right now',
+    href: '/apps',
+    icon: '[>]',
   },
   {
-    label: 'Agent Workbench',
-    sublabel: 'Multi-agent operator app · open source',
-    href: 'https://github.com/anthonyabusa/agent-workbench',
-    icon: '>_',
-    external: true,
+    label: 'Projects & case studies',
+    sublabel: 'How I build: ventures, AI systems, write-ups',
+    href: '/projects',
+    icon: '{ }',
   },
   {
     label: 'Writing',
@@ -45,14 +44,6 @@ export const hubLinks: HubLink[] = [
     href: '/contact',
     icon: '@>',
   },
-  // ── Easy add-ons (uncomment + fill once you have a public URL) ──────────────
-  // {
-  //   label: 'Navore Market',
-  //   sublabel: 'Local food marketplace I run strategy & ops for',
-  //   href: 'https://navore.market',   // ← confirm the real URL
-  //   icon: '<=>',
-  //   external: true,
-  // },
 ];
 
 export interface SocialLink {
