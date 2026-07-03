@@ -34,6 +34,17 @@ export const apps: AppEntry[] = [
     tags: ['Marketplace', 'Local food', 'Venture'],
   },
   {
+    name: 'Going On',
+    tagline: "What's going on near you",
+    description:
+      'A local-events recommender. Pick your city and your vibe, get a weekly lineup of things to do tuned to your taste, thumbs-tune it, and get an AI plan for your weekend.',
+    status: 'live',
+    icon: '[o]',
+    useUrl: 'https://goingon.anthonyabusa.com',
+    useLabel: 'Open Going On',
+    tags: ['Events', 'Recommender', 'AI'],
+  },
+  {
     name: 'Agent Workbench',
     tagline: 'Run a team of AI agents from one desk',
     description:
