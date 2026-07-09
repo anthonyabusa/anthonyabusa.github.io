@@ -30,10 +30,12 @@
       },
       {
         "value": "Local-first",
+        "kind": "qualitative",
         "label": "State and logs persist at ~/.agent-workbench; no cloud"
       },
       {
         "value": "Voice",
+        "kind": "qualitative",
         "label": "Push-to-talk operator panel; hold Space anywhere to dictate"
       }
     ],
@@ -81,6 +83,7 @@
       },
       {
         "value": "Gated",
+        "kind": "qualitative",
         "label": "Phase 3 execution disabled by default; validate first"
       }
     ],
@@ -126,10 +129,12 @@
       },
       {
         "value": "San Diego",
+        "kind": "qualitative",
         "label": "Initial operating market"
       },
       {
         "value": "Live",
+        "kind": "qualitative",
         "label": "Marketplace and hub operations"
       }
     ],
@@ -181,18 +186,22 @@
       },
       {
         "value": "Local-first",
+        "kind": "qualitative",
         "label": "Private Ollama inference; memory and state never leave the machines"
       },
       {
         "value": "RAG",
+        "kind": "qualitative",
         "label": "Durable cross-session memory; working context, daily logs, semantic recall"
       },
       {
         "value": "Lease + fence",
+        "kind": "qualitative",
         "label": "Kleppmann-style fencing tokens for safe multi-session concurrency"
       },
       {
         "value": "FastAPI",
+        "kind": "qualitative",
         "label": "Unified ops dashboard, status caches, and heartbeat health checks"
       }
     ],
@@ -238,14 +247,17 @@
     "metrics": [
       {
         "value": "EHR",
+        "kind": "qualitative",
         "label": "Clinical workflow technology"
       },
       {
         "value": "RCM",
+        "kind": "qualitative",
         "label": "Revenue cycle management"
       },
       {
         "value": "Consulting",
+        "kind": "qualitative",
         "label": "Operational advisory services"
       }
     ],
@@ -363,10 +375,12 @@
       },
       {
         "value": "Exhibit",
+        "kind": "qualitative",
         "label": "Final public format"
       },
       {
         "value": "Visual",
+        "kind": "qualitative",
         "label": "Research and storytelling method"
       }
     ],
