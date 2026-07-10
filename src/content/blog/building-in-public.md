@@ -3,7 +3,7 @@ title: "Why I'm Building in Public"
 description: "Shipping a portfolio is easy. Building one that actually reflects who you are is harder. Here's why I chose to do it openly."
 pubDate: 2026-05-21
 tags: ["Entrepreneurship", "Building", "Personal Brand"]
-draft: true
+draft: false
 ---
 
 Though shipping a portfolio is easy, building one that actually reflects who you are is the harder thing, and it is the one I wanted to do.

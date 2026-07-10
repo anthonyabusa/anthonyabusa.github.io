@@ -3,7 +3,7 @@ title: "Building the Missing Structure"
 description: "The first thing I built was a student government that didn't exist yet. The pattern that came from it, and why this site is a workshop, not a showroom."
 pubDate: 2026-06-13
 tags: ["Strategy", "Building", "Personal Brand"]
-draft: true
+draft: false
 ---
 
 The first thing I ever built was a student government that did not exist yet.

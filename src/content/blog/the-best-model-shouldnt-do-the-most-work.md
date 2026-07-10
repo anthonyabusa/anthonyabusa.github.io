@@ -3,7 +3,7 @@ title: "The Best Model Shouldn't Do the Most Work"
 description: "When you get a frontier model, the instinct is to hand it everything. The economics and the architecture argue for the opposite."
 pubDate: 2026-06-13
 tags: ["AI", "Systems", "Strategy"]
-draft: true
+draft: false
 ---
 
 When you finally get your hands on a frontier model, the instinct is to hand it everything. It is the smartest thing in the room, so surely the move is to let it do the most. I ran my whole system that way for about a week: every draft, every file rename, every three-line summary routed to the most capable and most expensive model I had. About a week was all it took for the logic to quietly invert, because that is when the bill arrives.
