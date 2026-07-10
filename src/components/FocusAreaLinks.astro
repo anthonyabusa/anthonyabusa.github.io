@@ -18,7 +18,7 @@ const areas = focusAreas.filter((area) => areaSlugs.includes(area.slug));
           href={`/work/${area.slug}`}
           class="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface px-3 py-2 text-xs text-ink-soft hover:border-accent/60 hover:text-accent-lighter transition-colors"
         >
-          <span class="ascii-icon ascii-icon--pill" aria-hidden="true">{area.icon}</span>
+          <span class="ascii-icon ascii-icon--pill" aria-hidden="true" set:html={area.svg} />
           {area.title}
         </a>
       ))}

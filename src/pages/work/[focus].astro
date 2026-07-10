@@ -32,7 +32,7 @@ const experienceWork = related.filter((project) => project.placement === 'experi
     <header class="reveal max-w-3xl mt-10 mb-14">
       <p class="text-accent font-mono text-xs tracking-widest uppercase mb-4">Filtered work</p>
       <div class="flex items-center gap-4 mb-5">
-        <span class="ascii-icon ascii-icon--hero" aria-hidden="true">{focus.icon}</span>
+        <span class="ascii-icon ascii-icon--hero" aria-hidden="true" set:html={focus.svg} />
         <h1 class="text-4xl md:text-5xl font-bold text-ink leading-tight">{focus.title}</h1>
       </div>
       <p class="text-ink-muted text-lg leading-relaxed">{focus.description}</p>

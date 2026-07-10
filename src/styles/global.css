@@ -212,6 +212,29 @@ a:hover .ascii-icon {
   min-height: 3rem;
   font-size: 1.25rem;
 }
+/* Bespoke stroke micro-SVGs (focusAreas.ts) scale off the chip's font-size so
+   one drawing sits correctly at pill, default, and hero sizes. */
+.ascii-icon svg {
+  width: 1.35em;
+  height: 1.35em;
+  flex-shrink: 0;
+}
+/* Subtle draw-on when a pill chip's link is hovered. Every shape carries
+   pathLength="1", so a unit dash draws the whole set at a uniform pace.
+   The prefers-reduced-motion block below collapses this to imperceptible. */
+@keyframes ascii-icon-draw {
+  from {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+}
+a:hover .ascii-icon--pill svg > * {
+  animation: ascii-icon-draw 0.5s ease-out;
+}
 
 /* Respect prefers-reduced-motion: neutralize animation/transition (shimmer, fadeUp,
    pulse, card-lift, scroll-reveal, ascii) and smooth scroll. The .reveal override keeps
