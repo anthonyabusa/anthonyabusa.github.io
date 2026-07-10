@@ -34,7 +34,15 @@ const roles = [
       {roles.map((role) => {
         const Tag = role.href ? 'a' : 'article';
         return (
-          <Tag href={role.href || undefined} class="reveal group block p-7 rounded-xl border border-border bg-surface card-hover">
+          <Tag
+            href={role.href || undefined}
+            class:list={[
+              'reveal block p-7 rounded-xl border border-border bg-surface',
+              // Interactive affordances (lift + title tint) only on linked cards;
+              // a hover-lift on a plain <article> reads as a broken link.
+              role.href && 'group card-hover',
+            ]}
+          >
             <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
               <div>
                 <h2 class="text-xl font-semibold text-ink group-hover:text-accent-lighter transition-colors">{role.title}</h2>
