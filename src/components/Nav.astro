@@ -37,7 +37,9 @@ const links = [
 
     <!-- Mobile nav toggle -->
     <details class="md:hidden group">
-      <summary class="list-none cursor-pointer text-ink-subtle hover:text-ink" aria-label="Menu">
+      {/* p-3/-m-3 grows the 22px icon's tap target to 46px (WCAG 2.5.8 / mobile
+          guidelines) without moving it visually. */}
+      <summary class="list-none cursor-pointer inline-flex p-3 -m-3 text-ink-subtle hover:text-ink" aria-label="Menu">
         <svg aria-hidden="true" class="group-open:hidden" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
         <svg aria-hidden="true" class="hidden group-open:block" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </summary>
