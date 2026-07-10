@@ -105,7 +105,7 @@ const { item, asciiKey, showAscii = true } = Astro.props;
     border-radius: 999px;
     color: #A5B4FC;
     background: rgba(99,102,241,.10);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-size: 10px;
     font-weight: 800;
     letter-spacing: .12em;
@@ -122,7 +122,7 @@ const { item, asciiKey, showAscii = true } = Astro.props;
   }
   .ascii-focus-card:hover .ascii-focus-card__title,
   .ascii-focus-card:focus-visible .ascii-focus-card__title {
-    color: #C4B5FD;
+    color: #A5B4FC; /* --color-accent-lighter: stay on the indigo ramp */
   }
   .ascii-focus-card__description {
     display: block;

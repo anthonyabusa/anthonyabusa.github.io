@@ -1,6 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
   <title id="title">Anthony Busa</title>
   <desc id="desc">Social preview image for Anthony Busa's portfolio site.</desc>
+  <!-- Source for /og-image.png. Text is set in JetBrains Mono (the site's brand
+       face); render the PNG via headless Chromium with the @fontsource woff2
+       loaded — a bare <img> of this SVG will NOT resolve the font. The corner
+       mark is the outlined single-'A' shared with favicon.svg. -->
   <rect width="1200" height="630" fill="#0B0D14"/>
   <defs>
     <radialGradient id="glow" cx="50%" cy="38%" r="55%">
@@ -8,17 +12,13 @@
       <stop offset="55%" stop-color="#6366F1" stop-opacity="0.06"/>
       <stop offset="100%" stop-color="#0B0D14" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="accent" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0%" stop-color="#6366F1"/>
-      <stop offset="100%" stop-color="#818CF8"/>
-    </linearGradient>
   </defs>
   <rect x="80" y="72" width="1040" height="486" rx="36" fill="#141928" stroke="#1E2640" stroke-width="2"/>
   <circle cx="600" cy="252" r="300" fill="url(#glow)"/>
-  <text x="120" y="170" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="600" letter-spacing="6" fill="#6366F1">SAN DIEGO, CALIFORNIA</text>
-  <text x="120" y="300" font-family="Inter, system-ui, sans-serif" font-size="86" font-weight="800" fill="#F1F5F9">Anthony Busa</text>
-  <text x="120" y="374" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="500" fill="#94A3B8">Strategy &amp; operations leader building</text>
-  <text x="120" y="420" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="500" fill="#94A3B8">technology-enabled systems.</text>
-  <rect x="120" y="472" width="72" height="72" rx="18" fill="#0B0D14" stroke="#1E2640" stroke-width="2"/>
-  <text x="156" y="520" font-family="Inter, system-ui, sans-serif" font-size="31" font-weight="800" fill="url(#accent)" text-anchor="middle">AA</text>
+  <text x="120" y="170" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="22" font-weight="700" letter-spacing="6" fill="#6366F1">SAN DIEGO, CALIFORNIA</text>
+  <text x="120" y="300" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="80" font-weight="700" fill="#F1F5F9">Anthony Busa</text>
+  <text x="120" y="374" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="30" font-weight="400" fill="#94A3B8">Strategy &amp; operations leader building</text>
+  <text x="120" y="420" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="30" font-weight="400" fill="#94A3B8">technology-enabled systems.</text>
+  <rect x="120" y="472" width="72" height="72" rx="18" fill="#0B0D14" stroke="#2E3350" stroke-width="2"/>
+  <path transform="translate(140.35 527.0) scale(0.05205 -0.05205)" fill="#6366F1" d="M35 0 219 730H380L565 0H437L397 177H203L163 0ZM226 279H374L330 475Q319 524 311.0 563.5Q303 603 300 621Q297 603 289.5 563.5Q282 524 270 476Z"/>
 </svg>

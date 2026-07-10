@@ -1,4 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- 'A' from JetBrains Mono Bold, outlined to a path so the mark renders
+       identically everywhere (no font dependency). Regenerate via fontTools
+       SVGPathPen if the mark ever changes. -->
   <rect width="32" height="32" rx="8" fill="#0B0D14"/>
-  <text x="16" y="22" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="700" fill="#6366F1" text-anchor="middle">A</text>
+  <rect x="0.5" y="0.5" width="31" height="31" rx="7.5" fill="none" stroke="#2E3350"/>
+  <path transform="translate(9.014 25.000) scale(0.02329 -0.02329)" fill="#6366F1" d="M35 0 219 730H380L565 0H437L397 177H203L163 0ZM226 279H374L330 475Q319 524 311.0 563.5Q303 603 300 621Q297 603 289.5 563.5Q282 524 270 476Z"/>
 </svg>
