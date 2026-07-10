@@ -30,7 +30,7 @@ const links = [
       aria-label={link.label}
       target={link.href.startsWith('mailto') ? undefined : '_blank'}
       rel={link.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-      class="text-ink-subtle hover:text-accent transition-colors duration-200"
+      class="inline-flex p-2 -m-2 text-ink-subtle hover:text-accent transition-colors duration-200"
       set:html={link.icon}
     />
   ))}
