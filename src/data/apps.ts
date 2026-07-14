@@ -56,6 +56,18 @@ export const apps: AppEntry[] = [
     sourceUrl: 'https://github.com/anthonyabusa/agent-workbench',
     tags: ['AI', 'Desktop app', 'Open source'],
   },
+  {
+    name: 'Metis Framework',
+    tagline: 'Run AI agents as a governed workforce',
+    description:
+      'The portable core of the Metis operating system: protocols, skills, hooks, and governance machinery for running AI agents as a multi-session, memory-backed workforce. Source-available, consumed via git subtree.',
+    status: 'live',
+    icon: '/\\',
+    useUrl: 'https://github.com/Busa-Legacies/metis-framework',
+    useLabel: 'View on GitHub',
+    sourceUrl: 'https://github.com/Busa-Legacies/metis-framework',
+    tags: ['AI', 'Framework', 'Open source'],
+  },
   // ── Add an app: copy a block above. Set status:'soon' to tease one early. ──
   // {
   //   name: 'Your next app',
