@@ -6,9 +6,9 @@ tags: ["Entrepreneurship", "Building", "Personal Brand"]
 draft: false
 ---
 
-Though shipping a portfolio is easy, building one that actually reflects who you are is the harder thing, and it is the one I wanted to do.
+Though shipping a portfolio is easy, building one that actually reflects who you are is a more difficult to achieve accomplishment, and it is an endeavor worth doing when done right.
 
-Most portfolios are graveyards: a list of projects you finished years ago, sitting untouched while the real work happens elsewhere. That is not what I was after. I wanted a site that grows as I do, reflects how I think, and actually brings value to the people who land on it.
+Most portfolios are graveyards: a list of projects you finished years ago, sitting untouched while the real work happens elsewhere. That is not what I was interested in. I wanted a site that grows as I do, reflects how I think, and actually brings value to the people who land on it.
 
 ### The constraints I gave myself
 
@@ -16,11 +16,11 @@ Most portfolios are graveyards: a list of projects you finished years ago, sitti
 
 **Content first, design second.** A polished empty site is still empty, so the writing comes before the polish.
 
-**Ship ugly, then refine.** The worst outcome is a perfect site that never launches, so I would rather launch rough and sharpen it in the open.
+**Ship ugly, then refine.** The worst outcome is a perfect site that never launches, so I would rather launch rough and sharpen it in the open overtime.
 
 ### What you'll find here
 
-Projects I have built across consulting, product, and open source. Writing on business strategy, technology, and the overlap between the two. Honest post-mortems on the things that did not work.
+Projects I have built across consulting, product, and open source. Writing on business strategy, technology, the overlap between the two, and other topics I find interesting: philosophy, psychology, economics, etc. Honest post-mortems on the things that did not work.
 
 If any of it is useful to you, even one idea, one framework, one honest mistake, then it is worth publishing.
 
