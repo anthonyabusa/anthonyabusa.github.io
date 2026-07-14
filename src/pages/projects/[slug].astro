@@ -18,6 +18,11 @@ const { project } = Astro.props;
       <h1 class="text-4xl md:text-6xl font-bold text-ink leading-tight mb-6">{project.title}</h1>
       <p class="text-lg md:text-xl text-ink-muted leading-relaxed max-w-3xl">{project.description}</p>
     </header>
+    {project.screenshot && (
+      <div class="reveal mb-16">
+        <img src={project.screenshot} alt={`${project.title} screenshot`} class="w-full rounded-xl border border-border" loading="lazy" />
+      </div>
+    )}
     <section class="reveal grid sm:grid-cols-3 gap-4 mb-16">
       {/* kind defaults to "quantitative" (big indigo). "qualitative" values (names, statuses,
           tech choices) drop to the card-title tier so large indigo stays reserved for real numbers. */}
