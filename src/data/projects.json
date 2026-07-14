@@ -151,18 +151,18 @@
     }
   },
   {
-    "title": "Personal AI Operations System",
+    "title": "Metis",
     "slug": "personal-ai-operations-system",
     "role": "Architect & builder",
     "status": "Active infrastructure",
-    "description": "A private, local-first AI operations system for agent workflows: gateway, memory RAG, Discord collaboration, dashboard visibility, scheduled briefs, and multi-machine orchestration.",
-    "url": "",
+    "description": "A personal AI operating system that runs agents as a governed, multi-session workforce across two machines. Specialized lanes, persistent memory, task governance, and a control-center UI keep the system compounding instead of starting cold every session.",
+    "url": "https://github.com/Busa-Legacies/metis-framework",
     "liveUrl": "",
     "tags": [
       "AI Agents",
       "Python",
-      "Node.js",
-      "Automation"
+      "TypeScript",
+      "Open Source"
     ],
     "focusAreas": [
       "operations",
@@ -174,7 +174,7 @@
     "endYear": "Present",
     "type": "infrastructure",
     "challenge": "Useful agents need more than a chat window. They need memory that compounds, task coordination, live system visibility, safety gates, and a way to operate across machines without stale sessions corrupting shared work.",
-    "approach": "I built a local-first operating layer around a gateway, specialized agent lanes, retrieval-augmented memory, Discord coordination, scheduled workflows, and a FastAPI dashboard. Governance lives in code: task state, leases, fencing tokens, health checks, and explicit done gates keep automation useful without making it reckless.",
+    "approach": "I built a local-first operating layer with specialized agent lanes (generation, research, review, governance), persistent memory, a governed task lifecycle with leases and fencing tokens, and a Next.js control center for real-time visibility. The portable core is published as the Metis Framework; the private operating repo layers identity, projects, and integrations on top.",
     "metrics": [
       {
         "value": "6",
@@ -185,35 +185,29 @@
         "label": "Machines coordinated; an always-on host plus an on-demand peer sharing one model host"
       },
       {
+        "value": "700+",
+        "label": "Governed tasks completed through the forward-only state machine"
+      },
+      {
         "value": "Local-first",
         "kind": "qualitative",
-        "label": "Private Ollama inference; memory and state never leave the machines"
+        "label": "Private MLX inference on-device; memory and state never leave the machines"
       },
       {
-        "value": "RAG",
+        "value": "FSL-1.1",
         "kind": "qualitative",
-        "label": "Durable cross-session memory; working context, daily logs, semantic recall"
-      },
-      {
-        "value": "Lease + fence",
-        "kind": "qualitative",
-        "label": "Kleppmann-style fencing tokens for safe multi-session concurrency"
-      },
-      {
-        "value": "FastAPI",
-        "kind": "qualitative",
-        "label": "Unified ops dashboard, status caches, and heartbeat health checks"
+        "label": "Source-available framework published for others to vendor and run"
       }
     ],
     "outcomes": [
-      "Unified coordination, memory, monitoring, and handoffs for agent work.",
-      "Live operational visibility across projects and machines.",
-      "Recurring briefs, health checks, and task workflows that run without starting cold each session."
+      "A governed agent workforce that compounds across sessions instead of starting fresh.",
+      "Real-time control center with task boards, agent sessions, and typed decision queues.",
+      "Published the portable core as an open-source framework others can vendor into their own repos."
     ],
     "focusNarratives": {
-      "operations": "This system is my private operating layer for running projects with AI support across machines, dashboards, Discord, memory, and scheduled workflows. Task governance, handoffs, health checks, status visibility, lane routing, and escalation rules keep the automation reliable day to day.",
-      "product-program-leadership": "The AI operations stack behaves like a product even though it is personally operated infrastructure. I scope releases, design dashboard surfaces, sequence agent capabilities, define done gates, and build feedback loops so the system compounds instead of becoming a pile of scripts.",
-      "ai-automation": "The system combines local agents, memory RAG, Discord workflows, dashboards, scheduled briefs, and multi-machine orchestration. Context, boundaries, verification loops, and durable memory matter as much as the agents themselves."
+      "operations": "Metis is my private operating layer for running projects with AI agents across two machines. Task governance, leases, health checks, lane routing, and escalation rules keep the automation reliable enough to run unattended overnight.",
+      "product-program-leadership": "Metis behaves like a product even though it is personally operated infrastructure. I scope releases, design the control-center UI, sequence agent capabilities, define done gates, and publish the portable core as an open-source framework.",
+      "ai-automation": "Metis combines local-model lanes, persistent memory, governed task lifecycles, and multi-machine orchestration into one operating system. The framework is source-available; the private repo layers identity, projects, and integrations on top."
     }
   },
   {
@@ -322,6 +316,56 @@
       "strategy": "Johnson Matthey needed transformation programs that could move a global specialty chemicals business, not just describe a future state. I translated ambiguous corporate priorities into scoped initiatives, stakeholder alignment, measurable efficiency targets, and the case for building a North America Government Affairs function from zero.",
       "operations": "The enterprise changes had to become durable routines inside a complex organization. I led execution across 12 programs, drove process-efficiency improvement, coordinated cross-functional cadences, and helped new capabilities become part of how the business actually worked.",
       "product-program-leadership": "Johnson Matthey required program leadership in a complex enterprise environment. I translated ambiguous priorities into scoped initiatives, built execution rhythms, coordinated cross-functional stakeholders, tracked outcomes, and kept transformation tied to measurable operating improvement rather than slideware."
+    }
+  },
+  {
+    "title": "Plotted",
+    "slug": "plotted-data-viz",
+    "role": "Designer & developer",
+    "status": "In progress",
+    "description": "An editorial data-visualization gallery where each piece is a self-standing visual story built on publicly available datasets. D3 interactivity meets authored visual language.",
+    "url": "",
+    "liveUrl": "",
+    "tags": [
+      "Data Visualization",
+      "D3",
+      "Astro",
+      "Design"
+    ],
+    "focusAreas": [
+      "product-program-leadership",
+      "ai-automation"
+    ],
+    "featured": false,
+    "year": 2026,
+    "endYear": "Present",
+    "type": "creative",
+    "challenge": "Most data dashboards optimize for density and utility. Plotted asks a different question: can a visualization be a story worth reading on its own, with real interactivity, honest sourcing, and a visual language that earns attention?",
+    "approach": "Each piece starts from a publicly available dataset (OWID, NASA, BLS) and gets a bespoke D3 component with its own layout, palette, and narrative arc. The gallery runs on Astro as a static site with a warm editorial design system.",
+    "metrics": [
+      {
+        "value": "2",
+        "label": "Published pieces (life expectancy, exoplanets)"
+      },
+      {
+        "value": "D3 + Astro",
+        "kind": "qualitative",
+        "label": "Interactive SVG on a static site; no server needed"
+      },
+      {
+        "value": "Public data",
+        "kind": "qualitative",
+        "label": "Every piece cites its source and license"
+      }
+    ],
+    "outcomes": [
+      "A visual language that treats data pieces as authored stories, not dashboards.",
+      "Interactive D3 visualizations running as pure static HTML.",
+      "A gallery format designed to grow one piece at a time."
+    ],
+    "focusNarratives": {
+      "product-program-leadership": "Plotted is a gallery product with a clear editorial voice. Each piece gets its own layout and narrative treatment, built on a reusable Astro + D3 system that keeps production cost low enough to publish steadily.",
+      "ai-automation": "The gallery is part of my broader toolkit: AI-assisted research and data prep feed into hand-crafted D3 visualizations. The system handles the ingestion; the editorial judgment stays human."
     }
   },
   {
