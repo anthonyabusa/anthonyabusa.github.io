@@ -1,0 +1,62 @@
+---
+// A single book tile for the /library bookshelf. Cover image when we resolved
+// one from OpenLibrary at sync time; otherwise a typographic spine fallback so
+// the shelf stays even. Purely presentational; data comes from the `library`
+// content collection (synced from Notion by scripts/sync-library.py).
+interface Props {
+  title: string;
+  authors?: string[];
+  genres?: string[];
+  status: 'read' | 'reading' | 'want';
+  rating?: number;
+  cover?: string;
+}
+
+const { title, authors = [], genres = [], status, rating, cover } = Astro.props;
+
+const statusMeta = {
+  read: { label: 'Read', cls: 'text-emerald-300 border-emerald-400/30 bg-emerald-400/10' },
+  reading: { label: 'Reading', cls: 'text-accent-lighter border-accent/40 bg-accent/15' },
+  want: { label: 'Want to read', cls: 'text-ink-muted border-border-strong bg-white/5' },
+}[status];
+
+const byline = authors.join(', ');
+---
+
+<article
+  class="card-hover group flex flex-col overflow-hidden rounded-xl border border-border bg-surface"
+  data-status={status}
+  data-genres={genres.join('|')}
+>
+  <div class="relative aspect-[2/3] overflow-hidden bg-surface2">
+    {cover ? (
+      <img
+        src={cover}
+        alt={`Cover of ${title}`}
+        loading="lazy"
+        decoding="async"
+        class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+      />
+    ) : (
+      <div class="flex h-full w-full flex-col items-center justify-center gap-2 p-4 text-center">
+        <span class="font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint">No cover</span>
+        <span class="font-mono text-sm font-semibold leading-tight text-ink-soft line-clamp-4">{title}</span>
+      </div>
+    )}
+    <span
+      class:list={['absolute left-2 top-2 rounded-full border px-2 py-0.5 font-mono text-[0.6rem] uppercase tracking-wider', statusMeta.cls]}
+    >
+      {statusMeta.label}
+    </span>
+  </div>
+
+  <div class="flex flex-1 flex-col gap-1 p-3">
+    <h3 class="text-sm font-semibold leading-snug text-ink line-clamp-2">{title}</h3>
+    {byline && <p class="text-xs text-ink-muted line-clamp-1">{byline}</p>}
+    {rating && (
+      <p class="mt-auto pt-1 font-mono text-xs text-amber-300" aria-label={`Rated ${rating} out of 5`}>
+        {'★'.repeat(rating)}<span class="text-ink-faint">{'★'.repeat(5 - rating)}</span>
+      </p>
+    )}
+  </div>
+</article>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.ant.library-sync</string>
+
+  <!-- Daily 08:00: pull the Notion Books DB into the site's library collection and
+       publish. HEARTH ONLY (always-on host); do not load on Outpost. PUBLISH_LIBRARY=1
+       lets the wrapper push to the Pages branch (a live publish); drop it to sync
+       files without publishing. Install on Hearth:
+         cp scripts/com.ant.library-sync.plist ~/Library/LaunchAgents/
+         launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.ant.library-sync.plist -->
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/Ant/code/anthonyabusa.github.io/scripts/sync-library.sh</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/Ant/code/anthonyabusa.github.io</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key><string>/Users/Ant</string>
+    <key>PATH</key><string>/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>PUBLISH_LIBRARY</key><string>1</string>
+  </dict>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key><integer>8</integer>
+    <key>Minute</key><integer>0</integer>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <false/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/Ant/code/anthonyabusa.github.io/scripts/library-sync.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/Ant/code/anthonyabusa.github.io/scripts/library-sync.log</string>
+</dict>
+</plist>
