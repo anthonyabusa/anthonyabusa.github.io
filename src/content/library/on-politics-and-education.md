@@ -6,7 +6,7 @@ genres:
   - "Philosophy"
   - "Policy"
 status: "want"
-cover: "https://covers.openlibrary.org/b/id/6636284-M.jpg"
+cover: "https://covers.openlibrary.org/b/id/6636284-L.jpg"
 notionId: "216176cc-7864-8036-951f-d4fe20d177c5"
 notionLastEdited: "2025-06-18T16:06:00.000Z"
 ---

@@ -7,7 +7,7 @@ genres:
   - "Business"
   - "Mindfulness"
 status: "want"
-cover: "https://covers.openlibrary.org/b/id/6602963-M.jpg"
+cover: "https://covers.openlibrary.org/b/id/6602963-L.jpg"
 notionId: "216176cc-7864-800a-b419-cedfd2266cb5"
 notionLastEdited: "2025-06-18T19:23:00.000Z"
 ---

@@ -130,9 +130,81 @@ def fetch_cover(title: str, author: str | None) -> str | None:
         with urllib.request.urlopen(req, timeout=15) as r:
             docs = json.load(r).get("docs", [])
         cid = docs[0].get("cover_i") if docs else None
-        return f"https://covers.openlibrary.org/b/id/{cid}-M.jpg" if cid else None
+        # -L (large): -M looked rough on the shelf; same image, higher res.
+        return f"https://covers.openlibrary.org/b/id/{cid}-L.jpg" if cid else None
     except Exception:
         return None
+
+
+# ---------------------------------------------------------------------------
+# OpenLibrary synopses (keyless, best-effort, cached in frontmatter, blank-safe)
+# ---------------------------------------------------------------------------
+_BLURB_SRC = r"(Globe|Times|Post|Chronicle|Review|Journal|Weekly|Magazine|News|Herald|Guardian|Tribune|NPR|BookPage|Booklist|Kirkus)"
+
+
+def _clean_desc(desc) -> str:
+    if isinstance(desc, dict):
+        desc = desc.get("value", "")
+    d = str(desc or "")
+    d = re.split(r"\n\s*[-*_]{3,}", d)[0]                     # cut "----" source separators
+    d = re.sub(r"\(\[source\]\[\d+\]\).*", "", d, flags=re.S)  # OL "([source][1])" cruft
+    d = re.sub(r"^\s*\[\d+\]:\s*http\S+.*$", "", d, flags=re.M)
+    d = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", d)            # markdown links -> text
+    d = re.sub(r"\*\*(.+?)\*\*", r"\1", d)
+    d = re.sub(r"(?<!\w)\*(.+?)\*(?!\w)", r"\1", d)
+    d = re.sub(r"__(.+?)__", r"\1", d)
+    d = re.sub(r"From the [A-Za-z ]+ edition\.?", "", d)
+    d = re.sub(r"[\w .'’-]{2,45}\bpdf\b", "", d, flags=re.I)   # "<title> pdf" download spam
+    d = re.sub(r"--\s*[A-Z][\w .'’&]+", "", d)                 # "--The Boston Globe" attributions
+    d = d.replace("—", ", ").replace("–", "-")                 # em/en dashes: site voice forbids em dashes
+    d = re.sub(r"\s*,\s*,", ",", d)
+    d = re.sub(r"\s+", " ", d).strip().strip('"“”‘’ ')
+    if len(d) > 600:
+        cut = d[:600]
+        dot = cut.rfind(". ")
+        d = (cut[: dot + 1] if dot > 300 else cut).strip()
+    return d
+
+
+def _is_junk_desc(d: str) -> bool:
+    """Reject marketing-blurb / review-quote 'descriptions' — blank beats junk."""
+    if len(d) < 40 or re.search(r"\bpdf\b", d, re.I):
+        return True
+    if re.search(_BLURB_SRC, d) and ('"' in d or "“" in d):
+        return True
+    return d.count('"') + d.count("“") + d.count("”") >= 4
+
+
+def fetch_synopsis(title: str, author: str | None, cover: str | None) -> str | None:
+    """Best-effort book blurb from OpenLibrary, matched to the cover already in use."""
+    cover_id = None
+    if cover:
+        m = re.search(r"/b/id/(\d+)-", cover)
+        cover_id = m.group(1) if m else None
+    q = {"title": title, "limit": "5", "fields": "key,cover_i"}
+    if author:
+        q["author"] = author
+    ua = {"User-Agent": "anthonyabusa.com library sync"}
+    try:
+        req = urllib.request.Request("https://openlibrary.org/search.json?" + urllib.parse.urlencode(q), headers=ua)
+        with urllib.request.urlopen(req, timeout=15) as r:
+            docs = json.load(r).get("docs", [])
+    except Exception:
+        return None
+    if not docs:
+        return None
+    doc = next((d for d in docs if cover_id and str(d.get("cover_i")) == cover_id), None) or docs[0]
+    key = doc.get("key")
+    if not key:
+        return None
+    try:
+        req = urllib.request.Request(f"https://openlibrary.org{key}.json", headers=ua)
+        with urllib.request.urlopen(req, timeout=15) as r:
+            work = json.load(r)
+    except Exception:
+        return None
+    d = _clean_desc(work.get("description", ""))
+    return None if (not d or _is_junk_desc(d)) else d
 
 
 # ---------------------------------------------------------------------------
@@ -245,6 +317,7 @@ def main():
     ap.add_argument("--commit", action="store_true", help="write files / Notion (default dry-run)")
     ap.add_argument("--push", action="store_true", help="also push local notes -> Notion bodies")
     ap.add_argument("--no-covers", action="store_true", help="skip OpenLibrary cover lookups")
+    ap.add_argument("--no-synopsis", action="store_true", help="skip OpenLibrary synopsis lookups")
     ap.add_argument("--limit", type=int, default=0, help="process only first N books (safe first batch)")
     args = ap.parse_args()
 
@@ -254,19 +327,30 @@ def main():
     if args.limit:
         pages = pages[: args.limit]
 
-    created = updated = unchanged = pushed = covers = 0
+    created = updated = unchanged = pushed = covers = synopses = 0
     for page in pages:
         b = book_from_page(page)
         nid = b["notionId"]
         existing = local.get(nid)
         old_fm, body = (parse_local(existing) if existing else ({}, ""))
 
-        # Cover: keep an existing one; else look it up once (best-effort).
+        # Cover: keep an existing one (upgrade rough -M/-S to -L); else look it
+        # up once (best-effort).
         cover = old_fm.get("cover")
+        if cover:
+            cover = re.sub(r"-[MS]\.jpg$", "-L.jpg", cover)
         if not cover and not args.no_covers:
             cover = fetch_cover(b["title"], b["authors"][0] if b["authors"] else None)
             if cover:
                 covers += 1
+
+        # Synopsis: keep an existing one; else look it up once (best-effort, OL;
+        # blank when OL has no clean description — never fabricated).
+        synopsis = old_fm.get("synopsis")
+        if not synopsis and not args.no_synopsis:
+            synopsis = fetch_synopsis(b["title"], b["authors"][0] if b["authors"] else None, cover)
+            if synopsis:
+                synopses += 1
 
         fm = {
             "title": b["title"],
@@ -277,6 +361,7 @@ def main():
             "progress": b["progress"],
             "completed": b["completed"],
             "cover": cover,
+            "synopsis": synopsis,
             "notionId": nid,
             "notionLastEdited": b["notionLastEdited"],
         }
@@ -307,7 +392,7 @@ def main():
 
     print(
         f"\nBooks: {len(pages)} | create {created} | update {updated} | "
-        f"unchanged {unchanged} | covers +{covers} | notes-pushed {pushed} | "
+        f"unchanged {unchanged} | covers +{covers} | synopsis +{synopses} | notes-pushed {pushed} | "
         f"{'COMMITTED' if args.commit else 'DRY-RUN (use --commit)'}"
     )
 
