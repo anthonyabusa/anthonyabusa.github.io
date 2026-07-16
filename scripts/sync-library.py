@@ -327,10 +327,12 @@ def main():
     if args.limit:
         pages = pages[: args.limit]
 
-    created = updated = unchanged = pushed = covers = synopses = 0
+    created = updated = unchanged = pushed = covers = synopses = pruned = 0
+    seen = set()
     for page in pages:
         b = book_from_page(page)
         nid = b["notionId"]
+        seen.add(nid)
         existing = local.get(nid)
         old_fm, body = (parse_local(existing) if existing else ({}, ""))
 
@@ -398,9 +400,22 @@ def main():
                 pushed += 1
                 print(f"    [notes->notion] {res}")
 
+    # Prune orphans: delete local files whose Notion row no longer exists, so a
+    # book removed in Notion drops off the shelf. Guarded — only on a FULL sync
+    # (never under --limit, never if the query came back empty) so a transient
+    # empty/partial result can't wipe the collection.
+    if not args.limit and seen:
+        for nid, path in local.items():
+            if nid not in seen:
+                print(f"  [prune] {path.name} (Notion row deleted)")
+                pruned += 1
+                if args.commit:
+                    path.unlink()
+
     print(
         f"\nBooks: {len(pages)} | create {created} | update {updated} | "
-        f"unchanged {unchanged} | covers +{covers} | synopsis +{synopses} | notes-pushed {pushed} | "
+        f"unchanged {unchanged} | covers +{covers} | synopsis +{synopses} | "
+        f"pruned {pruned} | notes-pushed {pushed} | "
         f"{'COMMITTED' if args.commit else 'DRY-RUN (use --commit)'}"
     )
 
