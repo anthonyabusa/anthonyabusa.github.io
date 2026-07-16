@@ -131,25 +131,47 @@
     }
   }
 
-  const cards = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-ascii-card]')).map((card) => {
+  // Hover-load driver: each card shows a static resolved frame at rest, and the
+  // animation loop only re-rasterizes the card currently hovered/focused. One
+  // card animates at a time instead of every card re-rasterizing every frame
+  // (the old always-on loop was the drag). Touch + reduced-motion stay static.
+  type RasterCard = { key: string; tc: TextCanvas | null; hovering: boolean; tick: number };
+
+  let asciiRasterRaf = 0;
+  function ensureLoop() {
+    if (!asciiRasterRaf && !prefersReducedAsciiRaster) {
+      asciiRasterRaf = window.requestAnimationFrame(tickAsciiRaster);
+    }
+  }
+  function tickAsciiRaster() {
+    asciiRasterRaf = 0;
+    let anyHover = false;
+    for (const card of cards) {
+      if (!card.tc || !card.hovering) continue;
+      anyHover = true;
+      card.tick += 1;
+      renderFromSource(card.tc, card.key, card.tick, true);
+    }
+    if (anyHover) ensureLoop(); // keep ticking only while something is hovered
+  }
+
+  const cards: RasterCard[] = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>('[data-ascii-card]'),
+  ).map((card) => {
     const canvas = card.querySelector<HTMLCanvasElement>('[data-ascii-raster]');
     const tc = canvas ? setupCanvas(canvas, 168, 54) : null;
-    let hover = false;
-    card.addEventListener('pointerenter', () => { hover = true; });
-    card.addEventListener('pointerleave', () => { hover = false; });
-    card.addEventListener('focus', () => { hover = true; });
-    card.addEventListener('blur', () => { hover = false; });
-    return { key: card.dataset.asciiCard ?? 'strategy', tc, get hover() { return hover; } };
+    const entry: RasterCard = { key: card.dataset.asciiCard ?? 'strategy', tc, hovering: false, tick: 0 };
+    const paintStatic = () => { if (entry.tc) renderFromSource(entry.tc, entry.key, 0, false); };
+    const enter = () => { entry.hovering = true; ensureLoop(); };
+    const leave = () => { entry.hovering = false; paintStatic(); };
+    card.addEventListener('pointerenter', enter);
+    card.addEventListener('pointerleave', leave);
+    card.addEventListener('focus', enter);
+    card.addEventListener('blur', leave);
+    // Paint the resting frame once the source image is ready (it loads async).
+    const img = sourceImages[entry.key];
+    if (img && img.complete && img.naturalWidth) paintStatic();
+    else if (img) img.addEventListener('load', paintStatic, { once: true });
+    return entry;
   });
-
-  let asciiRasterTick = 0;
-  function animateAsciiRaster() {
-    asciiRasterTick += 1;
-    cards.forEach((card) => {
-      if (!card.tc) return;
-      renderFromSource(card.tc, card.key, asciiRasterTick, card.hover);
-    });
-    if (!prefersReducedAsciiRaster) window.requestAnimationFrame(animateAsciiRaster);
-  }
-  animateAsciiRaster();
 </script>
