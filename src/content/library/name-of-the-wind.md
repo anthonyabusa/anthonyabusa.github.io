@@ -6,6 +6,7 @@ genres:
   - "Fantasy"
   - "Fiction"
   - "Adventure"
+  - "Science Fiction"
 status: "read"
 rating: 4
 progress: 1

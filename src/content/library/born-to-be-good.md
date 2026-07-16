@@ -4,6 +4,7 @@ authors:
   - "Dacher Keltner"
 genres:
   - "Philosophy"
+  - "Science"
 status: "read"
 rating: 3
 progress: 1

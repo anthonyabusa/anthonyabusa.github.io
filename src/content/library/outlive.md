@@ -6,6 +6,8 @@ genres:
   - "Biology"
   - "Genetics"
   - "Health"
+  - "Science"
+  - "Self-Help"
 status: "read"
 rating: 3
 progress: 1

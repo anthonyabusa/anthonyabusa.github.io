@@ -5,7 +5,9 @@ authors:
 genres:
   - "Skill Building"
   - "Self Reflection & Improvement"
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
+  - "Psychology"
+  - "Health"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/7239478-L.jpg"
 notionId: "219176cc-7864-80b1-a2d1-c2e6106f9162"

@@ -6,6 +6,7 @@ YANAGIHARA"
 genres:
   - "Novel"
   - "Fiction"
+  - "Literary Fiction"
 status: "want"
 progress: 0
 cover: "https://covers.openlibrary.org/b/id/12065783-L.jpg"

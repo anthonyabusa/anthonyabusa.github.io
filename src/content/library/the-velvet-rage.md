@@ -5,6 +5,8 @@ authors:
 genres:
   - "Psychology & Sociology"
   - "Psychology"
+  - "Sociology"
+  - "Health"
 status: "reading"
 progress: 0.05
 cover: "https://covers.openlibrary.org/b/id/465579-L.jpg"

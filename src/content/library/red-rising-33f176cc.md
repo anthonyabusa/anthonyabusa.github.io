@@ -6,6 +6,7 @@ genres:
   - "Fantasy"
   - "Fiction"
   - "Young Adult"
+  - "Science Fiction"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/7316188-L.jpg"
 notionId: "33f176cc-7864-807b-894f-dbae7fed10e1"

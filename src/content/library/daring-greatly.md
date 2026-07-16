@@ -3,8 +3,11 @@ title: "Daring Greatly"
 authors:
   - "Brene Brown"
 genres:
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
   - "Self Reflection & Improvement"
+  - "Self-Help"
+  - "Health"
+  - "Spirituality"
 status: "reading"
 progress: 0.03
 cover: "https://covers.openlibrary.org/b/id/7367250-L.jpg"

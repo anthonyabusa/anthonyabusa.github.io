@@ -5,6 +5,7 @@ authors:
 genres:
   - "Memoirs"
   - "Fiction"
+  - "Literary Fiction"
 status: "read"
 rating: 2
 progress: 1

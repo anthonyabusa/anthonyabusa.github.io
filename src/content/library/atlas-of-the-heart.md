@@ -4,7 +4,10 @@ authors:
   - "Brene Brown"
 genres:
   - "Self Reflection & Improvement"
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
+  - "Psychology"
+  - "Health"
+  - "Business"
 status: "read"
 rating: 5
 progress: 1

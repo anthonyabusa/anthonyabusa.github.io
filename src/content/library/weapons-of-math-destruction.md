@@ -6,6 +6,8 @@ genres:
   - "Math"
   - "Computer Science"
   - "Mathematics"
+  - "Politics"
+  - "Sociology"
 status: "read"
 rating: 4
 progress: 1

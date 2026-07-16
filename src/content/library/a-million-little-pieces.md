@@ -6,6 +6,7 @@ genres:
   - "Memoirs"
   - "Biography"
   - "Health"
+  - "Sociology"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/242446-L.jpg"
 notionId: "21f176cc-7864-80ce-b73c-d2341e635f06"

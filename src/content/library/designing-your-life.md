@@ -6,6 +6,8 @@ genres:
   - "Skill Building"
   - "Self Reflection & Improvement"
   - "Economics"
+  - "Self-Help"
+  - "Health"
 status: "read"
 rating: 5
 progress: 1

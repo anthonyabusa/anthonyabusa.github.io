@@ -7,6 +7,7 @@ genres:
   - "Psychology & Sociology"
   - "Biology"
   - "Fiction"
+  - "Literary Fiction"
 status: "read"
 rating: 4
 progress: 1

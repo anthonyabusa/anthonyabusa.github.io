@@ -5,6 +5,8 @@ authors:
 genres:
   - "Novel"
   - "Fiction"
+  - "Literary Fiction"
+  - "Science Fiction"
 status: "read"
 rating: 3
 progress: 1

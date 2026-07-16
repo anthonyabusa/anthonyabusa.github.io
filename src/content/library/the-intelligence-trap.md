@@ -7,6 +7,7 @@ genres:
   - "Meta Cognition"
   - "Psychology"
   - "Science"
+  - "Health"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/14859618-L.jpg"
 notionId: "11b176cc-7864-8070-9456-ca5972202f81"

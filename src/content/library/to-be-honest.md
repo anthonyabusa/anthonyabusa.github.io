@@ -7,6 +7,7 @@ genres:
   - "Business"
   - "Fiction"
   - "Economics"
+  - "Biography"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/10148235-L.jpg"
 notionId: "216176cc-7864-80a8-ae60-d4dcc57fd297"

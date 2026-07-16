@@ -5,6 +5,7 @@ authors:
 genres:
   - "Fiction"
   - "Fantasy"
+  - "Science Fiction"
 status: "want"
 progress: 0
 cover: "https://covers.openlibrary.org/b/id/14803407-L.jpg"

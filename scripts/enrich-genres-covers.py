@@ -62,6 +62,15 @@ _ALIAS = {
     "success": "Personal Development", "leadership": "Leadership", "economics": "Economics",
     "artificial intelligence": "Artificial Intelligence", "computer science": "Computer Science",
     "neurosciences": "Neuroscience", "physics": "Physics", "biology": "Biology",
+    # iTunes / Apple Books genre names
+    "self-improvement": "Self-Help", "business & personal finance": "Business",
+    "health, mind & body": "Health", "biographies & memoirs": "Biography",
+    "religion & spirituality": "Spirituality", "sci-fi & fantasy": "Science Fiction",
+    "computers & internet": "Computer Science", "science & nature": "Science",
+    "politics & current events": "Politics", "arts & entertainment": "Art",
+    "history": "History", "fiction & literature": "Fiction", "romance": "Romance",
+    "mysteries & thrillers": "Mystery", "sports & outdoors": "Sports",
+    "professional & technical": "Technology", "travel & adventure": "Travel",
 }
 
 
@@ -127,6 +136,60 @@ def ol_lookup(title: str, author: str | None, want_cover: bool):
     return cover, subjects
 
 
+# --------------------------------------------------------------------------
+# Second source: Google Books (covers + descriptions + categories) — fills the
+# gaps Open Library leaves. Keyless volumes API.
+# --------------------------------------------------------------------------
+_BLURB_SRC = r"(Globe|Times|Post|Chronicle|Review|Journal|Weekly|Magazine|News|Herald|Guardian|Tribune|NPR|BookPage|Booklist|Kirkus)"
+
+
+def clean_desc(desc) -> str:
+    d = str(desc or "")
+    d = re.sub(r"<[^>]+>", " ", d)                            # Google descriptions carry HTML
+    d = re.split(r"\n\s*[-*_]{3,}", d)[0]
+    d = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", d)
+    d = re.sub(r"\*\*(.+?)\*\*", r"\1", d)
+    d = re.sub(r"(?<!\w)\*(.+?)\*(?!\w)", r"\1", d)
+    d = re.sub(r"From the [A-Za-z ]+ edition\.?", "", d)
+    d = re.sub(r"[\w .'’-]{2,45}\bpdf\b", "", d, flags=re.I)
+    d = re.sub(r"--\s*[A-Z][\w .'’&]+", "", d)
+    d = d.replace("—", ", ").replace("–", "-")
+    d = re.sub(r"\s*,\s*,", ",", d)
+    d = re.sub(r"\s+", " ", d).strip().strip('"“”‘’ ')
+    if len(d) > 600:
+        cut = d[:600]
+        dot = cut.rfind(". ")
+        d = (cut[: dot + 1] if dot > 300 else cut).strip()
+    return d
+
+
+def is_junk_desc(d: str) -> bool:
+    if len(d) < 40 or re.search(r"\bpdf\b", d, re.I):
+        return True
+    if re.search(_BLURB_SRC, d) and ('"' in d or "“" in d):
+        return True
+    return d.count('"') + d.count("“") + d.count("”") >= 4
+
+
+def second_source(title: str, author: str | None):
+    """Return (cover_url|None, [genres], description|None) from a source OTHER than
+    Open Library. Primary: iTunes/Apple Books (keyless, reliable). Google Books is
+    intentionally NOT used — its keyless endpoint hard-429s from this host."""
+    term = title + ((" " + author) if author else "")
+    try:
+        res = _get("https://itunes.apple.com/search?" +
+                   urllib.parse.urlencode({"term": term, "entity": "ebook", "limit": "3"})).get("results", [])
+    except Exception:
+        return None, [], None
+    if not res:
+        return None, [], None
+    best = res[0]
+    cover = best.get("artworkUrl100")
+    if cover:                                                 # 100px -> 600px
+        cover = re.sub(r"/\d+x\d+bb\.(jpg|png)", "/600x600bb.jpg", cover)
+    return cover, best.get("genres") or [], best.get("description")
+
+
 def _fm_value(fm: str, key: str) -> str:
     m = re.search(rf'^{key}:\s*"?(.*?)"?\s*$', fm, re.M)
     return m.group(1) if m else ""
@@ -158,15 +221,40 @@ def process(path: Path, commit: bool):
     existing = _fm_list(fm, "genres")
     has_cover = bool(re.search(r"^cover:", fm, re.M))
 
-    cover, subjects = ol_lookup(title, author, want_cover=not has_cover)
+    has_syn = bool(re.search(r"^synopsis:", fm, re.M))
     notes = []
 
+    cover, subjects = ol_lookup(title, author, want_cover=not has_cover)
+    candidates = clean_genres(subjects)
+
+    # Second source: Google Books fills what Open Library missed (cover / synopsis
+    # / thin genres).
+    gdesc = None
+    if (not has_cover and not cover) or (not has_syn) or (len(existing) < 3):
+        gcover, gcats, gdesc = second_source(title, author)
+        if not has_cover and not cover and gcover:
+            cover = gcover
+            notes.append("cover=alt")
+        candidates = candidates + clean_genres(gcats)
+
+    if not has_cover and cover and "cover=alt" not in notes:
+        notes.append("cover=ol")
     if not has_cover and cover:
         fm = re.sub(r"^(notionId:)", f'cover: "{cover}"\n' + r"\1", fm, flags=re.M, count=1)
-        notes.append("cover+")
 
-    ol_genres = clean_genres(subjects)
-    add = [g for g in ol_genres if g.lower() not in {e.lower() for e in existing}]
+    if not has_syn and gdesc:
+        d = clean_desc(gdesc)
+        if d and not is_junk_desc(d):
+            esc = d.replace("\\", "\\\\").replace('"', '\\"')
+            fm = re.sub(r"^(notionId:)", f'synopsis: "{esc}"\n' + r"\1", fm, flags=re.M, count=1)
+            notes.append("synopsis+")
+
+    seen, add = {e.lower() for e in existing}, []
+    for g in candidates:
+        if g.lower() not in seen:
+            seen.add(g.lower())
+            add.append(g)
+    add = add[: max(0, 5 - len(existing))]                    # cap total genres ~5
     if add:
         fm = _write_list(fm, "genres", existing + add)
         notes.append("genres+" + str(len(add)))
@@ -192,7 +280,7 @@ def main():
     covers = genres = 0
     for i, f in enumerate(files, 1):
         res = process(f, args.commit)
-        if "cover+" in res:
+        if "cover=" in res:
             covers += 1
         if "genres+" in res:
             genres += 1

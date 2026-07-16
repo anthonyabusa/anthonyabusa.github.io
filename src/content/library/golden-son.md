@@ -5,6 +5,7 @@ authors:
 genres:
   - "Fantasy"
   - "Fiction"
+  - "Science Fiction"
 status: "read"
 progress: 1
 completed: "2026-04-18"

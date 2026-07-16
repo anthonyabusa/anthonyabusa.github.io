@@ -5,6 +5,7 @@ authors:
 genres:
   - "Fiction"
   - "Fantasy"
+  - "Science Fiction"
 status: "read"
 rating: 4
 progress: 1
