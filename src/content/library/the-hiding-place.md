@@ -1,10 +1,11 @@
 ---
 title: "The Hiding Place"
 authors:
-  - "Corrieten Boom"
+  - "Corrie ten Boom"
 genres:
   - "Non Fiction"
 status: "want"
+cover: "https://covers.openlibrary.org/b/id/12817925-M.jpg"
 notionId: "216176cc-7864-8025-a826-f523a52690bf"
-notionLastEdited: "2025-06-18T19:24:00.000Z"
+notionLastEdited: "2026-07-16T19:04:00.000Z"
 ---

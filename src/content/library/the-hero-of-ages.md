@@ -1,7 +1,7 @@
 ---
 title: "The Hero of Ages"
 authors:
-  - "Brandon Saunderson"
+  - "Brandon Sanderson"
 genres:
   - "Fantasy"
   - "Fiction"
@@ -9,6 +9,7 @@ status: "read"
 rating: 4
 progress: 1
 completed: "2026-03-02"
+cover: "https://covers.openlibrary.org/b/id/14658094-M.jpg"
 notionId: "318176cc-7864-8068-9cee-e7f2a8059daa"
-notionLastEdited: "2026-03-03T02:28:00.000Z"
+notionLastEdited: "2026-07-16T19:04:00.000Z"
 ---
