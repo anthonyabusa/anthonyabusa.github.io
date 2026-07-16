@@ -102,20 +102,24 @@ const { label = 'Live system readout', class: className = '' } = Astro.props;
       return [ch, res > 0.45 ? FRAME_LIT : FRAME_DIM];
     }
     if (tier === 'field') {
-      // Stable positional lattice that briefly densifies under the beam.
-      const lit = (col + r) % 4 === 0;
-      if (!lit && res < 0.5) return null;
-      const idx = Math.min(FIELD_GLYPHS.length - 1, Math.floor(res * 2.4));
-      const glyph = res < 0.14 ? '.' : FIELD_GLYPHS[idx];
-      const shade = res < 0.14 ? SHADE[0] : SHADE[Math.min(2, idx + 1)];
+      // Sparse positional lattice that densifies under the beam. Kept thin (every
+      // 6th cell, not 4th) + faint so it reads as quiet texture behind the words,
+      // not the noise that made the readout look rough.
+      const lit = (col + r) % 6 === 0;
+      if (!lit && res < 0.55) return null;
+      const idx = Math.min(FIELD_GLYPHS.length - 1, Math.floor(res * 2.2));
+      const glyph = res < 0.16 ? '.' : FIELD_GLYPHS[idx];
+      const shade = res < 0.16 ? SHADE[0] : SHADE[Math.min(2, idx)];
       return [glyph, shade];
     }
-    // Label: crisp word under the beam, decays to a dot then faint behind it.
-    if (res > 0.62) return [ch, SHADE[5]];
-    if (res > 0.42) return [ch, SHADE[4]];
-    if (res > 0.24) return [ch, SHADE[3]];
-    if (res > 0.1) return ['.', SHADE[2]];
-    return ['.', SHADE[1]];
+    // Label: ALWAYS the real glyph, legible dim at rest, brightening under the
+    // beam. (It used to dissolve unlit words to dots, so at rest the readout read
+    // as half-broken text like "....EM READOUT". Words now stay whole; the beam
+    // adds emphasis instead of being required to reveal them.)
+    if (res > 0.6) return [ch, SHADE[5]];
+    if (res > 0.4) return [ch, SHADE[4]];
+    if (res > 0.22) return [ch, SHADE[3]];
+    return [ch, SHADE[2]];
   }
 
   const escape = (s: string) =>
