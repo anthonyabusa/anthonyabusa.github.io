@@ -31,7 +31,6 @@ const library = defineCollection({
     rating: z.number().min(1).max(5).optional(),
     progress: z.number().optional(),
     completed: z.coerce.date().optional(),
-    hearAboutFrom: z.string().optional(),
     cover: z.string().optional(),
     notionId: z.string(),
     notionLastEdited: z.string().optional(),

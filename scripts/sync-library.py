@@ -8,8 +8,9 @@ Field ownership (this is what makes "two-way" safe — each field has exactly ON
 authoritative side, so neither direction ever clobbers the other's work):
 
   Notion  → local   the catalog: Title, Author, Genre, Rating, Status,
-                    Progress, Completed, "Hear About From". Notion is where Ant
-                    manages books, so a pull overwrites these fields locally.
+                    Progress, Completed. Notion is where Ant manages books, so a
+                    pull overwrites these fields locally. The "Hear About From"
+                    field is deliberately NOT synced (it names real people).
   local   → Notion   reading notes (the markdown BODY of each file) are written
                     back to the Notion page under a site-owned "Notes (from
                     site)" heading, replacing only that managed section.
@@ -110,7 +111,9 @@ def book_from_page(page: dict) -> dict:
         "rating": int(rating_raw) if rating_raw and rating_raw.isdigit() else None,
         "progress": p.get("Progress", {}).get("number"),
         "completed": completed,
-        "hearAboutFrom": _plain(p.get("Hear About From", {}).get("rich_text")) or None,
+        # NOTE: the Notion "Hear About From" field is intentionally NOT synced.
+        # It names real people (recommenders), which must never land in this
+        # PUBLIC repo. It isn't shown on the page either, so nothing is lost.
     }
 
 
@@ -273,7 +276,6 @@ def main():
             "rating": b["rating"],
             "progress": b["progress"],
             "completed": b["completed"],
-            "hearAboutFrom": b["hearAboutFrom"],
             "cover": cover,
             "notionId": nid,
             "notionLastEdited": b["notionLastEdited"],

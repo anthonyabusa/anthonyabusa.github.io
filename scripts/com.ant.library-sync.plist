@@ -5,7 +5,7 @@
   <key>Label</key>
   <string>com.ant.library-sync</string>
 
-  <!-- Daily 08:00: pull the Notion Books DB into the site's library collection and
+  <!-- Weekly (Sun 08:00): pull the Notion Books DB into the site's library collection and
        publish. HEARTH ONLY (always-on host); do not load on Outpost. PUBLISH_LIBRARY=1
        lets the wrapper push to the Pages branch (a live publish); drop it to sync
        files without publishing. Install on Hearth:
@@ -27,8 +27,10 @@
     <key>PUBLISH_LIBRARY</key><string>1</string>
   </dict>
 
+  <!-- Weekly: Sunday 08:00. Pulls any Notion Books edits from the week and publishes. -->
   <key>StartCalendarInterval</key>
   <dict>
+    <key>Weekday</key><integer>0</integer>
     <key>Hour</key><integer>8</integer>
     <key>Minute</key><integer>0</integer>
   </dict>
