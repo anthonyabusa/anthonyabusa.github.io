@@ -1,0 +1,113 @@
+---
+// Cursor flow field hero art. Server-renders a calm static frame, then (only
+// while the pointer is over the hero) a single rAF loop eases the field to
+// follow the cursor and stops the instant it eases back to rest. Touch and
+// reduced-motion never animate: they keep the static frame. This is the
+// hover-load pattern the project/skill cards will share.
+import { buildFieldHtml, REST_FX, REST_FY } from '../scripts/flowField';
+
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+const staticFrame = buildFieldHtml(REST_FX, REST_FY);
+---
+
+<div class={`flow-field ${className}`} aria-hidden="true" data-flow-field>
+  <pre data-flow-frame set:html={staticFrame}></pre>
+</div>
+
+<style>
+  .flow-field {
+    pointer-events: none;
+    user-select: none;
+  }
+  .flow-field pre {
+    margin: 0;
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 14px;
+    line-height: 1.3;
+    letter-spacing: 0;
+    white-space: pre;
+    color: #4B5590;
+    text-shadow: 0 0 16px rgba(99, 102, 241, 0.14);
+  }
+</style>
+
+<script>
+  import { buildFieldHtml, COLS, ROWS, REST_FX, REST_FY } from '../scripts/flowField';
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const coarse = window.matchMedia('(pointer: coarse)');
+
+  document.querySelectorAll('[data-flow-field]').forEach((root) => {
+    const pre = root.querySelector('[data-flow-frame]') as HTMLElement | null;
+    if (!pre) return;
+
+    // Static-at-rest fallback: no hover on touch, and never animate under
+    // reduced-motion. The server-rendered frame already shows, so leave it be.
+    if (reduce.matches || coarse.matches) return;
+
+    // Drive from the whole hero so the field reacts wherever the cursor moves.
+    const surface = (root.closest('section') as HTMLElement) || (root as HTMLElement);
+
+    let fx = REST_FX;
+    let fy = REST_FY;
+    let targetX = fx;
+    let targetY = fy;
+    let rect = surface.getBoundingClientRect();
+    let raf = 0;
+    let prevT = 0;
+    let hovering = false;
+    let prevKey = '';
+
+    const refreshRect = () => { rect = surface.getBoundingClientRect(); };
+    const paint = () => { pre.innerHTML = buildFieldHtml(fx, fy); };
+
+    const tick = (now: number) => {
+      raf = window.requestAnimationFrame(tick);
+      const dt = prevT ? (now - prevT) / 1000 : 0.016;
+      prevT = now;
+      const k = 1 - Math.exp(-dt * 9); // frame-rate-independent easing
+      fx += (targetX - fx) * k;
+      fy += (targetY - fy) * k;
+
+      const key = Math.round(fx * 2) + ':' + Math.round(fy * 2);
+      if (key !== prevKey) { prevKey = key; paint(); }
+
+      // Pointer has left AND the field has eased back to rest -> freeze: stop
+      // repainting so the tab goes fully idle (the core of the load saving).
+      if (!hovering && Math.abs(fx - REST_FX) < 0.15 && Math.abs(fy - REST_FY) < 0.15) {
+        window.cancelAnimationFrame(raf);
+        raf = 0;
+        fx = REST_FX; fy = REST_FY;
+        paint();
+      }
+    };
+
+    const start = () => { if (!raf) { prevT = 0; raf = window.requestAnimationFrame(tick); } };
+
+    const onMove = (event: PointerEvent) => {
+      const nx = (event.clientX - rect.left) / Math.max(1, rect.width);
+      const ny = (event.clientY - rect.top) / Math.max(1, rect.height);
+      targetX = Math.max(-3, Math.min(COLS + 3, nx * COLS));
+      targetY = Math.max(-2, Math.min(ROWS + 2, ny * ROWS));
+    };
+
+    // Hover-gated: the loop only exists while the cursor is over the hero.
+    surface.addEventListener('pointerenter', () => { hovering = true; refreshRect(); start(); });
+    surface.addEventListener('pointermove', onMove, { passive: true });
+    surface.addEventListener('pointerleave', () => {
+      hovering = false; targetX = REST_FX; targetY = REST_FY; start();
+    });
+    window.addEventListener('resize', refreshRect, { passive: true });
+    window.addEventListener('scroll', refreshRect, { passive: true });
+
+    window.addEventListener('pagehide', () => {
+      if (raf) window.cancelAnimationFrame(raf);
+      surface.removeEventListener('pointermove', onMove);
+      window.removeEventListener('resize', refreshRect);
+      window.removeEventListener('scroll', refreshRect);
+    }, { once: true });
+  });
+</script>
