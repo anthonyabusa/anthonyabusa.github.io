@@ -32,6 +32,9 @@ const library = defineCollection({
     progress: z.number().optional(),
     completed: z.coerce.date().optional(),
     cover: z.string().optional(),
+    // Short book blurb for the detail page. Optional: populated later (e.g. from
+    // Open Library); the page hides the section when absent so it's never fabricated.
+    synopsis: z.string().optional(),
     notionId: z.string(),
     notionLastEdited: z.string().optional(),
   }),
