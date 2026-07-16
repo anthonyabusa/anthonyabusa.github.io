@@ -9,7 +9,7 @@ genres:
   - "Business"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/9295723-L.jpg"
-synopsis: "Jonah Berger is one of those rare thinkers who blends research-based insights with immensely practical guidance. I am grateful to be one of the many who have learned from this master teacher.” , Jim Collins, author Good to Great , coauthor Built to Last From the author of New York Times bestsellers Contagious and Invisible Influence comes a revolutionary approach to changing anyone’s mind. Everyone has something they want to change, a habit, a decision, or a mindset."
+synopsis: "Jonah Berger masterfully bridges rigorous research with practical guidance, offering a revolutionary approach to influencing minds. This insightful work empowers readers to transform habits, decisions, and mindsets with clarity and confidence. Discover how to effectively inspire change in yourself and others through Berger’s engaging and actionable wisdom."
 notionId: "216176cc-7864-80a8-bbe5-d6260e3a05c1"
 notionLastEdited: "2025-06-18T19:21:00.000Z"
 ---

@@ -14,7 +14,7 @@ genres:
   - "Entrepreneurship"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/668157-L.jpg"
-synopsis: "Become confident in your choices. Where should I live? Is it time to get a new job? Which job candidate should I hire? What business strategy should I pursue? We spend the majority of our lives making decisions, both big and small. Yet, even though our success is largely determined by the choices that we make, very few of us are equipped with useful decision-making skills. Because of this, we often approach our choices tentatively, or even fearfully, and avoid giving them the time and thought required to put our best foot forward."
+synopsis: "Smart Choices empowers you to navigate life’s pivotal moments with clarity and confidence, transforming uncertainty into opportunity. By mastering essential decision-making skills, you can thoughtfully evaluate everything from career shifts to hiring strategies. This guide invites you to embrace the power of your choices, ensuring you consistently move forward with purpose and assurance."
 notionId: "2f3176cc-7864-802a-8d46-f57990deaac7"
 notionLastEdited: "2026-01-25T21:52:00.000Z"
 ---

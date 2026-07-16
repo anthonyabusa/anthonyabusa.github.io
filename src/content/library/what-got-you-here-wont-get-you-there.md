@@ -8,7 +8,7 @@ genres:
   - "Business"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/749692-L.jpg"
-synopsis: "Whether you are near the top of the ladder or still have a ways to climb, this book serves as an essential guide to help you eliminate your dysfunctions and move to where you want to go. Marshall Goldsmith is an expert at helping global leaders overcome their sometimes unconscious annoying habits and attain a higher level of success. His one-on-one coaching comes with a six-figure price tag."
+synopsis: "This essential guide empowers readers to transcend current limitations by identifying and resolving hidden behavioral patterns that hinder progress. Marshall Goldsmith translates his high-level executive coaching into accessible wisdom, helping you cultivate the self-awareness needed for sustained professional growth. You will gain practical strategies to refine your interpersonal dynamics and confidently advance toward your highest aspirations."
 notionId: "21e176cc-7864-8015-bd91-e8bd40781c6a"
 notionLastEdited: "2026-01-25T22:12:00.000Z"
 ---

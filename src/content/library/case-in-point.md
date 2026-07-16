@@ -8,7 +8,7 @@ genres:
   - "Finance"
 status: "read"
 cover: "https://covers.openlibrary.org/b/id/735902-L.jpg"
-synopsis: "Cosentino demystifies the consulting case interview. He takes you inside a typical interview by exploring the various types of case questions and he shares with you a system that will help you answer today's most sophisticated case questions"
+synopsis: "Cosentino invites you into the world of consulting interviews, offering a clear and supportive path to mastering complex case questions. By exploring diverse question types and sharing a practical system, this book empowers readers to approach sophisticated challenges with confidence and clarity. You will gain the tools to navigate interviews successfully, turning potential anxiety into assured, insightful performance."
 notionId: "21e176cc-7864-8011-b8d4-ea142ccd4a42"
 notionLastEdited: "2026-01-25T22:25:00.000Z"
 ---

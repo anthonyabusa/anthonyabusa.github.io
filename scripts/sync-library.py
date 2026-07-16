@@ -207,6 +207,28 @@ def fetch_synopsis(title: str, author: str | None, cover: str | None) -> str | N
     return None if (not d or _is_junk_desc(d)) else d
 
 
+def itunes_lookup(title: str, author: str | None):
+    """Second source (iTunes/Apple Books) for what Open Library misses: returns
+    (cover_url|None, description|None). Keyless; Google Books hard-429s here."""
+    term = title + ((" " + author) if author else "")
+    try:
+        req = urllib.request.Request(
+            "https://itunes.apple.com/search?" + urllib.parse.urlencode(
+                {"term": term, "entity": "ebook", "limit": "3"}),
+            headers={"User-Agent": "anthonyabusa.com library sync"})
+        with urllib.request.urlopen(req, timeout=15) as r:
+            res = json.load(r).get("results", [])
+    except Exception:
+        return None, None
+    if not res:
+        return None, None
+    best = res[0]
+    cover = best.get("artworkUrl100")
+    if cover:
+        cover = re.sub(r"/\d+x\d+bb\.(jpg|png)", "/600x600bb.jpg", cover)
+    return cover, best.get("description")
+
+
 # ---------------------------------------------------------------------------
 # Local markdown files (frontmatter + body)
 # ---------------------------------------------------------------------------
@@ -334,23 +356,35 @@ def main():
         existing = local.get(nid)
         old_fm, body = (parse_local(existing) if existing else ({}, ""))
 
-        # Cover: keep an existing one (upgrade rough -M/-S to -L); else look it
-        # up once (best-effort).
+        auth = b["authors"][0] if b["authors"] else None
+
+        # Cover: keep an existing one (upgrade rough -M/-S to -L); else Open Library.
         cover = old_fm.get("cover")
         if cover:
             cover = re.sub(r"-[MS]\.jpg$", "-L.jpg", cover)
-        if not cover and not args.no_covers:
-            cover = fetch_cover(b["title"], b["authors"][0] if b["authors"] else None)
-            if cover:
-                covers += 1
+        elif not args.no_covers:
+            cover = fetch_cover(b["title"], auth)
 
-        # Synopsis: keep an existing one; else look it up once (best-effort, OL;
-        # blank when OL has no clean description — never fabricated).
+        # Synopsis: keep an existing one; else Open Library (blank if no clean
+        # description — never fabricated).
         synopsis = old_fm.get("synopsis")
         if not synopsis and not args.no_synopsis:
-            synopsis = fetch_synopsis(b["title"], b["authors"][0] if b["authors"] else None, cover)
-            if synopsis:
-                synopses += 1
+            synopsis = fetch_synopsis(b["title"], auth, cover)
+
+        # iTunes/Apple Books second source fills what Open Library still missed.
+        if (not cover and not args.no_covers) or (not synopsis and not args.no_synopsis):
+            itc, itd = itunes_lookup(b["title"], auth)
+            if not cover and not args.no_covers and itc:
+                cover = itc
+            if not synopsis and not args.no_synopsis and itd:
+                d = _clean_desc(itd)
+                if d and not _is_junk_desc(d):
+                    synopsis = d
+
+        if cover and not old_fm.get("cover"):
+            covers += 1
+        if synopsis and not old_fm.get("synopsis"):
+            synopses += 1
 
         # Genres: Notion-owned, but UNION in any locally-added genres (e.g. Open
         # Library enrichment via enrich-genres-covers.py) so a pull never drops

@@ -10,7 +10,7 @@ genres:
 status: "reading"
 progress: 0.05
 cover: "https://covers.openlibrary.org/b/id/662232-L.jpg"
-synopsis: "Within ancient Chinese, a sole character possesses a broad, and sometimes contradictory, range of meanings. Moreover, the Tao Te Ching is rife with terms and expressions that have no exact counterpart in English. So while the Tao Te Ching ranks behind only the Bible as the most widely translated book in the world, it remains one of the least understood.\". \"Jonathan Star's Tao Te Ching: The Definitive Edition helps remedy this situation."
+synopsis: "Jonathan Star’s definitive edition illuminates the profound depth of the Tao Te Ching, addressing the unique linguistic challenges that often obscure its ancient wisdom. By bridging the gap between original Chinese concepts and English understanding, this work invites readers to discover the timeless insights within one of history’s most widely translated yet rarely grasped texts. It offers a clear, enriching path to appreciating the book’s enduring spiritual guidance."
 notionId: "21e176cc-7864-80ca-98ab-fc996bab6f9c"
 notionLastEdited: "2026-01-25T21:09:00.000Z"
 ---

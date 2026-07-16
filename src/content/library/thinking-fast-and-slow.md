@@ -12,7 +12,7 @@ rating: 5
 progress: 1
 completed: "2024-12-12"
 cover: "https://covers.openlibrary.org/b/id/13290711-L.jpg"
-synopsis: "In his mega bestseller, Thinking, Fast and Slow, Daniel Kahneman, world-famous psychologist and winner of the Nobel Prize in Economics, takes us on a groundbreaking tour of the mind and explains the two systems that drive the way we think. System 1 is fast, intuitive, and emotional; System 2 is slower, more deliberative, and more logical."
+synopsis: "Daniel Kahneman invites you on a fascinating journey into the architecture of thought, revealing how our intuitive System 1 and deliberate System 2 shape every decision. This insightful exploration empowers readers to understand their mental processes, fostering greater clarity and confidence in navigating life’s complex choices with wisdom and ease."
 notionId: "8039c4c8-0d68-4e83-ab1c-b44e7fe2b5ee"
 notionLastEdited: "2024-12-12T23:20:00.000Z"
 ---

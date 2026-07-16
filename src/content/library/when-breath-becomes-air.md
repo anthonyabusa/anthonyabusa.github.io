@@ -15,7 +15,7 @@ rating: 3
 progress: 1
 completed: "2024-10-27"
 cover: "https://covers.openlibrary.org/b/id/11463139-L.jpg"
-synopsis: "When Breath Becomes Air is a non-fiction autobiographical book written by American neurosurgeon Paul Kalanithi. It is a memoir about his life and illness, battling stage IV metastatic lung cancer. It was posthumously published by Random House on January 12, 2016."
+synopsis: "Paul Kalanithi’s profound memoir invites readers into a deeply human exploration of life, mortality, and meaning. As a neurosurgeon facing terminal illness, he offers a luminous perspective on what truly matters when time grows short. This inspiring narrative encourages a thoughtful appreciation for the preciousness of every breath and moment."
 notionId: "12c176cc-7864-80ef-baa8-e53af5a7c3c8"
 notionLastEdited: "2025-12-20T01:54:00.000Z"
 ---

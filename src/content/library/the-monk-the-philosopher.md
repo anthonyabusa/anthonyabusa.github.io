@@ -12,7 +12,7 @@ genres:
 status: "reading"
 rating: 4
 cover: "https://is1-ssl.mzstatic.com/image/thumb/Publication/78/15/3b/mzi.reggfute.jpg/600x600bb.jpg"
-synopsis: "Jean Francois-Revel, a pillar of French intellectual life in our time, became world famous for his challenges to both Communism and Christianity. Twenty-seven years ago, his son, Matthieu Ricard, gave up a promising career as a scientist to study Tibetan Buddhism -- not as a detached observer but by immersing himself in its practice under the guidance of its greatest living masters. Meeting in an inn overlooking Katmandu, these two profoundly thoughtful men explored the questions that have occupied humankind throughout its history."
+synopsis: "This profound dialogue between father and son bridges Western philosophy and Eastern wisdom, offering readers a deeply insightful exploration of life’s most enduring questions. By witnessing their thoughtful exchange, you gain a richer understanding of human existence and the timeless pursuit of meaning. It is an inviting journey that illuminates the shared quest for truth across diverse intellectual traditions."
 notionId: "219176cc-7864-80dd-bcee-e0fcffc5cde8"
 notionLastEdited: "2026-01-25T22:18:00.000Z"
 ---

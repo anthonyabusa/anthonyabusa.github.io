@@ -12,7 +12,7 @@ rating: 4
 progress: 1
 completed: "2026-01-22"
 cover: "https://covers.openlibrary.org/b/id/14658160-M.jpg"
-synopsis: "From #1 New York Times bestselling author Brandon Sanderson, the Mistborn series is a heist story of political intrigue and magical, martial-arts action. Three hundred years after the events of the Mistborn trilogy, Scadrial is now on the verge of modernity, with railroads to supplement the canals, electric lighting in the streets and the homes of the wealthy, and the first steel-framed skyscrapers racing for the clouds. The Bands of Mourning are the mythical metal minds owned by the Lord Ruler, said to grant anyone who wears them the powers that the Lord Ruler had at his command."
+synopsis: "This captivating narrative invites readers into a vibrant world where ancient magic meets the dawn of modernity. You will explore a rich tapestry of political intrigue and martial arts action, uncovering the secrets of the legendary Bands of Mourning. Discover how these mythical artifacts empower characters to reshape their destiny amidst rising skyscrapers and electric lights."
 notionId: "309176cc-7864-808e-a46d-f141a98c5f06"
 notionLastEdited: "2026-07-16T19:04:00.000Z"
 ---

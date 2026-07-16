@@ -12,7 +12,7 @@ genres:
   - "Self-Help"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/8826393-L.jpg"
-synopsis: "Highly informative and remarkably entertaining.\" , Elle From forest trails in Korea, to islands in Finland, to eucalyptus groves in California, Florence Williams investigates the science behind nature’s positive effects on the brain. Delving into brand-new research, she uncovers the powers of the natural world to improve health, promote reflection and innovation, and strengthen our relationships. As our modern lives shift dramatically indoors, these ideas, and the answers they yield, are more urgent than ever."
+synopsis: "Florence Williams invites readers to explore the profound benefits of nature through engaging storytelling and fresh scientific insights. This book reveals how spending time outdoors enhances health, sparks creativity, and deepens our connections with others. It offers a hopeful guide to reclaiming well-being by embracing the restorative power of the natural world in our modern lives."
 notionId: "2cf176cc-7864-8080-97e0-f176926b2123"
 notionLastEdited: "2025-12-20T02:13:00.000Z"
 ---

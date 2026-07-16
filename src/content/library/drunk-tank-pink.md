@@ -10,7 +10,7 @@ genres:
   - "Business"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/11097494-L.jpg"
-synopsis: "A New York Times bestseller!&#xa0; A revelatory look at how our environment unconsciously yet dramatically shapes the judgments and decisions we make every day Most of us go through life believing that we are in control of the choices we make, that we think and behave almost independently from the world around us. But as Drunk Tank Pink illustrates, the truth is our environment shapes our thoughts and actions in myriad ways without our permission or even our knowledge."
+synopsis: "Discover how your surroundings subtly guide your daily choices in this revelatory New York Times bestseller. You will gain a deeper understanding of the unconscious forces that shape your judgments, transforming your awareness of the world’s quiet influence. Embrace the insight that your environment actively participates in your decisions, offering a positive path toward greater self-knowledge and intentional living."
 notionId: "2cf176cc-7864-8055-872c-dac63b259fb5"
 notionLastEdited: "2025-12-20T02:15:00.000Z"
 ---

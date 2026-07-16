@@ -10,7 +10,7 @@ genres:
 status: "reading"
 progress: 0.05
 cover: "https://covers.openlibrary.org/b/id/473219-L.jpg"
-synopsis: "Using a mix of experiential reportage, personal storytelling, and fresh scientific discovery, Steven Johnson describes how the brain works-its chemicals, structures, and subroutines-and how these systems connect to the day-to-day realities of individual lives. For a hundred years, he says, many of us have assumed that the most powerful route to self-knowledge took the form of lying on a couch, talking about our childhoods."
+synopsis: "Steven Johnson invites readers to explore the fascinating intersection of neuroscience and daily life through engaging storytelling and fresh scientific insights. This book offers a warm, accessible guide to understanding how our brain’s intricate systems shape our personal experiences. By moving beyond traditional introspection, readers gain a deeper, more empowering appreciation for the biological foundations of self-knowledge and human connection."
 notionId: "216176cc-7864-804b-8cde-f118dd182062"
 notionLastEdited: "2026-01-25T22:25:00.000Z"
 ---

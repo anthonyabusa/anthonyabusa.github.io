@@ -11,7 +11,7 @@ genres:
 status: "reading"
 progress: 0.05
 cover: "https://covers.openlibrary.org/b/id/14363373-L.jpg"
-synopsis: "As seen on Oprah’s Super Soul Sunday A beacon of hope in the face of our current world crises, this uplifting book demonstrates how embracing our interconnectedness is key to world transformation In a time of social and ecological crisis, what can we as individuals do to make the world a better place? This inspirational and thought-provoking book serves as an empowering antidote to the cynicism, frustration, paralysis, and overwhelm so many of us are feeling, replacing it with a grounding reminder of what’s true: we are all connected, and our small, personal choices bear unsuspected transforma"
+synopsis: "This inspiring guide offers a hopeful vision for global transformation by revealing the profound power of our deep interconnectedness. It empowers readers to replace feelings of overwhelm with the grounding truth that our small, personal choices create unsuspected positive change. Embracing this perspective invites a warmer, more engaged approach to building a better world together."
 notionId: "47bab2a0-916a-4c3e-884f-1b26a6033563"
 notionLastEdited: "2025-06-18T19:19:00.000Z"
 ---

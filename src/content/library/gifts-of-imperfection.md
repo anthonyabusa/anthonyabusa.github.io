@@ -10,7 +10,7 @@ genres:
 status: "reading"
 progress: 0.05
 cover: "https://covers.openlibrary.org/b/id/7237826-L.jpg"
-synopsis: "A deep book about Courage, Compassion and Connection; these are decisions (mind sets) to lead our way to being wholehearted, to loving ourselves and others. We can not give what we do not have. Real authenticity and love come from within. The journey requires us to get deliberate through deep meditation and prayer, get inspired to make new and different choses in our lives and finally to get going, take action and make each day a new beginning."
+synopsis: "This profound exploration invites you to embrace courage, compassion, and connection as intentional choices that cultivate a wholehearted life. By discovering that authentic love originates from within, you gain the clarity to make deliberate, inspired decisions that transform each day into a fresh beginning. The journey empowers you to lead with intention, fostering deep self acceptance and meaningful relationships through mindful action."
 notionId: "c24a6288-f1f9-4117-9413-ce706a3c41fd"
 notionLastEdited: "2026-01-25T22:25:00.000Z"
 ---

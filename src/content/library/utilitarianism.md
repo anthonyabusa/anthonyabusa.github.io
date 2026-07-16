@@ -9,7 +9,7 @@ genres:
   - "Essays"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/675806-L.jpg"
-synopsis: "Because Utilitarianism is a work of enduring value, it is easy to forget that Mill meant for it to be a topical and relevant contribution to the moral debates of his time. In this edition of Mill's essay, Colin Heydt situates the work in its historical context by supplementing the text of the essay with appendices containing excerpts of related works by Mill's predecessors, Mill himself, and prominent critics of his views."
+synopsis: "This edition illuminates John Stuart Mill’s enduring contribution to moral philosophy by grounding his arguments in their vibrant historical context. By including insightful appendices with related works and critical responses, the volume offers readers a rich, engaging dialogue that deepens their understanding of utilitarian thought. It invites you to explore the timeless relevance of Mill’s ideas through a carefully curated collection of perspectives."
 notionId: "21e176cc-7864-8037-b5fa-d5b6ac614da4"
 notionLastEdited: "2026-01-25T22:01:00.000Z"
 ---

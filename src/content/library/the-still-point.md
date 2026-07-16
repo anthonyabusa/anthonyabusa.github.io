@@ -10,7 +10,7 @@ genres:
 status: "reading"
 progress: 0.05
 cover: "https://covers.openlibrary.org/b/id/9303804-L.jpg"
-synopsis: "How this little book came about. Upon discharge from hospital on the second occasion after a battle with a brain tumour, my wife Ruth and I set about the first appropriate step in cleaning out the cupboard of our lives, as we termed it. Up until this point, we had paid little attention to the stresses in our lives, just accepting what is. Our first priority was to habitually harness more the developed awareness from our life experiences."
+synopsis: "This intimate narrative explores the transformative journey of intentional living, born from the profound clarity that follows a serious health challenge. It invites readers to embrace a deeper awareness of their experiences, encouraging them to actively shape their lives rather than merely accepting external stresses. By harnessing this hard-won insight, you can cultivate a more mindful and purposeful existence."
 notionId: "216176cc-7864-80d9-9189-fb6c510dd9c4"
 notionLastEdited: "2026-01-25T21:10:00.000Z"
 ---

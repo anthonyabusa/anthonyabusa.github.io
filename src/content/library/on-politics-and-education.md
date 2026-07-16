@@ -10,7 +10,7 @@ genres:
   - "History"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/6636284-L.jpg"
-synopsis: "John Locke (29 August 1632 - 28 October 1704) was an English philosopher and physician. Locke is regarded as one of the most influential of Enlightenment thinkers and known as the \"Father of Classical Liberalism” His work greatly affected the development of epistemology and political philosophy. His writings influenced Voltaire and Rousseau, many Scottish Enlightenment thinkers, as well as the US founding fathers."
+synopsis: "This profound work explores the vital intersection of politics and education, reflecting John Locke’s enduring legacy as a foundational Enlightenment thinker. Readers gain valuable insights into how his ideas on epistemology and political philosophy shaped modern governance and educational theory. It offers a warm invitation to understand the intellectual roots of classical liberalism and its lasting impact on democratic societies."
 notionId: "216176cc-7864-8036-951f-d4fe20d177c5"
 notionLastEdited: "2025-06-18T16:06:00.000Z"
 ---

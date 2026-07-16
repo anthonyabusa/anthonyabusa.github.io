@@ -13,7 +13,7 @@ rating: 3
 progress: 1
 completed: "2024-03-31"
 cover: "https://covers.openlibrary.org/b/id/1650716-L.jpg"
-synopsis: "The first yoga text to outline a step-by-step sequence for developing a complete practice according to viniyoga--yoga adapted to the needs of the individual. • A contemporary classic by a world-renowned teacher. • This new edition adds thirty-two poems by Krishnamacharya that capture the essence of his teachings. Sri Tirumalai Krishnamacharya, who lived to be over 100 years old, was one of the greatest yogis of the modern era. Elements of Krishnamacharya's teaching have become well known around the world through the work of B. K. S."
+synopsis: "Heart of Yoga offers a warm, step-by-step guide to crafting a personalized practice through viniyoga, honoring the unique needs of each individual. This contemporary classic, enriched by thirty-two insightful poems by the revered teacher Sri Tirumalai Krishnamacharya, invites readers to embrace a holistic journey of self-discovery. By blending timeless wisdom with accessible instruction, the book empowers you to cultivate a deeply rewarding and adaptable yoga experience."
 notionId: "a55426e1-e107-4310-8695-c015f5c57738"
 notionLastEdited: "2025-01-02T21:52:00.000Z"
 ---

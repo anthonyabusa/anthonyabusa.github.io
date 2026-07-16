@@ -10,7 +10,7 @@ genres:
 status: "want"
 progress: 0
 cover: "https://covers.openlibrary.org/b/id/8634250-L.jpg"
-synopsis: "This fourth and final installment of the epic graphic adaptation of the internationally bestselling phenomenon follows the revolutions that made modern humanity what it is today, and begs the question: what will we become? Five hundred years ago humankind made a startling discovery. We discovered our own collective ignorance. Determined to finally uncover the secrets of the universe, modern humans have learned how to control the world and how to produce more of everything."
+synopsis: "This captivating graphic adaptation explores the profound revolutions that shaped modern humanity, inviting readers to reflect on our collective journey. By revealing how we uncovered our own ignorance and mastered the world, the book offers a warm, insightful look at our shared history. It encourages a positive engagement with the big questions of what we might become, celebrating human curiosity and growth."
 notionId: "fdd72b59-18ba-422b-8969-c94da6c021ca"
 notionLastEdited: "2025-06-18T19:56:00.000Z"
 ---
