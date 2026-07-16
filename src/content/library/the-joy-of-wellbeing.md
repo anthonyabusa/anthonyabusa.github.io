@@ -4,8 +4,9 @@ authors:
   - "Colleen Wachob"
   - "Jason Wachob"
 genres:
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Self Reflection & Improvement"
+  - "Psychology & Sociology"
   - "Self-Help"
   - "Health"
   - "Spirituality"

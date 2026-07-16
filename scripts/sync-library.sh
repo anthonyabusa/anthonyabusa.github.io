@@ -27,7 +27,7 @@ if [ -z "$(git status --porcelain src/content/library)" ]; then
   exit 0
 fi
 
-git add src/content/library
+git add -A src/content/library
 git commit -m "chore(library): sync bookshelf from Notion Books DB"
 
 if [ "${PUBLISH_LIBRARY:-0}" = "1" ]; then

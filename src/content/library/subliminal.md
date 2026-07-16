@@ -5,6 +5,7 @@ authors:
 genres:
   - "Skill Building"
   - "Self Reflection & Improvement"
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "Psychology"
   - "Health"

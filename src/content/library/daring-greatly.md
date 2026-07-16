@@ -3,8 +3,9 @@ title: "Daring Greatly"
 authors:
   - "Brene Brown"
 genres:
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Self Reflection & Improvement"
+  - "Psychology & Sociology"
   - "Self-Help"
   - "Health"
   - "Spirituality"

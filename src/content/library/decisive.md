@@ -6,9 +6,10 @@ authors:
 genres:
   - "Philosophy"
   - "Skill Building"
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Self Reflection & Improvement"
   - "Meta Cognition"
+  - "Psychology & Sociology"
   - "Personal Development"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/8537216-L.jpg"

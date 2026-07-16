@@ -4,6 +4,7 @@ authors:
   - "Richard H. Thaler"
 genres:
   - "Economics"
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "Psychology"
   - "Business"

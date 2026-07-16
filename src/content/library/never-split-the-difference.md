@@ -5,6 +5,7 @@ authors:
 genres:
   - "Business"
   - "Philosophy"
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "Communication"
   - "Psychology"

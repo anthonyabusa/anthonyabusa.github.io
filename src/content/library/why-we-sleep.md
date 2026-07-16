@@ -3,11 +3,12 @@ title: "Why We Sleep"
 authors:
   - "Matthew Walker"
 genres:
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Self Reflection & Improvement"
   - "Anatomy & Physiology"
   - "Biology"
   - "Science"
+  - "Psychology & Sociology"
   - "Health"
   - "Psychology"
 status: "want"

@@ -4,6 +4,7 @@ authors:
   - "Shawn A. Ginwright"
 genres:
   - "Policy"
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "History"
   - "Sociology"

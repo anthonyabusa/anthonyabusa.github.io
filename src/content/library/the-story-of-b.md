@@ -5,6 +5,7 @@ authors:
 genres:
   - "Fiction"
   - "Philosophy"
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "Religion"
 status: "want"

@@ -6,6 +6,7 @@ genres:
   - "Self Reflection & Improvement"
   - "Leadership"
   - "Business"
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "Health"
 status: "read"

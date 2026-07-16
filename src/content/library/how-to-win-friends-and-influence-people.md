@@ -4,6 +4,7 @@ authors:
   - "Dale Carnegie"
 genres:
   - "Skill Building"
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "Personal Development"
   - "Leadership"

@@ -3,6 +3,7 @@ title: "How to Have a Good Day"
 authors:
   - "Caroline Webb"
 genres:
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "Self-Help"
   - "Psychology"

@@ -6,9 +6,10 @@ authors:
   - "Howard Raiffa"
 genres:
   - "Self Reflection & Improvement"
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Skill Building"
   - "Philosophy"
+  - "Psychology & Sociology"
   - "Business"
   - "Psychology"
   - "Entrepreneurship"

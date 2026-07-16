@@ -3,9 +3,10 @@ title: "Artificial Psychology"
 authors:
   - "James A. Crowder"
 genres:
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Computer Science"
   - "Artificial Intelligence"
+  - "Psychology & Sociology"
   - "Technology"
   - "Engineering"
 status: "reading"

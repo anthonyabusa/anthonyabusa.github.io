@@ -4,10 +4,11 @@ authors:
   - "Daniel H. Pink"
 genres:
   - "Self Reflection & Improvement"
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Science"
   - "Neuroscience"
   - "Meta Cognition"
+  - "Psychology & Sociology"
   - "Personal Development"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/8552540-L.jpg"

@@ -6,6 +6,7 @@ genres:
   - "Philosophy"
   - "Ethics"
   - "Self Reflection & Improvement"
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "Self-Help"
 status: "want"

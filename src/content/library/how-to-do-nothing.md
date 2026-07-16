@@ -3,9 +3,10 @@ title: "How to do nothing"
 authors:
   - "Jenny Odell"
 genres:
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Science"
   - "Culture"
+  - "Psychology & Sociology"
   - "Nature"
   - "Art"
   - "Philosophy"
