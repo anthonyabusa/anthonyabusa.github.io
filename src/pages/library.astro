@@ -1,0 +1,151 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookCard from '../components/BookCard.astro';
+import { getCollection } from 'astro:content';
+
+const books = await getCollection('library');
+
+// Shelf order: currently reading first, then read, then the to-read pile.
+// Within a status, higher rating and more recent completion float up.
+const statusOrder = { reading: 0, read: 1, want: 2 };
+const sorted = books.sort((a, b) => {
+  const s = statusOrder[a.data.status] - statusOrder[b.data.status];
+  if (s !== 0) return s;
+  const r = (b.data.rating ?? 0) - (a.data.rating ?? 0);
+  if (r !== 0) return r;
+  return (b.data.completed?.valueOf() ?? 0) - (a.data.completed?.valueOf() ?? 0);
+});
+
+const counts = {
+  read: books.filter((b) => b.data.status === 'read').length,
+  reading: books.filter((b) => b.data.status === 'reading').length,
+  want: books.filter((b) => b.data.status === 'want').length,
+};
+
+const filters = [
+  { key: 'all', label: `All · ${books.length}` },
+  { key: 'reading', label: `Reading · ${counts.reading}` },
+  { key: 'read', label: `Read · ${counts.read}` },
+  { key: 'want', label: `Want to read · ${counts.want}` },
+];
+
+// Genre facets, most-common first. Notion genres carry stray whitespace, so trim.
+const genreCounts = new Map<string, number>();
+for (const b of books) {
+  for (const g of b.data.genres ?? []) {
+    const key = g.trim();
+    if (key) genreCounts.set(key, (genreCounts.get(key) ?? 0) + 1);
+  }
+}
+const genres = [...genreCounts.entries()].sort((a, b) => b[1] - a[1]);
+---
+
+<BaseLayout
+  title="Library"
+  description="Anthony Busa's bookshelf: what I've read, what I'm reading, and what's next. Synced from my reading log."
+>
+  <div class="max-w-5xl mx-auto px-6 pt-32 pb-24">
+    <div class="reveal mb-10">
+      <p class="text-accent font-mono text-xs tracking-widest uppercase mb-4">Reading Log</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-ink mb-3">Library</h1>
+      <p class="text-xl text-ink-soft mb-4">What's on the Bookshelf</p>
+      <p class="text-ink-muted max-w-xl">
+        The books I've read, the ones I'm in, and the pile I'm working toward: {counts.read} read,
+        {counts.reading} in progress, {counts.want} on deck. Kept in sync with my reading log.
+      </p>
+    </div>
+
+    <div class="reveal flex flex-col gap-3 mb-10">
+      <div class="flex flex-wrap gap-2" role="group" aria-label="Filter by reading status">
+        {filters.map((f) => (
+          <button class:list={['project-filter', f.key === 'all' && 'active']} data-filter={f.key}>{f.label}</button>
+        ))}
+      </div>
+      <div class="flex items-center gap-2">
+        <label for="genre-filter" class="font-mono text-xs uppercase tracking-widest text-ink-faint">Genre</label>
+        <select
+          id="genre-filter"
+          class="rounded-full border border-border bg-surface px-3 py-1 font-mono text-xs text-ink-muted hover:text-ink focus:border-accent focus:outline-none"
+        >
+          <option value="all">All genres · {books.length}</option>
+          {genres.map(([g, n]) => <option value={g}>{g} · {n}</option>)}
+        </select>
+      </div>
+    </div>
+
+    <div
+      class="reveal-group grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5"
+    >
+      {sorted.map((book) => (
+        <div
+          class="reveal"
+          data-book
+          data-status={book.data.status}
+          data-genres={(book.data.genres ?? []).map((g) => g.trim()).join('|')}
+        >
+          <BookCard
+            title={book.data.title}
+            authors={book.data.authors}
+            genres={book.data.genres}
+            status={book.data.status}
+            rating={book.data.rating}
+            cover={book.data.cover}
+            href={`/library/${book.id}/`}
+          />
+        </div>
+      ))}
+    </div>
+
+    <p id="empty-state" class="reveal mt-10 hidden text-center text-ink-muted">No books match that filter.</p>
+
+    <p class="reveal mt-14 text-center font-mono text-xs text-ink-faint">
+      Covers via <a href="https://openlibrary.org" class="hover:text-ink-muted underline underline-offset-2">Open Library</a>.
+    </p>
+  </div>
+</BaseLayout>
+
+<script>
+  const statusButtons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const genreSelect = document.querySelector<HTMLSelectElement>('#genre-filter');
+  const cards = document.querySelectorAll<HTMLElement>('[data-book]');
+  const emptyState = document.querySelector<HTMLElement>('#empty-state');
+  let activeStatus = 'all';
+  let activeGenre = 'all';
+
+  function apply() {
+    let visible = 0;
+    cards.forEach((card) => {
+      const okStatus = activeStatus === 'all' || card.dataset.status === activeStatus;
+      const genreList = (card.dataset.genres ?? '').split('|');
+      const okGenre = activeGenre === 'all' || genreList.includes(activeGenre);
+      const show = okStatus && okGenre;
+      card.hidden = !show;
+      if (show) visible++;
+    });
+    if (emptyState) emptyState.hidden = visible !== 0;
+  }
+
+  statusButtons.forEach((button) => button.addEventListener('click', () => {
+    statusButtons.forEach((item) => item.classList.remove('active'));
+    button.classList.add('active');
+    activeStatus = button.dataset.filter ?? 'all';
+    apply();
+  }));
+
+  genreSelect?.addEventListener('change', () => {
+    activeGenre = genreSelect.value;
+    apply();
+  });
+
+  // Deep-link support: /library/?genre=Philosophy preselects that genre (from a
+  // book detail page's genre tag).
+  const wanted = new URLSearchParams(location.search).get('genre');
+  if (wanted && genreSelect) {
+    const match = [...genreSelect.options].find((o) => o.value === wanted);
+    if (match) {
+      genreSelect.value = wanted;
+      activeGenre = wanted;
+      apply();
+    }
+  }
+</script>

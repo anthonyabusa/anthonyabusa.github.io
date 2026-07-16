@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const books = await getCollection('library');
+  return books.map((book) => ({ params: { slug: book.id }, props: { book } }));
+}
+
+const { book } = Astro.props;
+const { title, authors = [], genres = [], status, rating, progress, completed, cover, synopsis } = book.data;
+const { Content } = await render(book);
+
+const statusLabel = { read: 'Read', reading: 'Reading', want: 'Want to read' }[status];
+const byline = authors.join(', ');
+const finished = completed
+  ? new Date(completed).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })
+  : null;
+const pct = typeof progress === 'number' ? Math.round(progress * 100) : null;
+// Reading notes live in the file body (repo-owned, synced to Notion). Show a
+// gentle placeholder when none are written yet rather than an empty page.
+const hasNotes = ((book.body ?? '').trim().length) > 0;
+---
+
+<BaseLayout
+  title={`${title} · Library`}
+  description={`${title}${byline ? ` by ${byline}` : ''}. From Anthony Busa's bookshelf.`}
+>
+  <div class="max-w-4xl mx-auto px-6 pt-32 pb-24">
+    <a
+      href="/library/"
+      class="reveal inline-flex items-center gap-1.5 font-mono text-xs text-ink-muted hover:text-ink transition-colors mb-8"
+    >
+      <span aria-hidden="true">←</span> Back to the shelf
+    </a>
+
+    <div class="reveal grid gap-8 md:grid-cols-[minmax(0,200px)_1fr]">
+      <div class="mx-auto w-40 md:mx-0 md:w-full">
+        {cover ? (
+          <img
+            src={cover}
+            alt={`Cover of ${title}`}
+            class="w-full rounded-xl border border-border shadow-lg"
+          />
+        ) : (
+          <div class="flex aspect-[2/3] w-full flex-col items-center justify-center gap-2 rounded-xl border border-border bg-surface2 p-4 text-center">
+            <span class="font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint">No cover</span>
+            <span class="font-mono text-sm font-semibold leading-tight text-ink-soft">{title}</span>
+          </div>
+        )}
+      </div>
+
+      <div>
+        <p class="font-mono text-xs uppercase tracking-widest text-accent mb-3">{statusLabel}</p>
+        <h1 class="text-3xl md:text-4xl font-bold text-ink mb-2 leading-tight">{title}</h1>
+        {byline && <p class="text-lg text-ink-muted mb-4">{byline}</p>}
+
+        {rating && (
+          <p class="font-mono text-amber-300 mb-4" aria-label={`Rated ${rating} out of 5`}>
+            {'★'.repeat(rating)}<span class="text-ink-faint">{'★'.repeat(5 - rating)}</span>
+          </p>
+        )}
+
+        <div class="flex flex-col gap-1 text-sm text-ink-muted mb-6">
+          {finished && <p>Finished {finished}</p>}
+          {status === 'reading' && pct !== null && pct > 0 && <p>{pct}% through</p>}
+        </div>
+
+        {genres.length > 0 && (
+          <div class="flex flex-wrap gap-2">
+            {genres.map((g) => (
+              <a
+                href={`/library/?genre=${encodeURIComponent(g.trim())}`}
+                class="rounded-full border border-border px-2.5 py-0.5 font-mono text-[0.65rem] text-ink-muted hover:border-accent hover:text-ink transition-colors"
+              >
+                {g.trim()}
+              </a>
+            ))}
+          </div>
+        )}
+
+        {synopsis && <p class="mt-6 text-ink-soft leading-relaxed">{synopsis}</p>}
+      </div>
+    </div>
+
+    <div class="reveal mt-12 border-t border-border pt-8">
+      <h2 class="font-mono text-xs uppercase tracking-widest text-ink-faint mb-4">Reflections</h2>
+      {hasNotes ? (
+        <div class="prose max-w-none"><Content /></div>
+      ) : (
+        <p class="text-ink-muted">No notes on this one yet. I add reflections as I finish or revisit a book.</p>
+      )}
+    </div>
+  </div>
+</BaseLayout>
