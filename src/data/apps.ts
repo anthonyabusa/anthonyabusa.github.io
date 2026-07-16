@@ -68,6 +68,15 @@ export const apps: AppEntry[] = [
     sourceUrl: 'https://github.com/Busa-Legacies/metis-framework',
     tags: ['AI', 'Framework', 'Open source'],
   },
+  {
+    name: 'Aux',
+    tagline: 'Tell it a vibe, get a real DJ set',
+    description:
+      'Describe a mood, an artist, or a moment and get back a continuous, beat-matched mix, not a playlist with hard cuts. Aux sequences and blends real tracks the way a DJ would, weaving stems and matching key and energy so every transition lands.',
+    status: 'soon',
+    icon: '|||',
+    tags: ['Music', 'AI', 'Audio'],
+  },
   // ── Add an app: copy a block above. Set status:'soon' to tease one early. ──
   // {
   //   name: 'Your next app',
