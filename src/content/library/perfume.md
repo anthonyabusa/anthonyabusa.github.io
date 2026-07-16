@@ -5,6 +5,7 @@ authors:
 genres:
   - "Horror"
   - "History"
+  - "Fiction"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/11796284-L.jpg"
 notionId: "219176cc-7864-80dd-b9c0-cdfc20bacf37"

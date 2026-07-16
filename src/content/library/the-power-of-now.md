@@ -6,6 +6,7 @@ genres:
   - "Philosophy"
   - "Ethics"
   - "Spirituality"
+  - "Religion"
 status: "want"
 rating: 4
 cover: "https://covers.openlibrary.org/b/id/2401616-L.jpg"

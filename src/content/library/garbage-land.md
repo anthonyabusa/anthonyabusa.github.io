@@ -5,6 +5,8 @@ authors:
 genres:
   - "Ecology"
   - "Environment"
+  - "Sociology"
+  - "Politics"
 status: "read"
 rating: 5
 progress: 1

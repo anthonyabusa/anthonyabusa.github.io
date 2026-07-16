@@ -4,7 +4,10 @@ authors:
   - "Dale Carnegie"
 genres:
   - "Skill Building"
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
+  - "Personal Development"
+  - "Leadership"
+  - "Sociology"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/13314878-L.jpg"
 synopsis: "Available for the first time ever in trade paperback, Dale Carnegie's enduring classic, the inspirational personal development guide that shows how to achieve lifelong success. One of the top-selling books of all time, \"How to Win Friends & Influence People\" has sold more than 15 million copies in all its editions."

@@ -4,6 +4,8 @@ authors:
   - "James Hilton"
 genres:
   - "Fiction"
+  - "Survival"
+  - "Fantasy"
 status: "reading"
 progress: 0.1
 cover: "https://covers.openlibrary.org/b/id/4656607-L.jpg"

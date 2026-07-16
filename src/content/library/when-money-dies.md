@@ -5,6 +5,7 @@ authors:
 genres:
   - "Finance"
   - "Economics"
+  - "History"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/7072765-L.jpg"
 synopsis: "This book is about the collapse of the Weimar Republic in Germany shortly after WW 1, which was prefaced by a period of deflation. The collapse was distinguished by a period of severe hyperinflation that rendered the German currency worthless."

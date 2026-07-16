@@ -4,6 +4,8 @@ authors:
   - "Cal Newport"
 genres:
   - "Skill Building"
+  - "Business"
+  - "Personal Development"
 status: "read"
 rating: 3
 progress: 1

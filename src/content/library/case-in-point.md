@@ -5,6 +5,7 @@ authors:
 genres:
   - "Skill Building"
   - "Business"
+  - "Finance"
 status: "read"
 cover: "https://covers.openlibrary.org/b/id/735902-L.jpg"
 synopsis: "Cosentino demystifies the consulting case interview. He takes you inside a typical interview by exploring the various types of case questions and he shares with you a system that will help you answer today's most sophisticated case questions"

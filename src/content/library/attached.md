@@ -3,8 +3,9 @@ title: "Attached"
 authors:
   - "Amir Levine"
 genres:
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
   - "Self Reflection & Improvement"
+  - "Psychology"
 status: "read"
 rating: 4
 progress: 1

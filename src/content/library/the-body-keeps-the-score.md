@@ -7,6 +7,9 @@ genres:
   - "Genetics"
   - "Mindfulness"
   - "Trauma"
+  - "Neuroscience"
+  - "Psychology"
+  - "Health"
 status: "want"
 progress: 0
 cover: "https://covers.openlibrary.org/b/id/8315367-L.jpg"

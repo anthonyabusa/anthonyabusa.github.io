@@ -4,6 +4,7 @@ authors:
   - "Patrick Rothfuss"
 genres:
   - "Fantasy"
+  - "Fiction"
 status: "read"
 rating: 4
 progress: 1

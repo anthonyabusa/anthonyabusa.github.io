@@ -352,10 +352,18 @@ def main():
             if synopsis:
                 synopses += 1
 
+        # Genres: Notion-owned, but UNION in any locally-added genres (e.g. Open
+        # Library enrichment via enrich-genres-covers.py) so a pull never drops
+        # them. Notion genres always kept; additive only.
+        genres = list(b["genres"])
+        for g in old_fm.get("genres", []):
+            if g.lower() not in {x.lower() for x in genres}:
+                genres.append(g)
+
         fm = {
             "title": b["title"],
             "authors": b["authors"],
-            "genres": b["genres"],
+            "genres": genres,
             "status": b["status"],
             "rating": b["rating"],
             "progress": b["progress"],

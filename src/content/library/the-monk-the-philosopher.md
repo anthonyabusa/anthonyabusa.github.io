@@ -7,6 +7,7 @@ genres:
   - "Philosophy"
   - "Ethics"
   - "Self Reflection & Improvement"
+  - "History"
 status: "reading"
 rating: 4
 notionId: "219176cc-7864-80dd-bcee-e0fcffc5cde8"

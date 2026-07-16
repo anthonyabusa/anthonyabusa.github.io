@@ -5,6 +5,9 @@ authors:
 genres:
   - "Self Reflection & Improvement"
   - "Skill Building"
+  - "Self-Help"
+  - "Health"
+  - "Sociology"
 status: "read"
 rating: 5
 progress: 1

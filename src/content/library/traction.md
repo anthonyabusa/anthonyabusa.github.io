@@ -5,6 +5,7 @@ authors:
 genres:
   - "Business"
   - "Leadership"
+  - "Entrepreneurship"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/10678412-L.jpg"
 notionId: "21c176cc-7864-805d-bfbf-d776842d744c"

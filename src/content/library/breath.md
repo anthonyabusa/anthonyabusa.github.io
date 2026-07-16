@@ -6,6 +6,8 @@ genres:
   - "Biology"
   - "Science"
   - "Skill Building"
+  - "Yoga"
+  - "Health"
 status: "read"
 rating: 4
 progress: 1

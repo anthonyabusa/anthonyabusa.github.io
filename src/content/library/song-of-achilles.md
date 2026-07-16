@@ -5,6 +5,8 @@ authors:
 genres:
   - "Romance"
   - "Fantasy"
+  - "Fiction"
+  - "History"
 status: "read"
 rating: 4
 progress: 1

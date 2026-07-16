@@ -5,6 +5,7 @@ authors:
 genres:
   - "Self Reflection & Improvement"
   - "Sex and Gender Studies"
+  - "Psychology"
 status: "read"
 rating: 3
 progress: 1

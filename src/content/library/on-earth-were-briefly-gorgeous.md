@@ -4,6 +4,7 @@ authors:
   - "Ocean Vuong"
 genres:
   - "Memoirs"
+  - "Fiction"
 status: "read"
 rating: 2
 progress: 1

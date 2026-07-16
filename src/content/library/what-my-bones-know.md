@@ -5,6 +5,8 @@ authors:
 genres:
   - "Memoirs"
   - "Trauma"
+  - "Biography"
+  - "Psychology"
 status: "read"
 rating: 3
 progress: 1

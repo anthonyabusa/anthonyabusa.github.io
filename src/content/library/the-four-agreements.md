@@ -5,6 +5,8 @@ authors:
 genres:
   - "Ethics"
   - "Philosophy"
+  - "Self-Help"
+  - "Personal Development"
 status: "want"
 progress: 0
 cover: "https://covers.openlibrary.org/b/id/924521-L.jpg"

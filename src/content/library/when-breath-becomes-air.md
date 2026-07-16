@@ -7,6 +7,9 @@ genres:
   - "Biology"
   - "Medical"
   - "Memoirs"
+  - "Biography"
+  - "Sociology"
+  - "Philosophy"
 status: "read"
 rating: 3
 progress: 1

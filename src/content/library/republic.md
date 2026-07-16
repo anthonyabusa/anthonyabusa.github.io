@@ -5,6 +5,7 @@ authors:
 genres:
   - "Philosophy"
   - "Ethics"
+  - "Politics"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/14377522-L.jpg"
 notionId: "21e176cc-7864-8007-a3aa-eee2315883ff"

@@ -5,6 +5,7 @@ authors:
 genres:
   - "Philosophy"
   - "Theology"
+  - "Fiction"
 status: "read"
 progress: 1
 completed: "2014-06-21"

@@ -5,7 +5,8 @@ authors:
 genres:
   - "Philosophy"
   - "Self Reflection & Improvement"
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
+  - "Neuroscience"
 status: "reading"
 progress: 0.05
 cover: "https://covers.openlibrary.org/b/id/473219-L.jpg"

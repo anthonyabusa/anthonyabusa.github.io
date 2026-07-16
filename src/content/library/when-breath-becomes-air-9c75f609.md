@@ -4,6 +4,9 @@ authors:
   - "Paul Kalanithi"
 genres:
   - "Memoirs"
+  - "Biography"
+  - "Sociology"
+  - "Philosophy"
 status: "read"
 rating: 2
 progress: 1

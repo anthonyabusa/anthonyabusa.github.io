@@ -6,6 +6,7 @@ genres:
   - "Fantasy"
   - "Science Fiction"
   - "Fiction"
+  - "Young Adult"
 status: "read"
 progress: 1
 completed: "2026-03-19"

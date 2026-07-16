@@ -4,6 +4,8 @@ authors:
   - "Lucius Annaeus Seneca"
 genres:
   - "Philosophy"
+  - "Personal Development"
+  - "Ethics"
 status: "want"
 progress: 0
 cover: "https://covers.openlibrary.org/b/id/103759-L.jpg"

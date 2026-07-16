@@ -6,6 +6,7 @@ genres:
   - "Philosophy"
   - "Mindfulness"
   - "Spirituality"
+  - "Self-Help"
 status: "read"
 rating: 3
 progress: 1

@@ -3,8 +3,10 @@ title: "Thinking Fast and Slow"
 authors:
   - "Daniel Kahneman"
 genres:
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
   - "Economics"
+  - "Psychology"
+  - "Business"
 status: "read"
 rating: 5
 progress: 1

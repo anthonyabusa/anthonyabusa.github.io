@@ -5,6 +5,8 @@ authors:
 genres:
   - "Engineering"
   - "Philosophy"
+  - "Politics"
+  - "Management"
 status: "read"
 rating: 5
 progress: 1

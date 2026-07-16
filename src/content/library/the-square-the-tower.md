@@ -8,6 +8,7 @@ genres:
   - "Imperialism"
   - "History"
   - "Policy"
+  - "Sociology"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/12274409-M.jpg"
 notionId: "294ce6ad-5b66-4f62-87d9-69eef841aceb"

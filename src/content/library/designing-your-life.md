@@ -5,6 +5,7 @@ authors:
 genres:
   - "Skill Building"
   - "Self Reflection & Improvement"
+  - "Economics"
 status: "read"
 rating: 5
 progress: 1

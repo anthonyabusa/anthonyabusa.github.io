@@ -4,6 +4,8 @@ authors:
   - "Kazuo Ishiguro"
 genres:
   - "Novel"
+  - "Fiction"
+  - "Artificial Intelligence"
 status: "want"
 progress: 0
 cover: "https://covers.openlibrary.org/b/id/10648686-L.jpg"

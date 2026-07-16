@@ -3,9 +3,12 @@ title: "How to do nothing"
 authors:
   - "Jenny Odell"
 genres:
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
   - "Science"
   - "Culture"
+  - "Nature"
+  - "Art"
+  - "Philosophy"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/8750439-L.jpg"
 synopsis: "Nothing is harder to do these days than nothing. But in a world where our value is determined by our 24/7 data productivity . . . doing nothing may be our most important form of resistance. So argues artist and critic Jenny Odell in this field guide to doing nothing (at least as capitalism defines it). Odell sees our attention as the most precious, and overdrawn, resource we have."

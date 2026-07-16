@@ -5,6 +5,7 @@ authors:
 genres:
   - "Fiction"
   - "Philosophy"
+  - "Drama"
 status: "read"
 rating: 2
 completed: "2017-06-18"

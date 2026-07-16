@@ -4,6 +4,9 @@ authors:
   - "Graham Greene"
 genres:
   - "History"
+  - "Fiction"
+  - "Classics"
+  - "Historical Fiction"
 status: "read"
 rating: 2
 progress: 1

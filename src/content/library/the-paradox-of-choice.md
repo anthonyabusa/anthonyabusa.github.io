@@ -5,9 +5,11 @@ authors:
 genres:
   - "Meta Cognition"
   - "Self Reflection & Improvement"
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
   - "Skill Building"
   - "Philosophy"
+  - "Psychology"
+  - "Sociology"
 status: "want"
 progress: 0
 cover: "https://covers.openlibrary.org/b/id/20382-L.jpg"

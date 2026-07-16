@@ -6,6 +6,8 @@ genres:
   - "Pharmacology"
   - "History"
   - "Biography"
+  - "True Crime"
+  - "Business"
 status: "want"
 progress: 0
 cover: "https://covers.openlibrary.org/b/id/10678221-L.jpg"

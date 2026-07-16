@@ -3,8 +3,11 @@ title: "The Goldfinch"
 authors:
   - "Donna Tartt"
 genres:
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
   - "Murder"
+  - "Fiction"
+  - "Survival"
+  - "Art"
 status: "want"
 progress: 0
 cover: "https://covers.openlibrary.org/b/id/8771366-M.jpg"

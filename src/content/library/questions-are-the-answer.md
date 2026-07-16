@@ -4,6 +4,7 @@ authors:
   - "Hal Gregersen"
 genres:
   - "Self Reflection & Improvement"
+  - "Business"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/11467095-L.jpg"
 notionId: "216176cc-7864-80d1-bc1d-f2949d9ed200"

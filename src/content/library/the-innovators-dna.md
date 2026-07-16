@@ -8,6 +8,8 @@ genres:
   - "Economics"
   - "Business"
   - "Startup/Entrepreneurship"
+  - "Entrepreneurship"
+  - "Creativity"
 status: "read"
 rating: 4
 progress: 1

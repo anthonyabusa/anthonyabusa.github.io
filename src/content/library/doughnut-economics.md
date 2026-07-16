@@ -4,6 +4,8 @@ authors:
   - "Kate Raworth"
 genres:
   - "Economics"
+  - "Politics"
+  - "History"
 status: "reading"
 progress: 0.5
 cover: "https://covers.openlibrary.org/b/id/8347411-L.jpg"

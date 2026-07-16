@@ -6,6 +6,7 @@ authors:
 genres:
   - "Philosophy"
   - "Ethics"
+  - "Psychology"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/13098570-L.jpg"
 synopsis: "Why have history's greatest minds embraced the wisdom of the ancient Stoics? Because they realize that the most valuable wisdom is timeless and that philosophy is for living a better life, not a classroom exercise. Holiday and Hanselman off 366 days of Stoic insights and exercises, to help you find the serenity, self-knowledge, and resilience you need to live well."

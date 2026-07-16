@@ -5,6 +5,8 @@ authors:
 genres:
   - "Science"
   - "Memoirs"
+  - "Biography"
+  - "Physics"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/1468422-L.jpg"
 synopsis: "One of the greatest physicists of the twentieth century, Richard Feynman possessed an unquenchable thirst for adventure and an unparalleled ability to tell the stories of his life."

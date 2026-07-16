@@ -6,8 +6,11 @@ genres:
   - "Meta Cognition"
   - "Science"
   - "Self Reflection & Improvement"
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
   - "Neuroscience"
+  - "Sociology"
+  - "Personal Development"
+  - "Psychology"
 status: "want"
 progress: 0
 cover: "https://covers.openlibrary.org/b/id/872503-L.jpg"

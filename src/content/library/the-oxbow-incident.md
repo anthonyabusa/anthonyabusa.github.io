@@ -4,6 +4,7 @@ authors:
   - "Walter Van Tilburg Clark"
 genres:
   - "History"
+  - "Fiction"
 status: "read"
 completed: "2015-06-24"
 cover: "https://covers.openlibrary.org/b/id/230325-L.jpg"

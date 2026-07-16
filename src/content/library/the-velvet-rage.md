@@ -3,7 +3,8 @@ title: "The Velvet Rage"
 authors:
   - "Alan Downs"
 genres:
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
+  - "Psychology"
 status: "reading"
 progress: 0.05
 cover: "https://covers.openlibrary.org/b/id/465579-L.jpg"

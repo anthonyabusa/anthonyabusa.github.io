@@ -4,6 +4,8 @@ authors:
   - "Epictetus"
 genres:
   - "Philosophy"
+  - "Personal Development"
+  - "Ethics"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/6034053-L.jpg"
 notionId: "216176cc-7864-8046-837a-ed310c7bb96a"

@@ -5,6 +5,7 @@ authors:
 genres:
   - "Theology"
   - "Philosophy"
+  - "Religion"
 status: "read"
 rating: 3
 progress: 1

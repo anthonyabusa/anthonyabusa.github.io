@@ -5,6 +5,9 @@ authors:
 genres:
   - "Skill Building"
   - "Self Reflection & Improvement"
+  - "Business"
+  - "Psychology"
+  - "Self-Help"
 status: "read"
 rating: 4
 progress: 1

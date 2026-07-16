@@ -4,6 +4,9 @@ authors:
   - "Michael Lewis"
 genres:
   - "Business"
+  - "Psychology"
+  - "Science"
+  - "Biography"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/9595637-L.jpg"
 synopsis: "Examines the history of behavioral economics, discussing the theory of Israeli psychologists who wrote the original studies undoing assumptions about the decision-making process and the influence it has had on evidence-based regulation."

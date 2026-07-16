@@ -5,6 +5,7 @@ authors:
 genres:
   - "Business"
   - "Skill Building"
+  - "Creativity"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/8025-L.jpg"
 synopsis: "The story of the origin and design process of IDEO, a design company in San Jose, CA. Shares examples of innovation from both IDEO and such companies as REI, Pike Place Market, and Nike."

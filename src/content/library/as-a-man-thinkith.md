@@ -5,6 +5,9 @@ authors:
 genres:
   - "Philosophy"
   - "Ethics"
+  - "Personal Development"
+  - "Spirituality"
+  - "Fiction"
 status: "reading"
 progress: 0.2
 cover: "https://covers.openlibrary.org/b/id/6268048-M.jpg"

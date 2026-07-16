@@ -5,9 +5,10 @@ authors:
 genres:
   - "Philosophy"
   - "Ethics"
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
   - "Science"
   - "Self Reflection & Improvement"
+  - "Psychology"
 status: "reading"
 progress: 0.25
 cover: "https://covers.openlibrary.org/b/id/11419815-L.jpg"

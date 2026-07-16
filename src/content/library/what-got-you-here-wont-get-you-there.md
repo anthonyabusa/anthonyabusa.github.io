@@ -5,6 +5,7 @@ authors:
 genres:
   - "Skill Building"
   - "Self Reflection & Improvement"
+  - "Business"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/749692-L.jpg"
 notionId: "21e176cc-7864-8015-bd91-e8bd40781c6a"

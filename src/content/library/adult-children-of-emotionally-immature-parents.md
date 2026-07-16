@@ -3,8 +3,10 @@ title: "Adult Children of Emotionally Immature Parents"
 authors:
   - "Lindsay Gibson"
 genres:
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
   - "Trauma"
+  - "Parenting"
+  - "Psychology"
 status: "reading"
 rating: 3
 progress: 0.2

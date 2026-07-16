@@ -5,7 +5,9 @@ authors:
 genres:
   - "Business"
   - "Philosophy"
-  - "Psychology & Sociology "
+  - "Psychology & Sociology"
+  - "Communication"
+  - "Psychology"
 status: "read"
 rating: 4
 progress: 1

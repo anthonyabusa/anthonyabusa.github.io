@@ -4,6 +4,8 @@ authors:
   - "Evagrius Ponticus"
 genres:
   - "Philosophy"
+  - "Spirituality"
+  - "History"
 status: "read"
 progress: 1
 completed: "2018-01-25"

@@ -6,6 +6,8 @@ genres:
   - "Philosophy"
   - "Ethics"
   - "History"
+  - "Fiction"
+  - "Travel"
 status: "read"
 rating: 1
 progress: 1

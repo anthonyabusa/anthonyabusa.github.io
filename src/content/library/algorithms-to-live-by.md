@@ -6,6 +6,7 @@ genres:
   - "Science"
   - "Computer Science"
   - "Artificial Intelligence"
+  - "Mathematics"
 status: "read"
 rating: 4
 progress: 1

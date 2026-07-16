@@ -5,6 +5,7 @@ authors:
 genres:
   - "Math"
   - "Computer Science"
+  - "Mathematics"
 status: "read"
 rating: 4
 progress: 1

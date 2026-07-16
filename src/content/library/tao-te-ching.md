@@ -5,6 +5,8 @@ authors:
 genres:
   - "Philosophy"
   - "Ethics"
+  - "Religion"
+  - "Spirituality"
 status: "reading"
 progress: 0.05
 cover: "https://covers.openlibrary.org/b/id/662232-L.jpg"
