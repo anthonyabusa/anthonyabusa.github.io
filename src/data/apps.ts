@@ -70,9 +70,9 @@ export const apps: AppEntry[] = [
   },
   {
     name: 'Aux',
-    tagline: 'Tell it a vibe, get a real DJ set',
+    tagline: 'Tell it a vibe, hear a seamless set',
     description:
-      'Describe a mood, an artist, or a moment and get back a continuous, beat-matched mix, not a playlist with hard cuts. Aux sequences and blends real tracks the way a DJ would, weaving stems and matching key and energy so every transition lands.',
+      "Describe a mood, an artist, or a moment and get back a continuous, beat-matched mix instead of a playlist with hard cuts. Aux studies how great DJs build a set, weaving stems and matching key and energy so every transition lands, for the times you want that flow and don't have a DJ on hand.",
     status: 'soon',
     icon: '|||',
     tags: ['Music', 'AI', 'Audio'],
