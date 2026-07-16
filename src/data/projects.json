@@ -101,7 +101,7 @@
     "slug": "navore-market-aggtech-startup",
     "role": "Director of Strategy & Operations",
     "status": "Active venture",
-    "screenshot": "/screenshots/navore-market.jpg",
+    "screenshot": "/screenshots/navore-market.webp",
     "description": "A USDA-backed San Diego marketplace connecting local producers and consumers through neighborhood hubs, mobile ordering, and practical local-food operations.",
     "url": "https://navoremarket.com",
     "liveUrl": "https://navoremarket.com",
@@ -348,7 +348,7 @@
     "metrics": [
       {
         "value": "2",
-        "label": "Published pieces (life expectancy, exoplanets)"
+        "label": "Completed pieces, gallery deploy in flight (life expectancy, exoplanets)"
       },
       {
         "value": "D3 + Astro",
