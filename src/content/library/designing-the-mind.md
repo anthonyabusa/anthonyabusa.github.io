@@ -6,6 +6,7 @@ genres:
   - "Philosophy"
   - "Skill Building"
   - "Self Reflection & Improvement"
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "Computer Science"
 status: "want"

@@ -3,6 +3,7 @@ title: "Influence"
 authors:
   - "Robert B. Cialdini"
 genres:
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "Communication"
   - "Psychology"

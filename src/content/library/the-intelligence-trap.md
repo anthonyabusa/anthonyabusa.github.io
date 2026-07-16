@@ -3,8 +3,9 @@ title: "The intelligence trap"
 authors:
   - "David Robson"
 genres:
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Meta Cognition"
+  - "Psychology & Sociology"
   - "Psychology"
   - "Science"
   - "Health"

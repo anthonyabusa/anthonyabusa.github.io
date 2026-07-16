@@ -3,8 +3,9 @@ title: "Braving The Wilderness"
 authors:
   - "Brene Brown"
 genres:
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Philosophy"
+  - "Psychology & Sociology"
   - "Sociology"
   - "Psychology"
 status: "read"

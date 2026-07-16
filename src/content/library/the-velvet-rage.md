@@ -3,6 +3,7 @@ title: "The Velvet Rage"
 authors:
   - "Alan Downs"
 genres:
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "Psychology"
   - "Sociology"

@@ -3,8 +3,9 @@ title: "Chatter"
 authors:
   - "Ethan Kross"
 genres:
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Self Reflection & Improvement"
+  - "Psychology & Sociology"
   - "Psychology"
   - "Self-Help"
   - "Health"

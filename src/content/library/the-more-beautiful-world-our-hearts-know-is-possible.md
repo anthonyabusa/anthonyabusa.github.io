@@ -4,6 +4,7 @@ authors:
   - "Charles Eisenstein"
 genres:
   - "Philosophy"
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "Spirituality"
   - "Health"

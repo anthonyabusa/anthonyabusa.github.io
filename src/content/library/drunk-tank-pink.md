@@ -5,8 +5,9 @@ authors:
 genres:
   - "Philosophy"
   - "Self Reflection & Improvement"
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Ethics"
+  - "Psychology & Sociology"
   - "Business"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/11097494-L.jpg"

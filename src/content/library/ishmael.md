@@ -4,8 +4,9 @@ authors:
   - "Daniel Quinn"
 genres:
   - "Philosophy"
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Biology"
+  - "Psychology & Sociology"
   - "Fiction"
   - "Literary Fiction"
 status: "read"

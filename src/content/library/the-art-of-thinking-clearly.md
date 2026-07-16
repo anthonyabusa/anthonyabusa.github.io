@@ -4,8 +4,9 @@ authors:
   - "Rolf Dobelli"
 genres:
   - "Philosophy"
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Self Reflection & Improvement"
+  - "Psychology & Sociology"
   - "Psychology"
 status: "read"
 rating: 4

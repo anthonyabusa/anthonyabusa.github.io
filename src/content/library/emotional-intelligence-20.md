@@ -4,9 +4,10 @@ authors:
   - "Travis Bradberry"
   - "Jean Greaves"
 genres:
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Self Reflection & Improvement"
   - "Skill Building"
+  - "Psychology & Sociology"
   - "Business"
   - "Self-Help"
 status: "want"

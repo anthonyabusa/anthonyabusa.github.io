@@ -4,8 +4,9 @@ authors:
   - "Brian R. Little"
 genres:
   - "Philosophy"
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Self Reflection & Improvement"
+  - "Psychology & Sociology"
   - "Psychology"
   - "Health"
 status: "reading"

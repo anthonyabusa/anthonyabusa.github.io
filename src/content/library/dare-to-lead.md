@@ -5,9 +5,10 @@ authors:
 genres:
   - "Skill Building"
   - "Self Reflection & Improvement"
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Leadership"
   - "Business"
+  - "Psychology & Sociology"
   - "Management"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/10304768-L.jpg"

@@ -3,11 +3,12 @@ title: "The Nature Fix"
 authors:
   - "Florence Williams"
 genres:
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Science"
   - "Biology"
   - "Ecology"
   - "Philosophy"
+  - "Psychology & Sociology"
   - "Nature"
   - "Self-Help"
 status: "want"

@@ -5,9 +5,10 @@ authors:
 genres:
   - "Philosophy"
   - "Ethics"
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Science"
   - "Self Reflection & Improvement"
+  - "Psychology & Sociology"
   - "Psychology"
 status: "reading"
 progress: 0.25

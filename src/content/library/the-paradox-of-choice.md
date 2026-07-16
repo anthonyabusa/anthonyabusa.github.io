@@ -5,9 +5,10 @@ authors:
 genres:
   - "Meta Cognition"
   - "Self Reflection & Improvement"
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Skill Building"
   - "Philosophy"
+  - "Psychology & Sociology"
   - "Psychology"
   - "Sociology"
 status: "want"

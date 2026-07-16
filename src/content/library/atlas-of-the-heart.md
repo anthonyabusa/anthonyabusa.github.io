@@ -4,6 +4,7 @@ authors:
   - "Brene Brown"
 genres:
   - "Self Reflection & Improvement"
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "Psychology"
   - "Health"

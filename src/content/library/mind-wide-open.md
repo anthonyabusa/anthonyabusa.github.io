@@ -5,6 +5,7 @@ authors:
 genres:
   - "Philosophy"
   - "Self Reflection & Improvement"
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
   - "Neuroscience"
 status: "reading"

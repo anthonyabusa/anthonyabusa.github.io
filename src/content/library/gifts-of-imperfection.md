@@ -4,8 +4,9 @@ authors:
   - "Brene Brown"
 genres:
   - "Skill Building"
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Self Reflection & Improvement"
+  - "Psychology & Sociology"
   - "Parenting"
 status: "reading"
 progress: 0.05
