@@ -35,10 +35,14 @@ const staticFrame = buildFieldHtml(REST_FX, REST_FY);
 </style>
 
 <script>
-  import { buildFieldHtml, COLS, ROWS, REST_FX, REST_FY } from '../scripts/flowField';
+  import { buildFieldHtml, COLS, ROWS, REST_FX, REST_FY, FT } from '../scripts/flowField';
 
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   const coarse = window.matchMedia('(pointer: coarse)');
+  // Lab-only escape hatches (#439): production has no window.__ASCII_TUNE, so
+  // these resolve to 0 there and the static-frame gates behave exactly as before.
+  const reducedActive = () => reduce.matches && !FT('ignoreReduceMotion', 0);
+  const autoOn = () => !!FT('alwaysOn', 0);
 
   document.querySelectorAll('[data-flow-field]').forEach((root) => {
     const pre = root.querySelector('[data-flow-frame]') as HTMLElement | null;
@@ -46,7 +50,10 @@ const staticFrame = buildFieldHtml(REST_FX, REST_FY);
 
     // Static-at-rest fallback: no hover on touch, and never animate under
     // reduced-motion. The server-rendered frame already shows, so leave it be.
-    if (reduce.matches || coarse.matches) return;
+    // The lab overrides both (ignoreReduceMotion + alwaysOn autopilot) so the
+    // motion can be judged from a phone with OS Reduce Motion on.
+    const hasTune = !!(window as unknown as { __ASCII_TUNE?: object }).__ASCII_TUNE;
+    if (!hasTune && (reduce.matches || coarse.matches)) return;
 
     // Drive from the whole hero so the field reacts wherever the cursor moves.
     const surface = (root.closest('section') as HTMLElement) || (root as HTMLElement);
@@ -68,7 +75,16 @@ const staticFrame = buildFieldHtml(REST_FX, REST_FY);
       raf = window.requestAnimationFrame(tick);
       const dt = prevT ? (now - prevT) / 1000 : 0.016;
       prevT = now;
-      const k = 1 - Math.exp(-dt * 9); // frame-rate-independent easing
+
+      // Lab autopilot: no cursor on a touch screen, so orbit the focus around
+      // the field on a slow lissajous path instead. Never active in production.
+      if (!hovering && autoOn()) {
+        const t = (now / Math.max(1000, FT('driftPeriod', 9000))) * Math.PI * 2;
+        targetX = COLS * (0.5 + 0.42 * Math.cos(t));
+        targetY = ROWS * (0.5 + 0.38 * Math.sin(t * 0.8));
+      }
+
+      const k = 1 - Math.exp(-dt * FT('easeK', 9)); // frame-rate-independent easing
       fx += (targetX - fx) * k;
       fy += (targetY - fy) * k;
 
@@ -77,7 +93,8 @@ const staticFrame = buildFieldHtml(REST_FX, REST_FY);
 
       // Pointer has left AND the field has eased back to rest -> freeze: stop
       // repainting so the tab goes fully idle (the core of the load saving).
-      if (!hovering && Math.abs(fx - REST_FX) < 0.15 && Math.abs(fy - REST_FY) < 0.15) {
+      // Autopilot never rests: it exists to keep the motion visible.
+      if (!hovering && !autoOn() && Math.abs(fx - REST_FX) < 0.15 && Math.abs(fy - REST_FY) < 0.15) {
         window.cancelAnimationFrame(raf);
         raf = 0;
         fx = REST_FX; fy = REST_FY;
@@ -86,6 +103,7 @@ const staticFrame = buildFieldHtml(REST_FX, REST_FY);
     };
 
     const start = () => { if (!raf) { prevT = 0; raf = window.requestAnimationFrame(tick); } };
+    const stop = () => { if (raf) { window.cancelAnimationFrame(raf); raf = 0; } };
 
     const onMove = (event: PointerEvent) => {
       const nx = (event.clientX - rect.left) / Math.max(1, rect.width);
@@ -103,11 +121,25 @@ const staticFrame = buildFieldHtml(REST_FX, REST_FY);
     window.addEventListener('resize', refreshRect, { passive: true });
     window.addEventListener('scroll', refreshRect, { passive: true });
 
+    // Lab slider changed: bust the settle key, repaint, and (re)start or park
+    // the loop to match the new alwaysOn/reduced state. No-op in production.
+    const onTune = () => {
+      prevKey = '';
+      if (reducedActive() && !autoOn()) { stop(); paint(); }
+      else if (autoOn() || hovering) start();
+      else paint();
+    };
+    window.addEventListener('ascii-tune', onTune);
+
+    // Lab autopilot animates immediately (no hover needed on a phone).
+    if (autoOn() && !reducedActive()) { refreshRect(); start(); }
+
     window.addEventListener('pagehide', () => {
-      if (raf) window.cancelAnimationFrame(raf);
+      stop();
       surface.removeEventListener('pointermove', onMove);
       window.removeEventListener('resize', refreshRect);
       window.removeEventListener('scroll', refreshRect);
+      window.removeEventListener('ascii-tune', onTune);
     }, { once: true });
   });
 </script>

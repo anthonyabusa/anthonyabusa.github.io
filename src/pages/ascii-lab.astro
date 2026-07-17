@@ -1,0 +1,232 @@
+---
+// #439 ASCII Studio lab: live sliders for every tunable knob on the branch's
+// two ASCII surfaces (hero flow field + focus-card raster). Unlinked from nav;
+// exists so tuning happens by feel on a real device instead of by code round-trip.
+// Settings persist in localStorage and export as JSON to fold back into the
+// engine defaults once a combination is approved.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FlowField from '../components/FlowField.astro';
+import AsciiFocusCard from '../components/AsciiFocusCard.astro';
+import AsciiRasterScript from '../components/AsciiRasterScript.astro';
+import { focusAreas } from '../data/focusAreas';
+
+type Knob = { key: string; label: string; min: number; max: number; step: number; d: number };
+
+const flowKnobs: Knob[] = [
+  { key: 'easeK', label: 'Motion · responsiveness', min: 2, max: 20, step: 0.5, d: 9 },
+  { key: 'driftPeriod', label: 'Motion · autopilot lap (ms)', min: 3000, max: 20000, step: 500, d: 9000 },
+  { key: 'radius', label: 'Coverage · bloom radius', min: 0.15, max: 0.9, step: 0.01, d: 0.4 },
+  { key: 'brightness', label: 'Intensity · brightness', min: 0.5, max: 2, step: 0.05, d: 1 },
+  { key: 'yCompress', label: 'Realism · bloom roundness', min: 1, max: 3, step: 0.05, d: 1.9 },
+  { key: 'dotCut', label: 'Realism · line threshold', min: 0.05, max: 0.5, step: 0.01, d: 0.16 },
+  { key: 'latticeMod', label: 'Realism · resting sparsity', min: 2, max: 12, step: 1, d: 5 },
+];
+
+const rasterKnobs: Knob[] = [
+  { key: 'speedHover', label: 'Motion · active speed', min: 0.004, max: 0.05, step: 0.001, d: 0.018 },
+  { key: 'speedRest', label: 'Motion · resting speed', min: 0.002, max: 0.03, step: 0.001, d: 0.011 },
+  { key: 'wobble', label: 'Motion · wobble', min: 0, max: 3, step: 0.05, d: 1 },
+  { key: 'sweepStrength', label: 'Intensity · light sweep', min: 0, max: 0.6, step: 0.01, d: 0.2 },
+  { key: 'contrast', label: 'Intensity · contrast', min: 0.5, max: 2, step: 0.05, d: 1 },
+  { key: 'opacityBase', label: 'Intensity · base glow', min: 0, max: 0.4, step: 0.01, d: 0.1 },
+  { key: 'opacityGain', label: 'Intensity · glow gain', min: 0.3, max: 1.5, step: 0.01, d: 0.92 },
+  { key: 'alphaCut', label: 'Realism · edge cutoff', min: 0.01, max: 0.2, step: 0.005, d: 0.045 },
+  { key: 'letterLevel', label: 'Realism · letters vs texture', min: 1, max: 7, step: 1, d: 5 },
+];
+
+const toggles = [
+  { group: 'flow', key: 'alwaysOn', label: 'Hero autopilot (no cursor needed)' },
+  { group: 'flow', key: 'ignoreReduceMotion', label: 'Hero: override OS Reduce Motion' },
+  { group: 'raster', key: 'alwaysOn', label: 'Cards: animate without hover' },
+  { group: 'raster', key: 'ignoreReduceMotion', label: 'Cards: override OS Reduce Motion' },
+];
+
+// Three cards are enough to judge the raster treatment; full set lives on /about.
+const labCards = [
+  { area: focusAreas.find((a) => a.slug === 'strategy')!, key: 'strategy' as const },
+  { area: focusAreas.find((a) => a.slug === 'operations')!, key: 'operations' as const },
+  { area: focusAreas.find((a) => a.slug === 'ai-automation')!, key: 'automation' as const },
+];
+---
+
+<BaseLayout title="ASCII Lab" description="Internal tuning lab for the site's ASCII art surfaces.">
+  <!-- Seed the tune object BEFORE the hoisted component modules run: lab
+       defaults force motion on (Ant reviews from a phone with OS Reduce Motion
+       on), then any saved slider values overlay them. -->
+  <script is:inline>
+    (function () {
+      var DEF = {
+        flow: { ignoreReduceMotion: 1, alwaysOn: 1 },
+        raster: { ignoreReduceMotion: 1, alwaysOn: 1 },
+      };
+      var saved = {};
+      try { saved = JSON.parse(localStorage.getItem('asciiTune.v1') || '{}') || {}; } catch (e) { saved = {}; }
+      window.__ASCII_TUNE = {
+        flow: Object.assign({}, DEF.flow, saved.flow),
+        raster: Object.assign({}, DEF.raster, saved.raster),
+      };
+    })();
+  </script>
+
+  <div class="max-w-3xl mx-auto px-6 pt-28 pb-24">
+    <header class="mb-10">
+      <p class="text-accent font-mono text-xs tracking-widest uppercase mb-3">Studio · Internal</p>
+      <h1 class="text-3xl font-bold text-ink mb-3">ASCII Lab</h1>
+      <p class="text-ink-muted text-sm leading-relaxed">
+        Live controls for the two ASCII surfaces on the flow-field branch. Changes apply
+        instantly, persist on this device, and export as JSON to fold back into the shipped
+        defaults. Card links are disabled here.
+      </p>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <button
+          type="button"
+          data-lab-copy
+          class="px-4 py-2 rounded-lg bg-accent hover:bg-accent-hover text-white text-sm font-medium transition-colors"
+        >Copy settings JSON</button>
+        <button
+          type="button"
+          data-lab-reset
+          class="px-4 py-2 rounded-lg border border-border-strong text-ink-soft text-sm font-medium hover:border-accent transition-colors"
+        >Reset to defaults</button>
+      </div>
+    </header>
+
+    <div class="mb-10 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
+      {toggles.map((t) => (
+        <label class="flex items-center gap-3 text-sm text-ink-soft">
+          <input
+            type="checkbox"
+            data-knob={t.key}
+            data-group={t.group}
+            class="accent-accent w-4 h-4"
+          />
+          {t.label}
+        </label>
+      ))}
+    </div>
+
+    <!-- Surface 1: hero flow field -->
+    <section class="mb-6 rounded-2xl border border-border bg-background overflow-hidden">
+      <div class="px-5 pt-4 pb-2 flex items-baseline justify-between">
+        <h2 class="text-ink font-semibold">Hero flow field</h2>
+        <span class="text-ink-subtle font-mono text-xs">drag anywhere in this box</span>
+      </div>
+      <div class="relative flex justify-center py-6 overflow-x-auto">
+        <FlowField />
+      </div>
+    </section>
+
+    <div class="mb-14 space-y-4">
+      {flowKnobs.map((k) => (
+        <label class="block">
+          <span class="flex items-baseline justify-between text-xs font-mono mb-1">
+            <span class="text-ink-soft">{k.label}</span>
+            <span class="text-accent-lighter" data-knob-value={`flow.${k.key}`}>{k.d}</span>
+          </span>
+          <input
+            type="range"
+            data-knob={k.key}
+            data-group="flow"
+            min={k.min}
+            max={k.max}
+            step={k.step}
+            value={k.d}
+            class="w-full accent-accent"
+          />
+        </label>
+      ))}
+    </div>
+
+    <!-- Surface 2: focus-card raster -->
+    <section class="mb-6">
+      <h2 class="text-ink font-semibold mb-4">Focus-card raster</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" data-lab-cards>
+        {labCards.map(({ area, key }) => (
+          <AsciiFocusCard item={area} asciiKey={key} />
+        ))}
+      </div>
+    </section>
+
+    <div class="space-y-4">
+      {rasterKnobs.map((k) => (
+        <label class="block">
+          <span class="flex items-baseline justify-between text-xs font-mono mb-1">
+            <span class="text-ink-soft">{k.label}</span>
+            <span class="text-accent-lighter" data-knob-value={`raster.${k.key}`}>{k.d}</span>
+          </span>
+          <input
+            type="range"
+            data-knob={k.key}
+            data-group="raster"
+            min={k.min}
+            max={k.max}
+            step={k.step}
+            value={k.d}
+            class="w-full accent-accent"
+          />
+        </label>
+      ))}
+    </div>
+  </div>
+
+  <AsciiRasterScript />
+
+  <script>
+    // Panel wiring: every input writes window.__ASCII_TUNE, persists it, and
+    // fires 'ascii-tune' so both engines repaint mid-animation.
+    type TuneMap = Record<string, Record<string, number>>;
+    const tune = (window as unknown as { __ASCII_TUNE: TuneMap }).__ASCII_TUNE;
+    const persist = () => {
+      try { localStorage.setItem('asciiTune.v1', JSON.stringify(tune)); } catch { /* private mode */ }
+    };
+    const announce = () => window.dispatchEvent(new Event('ascii-tune'));
+
+    document.querySelectorAll<HTMLInputElement>('[data-knob]').forEach((input) => {
+      const group = input.dataset.group ?? 'flow';
+      const key = input.dataset.knob ?? '';
+      const isToggle = input.type === 'checkbox';
+      const readout = document.querySelector(`[data-knob-value="${group}.${key}"]`);
+      const saved = tune[group]?.[key];
+      if (typeof saved === 'number') {
+        if (isToggle) input.checked = !!saved;
+        else input.value = String(saved);
+      }
+      const show = () => { if (readout) readout.textContent = input.value; };
+      show();
+      input.addEventListener('input', () => {
+        tune[group] = tune[group] ?? {};
+        tune[group][key] = isToggle ? (input.checked ? 1 : 0) : Number(input.value);
+        persist();
+        show();
+        announce();
+      });
+    });
+
+    // Kick both engines once wired: raster alwaysOn needs a first ensureLoop,
+    // and the hero autopilot may have been toggled since its module ran.
+    announce();
+
+    // The cards are real /work links on the live site; here they are previews.
+    document.querySelectorAll<HTMLAnchorElement>('[data-lab-cards] a').forEach((a) => {
+      a.addEventListener('click', (e) => e.preventDefault());
+    });
+
+    document.querySelector('[data-lab-copy]')?.addEventListener('click', async (e) => {
+      const btn = e.currentTarget as HTMLButtonElement;
+      const json = JSON.stringify(tune, null, 2);
+      try {
+        await navigator.clipboard.writeText(json);
+        btn.textContent = 'Copied';
+      } catch {
+        // Clipboard API needs a secure context; fall back to a prompt.
+        window.prompt('Copy settings JSON:', json);
+      }
+      setTimeout(() => { btn.textContent = 'Copy settings JSON'; }, 1600);
+    });
+
+    document.querySelector('[data-lab-reset]')?.addEventListener('click', () => {
+      try { localStorage.removeItem('asciiTune.v1'); } catch { /* private mode */ }
+      window.location.reload();
+    });
+  </script>
+</BaseLayout>

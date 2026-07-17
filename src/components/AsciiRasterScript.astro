@@ -1,5 +1,14 @@
 <script>
-  const prefersReducedAsciiRaster = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Live-tunable knobs (#439 ascii-lab). Defaults ARE the shipped values;
+  // window.__ASCII_TUNE only exists on the lab page, so production behavior is
+  // unchanged when it is absent.
+  const RT = (k: string, d: number): number => {
+    const t = (window as unknown as { __ASCII_TUNE?: { raster?: Record<string, number> } }).__ASCII_TUNE?.raster;
+    const v = t ? t[k] : undefined;
+    return typeof v === 'number' && Number.isFinite(v) ? v : d;
+  };
+  const rasterReducedMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const prefersReducedAsciiRaster = () => rasterReducedMedia.matches && !RT('ignoreReduceMotion', 0);
   const textureTokens: Record<string, string> = {
     strategy: 'NORTHSTARVECTOR',
     operations: 'GEARSFLOWCADENCE',
@@ -58,7 +67,7 @@
     ctx.clearRect(0, 0, w, h);
     const image = sourceImages[kind];
     if (!image || !image.complete || !image.naturalWidth) return;
-    const t = tick * (hover ? 0.018 : 0.011);
+    const t = tick * (hover ? RT('speedHover', 0.018) : RT('speedRest', 0.011));
     const cx = w * .52;
     const cy = h * .52;
     const fit = Math.min((w * .78) / image.naturalWidth, (h * .78) / image.naturalHeight);
@@ -67,7 +76,7 @@
 
     ctx.save();
     ctx.translate(cx, cy);
-    ctx.rotate(Math.sin(t) * (kind === 'operations' ? 0.07 : kind === 'product' ? 0.052 : 0.025));
+    ctx.rotate(Math.sin(t) * (kind === 'operations' ? 0.07 : kind === 'product' ? 0.052 : 0.025) * RT('wobble', 1));
     const scale = hover ? 1.06 : 1;
     ctx.scale(scale, scale);
     ctx.shadowColor = 'rgba(5,7,16,.62)';
@@ -92,7 +101,7 @@
     const sweep = (Math.sin(t * 1.8) * .5 + .5) * w;
     const hg = ctx.createLinearGradient(sweep - 90, 0, sweep + 90, h);
     hg.addColorStop(0, 'rgba(255,255,255,0)');
-    hg.addColorStop(.48, 'rgba(255,255,255,.20)');
+    hg.addColorStop(.48, `rgba(255,255,255,${RT('sweepStrength', 0.20)})`);
     hg.addColorStop(1, 'rgba(255,255,255,0)');
     ctx.fillStyle = hg;
     ctx.fillRect(0, 0, w, h);
@@ -118,13 +127,13 @@
         const sy = Math.floor((row + 0.5) / tc.rows * sourceCanvas.height);
         const idx = (sy * sourceCanvas.width + sx) * 4;
         const a = data[idx + 3] / 255;
-        if (a < 0.045) continue;
+        if (a < RT('alphaCut', 0.045)) continue;
         const lum = (data[idx] * .2126 + data[idx+1] * .7152 + data[idx+2] * .0722) / 255;
-        const value = Math.max(a * .55, lum * a);
+        const value = Math.min(1, Math.max(a * .55, lum * a) * RT('contrast', 1));
         const level = Math.max(1, Math.min(ramp.length - 1, Math.floor(value * ramp.length)));
-        const textured = level >= 5;
+        const textured = level >= Math.round(RT('letterLevel', 5));
         const char = textured ? token[(col + row * 2 + phase) % token.length] : ramp[level];
-        const opacity = Math.min(.96, .10 + value * .92);
+        const opacity = Math.min(.96, RT('opacityBase', 0.10) + value * RT('opacityGain', 0.92));
         const color = level >= 6 ? '241,245,249' : level >= 4 ? '165,180,252' : '99,102,241';
         drawChar(tc, col, row, char, opacity, color);
       }
@@ -139,21 +148,33 @@
 
   let asciiRasterRaf = 0;
   function ensureLoop() {
-    if (!asciiRasterRaf && !prefersReducedAsciiRaster) {
+    if (!asciiRasterRaf && !prefersReducedAsciiRaster()) {
       asciiRasterRaf = window.requestAnimationFrame(tickAsciiRaster);
     }
   }
   function tickAsciiRaster() {
     asciiRasterRaf = 0;
     let anyHover = false;
+    // alwaysOn (lab toggle): animate every card without needing hover, so the
+    // motion can be judged on a touch screen. 0 in production = hover-only.
+    const alwaysOn = !!RT('alwaysOn', 0);
     for (const card of cards) {
-      if (!card.tc || !card.hovering) continue;
+      if (!card.tc || !(card.hovering || alwaysOn)) continue;
       anyHover = true;
       card.tick += 1;
-      renderFromSource(card.tc, card.key, card.tick, true);
+      renderFromSource(card.tc, card.key, card.tick, card.hovering || alwaysOn);
     }
     if (anyHover) ensureLoop(); // keep ticking only while something is hovered
   }
+
+  // Lab slider changed: repaint every card at its current state and (re)kick
+  // the loop so alwaysOn/param changes show immediately. No-op in production.
+  window.addEventListener('ascii-tune', () => {
+    for (const card of cards) {
+      if (card.tc) renderFromSource(card.tc, card.key, card.tick, card.hovering || !!RT('alwaysOn', 0));
+    }
+    ensureLoop();
+  });
 
   const cards: RasterCard[] = Array.from(
     document.querySelectorAll<HTMLAnchorElement>('[data-ascii-card]'),

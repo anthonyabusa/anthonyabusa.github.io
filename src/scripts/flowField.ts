@@ -20,22 +20,32 @@ const DOT = '·'; // ·
 export const REST_FX = COLS * 0.9;
 export const REST_FY = ROWS * 0.36;
 
+// Live-tunable knobs (#439 ascii-lab). Defaults ARE the shipped values, and this
+// module also runs at build time for the static frame, so the read is guarded:
+// no window (server render) or no window.__ASCII_TUNE (production) -> default.
+export const FT = (k: string, d: number): number => {
+  if (typeof window === 'undefined') return d;
+  const t = (window as unknown as { __ASCII_TUNE?: { flow?: Record<string, number> } }).__ASCII_TUNE?.flow;
+  const v = t ? t[k] : undefined;
+  return typeof v === 'number' && Number.isFinite(v) ? v : d;
+};
+
 function cellAt(c: number, r: number, fx: number, fy: number): [string, string] | null {
   const dx = fx - c;
-  const dy = (fy - r) * 1.9; // cells are ~2x taller than wide; compress y to keep circles round
+  const dy = (fy - r) * FT('yCompress', 1.9); // cells are ~2x taller than wide; compress y to keep circles round
   const dist = Math.sqrt(dx * dx + dy * dy);
-  const radius = COLS * 0.4;
+  const radius = COLS * FT('radius', 0.4);
   const prox = Math.max(0, 1 - dist / radius); // 1 at focus -> 0 at the radius
   if (prox <= 0.06) {
     // Calm field: a stable, sparse lattice of faint dots; most cells stay empty.
-    return (c * 7 + r * 3) % 5 === 0 ? [DOT, SHADE[0]] : null;
+    return (c * 7 + r * 3) % Math.max(2, Math.round(FT('latticeMod', 5))) === 0 ? [DOT, SHADE[0]] : null;
   }
   // Orient the glyph along the line from this cell to the focus.
   let a = Math.atan2(dy, dx);
   if (a < 0) a += Math.PI; // fold to 0..pi (undirected line)
   const bucket = Math.round(a / (Math.PI / 4)) % 4;
-  const glyph = prox < 0.16 ? DOT : ORIENT[bucket];
-  const shade = SHADE[Math.min(SHADE.length - 1, 1 + Math.floor(prox * 4))];
+  const glyph = prox < FT('dotCut', 0.16) ? DOT : ORIENT[bucket];
+  const shade = SHADE[Math.min(SHADE.length - 1, 1 + Math.floor(prox * 4 * FT('brightness', 1)))];
   return [glyph, shade];
 }
 

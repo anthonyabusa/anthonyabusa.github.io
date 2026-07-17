@@ -81,13 +81,23 @@ const { label = 'Live system readout', class: className = '' } = Astro.props;
   const tiers: Tier[][] = SOURCE.map((line) => Array.from(line, classify));
   const chars: string[][] = SOURCE.map((line) => Array.from(line));
 
+  // Live-tunable knobs (#439 ascii-lab). Every default here IS the shipped
+  // value; window.__ASCII_TUNE only exists on the lab page, so production
+  // behavior is unchanged when it is absent. Read per-frame: cheap, and lets
+  // the lab sliders retune a running animation.
+  const TUNE = (k: string, d: number): number => {
+    const t = (window as unknown as { __ASCII_TUNE?: { signal?: Record<string, number> } }).__ASCII_TUNE?.signal;
+    const v = t ? t[k] : undefined;
+    return typeof v === 'number' && Number.isFinite(v) ? v : d;
+  };
+
   // Smooth radial falloff. y weighted heavier than x so the beam reads as a
   // horizontal scan band sweeping vertically, like a flashlight on a console.
   function resolveAt(col: number, r: number, fx: number, fy: number): number {
     const dx = (col - fx) / COLS;
     const dy = (r - fy) / ROWS;
-    const d = Math.sqrt(dx * dx * 0.55 + dy * dy * 2.6);
-    const v = 1 - d * 1.85;
+    const d = Math.sqrt(dx * dx * TUNE('beamWide', 0.55) + dy * dy * TUNE('beamTall', 2.6));
+    const v = 1 - d * TUNE('beamFalloff', 1.85);
     return v < 0 ? 0 : v > 1 ? 1 : v;
   }
 
@@ -103,7 +113,7 @@ const { label = 'Live system readout', class: className = '' } = Astro.props;
     }
     if (tier === 'field') {
       // Stable positional lattice that briefly densifies under the beam.
-      const lit = (col + r) % 4 === 0;
+      const lit = (col + r) % Math.max(2, Math.round(TUNE('latticeMod', 4))) === 0;
       if (!lit && res < 0.5) return null;
       const idx = Math.min(FIELD_GLYPHS.length - 1, Math.floor(res * 2.4));
       const glyph = res < 0.14 ? '.' : FIELD_GLYPHS[idx];
@@ -178,7 +188,10 @@ const { label = 'Live system readout', class: className = '' } = Astro.props;
       pre.innerHTML = buildHtml(STATIC_FX, STATIC_FY);
     };
 
-    if (reduced.matches) {
+    // The lab sets ignoreReduceMotion so Ant (OS Reduce Motion ON) can still
+    // judge motion there; production has no tune object, so this stays honest.
+    const reducedActive = () => reduced.matches && !TUNE('ignoreReduceMotion', 0);
+    if (reducedActive()) {
       renderStatic();
       return;
     }
@@ -202,29 +215,26 @@ const { label = 'Live system readout', class: className = '' } = Astro.props;
     const fonts = (document as unknown as { fonts?: { ready?: Promise<unknown> } }).fonts;
     if (fonts?.ready) fonts.ready.then(refreshRect);
 
-    const IDLE_MS = 1800;
-    const REST_MS = 11000; // after this much idle, park and stop repainting
-
     const tick = (now: number) => {
       raf = window.requestAnimationFrame(tick);
       const dt = prevT ? (now - prevT) / 1000 : 0.016;
       prevT = now;
-      if (now - lastDraw < 33) return; // cap ~30fps
+      if (now - lastDraw < TUNE('frameMs', 33)) return; // cap ~30fps
       lastDraw = now;
 
       const sinceMove = now - lastMove;
-      const idle = sinceMove > IDLE_MS;
-      const resting = sinceMove > REST_MS;
+      const idle = sinceMove > TUNE('idleMs', 1800);
+      const resting = sinceMove > TUNE('restMs', 11000); // park + stop repainting
 
       if (idle) {
         // Calm scanline reading slowly down the map; scroll nudges the phase.
-        const phase = (now / 16000 + window.scrollY / 2800) % 1;
+        const phase = (now / TUNE('scanPeriod', 16000) + window.scrollY / 2800) % 1;
         targetY = phase * (ROWS + 2) - 1;
         targetX = COLS * 0.34;
       }
 
       // Frame-rate-independent easing toward the target.
-      const k = 1 - Math.exp(-dt * 7);
+      const k = 1 - Math.exp(-dt * TUNE('easeK', 7));
       focusX += (targetX - focusX) * k;
       focusY += (targetY - focusY) * k;
 
@@ -244,10 +254,19 @@ const { label = 'Live system readout', class: className = '' } = Astro.props;
 
     // Honor a mid-session reduced-motion toggle.
     const onReducedChange = () => {
-      if (reduced.matches) { stop(); renderStatic(); }
+      if (reducedActive()) { stop(); renderStatic(); }
       else { lastMove = performance.now(); start(); }
     };
     reduced.addEventListener('change', onReducedChange);
+
+    // Lab slider changed: force a repaint (bust the settle key) and wake a
+    // parked loop so retunes show immediately. No-op in production.
+    const onTune = () => {
+      prevKey = '';
+      lastMove = performance.now();
+      if (reducedActive()) { stop(); renderStatic(); } else start();
+    };
+    window.addEventListener('ascii-tune', onTune);
 
     // Pause on a backgrounded tab; resume (with a fresh rect) when visible.
     const onVisibility = () => {
@@ -262,6 +281,7 @@ const { label = 'Live system readout', class: className = '' } = Astro.props;
       window.removeEventListener('resize', refreshRect);
       window.removeEventListener('scroll', refreshRect);
       reduced.removeEventListener('change', onReducedChange);
+      window.removeEventListener('ascii-tune', onTune);
       document.removeEventListener('visibilitychange', onVisibility);
     }, { once: true });
   });
