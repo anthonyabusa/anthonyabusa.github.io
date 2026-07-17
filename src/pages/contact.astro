@@ -64,8 +64,11 @@ const contactLinks = [
 
     <!-- Availability note -->
     <div class="reveal p-8 rounded-2xl border border-border bg-surface">
+      {/* Live-status pattern (#383): dot + mono-uppercase label, shared with the
+          ProjectCard "Live" chip; green = personal availability, amber = an
+          operated system. motion-safe keeps the pulse off under reduced motion. */}
       <div class="flex items-center gap-2 mb-3">
-        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+        <span class="w-2 h-2 rounded-full bg-green-400 motion-safe:animate-pulse" />
         <span class="text-xs text-green-400 font-mono uppercase tracking-widest">Available</span>
       </div>
       <h2 class="text-ink font-semibold text-lg mb-2">Currently open to:</h2>

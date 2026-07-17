@@ -149,7 +149,8 @@
       "operations": "Navore has to hold up on the ground. Producer workflows, hub logistics, fulfillment routines, customer support, grant execution, analytics, and performance metrics all have to connect cleanly enough for the model to repeat beyond one neighborhood.",
       "product-program-leadership": "Navore is both a marketplace product and an operating system for local food. Customer experience, producer onboarding, mobile ordering, fulfillment, roadmap tradeoffs, and feedback loops have to evolve together so the marketplace improves as a live service, not as disconnected features.",
       "marketplace-venture-building": "Navore is the venture-building case in its most direct form: supply, demand, trust, logistics, funding, and neighborhood adoption all have to move together. My role translates that 0 to 1 complexity into a clearer marketplace model, producer relationships, hub operations, and a scalable operating playbook."
-    }
+    },
+    "liveStatus": "live"
   },
   {
     "title": "Metis",
@@ -210,7 +211,8 @@
       "operations": "Metis is my private operating layer for running projects with AI agents across two machines. Task governance, leases, health checks, lane routing, and escalation rules keep the automation reliable enough to run unattended overnight.",
       "product-program-leadership": "Metis behaves like a product even though it is personally operated infrastructure. I scope releases, design the control-center UI, sequence agent capabilities, define done gates, and publish the portable core as an open-source framework.",
       "ai-automation": "Metis combines local-model lanes, persistent memory, governed task lifecycles, and multi-machine orchestration into one operating system. The framework is source-available; the private repo layers identity, projects, and integrations on top."
-    }
+    },
+    "liveStatus": "live"
   },
   {
     "title": "HealthRise EHR & Revenue Operations",
