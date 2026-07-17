@@ -26,3 +26,6 @@ pnpm-debug.log*
 # python bytecode
 scripts/__pycache__/
 scripts/library-sync.log
+
+# ascii-lab runtime settings capture (dev-server only, per preview host)
+.ascii-tune/

@@ -74,20 +74,16 @@ const labCards = [
       <h1 class="text-3xl font-bold text-ink mb-3">ASCII Lab</h1>
       <p class="text-ink-muted text-sm leading-relaxed">
         Live controls for the two ASCII surfaces on the flow-field branch. Changes apply
-        instantly, persist on this device, and export as JSON to fold back into the shipped
-        defaults. Card links are disabled here.
+        instantly and save to the Studio automatically: tune until it feels right, then
+        just say the editing is done. Card links are disabled here.
       </p>
-      <div class="mt-5 flex flex-wrap gap-3">
-        <button
-          type="button"
-          data-lab-copy
-          class="px-4 py-2 rounded-lg bg-accent hover:bg-accent-hover text-white text-sm font-medium transition-colors"
-        >Copy settings JSON</button>
+      <div class="mt-5 flex flex-wrap items-center gap-3">
         <button
           type="button"
           data-lab-reset
           class="px-4 py-2 rounded-lg border border-border-strong text-ink-soft text-sm font-medium hover:border-accent transition-colors"
         >Reset to defaults</button>
+        <span class="font-mono text-xs text-ink-subtle" data-lab-saved>settings sync on change</span>
       </div>
     </header>
 
@@ -181,6 +177,29 @@ const labCards = [
     };
     const announce = () => window.dispatchEvent(new Event('ascii-tune'));
 
+    // Server-side capture: debounce-POST every change to the dev server's
+    // /api/ascii-tune (astro.config middleware), which lands it on the preview
+    // host. The reviewing agent reads it there: nothing to copy or send back.
+    const savedBadge = document.querySelector('[data-lab-saved]');
+    let saveTimer = 0;
+    const pushToStudio = () => {
+      window.clearTimeout(saveTimer);
+      saveTimer = window.setTimeout(async () => {
+        try {
+          const r = await fetch('/api/ascii-tune', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(tune),
+          });
+          if (savedBadge) savedBadge.textContent = r.ok
+            ? `saved to studio ${new Date().toLocaleTimeString()}`
+            : 'save failed (not the dev preview?)';
+        } catch {
+          if (savedBadge) savedBadge.textContent = 'save failed (not the dev preview?)';
+        }
+      }, 600);
+    };
+
     document.querySelectorAll<HTMLInputElement>('[data-knob]').forEach((input) => {
       const group = input.dataset.group ?? 'flow';
       const key = input.dataset.knob ?? '';
@@ -199,8 +218,13 @@ const labCards = [
         persist();
         show();
         announce();
+        pushToStudio();
       });
     });
+
+    // Capture the opening state too, so the studio always holds the settings
+    // the review actually ran with, even if no slider is ever moved.
+    pushToStudio();
 
     // Kick both engines once wired: raster alwaysOn needs a first ensureLoop,
     // and the hero autopilot may have been toggled since its module ran.
@@ -209,19 +233,6 @@ const labCards = [
     // The cards are real /work links on the live site; here they are previews.
     document.querySelectorAll<HTMLAnchorElement>('[data-lab-cards] a').forEach((a) => {
       a.addEventListener('click', (e) => e.preventDefault());
-    });
-
-    document.querySelector('[data-lab-copy]')?.addEventListener('click', async (e) => {
-      const btn = e.currentTarget as HTMLButtonElement;
-      const json = JSON.stringify(tune, null, 2);
-      try {
-        await navigator.clipboard.writeText(json);
-        btn.textContent = 'Copied';
-      } catch {
-        // Clipboard API needs a secure context; fall back to a prompt.
-        window.prompt('Copy settings JSON:', json);
-      }
-      setTimeout(() => { btn.textContent = 'Copy settings JSON'; }, 1600);
     });
 
     document.querySelector('[data-lab-reset]')?.addEventListener('click', () => {
