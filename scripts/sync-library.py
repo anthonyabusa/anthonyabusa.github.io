@@ -388,6 +388,10 @@ def main():
         if synopsis and not old_fm.get("synopsis"):
             synopses += 1
 
+        # Takeaways: repo-owned (e.g. extracted research-paper key points).
+        # Never fetched or fabricated; preserved verbatim across a pull.
+        takeaways = old_fm.get("takeaways") or []
+
         # Genres: Notion-owned, but UNION in any locally-added genres (e.g. Open
         # Library enrichment via enrich-genres-covers.py) so a pull never drops
         # them. Notion genres always kept; additive only.
@@ -406,6 +410,7 @@ def main():
             "completed": b["completed"],
             "cover": cover,
             "synopsis": synopsis,
+            "takeaways": takeaways,  # emits nothing when empty (yaml_dump skips [])
             "notionId": nid,
             "notionLastEdited": b["notionLastEdited"],
         }
