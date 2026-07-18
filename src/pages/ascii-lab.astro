@@ -37,12 +37,18 @@ const toggles = [
   { group: 'raster', key: 'ignoreReduceMotion', label: 'Override OS Reduce Motion' },
 ];
 
-// Three cards are enough to judge the raster treatment; full set lives on /about.
-const labCards = [
-  { area: focusAreas.find((a) => a.slug === 'strategy')!, key: 'strategy' as const },
-  { area: focusAreas.find((a) => a.slug === 'operations')!, key: 'operations' as const },
-  { area: focusAreas.find((a) => a.slug === 'ai-automation')!, key: 'automation' as const },
-];
+// All five focus areas, same mapping /about uses.
+const asciiKeyByFocus = {
+  strategy: 'strategy',
+  operations: 'operations',
+  'product-program-leadership': 'product',
+  'ai-automation': 'automation',
+  'marketplace-venture-building': 'marketplace',
+} as const;
+const labCards = focusAreas.map((area) => ({
+  area,
+  key: asciiKeyByFocus[area.slug as keyof typeof asciiKeyByFocus],
+}));
 ---
 
 <BaseLayout title="ASCII Lab" description="Internal tuning lab for the site's ASCII art surfaces.">
@@ -157,6 +163,24 @@ const labCards = [
   </div>
 
   <AsciiRasterScript />
+
+  <style is:global>
+    /* Lab context: production hides card art at rest (hover-reveal, none on
+       touch), but here the art IS the thing under review, so keep every lab
+       canvas laid out and visible on all devices. */
+    [data-lab-cards] .ascii-focus-card__canvas {
+      display: block;
+      position: relative;
+      right: auto;
+      bottom: auto;
+      width: 100%;
+      height: 180px;
+      margin-top: 18px;
+      opacity: 0.98;
+    }
+    [data-lab-cards] .ascii-focus-card { min-height: auto; }
+    [data-lab-cards] .ascii-focus-card__content { max-width: 100%; }
+  </style>
 
   <script>
     // Panel wiring: every input writes window.__ASCII_TUNE, persists it, and

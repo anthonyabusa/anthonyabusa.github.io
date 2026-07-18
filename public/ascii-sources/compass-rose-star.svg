@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Raster source: classic 8-point compass rose (Ant 2026-07-18: the old
+       ring source read as a stopwatch). Long cardinal star + dimmer
+       intercardinal star + ring; the luminance gap between the two stars
+       gives the rasterizer its texture tiers. -->
+  <circle cx="100" cy="100" r="82" fill="none" stroke="#000" stroke-width="3"/>
+  <circle cx="100" cy="100" r="70" fill="none" stroke="#000" stroke-width="1.5" opacity=".6"/>
+  <path d="M100 52 L112 88 L148 100 L112 112 L100 148 L88 112 L52 100 L88 88 Z" transform="rotate(45 100 100)" fill="#000" opacity=".5"/>
+  <path d="M100 8 L112 88 L192 100 L112 112 L100 192 L88 112 L8 100 L88 88 Z" fill="#000"/>
+  <circle cx="100" cy="100" r="8" fill="#fff" stroke="#000" stroke-width="4"/>
+</svg>

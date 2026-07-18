@@ -70,19 +70,27 @@ const { item, asciiKey, showAscii = true } = Astro.props;
     box-shadow: 0 18px 48px rgba(0,0,0,.38), 0 0 34px rgba(99,102,241,.13);
     outline: none;
   }
+  /* Hidden at rest (Ant, 2026-07-18: the art only earns its place as motion,
+     five frozen frames read as noise). Hover/focus fades it in as the
+     animation starts; touch and reduced-motion never reveal it, so those
+     contexts keep a clean typographic card. The lab forces visibility from JS
+     when its alwaysOn toggle is set. */
   .ascii-focus-card__canvas {
     position: absolute;
     right: -12px;
     bottom: 14px;
     width: 78%;
     height: 60%;
-    opacity: .98;
-    transition: filter .2s ease, transform .2s ease, opacity .2s ease;
+    opacity: 0;
+    transition: filter .2s ease, transform .2s ease, opacity .35s ease;
   }
-  .ascii-focus-card:hover .ascii-focus-card__canvas,
-  .ascii-focus-card:focus-visible .ascii-focus-card__canvas {
-    filter: drop-shadow(0 0 24px rgba(129,140,248,.30));
-    transform: translateX(-5px) scale(1.01);
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .ascii-focus-card:hover .ascii-focus-card__canvas,
+    .ascii-focus-card:focus-visible .ascii-focus-card__canvas {
+      opacity: .98;
+      filter: drop-shadow(0 0 24px rgba(129,140,248,.30));
+      transform: translateX(-5px) scale(1.01);
+    }
   }
   .ascii-focus-card__content {
     position: relative;
@@ -149,16 +157,10 @@ const { item, asciiKey, showAscii = true } = Astro.props;
     opacity: 1;
   }
   @media (max-width: 720px) {
-    .ascii-focus-card { min-height: 390px; }
+    .ascii-focus-card { min-height: auto; }
     .ascii-focus-card__content { max-width: 100%; }
-    .ascii-focus-card__canvas {
-      position: relative;
-      right: auto;
-      bottom: auto;
-      width: 100%;
-      height: 180px;
-      margin-top: 18px;
-    }
+    /* Touch never reveals the art, so do not reserve layout for it. */
+    .ascii-focus-card__canvas { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     .ascii-focus-card,
