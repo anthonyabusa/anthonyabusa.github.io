@@ -15,7 +15,10 @@
     ],
     "focusAreas": [
       "product-program-leadership",
-      "ai-automation"
+      "ai-automation",
+      "ai-implementation-enablement",
+      "agent-systems-orchestration",
+      "platform-systems-architecture"
     ],
     "featured": true,
     "year": 2026,
@@ -46,7 +49,10 @@
     ],
     "focusNarratives": {
       "product-program-leadership": "Agent Workbench turns multi-agent development from terminal sprawl into a product surface. Persistent sessions, clear agent states, voice input, reviewable output, and an operator panel give the workflow enough structure that a human can steer it without slowing it down.",
-      "ai-automation": "Agent Workbench brings several AI runtimes into one local-first workspace. Instructions route to the right agent, session context stays visible, PTY controls keep execution inspectable, and the operator remains in the loop when judgment matters."
+      "ai-automation": "Agent Workbench brings several AI runtimes into one local-first workspace. Instructions route to the right agent, session context stays visible, PTY controls keep execution inspectable, and the operator remains in the loop when judgment matters.",
+      "ai-implementation-enablement": "The operator surface that makes AI adoption practical, one control plane where a non-specialist can drive Claude, Codex, and Gemini sessions without living in a terminal.",
+      "agent-systems-orchestration": "The control plane that coordinates Claude, Codex, Gemini, shell, and Python sessions from one surface, with routing, persistence, and voice-driven orchestration of parallel agents.",
+      "platform-systems-architecture": "A desktop control plane architecture: PTY terminals, persistent sessions, and integrations that unify several AI runtimes behind one operator surface."
     }
   },
   {
@@ -64,7 +70,8 @@
       "Automation"
     ],
     "focusAreas": [
-      "ai-automation"
+      "ai-automation",
+      "data-analytics-engineering"
     ],
     "featured": false,
     "year": 2026,
@@ -93,7 +100,8 @@
       "A validation-first design that keeps live execution disabled by default."
     ],
     "focusNarratives": {
-      "ai-automation": "The Polymarket bot handles the pieces that should be systematic: market ingestion, normalization, edge scoring, liquidity checks, timing signals, and sizing. Execution stays gated, because the point is not to automate risk faster; it is to make the signal auditable before it gets authority."
+      "ai-automation": "The Polymarket bot handles the pieces that should be systematic: market ingestion, normalization, edge scoring, liquidity checks, timing signals, and sizing. Execution stays gated, because the point is not to automate risk faster; it is to make the signal auditable before it gets authority.",
+      "data-analytics-engineering": "A full signal pipeline: ingesting prediction markets, normalizing pricing, and scoring edge and liquidity into ranked, decision-ready outputs."
     }
   },
   {
@@ -115,7 +123,8 @@
       "strategy",
       "operations",
       "product-program-leadership",
-      "marketplace-venture-building"
+      "marketplace-venture-building",
+      "data-analytics-engineering"
     ],
     "featured": true,
     "year": 2025,
@@ -148,7 +157,8 @@
       "strategy": "Navore Market is a USDA-backed local-food marketplace in San Diego. I helped shape the market model around neighborhood hubs, producer relationships, grant milestones, customer segments, strategic partnerships, platform roadmap, and growth loops that can turn local-food demand into something more durable than a one-off storefront.",
       "operations": "Navore has to hold up on the ground. Producer workflows, hub logistics, fulfillment routines, customer support, grant execution, analytics, and performance metrics all have to connect cleanly enough for the model to repeat beyond one neighborhood.",
       "product-program-leadership": "Navore is both a marketplace product and an operating system for local food. Customer experience, producer onboarding, mobile ordering, fulfillment, roadmap tradeoffs, and feedback loops have to evolve together so the marketplace improves as a live service, not as disconnected features.",
-      "marketplace-venture-building": "Navore is the venture-building case in its most direct form: supply, demand, trust, logistics, funding, and neighborhood adoption all have to move together. My role translates that 0 to 1 complexity into a clearer marketplace model, producer relationships, hub operations, and a scalable operating playbook."
+      "marketplace-venture-building": "Navore is the venture-building case in its most direct form: supply, demand, trust, logistics, funding, and neighborhood adoption all have to move together. My role translates that 0 to 1 complexity into a clearer marketplace model, producer relationships, hub operations, and a scalable operating playbook.",
+      "data-analytics-engineering": "Built the analytics and distribution data layer: producer operations, ordering flows, and the metrics that drive marketplace decisions."
     },
     "liveStatus": "live"
   },
@@ -170,7 +180,10 @@
     "focusAreas": [
       "operations",
       "product-program-leadership",
-      "ai-automation"
+      "ai-automation",
+      "ai-implementation-enablement",
+      "agent-systems-orchestration",
+      "platform-systems-architecture"
     ],
     "featured": true,
     "year": 2026,
@@ -210,7 +223,10 @@
     "focusNarratives": {
       "operations": "Metis is my private operating layer for running projects with AI agents across two machines. Task governance, leases, health checks, lane routing, and escalation rules keep the automation reliable enough to run unattended overnight.",
       "product-program-leadership": "Metis behaves like a product even though it is personally operated infrastructure. I scope releases, design the control-center UI, sequence agent capabilities, define done gates, and publish the portable core as an open-source framework.",
-      "ai-automation": "Metis combines local-model lanes, persistent memory, governed task lifecycles, and multi-machine orchestration into one operating system. The framework is source-available; the private repo layers identity, projects, and integrations on top."
+      "ai-automation": "Metis combines local-model lanes, persistent memory, governed task lifecycles, and multi-machine orchestration into one operating system. The framework is source-available; the private repo layers identity, projects, and integrations on top.",
+      "ai-implementation-enablement": "Metis is my working proof of AI enablement: agents wired into real daily operations with governance, memory, and guardrails so the automation is trusted, not just demoed.",
+      "agent-systems-orchestration": "A governed multi-agent workforce across two machines: specialized lanes, persistent memory, task lifecycles, and orchestration that keeps autonomous work accountable.",
+      "platform-systems-architecture": "Multi-machine architecture: two hosts, a served local model, governed sync, and the infrastructure backbone that keeps a distributed agent system running unattended."
     },
     "liveStatus": "live"
   },
@@ -234,7 +250,9 @@
       "strategy",
       "operations",
       "product-program-leadership",
-      "ai-automation"
+      "ai-automation",
+      "ai-implementation-enablement",
+      "platform-systems-architecture"
     ],
     "featured": true,
     "year": 2023,
@@ -268,7 +286,9 @@
       "strategy": "HealthRise sat at the intersection of EHR software, revenue cycle operations, consulting delivery, and healthcare workflow improvement. I connected product direction, strategic planning, financial forecasting, delivery priorities, and stakeholder needs into initiatives that made sense commercially and could survive implementation.",
       "operations": "Healthcare-product ambition only matters if it can survive real implementation. I translated clinical workflows, RCM handoffs, team capacity, global delivery routines, and rollout constraints into plans teams could execute and customers could adopt.",
       "product-program-leadership": "HealthRise was a SaaS and services environment where product decisions had direct operational consequences. I worked across the product development lifecycle: requirements translation, Scrum delivery, UX/UI testing, roadmap coordination, release planning, stakeholder feedback, and global delivery execution to move EHR and revenue-operations initiatives from idea to shipped workflow.",
-      "ai-automation": "At HealthRise, AI had to fit inside healthcare operations rather than sit beside them. I helped drive ML/AI integration across global delivery teams, focusing on model-assisted workflows that could support EHR and revenue-cycle processes without ignoring usability, implementation risk, or delivery constraints."
+      "ai-automation": "At HealthRise, AI had to fit inside healthcare operations rather than sit beside them. I helped drive ML/AI integration across global delivery teams, focusing on model-assisted workflows that could support EHR and revenue-cycle processes without ignoring usability, implementation risk, or delivery constraints.",
+      "ai-implementation-enablement": "Ran ML/AI integration programs inside a live healthtech stack, pairing model-driven revenue-cycle tooling with the training and workflow changes that got clinical and billing teams to actually adopt it.",
+      "platform-systems-architecture": "Worked across an EHR software platform and revenue-cycle systems, owning the integrations and data plumbing that connect clinical software to billing operations."
     }
   },
   {
@@ -339,7 +359,8 @@
     ],
     "focusAreas": [
       "product-program-leadership",
-      "ai-automation"
+      "ai-automation",
+      "data-analytics-engineering"
     ],
     "featured": false,
     "year": 2026,
@@ -370,7 +391,8 @@
     ],
     "focusNarratives": {
       "product-program-leadership": "Plotted is a gallery product with a clear editorial voice. Each piece gets its own layout and narrative treatment, built on a reusable Astro + D3 system that keeps production cost low enough to publish steadily.",
-      "ai-automation": "The gallery is part of my broader toolkit: AI-assisted research and data prep feed into hand-crafted D3 visualizations. The system handles the ingestion; the editorial judgment stays human."
+      "ai-automation": "The gallery is part of my broader toolkit: AI-assisted research and data prep feed into hand-crafted D3 visualizations. The system handles the ingestion; the editorial judgment stays human.",
+      "data-analytics-engineering": "Editorial data engineering: sourcing public datasets, shaping them, and building D3-driven visual stories that stand on their own as analysis."
     }
   },
   {
