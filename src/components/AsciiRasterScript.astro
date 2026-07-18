@@ -113,6 +113,29 @@
   sourceCanvas.height = 360;
   const sourceCtx = sourceCanvas.getContext('2d', { willReadFrequently: true });
 
+  // Per-icon brightness normalization (Ant, 2026-07-18: "the compass is barely
+  // discernible while the gears are 100% illuminated"). The source SVGs vary
+  // wildly in stroke density, so a uniform value ramp renders dense icons hot
+  // and sparse icons faint. Compute one gain per icon that lands its p95
+  // pixel value on a shared target, cached after first computation.
+  const NORM_TARGET = 0.72;
+  const iconGain: Record<string, number> = {};
+  function gainFor(kind: string, data: Uint8ClampedArray, alphaCut: number): number {
+    if (iconGain[kind]) return iconGain[kind];
+    const values: number[] = [];
+    for (let i = 0; i < data.length; i += 16) { // every 4th pixel
+      const a = data[i + 3] / 255;
+      if (a < alphaCut) continue;
+      const lum = (data[i] * .2126 + data[i + 1] * .7152 + data[i + 2] * .0722) / 255;
+      values.push(Math.max(a * .55, lum * a));
+    }
+    if (values.length < 40) return 1; // image not ready; do not cache
+    values.sort((x, y) => x - y);
+    const p95 = values[Math.floor(values.length * 0.95)] || 1;
+    iconGain[kind] = Math.min(2.4, Math.max(0.45, NORM_TARGET / Math.max(0.05, p95)));
+    return iconGain[kind];
+  }
+
   function renderFromSource(tc: TextCanvas, kind: string, tick: number, hover: boolean) {
     tc.ctx.clearRect(0, 0, Number.parseFloat(tc.canvas.style.width), Number.parseFloat(tc.canvas.style.height));
     if (!sourceCtx) return;
@@ -121,6 +144,7 @@
     const token = textureTokens[kind] ?? 'SYSTEM';
     const ramp = [' ', '.', ':', '-', '+', '*', '#', '@'];
     const phase = Math.floor(tick / (hover ? 5 : 9));
+    const gain = gainFor(kind, data, RT('alphaCut', 0.045));
     for (let row = 0; row < tc.rows; row += 1) {
       for (let col = 0; col < tc.cols; col += 1) {
         const sx = Math.floor((col + 0.5) / tc.cols * sourceCanvas.width);
@@ -129,7 +153,7 @@
         const a = data[idx + 3] / 255;
         if (a < RT('alphaCut', 0.045)) continue;
         const lum = (data[idx] * .2126 + data[idx+1] * .7152 + data[idx+2] * .0722) / 255;
-        const value = Math.min(1, Math.max(a * .55, lum * a) * RT('contrast', 1));
+        const value = Math.min(1, Math.max(a * .55, lum * a) * gain * RT('contrast', 1));
         const level = Math.max(1, Math.min(ramp.length - 1, Math.floor(value * ramp.length)));
         const textured = level >= Math.round(RT('letterLevel', 5));
         const char = textured ? token[(col + row * 2 + phase) % token.length] : ramp[level];
