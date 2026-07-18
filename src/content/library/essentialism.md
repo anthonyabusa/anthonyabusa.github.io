@@ -6,6 +6,7 @@ genres:
   - "Ethics"
   - "Philosophy"
   - "Self Reflection & Improvement"
+  - "Psychology & Sociology "
   - "Psychology & Sociology"
 status: "want"
 cover: "https://covers.openlibrary.org/b/id/7285986-L.jpg"

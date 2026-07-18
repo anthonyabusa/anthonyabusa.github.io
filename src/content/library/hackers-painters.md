@@ -6,8 +6,9 @@ genres:
   - "Computer Science"
   - "Self Reflection & Improvement"
   - "Non Fiction"
-  - "Psychology & Sociology"
+  - "Psychology & Sociology "
   - "Philosophy"
+  - "Psychology & Sociology"
 status: "want"
 progress: 0
 cover: "https://covers.openlibrary.org/b/id/388913-L.jpg"

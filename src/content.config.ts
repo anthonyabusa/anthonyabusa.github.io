@@ -35,6 +35,10 @@ const library = defineCollection({
     // Short book blurb for the detail page. Optional: populated later (e.g. from
     // Open Library); the page hides the section when absent so it's never fabricated.
     synopsis: z.string().optional(),
+    // Objective key points extracted from the source (e.g. a research paper). Shown
+    // in a dedicated "Key takeaways" section, kept separate from the first-person
+    // Reflections (body) so a summary is never presented as Ant's own notes.
+    takeaways: z.array(z.string()).default([]),
     notionId: z.string(),
     notionLastEdited: z.string().optional(),
   }),

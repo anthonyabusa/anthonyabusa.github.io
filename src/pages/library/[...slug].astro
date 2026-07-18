@@ -8,7 +8,7 @@ export async function getStaticPaths() {
 }
 
 const { book } = Astro.props;
-const { title, authors = [], genres = [], status, rating, progress, completed, cover, synopsis } = book.data;
+const { title, authors = [], genres = [], status, rating, progress, completed, cover, synopsis, takeaways = [] } = book.data;
 const { Content } = await render(book);
 
 const statusLabel = { read: 'Read', reading: 'Reading', want: 'Want to read' }[status];
@@ -82,6 +82,15 @@ const hasNotes = ((book.body ?? '').trim().length) > 0;
         {synopsis && <p class="mt-6 text-ink-soft leading-relaxed">{synopsis}</p>}
       </div>
     </div>
+
+    {takeaways.length > 0 && (
+      <div class="reveal mt-12 border-t border-border pt-8">
+        <h2 class="font-mono text-xs uppercase tracking-widest text-ink-faint mb-4">Key takeaways</h2>
+        <ul class="list-disc space-y-2 pl-5 text-ink-soft leading-relaxed marker:text-accent">
+          {takeaways.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
+    )}
 
     <div class="reveal mt-12 border-t border-border pt-8">
       <h2 class="font-mono text-xs uppercase tracking-widest text-ink-faint mb-4">Reflections</h2>
