@@ -18,5 +18,5 @@ takeaways:
   - "The sharpest finding is GSM-NoOp: adding one relevant-sounding but inconsequential clause drops accuracy by up to 65 percent across every model, including frontier ones. They tend to convert each stated detail into an operation instead of judging what actually matters."
   - "The gap resists few-shot prompting, even when the examples contain the same question or similar no-op cases. The authors conclude that today's models rely on sophisticated pattern-matching rather than formal logical reasoning."
 notionId: "12c176cc-7864-809f-b940-d928bec51fa0"
-notionLastEdited: "2026-07-17T19:45:00.000Z"
+notionLastEdited: "2026-07-17T20:24:00.000Z"
 ---
