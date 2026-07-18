@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Raster source for Platform & Systems Architecture: three isometric layers
+       stacked (the technical backbone). Stroke-drawn slabs with side edges give
+       the rasterizer clean parallel texture bands. -->
+  <path d="M100 24 L176 64 L100 104 L24 64 Z" fill="none" stroke="#000" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M24 98 L100 138 L176 98" fill="none" stroke="#000" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M24 132 L100 172 L176 132" fill="none" stroke="#000" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M24 64 V98 M176 64 V98 M100 104 V138" fill="none" stroke="#000" stroke-width="5" opacity=".5"/>
+  <circle cx="100" cy="64" r="8" fill="#000"/>
+</svg>

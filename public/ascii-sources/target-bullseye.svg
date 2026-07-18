@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Raster source for Product & Program Leadership (Ant 2026-07-18: chose a
+       bullseye: scoped delivery to a goal). Concentric rings + solid center +
+       crosshair ticks; the ring stack gives the rasterizer even luminance
+       tiers and cannot read as a figure. -->
+  <circle cx="100" cy="100" r="84" fill="none" stroke="#000" stroke-width="7"/>
+  <circle cx="100" cy="100" r="60" fill="none" stroke="#000" stroke-width="6" opacity=".82"/>
+  <circle cx="100" cy="100" r="36" fill="none" stroke="#000" stroke-width="6" opacity=".7"/>
+  <circle cx="100" cy="100" r="13" fill="#000"/>
+  <path d="M100 4v24M100 172v24M4 100h24M172 100h24" fill="none" stroke="#000" stroke-width="6" stroke-linecap="round"/>
+</svg>

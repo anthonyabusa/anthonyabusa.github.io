@@ -20,19 +20,27 @@
   const textureTokens: Record<string, string> = {
     strategy: 'NORTHSTARVECTOR',
     operations: 'GEARSFLOWCADENCE',
-    product: 'BUILDTESTSHIP',
+    product: 'SCOPESHIPDELIVER',
     automation: 'BRAINAIMEMORY',
     marketplace: 'HUBSPOKEALIGN',
+    enablement: 'DEPLOYADOPTSCALE',
+    agents: 'ORCHESTRATEAGENTS',
+    data: 'PIPELINEMODELDATA',
+    platform: 'PLATFORMSCALEBUILD',
   };
   const sourcePaths: Record<string, string> = {
     strategy: '/ascii-sources/compass-rose-star.svg',
     operations: '/ascii-sources/icon-gears2.svg',
-    product: '/ascii-sources/roadmap-flag.svg',
+    product: '/ascii-sources/target-bullseye.svg',
     automation: '/ascii-sources/brain-outline-lateral.svg',
     marketplace: '/ascii-sources/social-network.svg',
+    enablement: '/ascii-sources/rocket-launch.svg',
+    agents: '/ascii-sources/agent-orchestration.svg',
+    data: '/ascii-sources/data-bars.svg',
+    platform: '/ascii-sources/platform-stack.svg',
   };
   const wobbleAmp = (kind: string) =>
-    kind === 'operations' ? 0.07 : kind === 'product' ? 0.052 : 0.025;
+    kind === 'operations' ? 0.07 : kind === 'enablement' ? 0.045 : 0.025;
 
   const sourceImages: Record<string, HTMLImageElement> = {};
   Object.entries(sourcePaths).forEach(([key, path]) => { sourceImages[key] = loadImage(path); });

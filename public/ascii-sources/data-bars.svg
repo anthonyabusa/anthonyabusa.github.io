@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Raster source for Data & Analytics Engineering: a bar chart with an
+       overlaid trend line (pipelines to decisions). Solid bars give the bright
+       tier; axis + trend give the sparse stroke tier the rasterizer boosts. -->
+  <path d="M30 168 H176" fill="none" stroke="#000" stroke-width="7" stroke-linecap="round"/>
+  <path d="M30 168 V40" fill="none" stroke="#000" stroke-width="7" stroke-linecap="round"/>
+  <rect x="50" y="108" width="26" height="60" fill="#000"/>
+  <rect x="92" y="78" width="26" height="90" fill="#000"/>
+  <rect x="134" y="124" width="26" height="44" fill="#000"/>
+  <path d="M52 98 L100 60 L142 92 L176 48" fill="none" stroke="#000" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity=".72"/>
+</svg>

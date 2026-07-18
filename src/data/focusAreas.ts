@@ -43,6 +43,34 @@ export const focusAreas = [
     title: 'Marketplace & Venture Building',
     description: 'Hands-on venture work building local food marketplace infrastructure, producer operations, grants, and growth systems.',
   },
+  {
+    slug: 'ai-implementation-enablement',
+    // ASCII motif: a launch (rocket + fins + exhaust): AI shipped to production.
+    svg: `<svg ${s}><path pathLength="1" d="M12 3c3 3 4.5 7 4.5 10.5L12 17l-4.5-3.5C7.5 10 9 6 12 3z"/><circle pathLength="1" cx="12" cy="10" r="1.6"/><path pathLength="1" d="M7.5 13 5 18l3.2-1.4"/><path pathLength="1" d="M16.5 13 19 18l-3.2-1.4"/></svg>`,
+    title: 'AI Implementation & Enablement',
+    description: 'Bringing AI into real organizations: agent workflows, LLM tooling, data plumbing, and the adoption work that gets teams actually using it. The core of my tech enablement and AI implementation consulting.',
+  },
+  {
+    slug: 'agent-systems-orchestration',
+    // ASCII motif: one node directing three (governed agent fan-out).
+    svg: `<svg ${s}><circle pathLength="1" cx="12" cy="5" r="2.2"/><circle pathLength="1" cx="5.5" cy="19" r="2.2"/><circle pathLength="1" cx="12" cy="19" r="2.2"/><circle pathLength="1" cx="18.5" cy="19" r="2.2"/><path pathLength="1" d="M11 6.8 6.4 17"/><path pathLength="1" d="M12 7.2V16.8"/><path pathLength="1" d="M13 6.8 17.6 17"/></svg>`,
+    title: 'Agent Systems & Orchestration',
+    description: 'Multi-agent architectures, governed autonomy, memory systems, and the operator tooling that runs a fleet of AI agents. Built on Metis and the Agent Workbench control plane.',
+  },
+  {
+    slug: 'data-analytics-engineering',
+    // ASCII motif: bar chart with a trend line (raw data to decisions).
+    svg: `<svg ${s}><path pathLength="1" d="M4 20V4"/><path pathLength="1" d="M4 20h16"/><path pathLength="1" d="M8 20v-5"/><path pathLength="1" d="M12 20v-9"/><path pathLength="1" d="M16 20v-3"/><path pathLength="1" d="M6 11l4-3 4 2 5-5"/></svg>`,
+    title: 'Data & Analytics Engineering',
+    description: 'Data pipelines, ML signal systems, dashboards, and analysis that turns raw streams into decisions. From the Polymarket signal pipeline to editorial data viz.',
+  },
+  {
+    slug: 'platform-systems-architecture',
+    // ASCII motif: stacked isometric layers (the technical backbone).
+    svg: `<svg ${s}><path pathLength="1" d="M12 3 3 8l9 5 9-5z"/><path pathLength="1" d="M3 12l9 5 9-5"/><path pathLength="1" d="M3 16l9 5 9-5"/></svg>`,
+    title: 'Platform & Systems Architecture',
+    description: 'The technical backbone: API integrations, platform engineering, and multi-machine infrastructure that scales across an organization.',
+  },
 ] as const;
 
 export type FocusArea = (typeof focusAreas)[number];

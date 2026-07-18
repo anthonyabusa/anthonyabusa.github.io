@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Raster source for AI Implementation & Enablement: a launch, standing for
+       putting AI into production and getting teams off the ground. Stroke-drawn
+       fuselage + fins with a solid window and flame for the brighter tier. -->
+  <path d="M100 16 C132 46 142 90 142 118 L58 118 C58 90 68 46 100 16 Z" fill="none" stroke="#000" stroke-width="8" stroke-linejoin="round"/>
+  <circle cx="100" cy="76" r="15" fill="#000"/>
+  <path d="M58 104 L34 152 L70 136" fill="none" stroke="#000" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M142 104 L166 152 L130 136" fill="none" stroke="#000" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M82 138 Q100 194 118 138 Z" fill="#000"/>
+</svg>
