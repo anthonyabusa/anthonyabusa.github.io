@@ -1,0 +1,125 @@
+---
+// Hero ASCII raster (#439, replaces the cursor flow field: Ant direction
+// "raster-treat the hero"). Same engine + treatment as the focus cards
+// (src/scripts/asciiRaster.ts), driven by a hero-scale source mark. Hover
+// animates on desktop; touch and reduced-motion keep the resting frame.
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<div class={`ascii-hero ${className}`} aria-hidden="true" data-ascii-hero>
+  <canvas data-ascii-hero-canvas width="440" height="330"></canvas>
+</div>
+
+<style>
+  .ascii-hero {
+    pointer-events: none;
+    user-select: none;
+  }
+  .ascii-hero canvas {
+    display: block;
+    max-width: 100%;
+  }
+</style>
+
+<script>
+  import { setupCanvas, drawSource, renderRaster, loadImage } from '../scripts/asciiRaster';
+
+  // Knob reader: hero group first, then the shared raster group (one slider
+  // set drives both surfaces; hero-only knobs like `source` live in hero).
+  // Production has no window.__ASCII_TUNE, so every read returns the default.
+  type TuneMap = { hero?: Record<string, number>; raster?: Record<string, number> };
+  const HT = (k: string, d: number): number => {
+    const t = (window as unknown as { __ASCII_TUNE?: TuneMap }).__ASCII_TUNE;
+    const h = t?.hero?.[k];
+    if (typeof h === 'number' && Number.isFinite(h)) return h;
+    const r = t?.raster?.[k];
+    if (typeof r === 'number' && Number.isFinite(r)) return r;
+    return d;
+  };
+
+  const SOURCES = [
+    { key: 'hero-compass', src: '/ascii-sources/compass-rose-black.svg' },
+    { key: 'hero-monogram', src: '/ascii-sources/monogram-ab.svg' },
+    { key: 'hero-orbit', src: '/ascii-sources/mark-orbit.svg' },
+  ];
+  const TOKEN = 'ANTHONYBUSASYSTEMS';
+  const WOBBLE = 0.02; // calmer than the cards: this sits beside the headline
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const coarse = window.matchMedia('(pointer: coarse)');
+  const reducedActive = () => reduced.matches && !HT('ignoreReduceMotion', 0);
+
+  document.querySelectorAll<HTMLElement>('[data-ascii-hero]').forEach((root) => {
+    const canvas = root.querySelector<HTMLCanvasElement>('[data-ascii-hero-canvas]');
+    if (!canvas) return;
+    const tc = setupCanvas(canvas, 146, 50, 9);
+    if (!tc) return;
+
+    const staging = document.createElement('canvas');
+    staging.width = 620;
+    staging.height = 465;
+    const stagingCtx = staging.getContext('2d', { willReadFrequently: true });
+    if (!stagingCtx) return;
+
+    const images = SOURCES.map((s) => loadImage(s.src));
+    const active = () => {
+      const i = Math.round(HT('source', 1));
+      return { image: images[i] ?? images[1], key: SOURCES[i]?.key ?? SOURCES[1].key };
+    };
+
+    let tick = 0;
+    let hovering = false;
+    let raf = 0;
+
+    const paint = (hover: boolean) => {
+      const { image, key } = active();
+      drawSource(image, stagingCtx, staging.width, staging.height, tick, hover, WOBBLE, HT);
+      renderRaster(tc, key, TOKEN, staging, stagingCtx, tick, hover, HT);
+    };
+    const paintStatic = () => { tick = 0; paint(false); };
+
+    const loop = () => {
+      raf = 0;
+      const alwaysOn = !!HT('alwaysOn', 0);
+      if (!(hovering || alwaysOn) || reducedActive()) return;
+      tick += 1;
+      paint(true);
+      raf = window.requestAnimationFrame(loop);
+    };
+    const start = () => { if (!raf) raf = window.requestAnimationFrame(loop); };
+    const stop = () => { if (raf) { window.cancelAnimationFrame(raf); raf = 0; } };
+
+    // Hover-load on the surrounding hero section (desktop); touch stays static.
+    const surface = (root.closest('section') as HTMLElement) || root;
+    if (!coarse.matches) {
+      surface.addEventListener('pointerenter', () => { hovering = true; start(); });
+      surface.addEventListener('pointerleave', () => { hovering = false; paintStatic(); });
+    }
+
+    // Lab slider or source change: repaint and rewire the loop. No-op in production.
+    const onTune = () => {
+      if (reducedActive() && !HT('alwaysOn', 0)) { stop(); paintStatic(); return; }
+      paint(hovering || !!HT('alwaysOn', 0));
+      start();
+    };
+    window.addEventListener('ascii-tune', onTune);
+
+    if (!reducedActive() && !!HT('alwaysOn', 0)) start();
+
+    // First paint per image as each loads (source switching needs all three).
+    images.forEach((img) => {
+      if (img.complete && img.naturalWidth) return;
+      img.addEventListener('load', () => { if (img === active().image) paintStatic(); }, { once: true });
+    });
+    const first = active().image;
+    if (first.complete && first.naturalWidth) paintStatic();
+
+    window.addEventListener('pagehide', () => {
+      stop();
+      window.removeEventListener('ascii-tune', onTune);
+    }, { once: true });
+  });
+</script>

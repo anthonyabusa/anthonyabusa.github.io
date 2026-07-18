@@ -1,25 +1,23 @@
 ---
 // #439 ASCII Studio lab: live sliders for every tunable knob on the branch's
-// two ASCII surfaces (hero flow field + focus-card raster). Unlinked from nav;
+// two ASCII surfaces (hero raster + focus-card raster, one shared engine).
+// Unlinked from nav;
 // exists so tuning happens by feel on a real device instead of by code round-trip.
 // Settings persist in localStorage and export as JSON to fold back into the
 // engine defaults once a combination is approved.
 import BaseLayout from '../layouts/BaseLayout.astro';
-import FlowField from '../components/FlowField.astro';
+import AsciiHeroRaster from '../components/AsciiHeroRaster.astro';
 import AsciiFocusCard from '../components/AsciiFocusCard.astro';
 import AsciiRasterScript from '../components/AsciiRasterScript.astro';
 import { focusAreas } from '../data/focusAreas';
 
 type Knob = { key: string; label: string; min: number; max: number; step: number; d: number };
 
-const flowKnobs: Knob[] = [
-  { key: 'easeK', label: 'Motion · responsiveness', min: 2, max: 20, step: 0.5, d: 9 },
-  { key: 'driftPeriod', label: 'Motion · autopilot lap (ms)', min: 3000, max: 20000, step: 500, d: 9000 },
-  { key: 'radius', label: 'Coverage · bloom radius', min: 0.15, max: 0.9, step: 0.01, d: 0.4 },
-  { key: 'brightness', label: 'Intensity · brightness', min: 0.5, max: 2, step: 0.05, d: 1 },
-  { key: 'yCompress', label: 'Realism · bloom roundness', min: 1, max: 3, step: 0.05, d: 1.9 },
-  { key: 'dotCut', label: 'Realism · line threshold', min: 0.05, max: 0.5, step: 0.01, d: 0.16 },
-  { key: 'latticeMod', label: 'Realism · resting sparsity', min: 2, max: 12, step: 1, d: 5 },
+// Hero source options (Ant direction 2026-07-18: raster-treat the hero).
+const heroSources = [
+  { idx: 0, label: 'Compass rose' },
+  { idx: 1, label: 'AB monogram' },
+  { idx: 2, label: 'Orbit mark' },
 ];
 
 const rasterKnobs: Knob[] = [
@@ -35,10 +33,8 @@ const rasterKnobs: Knob[] = [
 ];
 
 const toggles = [
-  { group: 'flow', key: 'alwaysOn', label: 'Hero autopilot (no cursor needed)' },
-  { group: 'flow', key: 'ignoreReduceMotion', label: 'Hero: override OS Reduce Motion' },
-  { group: 'raster', key: 'alwaysOn', label: 'Cards: animate without hover' },
-  { group: 'raster', key: 'ignoreReduceMotion', label: 'Cards: override OS Reduce Motion' },
+  { group: 'raster', key: 'alwaysOn', label: 'Animate without hover (hero + cards)' },
+  { group: 'raster', key: 'ignoreReduceMotion', label: 'Override OS Reduce Motion' },
 ];
 
 // Three cards are enough to judge the raster treatment; full set lives on /about.
@@ -56,13 +52,13 @@ const labCards = [
   <script is:inline>
     (function () {
       var DEF = {
-        flow: { ignoreReduceMotion: 1, alwaysOn: 1 },
+        hero: { source: 1 },
         raster: { ignoreReduceMotion: 1, alwaysOn: 1 },
       };
       var saved = {};
       try { saved = JSON.parse(localStorage.getItem('asciiTune.v1') || '{}') || {}; } catch (e) { saved = {}; }
       window.__ASCII_TUNE = {
-        flow: Object.assign({}, DEF.flow, saved.flow),
+        hero: Object.assign({}, DEF.hero, saved.hero),
         raster: Object.assign({}, DEF.raster, saved.raster),
       };
     })();
@@ -73,9 +69,9 @@ const labCards = [
       <p class="text-accent font-mono text-xs tracking-widest uppercase mb-3">Studio · Internal</p>
       <h1 class="text-3xl font-bold text-ink mb-3">ASCII Lab</h1>
       <p class="text-ink-muted text-sm leading-relaxed">
-        Live controls for the two ASCII surfaces on the flow-field branch. Changes apply
-        instantly and save to the Studio automatically: tune until it feels right, then
-        just say the editing is done. Card links are disabled here.
+        The hero now uses the same raster treatment as the focus cards: pick its source
+        mark below. Changes apply instantly and save to the Studio automatically: tune
+        until it feels right, then just say the editing is done. Card links are disabled here.
       </p>
       <div class="mt-5 flex flex-wrap items-center gap-3">
         <button
@@ -101,37 +97,32 @@ const labCards = [
       ))}
     </div>
 
-    <!-- Surface 1: hero flow field -->
+    <!-- Surface 1: hero raster (same treatment as the cards, hero-scale source) -->
     <section class="mb-6 rounded-2xl border border-border bg-background overflow-hidden">
       <div class="px-5 pt-4 pb-2 flex items-baseline justify-between">
-        <h2 class="text-ink font-semibold">Hero flow field</h2>
-        <span class="text-ink-subtle font-mono text-xs">drag anywhere in this box</span>
+        <h2 class="text-ink font-semibold">Hero raster</h2>
+        <span class="text-ink-subtle font-mono text-xs">shares the sliders below</span>
       </div>
       <div class="relative flex justify-center py-6 overflow-x-auto">
-        <FlowField />
+        <AsciiHeroRaster />
+      </div>
+      <div class="px-5 pb-5 flex flex-wrap gap-x-6 gap-y-2">
+        {heroSources.map((src) => (
+          <label class="flex items-center gap-2 text-sm text-ink-soft">
+            <input
+              type="radio"
+              name="heroSource"
+              data-knob="source"
+              data-group="hero"
+              value={src.idx}
+              checked={src.idx === 1}
+              class="accent-accent"
+            />
+            {src.label}
+          </label>
+        ))}
       </div>
     </section>
-
-    <div class="mb-14 space-y-4">
-      {flowKnobs.map((k) => (
-        <label class="block">
-          <span class="flex items-baseline justify-between text-xs font-mono mb-1">
-            <span class="text-ink-soft">{k.label}</span>
-            <span class="text-accent-lighter" data-knob-value={`flow.${k.key}`}>{k.d}</span>
-          </span>
-          <input
-            type="range"
-            data-knob={k.key}
-            data-group="flow"
-            min={k.min}
-            max={k.max}
-            step={k.step}
-            value={k.d}
-            class="w-full accent-accent"
-          />
-        </label>
-      ))}
-    </div>
 
     <!-- Surface 2: focus-card raster -->
     <section class="mb-6">
@@ -204,10 +195,12 @@ const labCards = [
       const group = input.dataset.group ?? 'flow';
       const key = input.dataset.knob ?? '';
       const isToggle = input.type === 'checkbox';
+      const isRadio = input.type === 'radio';
       const readout = document.querySelector(`[data-knob-value="${group}.${key}"]`);
       const saved = tune[group]?.[key];
       if (typeof saved === 'number') {
         if (isToggle) input.checked = !!saved;
+        else if (isRadio) input.checked = Number(input.value) === saved;
         else input.value = String(saved);
       }
       const show = () => { if (readout) readout.textContent = input.value; };

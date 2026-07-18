@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 150">
+  <!-- Hero raster source: AB monogram. System sans renders fine inside an
+       img-loaded SVG (no external font fetch); black fill matches the other
+       raster sources so the shared normalization treats it uniformly. -->
+  <text x="120" y="118" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="124" font-weight="800" letter-spacing="-6" fill="#000">AB</text>
+</svg>

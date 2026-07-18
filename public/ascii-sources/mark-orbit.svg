@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none" stroke="#000" stroke-width="6" stroke-linecap="round">
+  <!-- Hero raster source: abstract orbit mark (systems motif: a core with two
+       crossing orbits and satellite nodes). Stroke-drawn like the compass so
+       the raster reads it as texture, not a solid fill. -->
+  <circle cx="100" cy="100" r="34"/>
+  <ellipse cx="100" cy="100" rx="86" ry="34" transform="rotate(-24 100 100)"/>
+  <ellipse cx="100" cy="100" rx="86" ry="34" transform="rotate(48 100 100)"/>
+  <circle cx="100" cy="100" r="10" fill="#000" stroke="none"/>
+  <circle cx="168" cy="64" r="8" fill="#000" stroke="none"/>
+  <circle cx="44" cy="150" r="8" fill="#000" stroke="none"/>
+</svg>
