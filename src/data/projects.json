@@ -424,7 +424,7 @@
     "slug": "globalization-photojournalism-exhibit",
     "role": "Photojournalist & creator",
     "status": "Independent creative project",
-    "description": "A photojournalism exhibit exploring globalization through fieldwork in Tibet and Mongolia.",
+    "description": "A photojournalism exhibit built from independent fieldwork in rural Tibet and Mongolia, using documentary images to show how globalization reaches remote communities. Exhibited at Villanova University and featured in Main Line Media News.",
     "url": "",
     "liveUrl": "",
     "tags": [
@@ -437,28 +437,38 @@
     "year": "Undergraduate",
     "endYear": "Exhibited",
     "type": "creative",
-    "challenge": "Globalization is often discussed through abstract economic and political language. The project sought to document how it appeared in lived environments and everyday experience.",
-    "approach": "I conducted fieldwork in Tibet and Mongolia, using photography and firsthand observation to build a visual narrative around globalization and cultural change.",
+    "challenge": "Globalization is usually discussed in abstract economic and political terms. I wanted to document what it actually looks like on the ground, in the daily life of communities far from the centers where those decisions get made.",
+    "approach": "I traveled through rural Tibet and Mongolia, photographing people, landscapes, and the small signs of a changing world, then curated the strongest frames into a cohesive visual narrative and mounted it as a public gallery exhibit.",
     "metrics": [
       {
         "value": "2",
-        "label": "Fieldwork regions"
+        "label": "Countries of fieldwork"
       },
       {
-        "value": "Exhibit",
+        "value": "2018",
+        "kind": "qualitative",
+        "label": "Year exhibited"
+      },
+      {
+        "value": "Gallery exhibit",
         "kind": "qualitative",
         "label": "Final public format"
-      },
-      {
-        "value": "Visual",
-        "kind": "qualitative",
-        "label": "Research and storytelling method"
       }
     ],
     "outcomes": [
-      "Produced a photojournalism exhibit based on international fieldwork.",
-      "Translated an abstract global issue into a visual narrative.",
-      "Documented perspectives and environments across Tibet and Mongolia."
+      "Exhibited the work publicly at Villanova University.",
+      "Earned press coverage in Main Line Media News for the exhibition.",
+      "Turned an abstract global theme into a firsthand visual story from Tibet and Mongolia."
+    ],
+    "links": [
+      {
+        "label": "Main Line Media News feature",
+        "url": "https://www.mainlinemedianews.com/2018/10/09/villanova-photography-exhibit-explores-rural-tibet-mongolia/"
+      },
+      {
+        "label": "Villanova University Art Gallery",
+        "url": "https://www.villanova.edu/university/art-gallery/exhibitions/past-exhibitions.html"
+      }
     ]
   }
 ]

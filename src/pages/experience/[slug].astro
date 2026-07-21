@@ -2,11 +2,13 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FocusAreaLinks from '../../components/FocusAreaLinks.astro';
 import projects from '../../data/projects.json';
+import { caseHeadersFor } from '../../data/caseHeaders';
 
 export function getStaticPaths() {
   return projects.filter((project) => project.slug && project.placement === 'experience').map((project) => ({ params: { slug: project.slug }, props: { project } }));
 }
 const { project } = Astro.props;
+const [contextHeader, approachHeader, outcomeHeader] = caseHeadersFor(project.type);
 ---
 
 <BaseLayout title={project.title} description={project.description}>
@@ -30,9 +32,9 @@ const { project } = Astro.props;
         <FocusAreaLinks areaSlugs={project.focusAreas} />
       </aside>
       <div class="space-y-12">
-        <section class="reveal detail-section"><p class="detail-label">Context</p><h2>What needed to change</h2><p>{project.challenge}</p></section>
-        <section class="reveal detail-section"><p class="detail-label">Leadership</p><h2>How I approached the work</h2><p>{project.approach}</p></section>
-        <section class="reveal detail-section"><p class="detail-label">Impact</p><h2>What the work delivered</h2><ul>{project.outcomes?.map((outcome: string) => <li>→ {outcome}</li>)}</ul></section>
+        <section class="reveal detail-section"><p class="detail-label">{contextHeader}</p><h2>{contextHeader}</h2><p>{project.challenge}</p></section>
+        <section class="reveal detail-section"><p class="detail-label">{approachHeader}</p><h2>{approachHeader}</h2><p>{project.approach}</p></section>
+        <section class="reveal detail-section"><p class="detail-label">{outcomeHeader}</p><h2>{outcomeHeader}</h2><ul>{project.outcomes?.map((outcome: string) => <li>→ {outcome}</li>)}</ul></section>
       </div>
     </div>
   </article>

@@ -2,11 +2,13 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FocusAreaLinks from '../../components/FocusAreaLinks.astro';
 import projects from '../../data/projects.json';
+import { caseHeadersFor } from '../../data/caseHeaders';
 
 export function getStaticPaths() {
   return projects.filter((project) => project.slug && project.placement !== 'experience').map((project) => ({ params: { slug: project.slug }, props: { project } }));
 }
 const { project } = Astro.props;
+const [contextHeader, approachHeader, outcomeHeader] = caseHeadersFor(project.type);
 ---
 
 <BaseLayout title={project.title} description={project.description}>
@@ -34,11 +36,26 @@ const { project } = Astro.props;
         <div><p class="case-label">Timeline</p><p class="text-sm text-ink-muted">{project.year}–{project.endYear ?? 'Present'}</p></div>
         <FocusAreaLinks areaSlugs={project.focusAreas} />
         {project.url && <a href={project.url} target="_blank" rel="noopener noreferrer" class="inline-flex px-5 py-2.5 rounded-lg border border-accent/40 text-sm text-accent-light hover:bg-accent/10 transition-colors">Open project ↗</a>}
+        {project.links?.length > 0 && (
+          <div>
+            <p class="case-label">Press &amp; references</p>
+            <ul class="space-y-2.5">
+              {project.links.map((link: { label: string; url: string }) => (
+                <li>
+                  <a href={link.url} target="_blank" rel="noopener noreferrer" class="group inline-flex items-start gap-1.5 text-sm text-ink-muted hover:text-accent-light transition-colors">
+                    <span>{link.label}</span>
+                    <span class="text-accent-light/70 group-hover:text-accent-light">↗</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </aside>
       <div class="space-y-12">
-        <section class="reveal case-section"><p class="case-label">The challenge</p><h2>What needed to change</h2><p>{project.challenge}</p></section>
-        <section class="reveal case-section"><p class="case-label">The approach</p><h2>How I built the system</h2><p>{project.approach}</p></section>
-        <section class="reveal case-section"><p class="case-label">The outcome</p><h2>What exists now</h2><ul>{project.outcomes?.map((outcome: string) => <li>→ {outcome}</li>)}</ul></section>
+        <section class="reveal case-section"><p class="case-label">{contextHeader}</p><h2>{contextHeader}</h2><p>{project.challenge}</p></section>
+        <section class="reveal case-section"><p class="case-label">{approachHeader}</p><h2>{approachHeader}</h2><p>{project.approach}</p></section>
+        <section class="reveal case-section"><p class="case-label">{outcomeHeader}</p><h2>{outcomeHeader}</h2><ul>{project.outcomes?.map((outcome: string) => <li>→ {outcome}</li>)}</ul></section>
       </div>
     </div>
   </article>
