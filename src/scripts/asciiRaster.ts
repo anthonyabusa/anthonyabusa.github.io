@@ -16,6 +16,13 @@ export type TextCanvas = {
 
 export type Knob = (k: string, d: number) => number;
 
+// A sub-sprite of a composite motif, rotating about ITS OWN centre (Ant: "the
+// axis should be at the centre of the gear like in real life"). Used for the
+// meshing gears — each gear is the same sprite placed at cx/cy (0..1 of the
+// staging canvas), sized by `scale`, turning at `dir`·`speed` (meshing gears
+// counter-rotate, and a smaller gear turns proportionally faster).
+export type MotifPart = { cx: number; cy: number; scale: number; dir: number; speed: number };
+
 export function setupCanvas(canvas: HTMLCanvasElement, cols: number, rows: number, fontPx = 8): TextCanvas | null {
   const ctx = canvas.getContext('2d');
   if (!ctx) return null;
@@ -56,31 +63,51 @@ export function drawSource(
   wobbleAmp: number,
   knob: Knob,
   spin = 0,
+  parts?: MotifPart[],
 ) {
   ctx.clearRect(0, 0, w, h);
   if (!image || !image.complete || !image.naturalWidth) return;
   const t = tick * (hover ? knob('speedHover', 0.018) : knob('speedRest', 0.011));
-  const cx = w * .52;
-  const cy = h * .52;
-  const fit = Math.min((w * .78) / image.naturalWidth, (h * .78) / image.naturalHeight);
-  const drawW = image.naturalWidth * fit;
-  const drawH = image.naturalHeight * fit;
+  const scale = hover ? 1.06 : 1;
 
   ctx.save();
-  ctx.translate(cx, cy);
-  // Continuous spin accumulates with `t` (which itself scales with the speed
-  // knobs, so spinners also quicken on hover); wobble oscillates in place.
-  const angle = spin
-    ? t * spin * knob('spin', 1)
-    : Math.sin(t) * wobbleAmp * knob('wobble', 1);
-  ctx.rotate(angle);
-  const scale = hover ? 1.06 : 1;
-  ctx.scale(scale, scale);
   ctx.shadowColor = 'rgba(5,7,16,.62)';
   ctx.shadowBlur = 18;
   ctx.shadowOffsetX = 13;
   ctx.shadowOffsetY = 15;
-  ctx.drawImage(image, -drawW / 2, -drawH / 2, drawW, drawH);
+  if (parts && parts.length) {
+    // Composite motif (the meshing gears): draw the SAME sprite once per part,
+    // each translated to its own centre THEN rotated — so every gear turns on
+    // its own axle instead of the whole image orbiting one point (Ant: "the
+    // axis should be at the centre of the gear like in real life"). Meshing
+    // gears counter-rotate (`dir`) and a smaller gear turns faster (`speed`).
+    // Squarish base size keeps the round sprite round regardless of canvas AR.
+    const base = Math.min(w, h) * knob('gearBase', 0.62) * scale;
+    for (const p of parts) {
+      const d = base * p.scale;
+      ctx.save();
+      ctx.translate(p.cx * w, p.cy * h);
+      ctx.rotate(t * spin * p.dir * p.speed * knob('spin', 1));
+      ctx.drawImage(image, -d / 2, -d / 2, d, d);
+      ctx.restore();
+    }
+  } else {
+    // Single centred sprite: continuous spin accumulates with `t` (spinners
+    // quicken on hover via the speed knobs); spin = 0 falls back to a calm
+    // sine wobble for motifs a full rotation would misread.
+    const cx = w * .52;
+    const cy = h * .52;
+    const fit = Math.min((w * .78) / image.naturalWidth, (h * .78) / image.naturalHeight);
+    const drawW = image.naturalWidth * fit;
+    const drawH = image.naturalHeight * fit;
+    ctx.translate(cx, cy);
+    const angle = spin
+      ? t * spin * knob('spin', 1)
+      : Math.sin(t) * wobbleAmp * knob('wobble', 1);
+    ctx.rotate(angle);
+    ctx.scale(scale, scale);
+    ctx.drawImage(image, -drawW / 2, -drawH / 2, drawW, drawH);
+  }
   ctx.restore();
 
   ctx.globalCompositeOperation = 'source-atop';

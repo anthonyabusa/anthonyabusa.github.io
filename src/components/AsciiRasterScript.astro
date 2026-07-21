@@ -4,7 +4,7 @@
   // only the card-specific behavior: hover-load, per-card wobble amplitudes,
   // and the lab's alwaysOn/reduced-motion overrides.
   import { setupCanvas, drawSource, renderRaster, loadImage } from '../scripts/asciiRaster';
-  import type { TextCanvas } from '../scripts/asciiRaster';
+  import type { TextCanvas, MotifPart } from '../scripts/asciiRaster';
 
   // Live-tunable knobs (#439 ascii-lab). Defaults ARE the shipped values;
   // window.__ASCII_TUNE only exists on the lab page, so production behavior is
@@ -30,7 +30,7 @@
   };
   const sourcePaths: Record<string, string> = {
     strategy: '/ascii-sources/compass-rose-star.svg',
-    operations: '/ascii-sources/icon-gears2.svg',
+    operations: '/ascii-sources/gear-single.svg',
     product: '/ascii-sources/target-bullseye.svg',
     automation: '/ascii-sources/brain-outline-lateral.svg',
     marketplace: '/ascii-sources/social-network.svg',
@@ -48,7 +48,21 @@
   // wobble+shimmer above (a brain / rocket / bar chart shouldn't spin). Sign =
   // direction; magnitude tunes against the rest/hover speed knobs.
   const spinAmp = (kind: string) =>
-    kind === 'operations' ? 2.6 : kind === 'strategy' ? -1.3 : 0;
+    kind === 'operations' ? 1.8 : kind === 'strategy' ? -1.3 : 0;
+
+  // Composite motifs drawn as several sprites, each on its OWN axle (Ant: gears
+  // must spin about their own centre, not orbit a shared point). Operations =
+  // two MESHING gears from one clean gear sprite: a big gear (cw) and a smaller
+  // one up-and-right (ccw), placed tangent so the teeth read as engaged. The
+  // smaller gear turns faster (speed ∝ 1/size) like real meshing gears. cx/cy
+  // are fractions of the 620×360 staging canvas; both sit right-of-centre, clear
+  // of the card's left legibility fade. Undefined kinds draw as a single sprite.
+  const motifParts: Record<string, MotifPart[]> = {
+    operations: [
+      { cx: 0.50, cy: 0.56, scale: 1.00, dir: 1, speed: 1.0 },
+      { cx: 0.70, cy: 0.32, scale: 0.62, dir: -1, speed: 1.6 },
+    ],
+  };
 
   const sourceImages: Record<string, HTMLImageElement> = {};
   Object.entries(sourcePaths).forEach(([key, path]) => { sourceImages[key] = loadImage(path); });
@@ -60,7 +74,7 @@
 
   function renderFromSource(tc: TextCanvas, kind: string, tick: number, hover: boolean) {
     if (!sourceCtx) return;
-    drawSource(sourceImages[kind], sourceCtx, sourceCanvas.width, sourceCanvas.height, tick, hover, wobbleAmp(kind), RT, spinAmp(kind));
+    drawSource(sourceImages[kind], sourceCtx, sourceCanvas.width, sourceCanvas.height, tick, hover, wobbleAmp(kind), RT, spinAmp(kind), motifParts[kind]);
     renderRaster(tc, kind, textureTokens[kind] ?? 'SYSTEM', sourceCanvas, sourceCtx, tick, hover, RT);
   }
 
