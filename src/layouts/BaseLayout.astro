@@ -9,6 +9,7 @@ interface Props {
   description?: string;
   ogImage?: string;
   ogType?: string;
+  noindex?: boolean;
 }
 
 const {
@@ -16,6 +17,7 @@ const {
   description = 'Anthony Busa: strategy and operations leader building technology-enabled systems across startups, marketplaces, AI workflows, and business strategy.',
   ogImage = '/og-image.png',
   ogType = 'website',
+  noindex = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -84,7 +86,7 @@ const breadcrumbSchema = crumbSegments.length
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} | Anthony Busa</title>
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
     <link rel="canonical" href={canonicalURL} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

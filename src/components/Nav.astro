@@ -1,4 +1,6 @@
 ---
+import { flags } from '../data/flags';
+
 const pathname = Astro.url.pathname;
 
 const links = [
@@ -8,6 +10,9 @@ const links = [
   { href: '/projects', label: 'Projects' },
   { href: '/library', label: 'Library' },
   { href: '/blog', label: 'Writing' },
+  // Consulting landing: only surfaced once its flag is flipped on (kept out of
+  // nav during review so the page stays undiscoverable until the copy ships).
+  ...(flags.workWithMe ? [{ href: '/work-with-me', label: 'Work With Me' }] : []),
   { href: '/contact', label: 'Contact' },
 ];
 ---

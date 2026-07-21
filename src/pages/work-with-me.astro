@@ -1,0 +1,218 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { flags } from '../data/flags';
+
+// AI implementation & enablement consulting landing. Gated by flags.workWithMe:
+// while OFF it still builds but carries noindex and no nav link (review-only).
+// Copy grounded in the resume + voice profile; no fabricated clients/testimonials
+// until there are real ones to cite.
+
+const offers = [
+  {
+    kicker: 'Audit',
+    title: 'AI Opportunity Audit & Roadmap',
+    body: 'A clear read on where AI actually earns its place in your business, and where it does not. You get a prioritized roadmap tied to real workflows and real numbers, not a hype deck of everything that is technically possible.',
+  },
+  {
+    kicker: 'Build',
+    title: 'Implementation Sprint',
+    body: 'A working system wired into a process you already run: an agent workflow, an automation, a data pipeline, a reporting layer. The deliverable is something in production that your team can use on Monday, not a demo that impresses the room and then dies.',
+  },
+  {
+    kicker: 'Enable',
+    title: 'Enablement & Adoption',
+    body: 'The part most AI projects skip. Training, documentation, and the centralized knowledge systems that get your team actually using the tooling, plus the operating changes that make the new way the default rather than the exception.',
+  },
+  {
+    kicker: 'Embed',
+    title: 'Fractional AI & Operations Leadership',
+    body: 'For teams that need a hand on the wheel: ongoing, embedded leadership across strategy, implementation, and operations while you build internal capability. A senior operator in the loop without a senior operator on payroll.',
+  },
+];
+
+const proof = [
+  {
+    label: 'Live AI operations',
+    body: 'As Director of Strategy & Operations at Navore Market, I run AI-enabled initiatives and automated workflows inside a working startup: choosing where automation earns its place, wiring it into producer and operational workflows, and building the knowledge systems that keep it usable.',
+  },
+  {
+    label: 'AI adoption at scale',
+    body: 'At HealthRise I drove ML and AI integration across globally distributed teams inside a live healthtech stack, pairing model-driven tooling with the training and workflow changes that got clinical and billing teams to adopt it.',
+  },
+  {
+    label: 'Enterprise transformation',
+    body: 'At Johnson Matthey I led 12 transformation programs across North America, drove 37% process-efficiency improvement, and built a new corporate function from zero. I know how change actually survives contact with a real organization.',
+  },
+  {
+    label: 'Systems I build and run',
+    body: 'Metis, a personal AI operating system for agents, memory, and governed task lifecycles; Agent Workbench, a control plane for multiple AI coding agents; a validation-gated prediction-market signal pipeline. I do not just advise on these systems; I operate them.',
+  },
+];
+
+const steps = [
+  { n: '01', title: 'Diagnose', body: 'We find where AI fits your business and where it does not, and agree on what a win actually looks like before building anything.' },
+  { n: '02', title: 'Build', body: 'I build a working system inside a real workflow, kept auditable and inspectable so you can trust what it does.' },
+  { n: '03', title: 'Enable', body: 'Your team learns to run and extend it. The goal is that the system outlives the engagement and does not depend on me.' },
+];
+---
+
+<BaseLayout
+  title="Work With Me"
+  description="AI implementation and enablement consulting: I turn AI from slideware into working systems your team actually adopts. Strategy, build, and adoption from an operator who runs these systems himself."
+  noindex={!flags.workWithMe}
+>
+  <div class="max-w-5xl mx-auto px-6 pt-32 pb-24">
+
+    <!-- Hero -->
+    <header class="reveal max-w-3xl mb-20">
+      <p class="text-accent font-mono text-xs tracking-widest uppercase mb-5">AI Implementation &amp; Enablement</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-ink leading-tight mb-6">
+        Most AI never makes it out of the demo.<br />I build the systems your team actually uses.
+      </h1>
+      <p class="text-ink-muted text-lg leading-relaxed mb-8">
+        The hard part of AI was never the model. It is deciding where it belongs, wiring it into work people already do, and getting a team to adopt it after the excitement fades. I close that gap, because I have set the strategy, built the systems, and driven the adoption inside real organizations.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a href="/contact" class="wwm-cta wwm-cta--primary">Start a conversation
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/projects" class="wwm-cta wwm-cta--ghost">See systems I have built</a>
+      </div>
+    </header>
+
+    <!-- Who this is for -->
+    <section class="reveal mb-20 max-w-3xl">
+      <p class="text-accent font-mono text-xs tracking-widest uppercase mb-3">Who this is for</p>
+      <p class="text-ink-muted leading-relaxed">
+        Founders and operators at startups and small-to-mid-sized teams who know AI should be doing more for them, but do not have someone who can span the whole distance: the strategy call on where to invest, the technical build, and the unglamorous adoption work that makes it stick. If you want a working system rather than another proof of concept, we should talk.
+      </p>
+    </section>
+
+    <!-- Offers -->
+    <section class="mb-20">
+      <p class="text-accent font-mono text-xs tracking-widest uppercase mb-3">How we can work together</p>
+      <h2 class="text-2xl font-bold text-ink mb-8">Engagements</h2>
+      <div class="reveal-group grid sm:grid-cols-2 gap-5">
+        {offers.map((o) => (
+          <div class="wwm-card">
+            <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-accent-light mb-3">{o.kicker}</p>
+            <h3 class="text-lg font-bold text-ink mb-3">{o.title}</h3>
+            <p class="text-ink-muted text-sm leading-relaxed">{o.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section class="reveal mb-20">
+      <p class="text-accent font-mono text-xs tracking-widest uppercase mb-3">How it works</p>
+      <h2 class="text-2xl font-bold text-ink mb-8">Diagnose, build, enable</h2>
+      <div class="grid sm:grid-cols-3 gap-5">
+        {steps.map((s) => (
+          <div class="wwm-step">
+            <span class="font-mono text-accent-light text-sm">{s.n}</span>
+            <h3 class="text-base font-bold text-ink mt-3 mb-2">{s.title}</h3>
+            <p class="text-ink-muted text-sm leading-relaxed">{s.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Why me / proof -->
+    <section class="mb-20">
+      <p class="text-accent font-mono text-xs tracking-widest uppercase mb-3">Why me</p>
+      <h2 class="text-2xl font-bold text-ink mb-4">Strategy, build, and adoption in one operator</h2>
+      <p class="reveal text-ink-muted leading-relaxed max-w-3xl mb-8">
+        Most people who can talk about AI cannot build it, and most who can build it have never had to make a real organization adopt anything. I have spent seven years on both sides: a chemical engineering foundation and a quantitative MBA from Carnegie Mellon, enterprise transformation experience, and a current operating role building AI into a live startup.
+      </p>
+      <div class="reveal-group grid sm:grid-cols-2 gap-5">
+        {proof.map((p) => (
+          <div class="wwm-card">
+            <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-accent-light mb-3">{p.label}</p>
+            <p class="text-ink-muted text-sm leading-relaxed">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Closing CTA -->
+    <section class="reveal">
+      <div class="wwm-closer">
+        <p class="text-ink text-lg md:text-xl font-semibold leading-relaxed max-w-2xl mb-6">
+          The measure of the work is the system your team still runs after I leave, not the demo that impressed the room. If that is the kind of AI you want, let us build it.
+        </p>
+        <a href="/contact" class="wwm-cta wwm-cta--primary">Start a conversation
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .wwm-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .01em;
+    transition: transform .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
+  }
+  .wwm-cta--primary {
+    color: #0B0D14;
+    background: #A5B4FC;
+    border: 1px solid #A5B4FC;
+  }
+  .wwm-cta--primary:hover {
+    transform: translateY(-2px);
+    background: #C7D2FE;
+    border-color: #C7D2FE;
+  }
+  .wwm-cta--ghost {
+    color: #C7D2FE;
+    border: 1px solid rgba(99, 102, 241, .4);
+    background: rgba(99, 102, 241, .08);
+  }
+  .wwm-cta--ghost:hover {
+    transform: translateY(-2px);
+    border-color: rgba(129, 140, 248, .7);
+    color: #E0E7FF;
+  }
+  .wwm-card {
+    padding: 22px;
+    border: 1px solid #222538;
+    border-top-color: rgba(255, 255, 255, .07);
+    border-radius: 16px;
+    background:
+      radial-gradient(circle at 84% 20%, rgba(129, 140, 248, .10), transparent 40%),
+      #13161F;
+    box-shadow: 0 1px 3px rgba(0,0,0,.5), 0 10px 28px rgba(0,0,0,.22);
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .wwm-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(129, 140, 248, .45);
+  }
+  .wwm-step {
+    padding: 22px;
+    border-left: 2px solid rgba(99, 102, 241, .5);
+    background: linear-gradient(90deg, rgba(99,102,241,.06), transparent 70%);
+    border-radius: 0 12px 12px 0;
+  }
+  .wwm-closer {
+    padding: 40px 32px;
+    border: 1px solid rgba(99, 102, 241, .28);
+    border-radius: 20px;
+    background:
+      radial-gradient(circle at 12% 20%, rgba(129, 140, 248, .14), transparent 46%),
+      linear-gradient(145deg, rgba(255,255,255,.04), transparent 45%),
+      #13161F;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wwm-cta:hover, .wwm-card:hover { transform: none; }
+  }
+</style>
