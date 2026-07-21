@@ -9,6 +9,10 @@ export function getStaticPaths() {
 }
 const { project } = Astro.props;
 const [contextHeader, approachHeader, outcomeHeader] = caseHeadersFor(project.type);
+// Eyebrow = the neutral category word; h2 = a fuller per-project phrase
+// (project.caseHeadings), falling back to the category word when absent.
+const h = project.caseHeadings ?? [];
+const [contextH2, approachH2, outcomeH2] = [h[0] ?? contextHeader, h[1] ?? approachHeader, h[2] ?? outcomeHeader];
 ---
 
 <BaseLayout title={project.title} description={project.description}>
@@ -32,9 +36,9 @@ const [contextHeader, approachHeader, outcomeHeader] = caseHeadersFor(project.ty
         <FocusAreaLinks areaSlugs={project.focusAreas} />
       </aside>
       <div class="space-y-12">
-        <section class="reveal detail-section"><p class="detail-label">{contextHeader}</p><h2>{contextHeader}</h2><p>{project.challenge}</p></section>
-        <section class="reveal detail-section"><p class="detail-label">{approachHeader}</p><h2>{approachHeader}</h2><p>{project.approach}</p></section>
-        <section class="reveal detail-section"><p class="detail-label">{outcomeHeader}</p><h2>{outcomeHeader}</h2><ul>{project.outcomes?.map((outcome: string) => <li>→ {outcome}</li>)}</ul></section>
+        <section class="reveal detail-section"><p class="detail-label">{contextHeader}</p><h2>{contextH2}</h2><p>{project.challenge}</p></section>
+        <section class="reveal detail-section"><p class="detail-label">{approachHeader}</p><h2>{approachH2}</h2><p>{project.approach}</p></section>
+        <section class="reveal detail-section"><p class="detail-label">{outcomeHeader}</p><h2>{outcomeH2}</h2><ul>{project.outcomes?.map((outcome: string) => <li>→ {outcome}</li>)}</ul></section>
       </div>
     </div>
   </article>

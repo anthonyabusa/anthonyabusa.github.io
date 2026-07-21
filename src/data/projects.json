@@ -53,7 +53,12 @@
       "ai-implementation-enablement": "The operator surface that makes AI adoption practical, one control plane where a non-specialist can drive Claude, Codex, and Gemini sessions without living in a terminal.",
       "agent-systems-orchestration": "The control plane that coordinates Claude, Codex, Gemini, shell, and Python sessions from one surface, with routing, persistence, and voice-driven orchestration of parallel agents.",
       "platform-systems-architecture": "A desktop control plane architecture: PTY terminals, persistent sessions, and integrations that unify several AI runtimes behind one operator surface."
-    }
+    },
+    "caseHeadings": [
+      "Taming a sprawl of parallel agents",
+      "A real-terminal control plane",
+      "One cockpit for every agent"
+    ]
   },
   {
     "title": "Polymarket Trading Bot",
@@ -102,7 +107,12 @@
     "focusNarratives": {
       "ai-automation": "The Polymarket bot handles the pieces that should be systematic: market ingestion, normalization, edge scoring, liquidity checks, timing signals, and sizing. Execution stays gated, because the point is not to automate risk faster; it is to make the signal auditable before it gets authority.",
       "data-analytics-engineering": "A full signal pipeline: ingesting prediction markets, normalizing pricing, and scoring edge and liquidity into ranked, decision-ready outputs."
-    }
+    },
+    "caseHeadings": [
+      "Turning market noise into signal",
+      "An auditable ingestion-to-intent pipeline",
+      "From market discovery to sized intent"
+    ]
   },
   {
     "title": "Navore Market",
@@ -160,7 +170,12 @@
       "marketplace-venture-building": "Navore is the venture-building case in its most direct form: supply, demand, trust, logistics, funding, and neighborhood adoption all have to move together. My role translates that 0 to 1 complexity into a clearer marketplace model, producer relationships, hub operations, and a scalable operating playbook.",
       "data-analytics-engineering": "Built the analytics and distribution data layer: producer operations, ordering flows, and the metrics that drive marketplace decisions."
     },
-    "liveStatus": "live"
+    "liveStatus": "live",
+    "caseHeadings": [
+      "A fragmented local-food system",
+      "Shaping the platform and hub operations",
+      "A live marketplace and neighborhood hub"
+    ]
   },
   {
     "title": "Metis",
@@ -228,7 +243,12 @@
       "agent-systems-orchestration": "A governed multi-agent workforce across two machines: specialized lanes, persistent memory, task lifecycles, and orchestration that keeps autonomous work accountable.",
       "platform-systems-architecture": "Multi-machine architecture: two hosts, a served local model, governed sync, and the infrastructure backbone that keeps a distributed agent system running unattended."
     },
-    "liveStatus": "live"
+    "liveStatus": "live",
+    "caseHeadings": [
+      "What agents need beyond a chat window",
+      "A governed, local-first operating layer",
+      "An agent workforce that compounds"
+    ]
   },
   {
     "title": "HealthRise EHR & Revenue Operations",
@@ -289,7 +309,12 @@
       "ai-automation": "At HealthRise, AI had to fit inside healthcare operations rather than sit beside them. I helped drive ML/AI integration across global delivery teams, focusing on model-assisted workflows that could support EHR and revenue-cycle processes without ignoring usability, implementation risk, or delivery constraints.",
       "ai-implementation-enablement": "Ran ML/AI integration programs inside a live healthtech stack, pairing model-driven revenue-cycle tooling with the training and workflow changes that got clinical and billing teams to actually adopt it.",
       "platform-systems-architecture": "Worked across an EHR software platform and revenue-cycle systems, owning the integrations and data plumbing that connect clinical software to billing operations."
-    }
+    },
+    "caseHeadings": [
+      "Where healthtech ambition meets reality",
+      "Driving ML integration as TPM",
+      "ML delivered across global teams"
+    ]
   },
   {
     "title": "Johnson Matthey Enterprise Transformation",
@@ -340,7 +365,12 @@
       "strategy": "Johnson Matthey needed transformation programs that could move a global specialty chemicals business, not just describe a future state. I translated ambiguous corporate priorities into scoped initiatives, stakeholder alignment, measurable efficiency targets, and the case for building a North America Government Affairs function from zero.",
       "operations": "The enterprise changes had to become durable routines inside a complex organization. I led execution across 12 programs, drove process-efficiency improvement, coordinated cross-functional cadences, and helped new capabilities become part of how the business actually worked.",
       "product-program-leadership": "Johnson Matthey required program leadership in a complex enterprise environment. I translated ambiguous priorities into scoped initiatives, built execution rhythms, coordinated cross-functional stakeholders, tracked outcomes, and kept transformation tied to measurable operating improvement rather than slideware."
-    }
+    },
+    "caseHeadings": [
+      "Moving a complex global business",
+      "Turning priorities into programs",
+      "Twelve transformation programs delivered"
+    ]
   },
   {
     "title": "Plotted",
@@ -393,7 +423,12 @@
       "product-program-leadership": "Plotted is a gallery product with a clear editorial voice. Each piece gets its own layout and narrative treatment, built on a reusable Astro + D3 system that keeps production cost low enough to publish steadily.",
       "ai-automation": "The gallery is part of my broader toolkit: AI-assisted research and data prep feed into hand-crafted D3 visualizations. The system handles the ingestion; the editorial judgment stays human.",
       "data-analytics-engineering": "Editorial data engineering: sourcing public datasets, shaping them, and building D3-driven visual stories that stand on their own as analysis."
-    }
+    },
+    "caseHeadings": [
+      "Can a chart be worth reading?",
+      "Bespoke D3 from public datasets",
+      "Data pieces as authored stories"
+    ]
   },
   {
     "title": "Personal Portfolio",
@@ -466,9 +501,14 @@
         "url": "https://www.mainlinemedianews.com/2018/10/09/villanova-photography-exhibit-explores-rural-tibet-mongolia/"
       },
       {
-        "label": "Villanova University Art Gallery",
+        "label": "Find the exhibit in Villanova's past-exhibitions archive",
         "url": "https://www.villanova.edu/university/art-gallery/exhibitions/past-exhibitions.html"
       }
+    ],
+    "caseHeadings": [
+      "Globalization on the ground",
+      "Fieldwork across Tibet and Mongolia",
+      "A public gallery exhibit"
     ]
   }
 ]
