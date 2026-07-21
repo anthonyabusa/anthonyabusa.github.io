@@ -116,6 +116,7 @@
   },
   {
     "title": "Navore Market",
+    "placement": "experience",
     "slug": "navore-market-aggtech-startup",
     "role": "Director of Strategy & Operations",
     "status": "Active venture",
@@ -133,6 +134,8 @@
       "strategy",
       "operations",
       "product-program-leadership",
+      "ai-automation",
+      "ai-implementation-enablement",
       "marketplace-venture-building",
       "data-analytics-engineering"
     ],
@@ -167,6 +170,8 @@
       "strategy": "Navore Market is a USDA-backed local-food marketplace in San Diego. I helped shape the market model around neighborhood hubs, producer relationships, grant milestones, customer segments, strategic partnerships, platform roadmap, and growth loops that can turn local-food demand into something more durable than a one-off storefront.",
       "operations": "Navore has to hold up on the ground. Producer workflows, hub logistics, fulfillment routines, customer support, grant execution, analytics, and performance metrics all have to connect cleanly enough for the model to repeat beyond one neighborhood.",
       "product-program-leadership": "Navore is both a marketplace product and an operating system for local food. Customer experience, producer onboarding, mobile ordering, fulfillment, roadmap tradeoffs, and feedback loops have to evolve together so the marketplace improves as a live service, not as disconnected features.",
+      "ai-automation": "Navore runs leaner because parts of it run themselves. I led the AI-enabled initiatives and automated the reporting and communication workflows a small team would otherwise do by hand, translating business objectives into technical solutions so operations scale without scaling headcount.",
+      "ai-implementation-enablement": "At Navore I own the practical side of bringing AI into a working startup: deciding where automation and LLM tooling actually earn their place, wiring them into real producer and operational workflows, and building the centralized knowledge systems that let the rest of the team use the tooling rather than just the person who built it.",
       "marketplace-venture-building": "Navore is the venture-building case in its most direct form: supply, demand, trust, logistics, funding, and neighborhood adoption all have to move together. My role translates that 0 to 1 complexity into a clearer marketplace model, producer relationships, hub operations, and a scalable operating playbook.",
       "data-analytics-engineering": "Built the analytics and distribution data layer: producer operations, ordering flows, and the metrics that drive marketplace decisions."
     },
@@ -272,7 +277,8 @@
       "product-program-leadership",
       "ai-automation",
       "ai-implementation-enablement",
-      "platform-systems-architecture"
+      "platform-systems-architecture",
+      "data-analytics-engineering"
     ],
     "featured": true,
     "year": 2023,
@@ -308,7 +314,8 @@
       "product-program-leadership": "HealthRise was a SaaS and services environment where product decisions had direct operational consequences. I worked across the product development lifecycle: requirements translation, Scrum delivery, UX/UI testing, roadmap coordination, release planning, stakeholder feedback, and global delivery execution to move EHR and revenue-operations initiatives from idea to shipped workflow.",
       "ai-automation": "At HealthRise, AI had to fit inside healthcare operations rather than sit beside them. I helped drive ML/AI integration across global delivery teams, focusing on model-assisted workflows that could support EHR and revenue-cycle processes without ignoring usability, implementation risk, or delivery constraints.",
       "ai-implementation-enablement": "Ran ML/AI integration programs inside a live healthtech stack, pairing model-driven revenue-cycle tooling with the training and workflow changes that got clinical and billing teams to actually adopt it.",
-      "platform-systems-architecture": "Worked across an EHR software platform and revenue-cycle systems, owning the integrations and data plumbing that connect clinical software to billing operations."
+      "platform-systems-architecture": "Worked across an EHR software platform and revenue-cycle systems, owning the integrations and data plumbing that connect clinical software to billing operations.",
+      "data-analytics-engineering": "HealthRise decisions leaned on forecasting, not gut feel. I built the strategic planning and investment prioritization around predictive analytics, using financial forecasting and model-driven signals to steer resource decisions for executive stakeholders."
     },
     "caseHeadings": [
       "Where healthtech ambition meets reality",
@@ -334,7 +341,8 @@
     "focusAreas": [
       "strategy",
       "operations",
-      "product-program-leadership"
+      "product-program-leadership",
+      "data-analytics-engineering"
     ],
     "featured": true,
     "year": 2019,
@@ -364,7 +372,8 @@
     "focusNarratives": {
       "strategy": "Johnson Matthey needed transformation programs that could move a global specialty chemicals business, not just describe a future state. I translated ambiguous corporate priorities into scoped initiatives, stakeholder alignment, measurable efficiency targets, and the case for building a North America Government Affairs function from zero.",
       "operations": "The enterprise changes had to become durable routines inside a complex organization. I led execution across 12 programs, drove process-efficiency improvement, coordinated cross-functional cadences, and helped new capabilities become part of how the business actually worked.",
-      "product-program-leadership": "Johnson Matthey required program leadership in a complex enterprise environment. I translated ambiguous priorities into scoped initiatives, built execution rhythms, coordinated cross-functional stakeholders, tracked outcomes, and kept transformation tied to measurable operating improvement rather than slideware."
+      "product-program-leadership": "Johnson Matthey required program leadership in a complex enterprise environment. I translated ambiguous priorities into scoped initiatives, built execution rhythms, coordinated cross-functional stakeholders, tracked outcomes, and kept transformation tied to measurable operating improvement rather than slideware.",
+      "data-analytics-engineering": "The strategy work ran on analysis, not intuition: market, competitive, technology, political, and regulatory research feeding recommendations leadership could act on. I derived direction from network analyses, stood up reporting frameworks that raised Toxic Substances compliance and reporting 400% across 19 sites and 50 product lines, and reworked data and IT systems that cut processing times by more than half."
     },
     "caseHeadings": [
       "Moving a complex global business",
