@@ -82,6 +82,12 @@ const { item, asciiKey, showAscii = true } = Astro.props;
     width: 78%;
     height: 60%;
     opacity: 0;
+    /* Now that motifs move for real (spin), keep the copy readable: fade the
+       raster out on its LEFT edge — the side that sits under the text column —
+       so the motion never crawls behind a word. The motif is centred, so this
+       trims empty margin, not the shape. */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 32%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 32%);
     transition: filter .2s ease, transform .2s ease, opacity .35s ease;
   }
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
@@ -97,6 +103,9 @@ const { item, asciiKey, showAscii = true } = Astro.props;
     z-index: 2;
     display: block;
     max-width: 76%;
+    /* Guarantee legibility over the moving raster regardless of what frame it's
+       on — a soft dark halo lifts the copy off the animation. */
+    text-shadow: 0 1px 6px rgba(5, 7, 16, .78);
   }
   /* No ASCII art: let the copy use the full card and drop the height the art needed. */
   .ascii-focus-card--plain {
