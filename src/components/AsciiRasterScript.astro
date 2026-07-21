@@ -42,6 +42,14 @@
   const wobbleAmp = (kind: string) =>
     kind === 'operations' ? 0.07 : kind === 'enablement' ? 0.045 : 0.025;
 
+  // Full structural motion for the motifs a rotation reads correctly on (Ant:
+  // "default to full movement for the ones we can — turn the gears"). The gears
+  // turn; the compass rose seeks the other way. Everything else stays on the
+  // wobble+shimmer above (a brain / rocket / bar chart shouldn't spin). Sign =
+  // direction; magnitude tunes against the rest/hover speed knobs.
+  const spinAmp = (kind: string) =>
+    kind === 'operations' ? 2.6 : kind === 'strategy' ? -1.3 : 0;
+
   const sourceImages: Record<string, HTMLImageElement> = {};
   Object.entries(sourcePaths).forEach(([key, path]) => { sourceImages[key] = loadImage(path); });
 
@@ -52,7 +60,7 @@
 
   function renderFromSource(tc: TextCanvas, kind: string, tick: number, hover: boolean) {
     if (!sourceCtx) return;
-    drawSource(sourceImages[kind], sourceCtx, sourceCanvas.width, sourceCanvas.height, tick, hover, wobbleAmp(kind), RT);
+    drawSource(sourceImages[kind], sourceCtx, sourceCanvas.width, sourceCanvas.height, tick, hover, wobbleAmp(kind), RT, spinAmp(kind));
     renderRaster(tc, kind, textureTokens[kind] ?? 'SYSTEM', sourceCanvas, sourceCtx, tick, hover, RT);
   }
 

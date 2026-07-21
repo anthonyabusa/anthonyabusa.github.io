@@ -39,8 +39,13 @@ function drawChar(tc: TextCanvas, col: number, row: number, char: string, opacit
   tc.ctx.fillText(char, (col + 0.5) * tc.cw, (row + 0.5) * tc.ch);
 }
 
-// Draw the source image with wobble, resolve gradient, and light sweep onto a
-// staging canvas. `wobbleAmp` is the per-surface rotation amplitude.
+// Draw the source image with motion, resolve gradient, and light sweep onto a
+// staging canvas. Motion is one of two modes (Ant, 2026-07-20 "default to full
+// movement for the ones we can — turn the gears"):
+//   • spin ≠ 0  → CONTINUOUS rotation at `spin` rad-velocity (gears actually
+//                 turn, compass rose seeks). Sign sets direction.
+//   • spin = 0  → the calmer sine WOBBLE (`wobbleAmp`) for motifs a full
+//                 rotation would misread (a rocket or bar chart shouldn't spin).
 export function drawSource(
   image: HTMLImageElement,
   ctx: CanvasRenderingContext2D,
@@ -50,6 +55,7 @@ export function drawSource(
   hover: boolean,
   wobbleAmp: number,
   knob: Knob,
+  spin = 0,
 ) {
   ctx.clearRect(0, 0, w, h);
   if (!image || !image.complete || !image.naturalWidth) return;
@@ -62,7 +68,12 @@ export function drawSource(
 
   ctx.save();
   ctx.translate(cx, cy);
-  ctx.rotate(Math.sin(t) * wobbleAmp * knob('wobble', 1));
+  // Continuous spin accumulates with `t` (which itself scales with the speed
+  // knobs, so spinners also quicken on hover); wobble oscillates in place.
+  const angle = spin
+    ? t * spin * knob('spin', 1)
+    : Math.sin(t) * wobbleAmp * knob('wobble', 1);
+  ctx.rotate(angle);
   const scale = hover ? 1.06 : 1;
   ctx.scale(scale, scale);
   ctx.shadowColor = 'rgba(5,7,16,.62)';

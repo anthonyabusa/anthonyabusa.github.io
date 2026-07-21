@@ -47,6 +47,9 @@ const { class: className = '' } = Astro.props;
   ];
   const TOKEN = 'ANTHONYBUSASYSTEMS';
   const WOBBLE = 0.02; // calmer than the cards: this sits beside the headline
+  // Rotational hero marks turn (compass seeks, orbit revolves); the AB monogram
+  // stays put — spinning letters misread. Calmer than the cards (beside copy).
+  const SPIN: Record<string, number> = { 'hero-compass': -0.8, 'hero-orbit': 1.5, 'hero-monogram': 0 };
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const coarse = window.matchMedia('(pointer: coarse)');
@@ -76,7 +79,7 @@ const { class: className = '' } = Astro.props;
 
     const paint = (hover: boolean) => {
       const { image, key } = active();
-      drawSource(image, stagingCtx, staging.width, staging.height, tick, hover, WOBBLE, HT);
+      drawSource(image, stagingCtx, staging.width, staging.height, tick, hover, WOBBLE, HT, SPIN[key] ?? 0);
       renderRaster(tc, key, TOKEN, staging, stagingCtx, tick, hover, HT);
     };
     const paintStatic = () => { tick = 0; paint(false); };
