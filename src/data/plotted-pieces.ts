@@ -16,6 +16,21 @@ export interface Piece {
 
 export const pieces: Piece[] = [
   {
+    slug: 'the-price-of-sunlight',
+    title: 'The Price of Sunlight',
+    dek: 'In one generation the cost of solar electricity fell more than 99 percent. It is now the cheapest power humanity has ever built, and still falling.',
+    kicker: 'Energy · Global · 1976–2024',
+    accent: 'var(--accent-3)',
+    source: {
+      name: 'IRENA · IEA · BloombergNEF · Ember · Our World in Data',
+      url: 'https://ourworldindata.org/grapher/solar-pv-prices',
+      license: 'Public data',
+    },
+    published: '2026-07-21',
+    tags: ['Time series', 'Energy', 'Progress'],
+    status: 'live',
+  },
+  {
     slug: 'who-gets-the-growth',
     title: 'Who Gets the Growth?',
     dek: 'Aggregate output has grown without interruption for seventy years. Its distribution has not kept pace.',
