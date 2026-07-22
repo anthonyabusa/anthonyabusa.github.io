@@ -1,0 +1,127 @@
+/* ── Plotted - house visual language ──────────────────────────────────────
+   One authored system every piece inherits, so the gallery reads as a body of
+   work, not a pile of D3 demos. Editorial "paper" aesthetic: warm ground, ink
+   text, a small curated accent set, fine hairlines, generous measure. */
+
+:root {
+  /* Ground + ink */
+  --paper: #f6f3ec;
+  --paper-2: #efeae0; /* panels, insets */
+  --paper-3: #e8e2d5;
+  --ink: #1b1a17;
+  --ink-soft: #55514a;
+  --ink-faint: #8a857c;
+  --rule: #d8d2c6; /* hairlines, axes */
+
+  /* Curated accents - used sparingly, meaningfully (one story ≈ one hue) */
+  --accent: #c2410c; /* burnt orange - primary */
+  --accent-2: #0f766e; /* teal */
+  --accent-3: #a16207; /* ochre */
+  --accent-4: #7c3aed; /* violet */
+  --accent-warm: #d97706;
+
+  /* Type */
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, monospace;
+
+  /* Type scale (1.25 minor-third) */
+  --step--1: 0.833rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.563rem;
+  --step-3: 1.953rem;
+  --step-4: 2.441rem;
+  --step-5: clamp(2.8rem, 6vw, 3.815rem);
+
+  /* Space + measure */
+  --space-1: 0.5rem;
+  --space-2: 0.75rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+  --measure: 66ch; /* reading width for prose */
+  --frame: min(92rem, 100% - 2.5rem); /* page gutter */
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur: 0.6s;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  font-feature-settings: 'kern' 1, 'liga' 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 560;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+/* Scroll-reveal: pieces fade/rise into view. Opt out under reduced motion. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  will-change: opacity, transform;
+}
+[data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Shared editorial atoms */
+.kicker {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.measure {
+  max-width: var(--measure);
+}
+.rule {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: var(--space-5) 0;
+}

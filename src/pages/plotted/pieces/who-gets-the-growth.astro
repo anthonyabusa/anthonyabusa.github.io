@@ -1,0 +1,357 @@
+---
+import Base from '../../../layouts/PlottedBase.astro';
+import { pieces } from '../../../data/plotted-pieces';
+import { marked } from 'marked';
+import contentJson from '../../../data/pieces-content/who-gets-the-growth.json';
+
+// The piece is fully data-driven: every word, caption, title, and chart spec
+// lives in src/data/pieces-content/who-gets-the-growth.json. This page renders that
+// structure - it holds no prose of its own - so the same content can be edited
+// through the Metis Studio piece editor and re-rendered without touching markup.
+const data: any = contentJson;
+const piece = pieces.find((p) => p.slug === 'who-gets-the-growth')!;
+
+// Inline markdown → HTML for a single run of text (no wrapping <p>).
+const mdi = (s: string): string => marked.parseInline(s ?? '', { async: false }) as string;
+
+// One prose part is either a paragraph {md, lead?} or a pull-quote {pull, cite?}.
+const partHtml = (p: any): string =>
+  p.pull ? mdi(p.pull) + (p.cite ? `<cite>${p.cite}</cite>` : '') : mdi(p.md);
+
+// Chart specs, keyed by svg id, handed to the client engine as JSON.
+const chartSpecs: Record<string, any> = {};
+for (const b of data.blocks) if (b.type === 'chart') chartSpecs[b.chartId] = b.chart;
+---
+
+<Base title={`${piece.title} · Plotted`} description={piece.dek}>
+  <article class="piece">
+    <header class="piece-head" data-reveal>
+      <p class="kicker">{data.head.kicker}</p>
+      <h1 set:html={mdi(data.head.title)} />
+      <p class="standfirst">{data.head.standfirst}</p>
+    </header>
+
+    {data.blocks.map((b: any) => {
+      if (b.type === 'intro')
+        return (
+          <div class="prose" data-reveal>
+            {b.parts.map((p: any) => <p class={p.lead ? 'lead' : undefined} set:html={partHtml(p)} />)}
+          </div>
+        );
+
+      if (b.type === 'chart')
+        return (
+          <section data-reveal>
+            <h2>{b.title}</h2>
+            <figure>
+              <p class="subhead">{b.subhead}</p>
+              <svg id={b.chartId} role="img" aria-label={b.aria}></svg>
+              <figcaption>
+                <span class="fignum">{b.fignum}</span>
+                <p class="signote" set:html={mdi(b.caption)} />
+              </figcaption>
+            </figure>
+            <div class="prose">
+              {b.parts.map((p: any) => <p class={p.pull ? 'pull' : p.lead ? 'lead' : undefined} set:html={partHtml(p)} />)}
+            </div>
+          </section>
+        );
+
+      if (b.type === 'stats')
+        return (
+          <section data-reveal>
+            <h2>{b.title}</h2>
+            <div class="stats">
+              {b.stats.map((s: any) => (
+                <div class="stat"><div class="n">{s.n}</div><div class="l" set:html={mdi(s.l)} /></div>
+              ))}
+            </div>
+            <div class="prose">
+              {b.parts.map((p: any) => <p class={p.lead ? 'lead' : undefined} set:html={partHtml(p)} />)}
+            </div>
+            {b.callouts.map((c: any) => (
+              <div class="callout"><p class="t">{c.t}</p><p set:html={mdi(c.md)} /></div>
+            ))}
+          </section>
+        );
+
+      if (b.type === 'prose')
+        return (
+          <section class="prose" data-reveal>
+            <h2>{b.title}</h2>
+            {b.parts.map((p: any) => <p class={p.pull ? 'pull' : p.lead ? 'lead' : undefined} set:html={partHtml(p)} />)}
+          </section>
+        );
+
+      return null;
+    })}
+
+    <footer class="piece-foot" data-reveal>
+      <hr class="rule" />
+      <p class="sources" set:html={mdi(data.foot.sourcesMd)} />
+      <dl class="meta">
+        {data.foot.meta.map((m: any) => (
+          <div><dt>{m.dt}</dt><dd>{m.dd}</dd></div>
+        ))}
+      </dl>
+      <p class="back"><a href="/plotted">← Back to the gallery</a></p>
+    </footer>
+  </article>
+
+  <script type="application/json" id="chart-specs" is:inline set:html={JSON.stringify(chartSpecs)}></script>
+</Base>
+
+<style>
+  .piece {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 var(--space-3);
+  }
+  .piece-head { padding: var(--space-6) 0 var(--space-4); }
+  .piece-head h1 { font-size: var(--step-5); margin: var(--space-2) 0 var(--space-3); }
+  .piece-head h1 em { font-style: italic; color: var(--accent-2); }
+  .standfirst {
+    font-size: var(--step-2);
+    line-height: 1.35;
+    color: var(--ink-soft);
+    font-family: var(--font-display);
+    font-weight: 400;
+    max-width: 34ch;
+  }
+
+  section { margin: var(--space-6) 0 0; }
+  section h2 {
+    font-size: var(--step-3);
+    line-height: 1.14;
+    margin: 0 0 var(--space-3);
+    max-width: 24ch;
+  }
+
+  .prose { margin: var(--space-4) 0 0; }
+  .prose p { font-size: var(--step-1); line-height: 1.65; margin: 0 0 var(--space-3); font-family: var(--font-display); font-weight: 400; }
+  .prose p.lead::first-letter {
+    font-family: var(--font-display);
+    font-size: 3.4em;
+    float: left;
+    line-height: 0.8;
+    padding: 0.08em 0.1em 0 0;
+    color: var(--accent-2);
+    font-weight: 560;
+  }
+  .prose strong { font-weight: 600; color: var(--ink); }
+  .pull {
+    font-style: italic;
+    font-size: var(--step-2);
+    line-height: 1.34;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: var(--space-3) 0;
+    margin: var(--space-4) 0;
+  }
+  .pull cite {
+    display: block;
+    font-style: normal;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: var(--space-2);
+  }
+
+  figure { margin: var(--space-4) 0 0; padding: 0; }
+  .subhead { font-family: var(--font-sans); font-size: var(--step-0); font-weight: 600; color: var(--ink-soft); margin: 0; }
+  svg { display: block; width: 100%; height: auto; overflow: visible; touch-action: pan-y; margin-top: var(--space-2); }
+  figcaption {
+    margin: var(--space-2) 0 0;
+    padding-top: var(--space-1);
+    border-top: 1px solid var(--rule);
+    display: flex;
+    gap: var(--space-2);
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .fignum {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .signote { font-family: var(--font-sans); font-size: var(--step--1); color: var(--ink-faint); line-height: 1.45; margin: 0; flex: 1; min-width: 15rem; }
+  .signote strong { color: var(--ink-soft); font-weight: 600; }
+
+  .callout {
+    background: var(--paper-2);
+    border-left: 2px solid var(--accent-3);
+    padding: var(--space-1) 0 var(--space-1) var(--space-3);
+    margin: var(--space-4) 0 0;
+  }
+  .callout .t {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-3);
+    margin: 0 0 var(--space-1);
+  }
+  .callout p { margin: 0; color: var(--ink-soft); font-size: var(--step-0); line-height: 1.56; font-family: var(--font-display); }
+  .callout strong { color: var(--ink); }
+
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin: var(--space-4) 0 0; }
+  .stat .n { font-family: var(--font-display); font-size: var(--step-3); font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; color: var(--accent-2); }
+  .stat .l { font-size: var(--step--1); color: var(--ink-soft); margin-top: var(--space-1); line-height: 1.35; }
+  @media (max-width: 30rem) { .stats { grid-template-columns: 1fr; } }
+
+  .piece-foot { margin-top: var(--space-6); }
+  .sources { font-family: var(--font-mono); font-size: var(--step--1); line-height: 1.7; color: var(--ink-faint); margin: 0 0 var(--space-4); }
+  .sources strong { color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+  .sources a { color: var(--accent-2); text-decoration: none; }
+  .meta { display: flex; flex-wrap: wrap; gap: var(--space-4); margin: 0; font-size: var(--step--1); }
+  .meta dt { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); margin-bottom: 2px; }
+  .meta dd { margin: 0; color: var(--ink-soft); }
+  .back { margin-top: var(--space-4); font-family: var(--font-mono); font-size: var(--step--1); }
+  .back a { color: var(--ink-soft); text-decoration: none; }
+  .back a:hover { color: var(--accent-2); }
+</style>
+
+<script>
+  // Hand-set SVG charts - no D3. Shared line + diverging-bar engine, direct labels
+  // (no legends), one pre-attentive cue per chart, zero-baseline bars: the house
+  // data-viz rules. Reads the Plotted design tokens so colour + type stay in system.
+  // Chart specs are data (embedded as JSON by the page) so graphics stay editable.
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(n, a) { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; }
+  // House tokens resolved from a static map, NOT getComputedStyle. This module script
+  // is deferred and on WebKit/Safari it runs before the tokens.css stylesheet has
+  // applied, so getComputedStyle(documentElement).getPropertyValue('--accent') returned
+  // '' at draw time - empty stroke/fill = invisible lines + black labels on mobile
+  // Safari (never on Chromium, which resolved in the same tick). Mirrors the same fix
+  // in metis-command's lib/plotted-chart.ts. Values are the canonical tokens.css set.
+  const TOKENS = {
+    '--paper': '#f6f3ec', '--paper-2': '#efeae0', '--paper-3': '#e8e2d5',
+    '--ink': '#1b1a17', '--ink-soft': '#55514a', '--ink-faint': '#8a857c', '--rule': '#d8d2c6',
+    '--accent': '#c2410c', '--accent-2': '#0f766e', '--accent-3': '#a16207',
+    '--accent-4': '#7c3aed', '--accent-warm': '#d97706',
+    '--font-display': "'Fraunces','Iowan Old Style',Georgia,'Times New Roman',serif",
+    '--font-sans': "'Inter',system-ui,-apple-system,'Segoe UI',sans-serif",
+    '--font-mono': "ui-monospace,'SF Mono','Cascadia Mono',Menlo,monospace",
+  };
+  function css(v) { return TOKENS[v] || getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Declarative axis/hover formatters, referenced by token in the chart spec so the
+  // whole chart is JSON-serialisable (and therefore editable) rather than holding code.
+  const YFMT = { pct: (v) => v + '%', dollarK: (v) => '$' + (v / 1000) + 'k' };
+  const HFMT = {
+    plusPct: (v) => '+' + Math.round(v) + '%',
+    fixed1pct: (v) => v.toFixed(1) + '%',
+    round: (v) => Math.round(v),
+    dollar: (v) => '$' + Math.round(v).toLocaleString(),
+  };
+
+  function makeChart(id, cfg) {
+    const svg = document.getElementById(id);
+    if (!svg) return;
+    const W = 680, H = cfg.H || 330, M = { t: 16, r: cfg.mr || 96, b: 30, l: cfg.ml || 30 };
+    const iw = W - M.l - M.r, ih = H - M.t - M.b;
+    const x = (v) => M.l + (v - cfg.xmin) / (cfg.xmax - cfg.xmin) * iw;
+    const y = (v) => M.t + ih - (v - cfg.ymin) / (cfg.ymax - cfg.ymin) * ih;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    cfg.yticks.forEach((t) => {
+      svg.appendChild(el('line', { x1: M.l, x2: M.l + iw, y1: y(t), y2: y(t), stroke: css('--rule'), 'stroke-width': 1 }));
+      const tx = el('text', { x: M.l - 6, y: y(t) + 4, 'text-anchor': 'end', 'font-family': css('--font-mono'), 'font-size': 10, fill: css('--ink-faint') });
+      tx.textContent = cfg.yfmt ? cfg.yfmt(t) : t; svg.appendChild(tx);
+    });
+    cfg.xticks.forEach((t) => {
+      const tx = el('text', { x: x(t), y: M.t + ih + 18, 'text-anchor': 'middle', 'font-family': css('--font-mono'), 'font-size': 10, fill: css('--ink-faint') });
+      tx.textContent = t; svg.appendChild(tx);
+    });
+    if (cfg.mark) {
+      const mx = x(cfg.mark[0]);
+      svg.appendChild(el('line', { x1: mx, x2: mx, y1: M.t + 2, y2: M.t + ih, stroke: css('--ink-faint'), 'stroke-width': 1, 'stroke-dasharray': '2 3', opacity: 0.7 }));
+      const mt = el('text', { x: mx, y: M.t - 3, 'text-anchor': 'middle', 'font-family': css('--font-mono'), 'font-size': 10.5, 'font-weight': 600, fill: css('--ink-soft') });
+      mt.textContent = cfg.mark[1]; svg.appendChild(mt);
+    }
+    cfg.series.forEach((s) => {
+      const d = s.pts.map((p, i) => (i ? 'L' : 'M') + x(p[0]) + ',' + y(p[1])).join('');
+      if (s.area) {
+        const ad = 'M' + x(s.pts[0][0]) + ',' + y(cfg.ymin) + s.pts.map((p) => 'L' + x(p[0]) + ',' + y(p[1])).join('') + 'L' + x(s.pts[s.pts.length - 1][0]) + ',' + y(cfg.ymin) + 'Z';
+        svg.appendChild(el('path', { d: ad, fill: css(s.color), opacity: 0.08 }));
+      }
+      const ln = el('path', { d: d, fill: 'none', stroke: css(s.color), 'stroke-width': s.w || 2.4, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', opacity: s.mute ? 0.85 : 1 });
+      svg.appendChild(ln);
+      if (!reduce) { const L = ln.getTotalLength(); ln.style.strokeDasharray = L; ln.style.strokeDashoffset = L; ln.getBoundingClientRect(); ln.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(.22,.61,.36,1)'; ln.style.strokeDashoffset = 0; }
+      const lp = s.pts[s.pts.length - 1], ly = y(lp[1]) + (s.dy || 0);
+      svg.appendChild(el('circle', { cx: x(lp[0]), cy: y(lp[1]), r: 3, fill: css(s.color) }));
+      const nm = el('text', { x: x(lp[0]) + 8, y: ly - 3, 'font-family': css('--font-sans'), 'font-size': 11, 'font-weight': 600, fill: css(s.color) });
+      nm.textContent = s.label; svg.appendChild(nm);
+      const vl = el('text', { x: x(lp[0]) + 8, y: ly + 9, 'font-family': css('--font-mono'), 'font-size': 10.5, fill: css(s.mute ? '--ink-faint' : s.color) });
+      vl.textContent = s.val; svg.appendChild(vl);
+    });
+    // hover readout
+    const guide = el('line', { y1: M.t, y2: M.t + ih, stroke: css('--ink'), 'stroke-width': 1, opacity: 0 }); svg.appendChild(guide);
+    const dots = cfg.series.map((s) => { const c = el('circle', { r: 4, fill: css(s.color), stroke: css('--paper'), 'stroke-width': 1.5, opacity: 0 }); svg.appendChild(c); return c; });
+    const bg = el('rect', { rx: 3, fill: css('--ink'), opacity: 0 }); svg.appendChild(bg);
+    const lbl = el('text', { 'font-family': css('--font-mono'), 'font-size': 11, fill: css('--paper'), opacity: 0, 'text-anchor': 'middle' }); svg.appendChild(lbl);
+    function interp(pts, xv) { for (let i = 0; i < pts.length - 1; i++) { if (xv >= pts[i][0] && xv <= pts[i + 1][0]) { const t = (xv - pts[i][0]) / (pts[i + 1][0] - pts[i][0]); return pts[i][1] + t * (pts[i + 1][1] - pts[i][1]); } } return xv < pts[0][0] ? pts[0][1] : pts[pts.length - 1][1]; }
+    const over = el('rect', { x: M.l, y: M.t, width: iw, height: ih, fill: 'transparent', cursor: 'crosshair' }); svg.appendChild(over);
+    function move(ev) {
+      const r = svg.getBoundingClientRect();
+      const cx = ((ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left) / r.width * W;
+      let xv = Math.round(cfg.xmin + (cx - M.l) / iw * (cfg.xmax - cfg.xmin)); xv = Math.max(cfg.xmin, Math.min(cfg.xmax, xv));
+      guide.setAttribute('x1', x(xv)); guide.setAttribute('x2', x(xv)); guide.setAttribute('opacity', 0.16);
+      const parts = [xv];
+      cfg.series.forEach((s, i) => { const yv = interp(s.pts, xv); dots[i].setAttribute('cx', x(xv)); dots[i].setAttribute('cy', y(yv)); dots[i].setAttribute('opacity', 1); parts.push(cfg.hfmt ? cfg.hfmt(yv) : Math.round(yv)); });
+      const txt = parts.join('  '); lbl.textContent = txt; const w = txt.length * 6.7 + 14;
+      const lx = Math.max(M.l + w / 2, Math.min(M.l + iw - w / 2, x(xv)));
+      lbl.setAttribute('x', lx); lbl.setAttribute('y', M.t + 12); lbl.setAttribute('opacity', 1);
+      bg.setAttribute('x', lx - w / 2); bg.setAttribute('y', M.t); bg.setAttribute('width', w); bg.setAttribute('height', 17); bg.setAttribute('opacity', 0.92);
+    }
+    function leave() { guide.setAttribute('opacity', 0); bg.setAttribute('opacity', 0); lbl.setAttribute('opacity', 0); dots.forEach((d) => d.setAttribute('opacity', 0)); }
+    over.addEventListener('pointermove', move); over.addEventListener('pointerleave', leave); over.addEventListener('touchmove', (e) => move(e), { passive: true });
+  }
+
+  function makeBars(id, cfg) {
+    const svg = document.getElementById(id);
+    if (!svg) return;
+    const W = 680, H = 340, M = { t: 22, r: 16, b: 56, l: 44 };
+    const iw = W - M.l - M.r, ih = H - M.t - M.b;
+    const y = (v) => M.t + ih - (v - cfg.ymin) / (cfg.ymax - cfg.ymin) * ih;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    cfg.yticks.forEach((t) => {
+      svg.appendChild(el('line', { x1: M.l, x2: M.l + iw, y1: y(t), y2: y(t), stroke: t === 0 ? css('--ink-faint') : css('--rule'), 'stroke-width': t === 0 ? 1.5 : 1 }));
+      const tx = el('text', { x: M.l - 6, y: y(t) + 4, 'text-anchor': 'end', 'font-family': css('--font-mono'), 'font-size': 10, fill: css('--ink-faint') });
+      tx.textContent = (t > 0 ? '+' : '') + t; svg.appendChild(tx);
+    });
+    const n = cfg.bars.length, gap = iw / n, bw = gap * 0.52;
+    cfg.bars.forEach((b, i) => {
+      const bx = M.l + gap * i + gap / 2 - bw / 2, col = b.r >= 0 ? '--accent-3' : '--accent';
+      const y0 = y(0), y1 = y(b.r), ry = Math.min(y0, y1), rh = Math.abs(y1 - y0);
+      const rect = el('rect', { x: bx, y: ry, width: bw, height: rh, fill: css(col), rx: 2 });
+      svg.appendChild(rect);
+      if (!reduce) { rect.setAttribute('y', y0); rect.setAttribute('height', 0); rect.getBoundingClientRect(); rect.style.transition = 'y .8s cubic-bezier(.22,.61,.36,1) ' + (i * 0.08) + 's, height .8s cubic-bezier(.22,.61,.36,1) ' + (i * 0.08) + 's'; rect.setAttribute('y', ry); rect.setAttribute('height', rh); }
+      const vt = el('text', { x: bx + bw / 2, y: b.r >= 0 ? y1 - 8 : y1 + 16, 'text-anchor': 'middle', 'font-family': css('--font-display'), 'font-size': 15, 'font-weight': 600, fill: css(col) });
+      vt.textContent = (b.r > 0 ? '+' : '') + b.r; svg.appendChild(vt);
+      const gt = el('text', { x: bx + bw / 2, y: M.t + ih + 20, 'text-anchor': 'middle', 'font-family': css('--font-sans'), 'font-size': 11, 'font-weight': 600, fill: css('--ink-soft') });
+      gt.textContent = b.k; svg.appendChild(gt);
+      const at = el('text', { x: bx + bw / 2, y: M.t + ih + 34, 'text-anchor': 'middle', 'font-family': css('--font-mono'), 'font-size': 10, fill: css('--ink-faint') });
+      at.textContent = b.a; svg.appendChild(at);
+    });
+  }
+
+  // Draw every chart from the embedded spec. Format tokens resolve to the functions
+  // above; type picks the engine. Nothing here hardcodes a chart's data.
+  const specsEl = document.getElementById('chart-specs');
+  const specs = specsEl && specsEl.textContent ? JSON.parse(specsEl.textContent) : {};
+  Object.keys(specs).forEach((id) => {
+    const spec = specs[id];
+    const cfg = Object.assign({}, spec);
+    if (spec.yfmt) cfg.yfmt = YFMT[spec.yfmt];
+    if (spec.hfmt) cfg.hfmt = HFMT[spec.hfmt];
+    if (spec.type === 'bars') makeBars(id, cfg);
+    else makeChart(id, cfg);
+  });
+</script>
