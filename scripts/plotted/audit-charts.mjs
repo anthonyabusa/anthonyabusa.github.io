@@ -44,7 +44,14 @@ async function auditPass(browser, reduced) {
         for (let i = 0; i < boxes.length; i++) for (let j = i + 1; j < boxes.length; j++)
           if (ov(boxes[i], boxes[j]) && !stack(boxes[i], boxes[j])) hits.push(`${boxes[i].s}|${boxes[j].s}`);
         const strokes = [...svg.querySelectorAll('path')].filter((p) => { const st = p.getAttribute('stroke'); return st && st !== 'none'; }).length;
-        out.push({ id: svg.id, overlaps: hits, strokes });
+        // Bars pieces draw data as filled <rect>s (not stroked paths); count them as marks so a
+        // legit bars chart (strokes=0 by design) isn't flagged empty. Skip transparent/opacity:0
+        // helper rects (hover overlay, focus-glow bg).
+        const bars = [...svg.querySelectorAll('rect')].filter((r) => {
+          const f = r.getAttribute('fill'); if (!f || f === 'none' || f === 'transparent') return false;
+          const op = r.getAttribute('opacity'); return !(op !== null && parseFloat(op) === 0);
+        }).length;
+        out.push({ id: svg.id, overlaps: hits, strokes, marks: strokes + bars });
       }
       // also check body doesn't overflow horizontally at 390
       const overflow = document.documentElement.scrollWidth > 400;
@@ -54,9 +61,9 @@ async function auditPass(browser, reduced) {
     const name = path.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '');
     if (!reduced) await page.screenshot({ path: `${OUT}/${name}.png`, fullPage: true });
     for (const c of report.charts) {
-      const bad = c.overlaps.length || c.strokes === 0;
+      const bad = c.overlaps.length || c.marks === 0;
       if (bad) fail++;
-      console.log(`  [${tag}] ${path} ${c.id}: ${c.overlaps.length ? 'OVERLAP ' + c.overlaps.join(', ') : 'clean'} strokes=${c.strokes}`);
+      console.log(`  [${tag}] ${path} ${c.id}: ${c.overlaps.length ? 'OVERLAP ' + c.overlaps.join(', ') : 'clean'} marks=${c.marks} (strokes=${c.strokes})`);
     }
     if (report.overflow) { fail++; console.log(`  [${tag}] ${path}: HORIZONTAL OVERFLOW at 390px`); }
     if (errs.length) { fail++; console.log(`  [${tag}] ${path}: CONSOLE ERRORS ${errs.join(' ; ')}`); }
