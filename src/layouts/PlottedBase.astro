@@ -1,0 +1,128 @@
+---
+import '../styles/plotted-tokens.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Plotted · data visualizations',
+  description = 'A gallery of in-house data visualizations. Each piece tells one story, built to stand on its own.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,600&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="site-head">
+      <a class="wordmark" href="/plotted">Plotted</a>
+      <nav>
+        <a href="/plotted">Gallery</a>
+        <a href="/plotted/about">About</a>
+      </nav>
+    </header>
+
+    <slot />
+
+    <footer class="site-foot">
+      <p>
+        <strong>Plotted</strong>. Data visualizations by Anthony Busa. Every
+        piece names its source and license.
+      </p>
+      <p class="foot-links">
+        <a href="https://anthonyabusa.com">anthonyabusa.com</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://anthonyabusa.com/apps">More apps</a>
+      </p>
+    </footer>
+
+    <style>
+      .site-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        width: var(--frame);
+        margin: 0 auto;
+        padding: var(--space-4) 0 var(--space-3);
+      }
+      .wordmark {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: var(--step-2);
+        letter-spacing: -0.02em;
+        text-decoration: none;
+      }
+      .site-head nav {
+        display: flex;
+        gap: var(--space-4);
+        font-size: var(--step--1);
+        font-family: var(--font-mono);
+        letter-spacing: 0.04em;
+      }
+      .site-head nav a {
+        text-decoration: none;
+        color: var(--ink-soft);
+        padding-bottom: 2px;
+        border-bottom: 1px solid transparent;
+        transition: color 0.2s, border-color 0.2s;
+      }
+      .site-head nav a:hover {
+        color: var(--ink);
+        border-color: var(--accent);
+      }
+      .site-foot {
+        width: var(--frame);
+        margin: var(--space-7) auto var(--space-6);
+        padding-top: var(--space-4);
+        border-top: 1px solid var(--rule);
+        color: var(--ink-faint);
+        font-size: var(--step--1);
+      }
+      .site-foot strong {
+        color: var(--ink-soft);
+      }
+      .foot-links {
+        display: flex;
+        gap: var(--space-2);
+      }
+      .foot-links a {
+        color: var(--ink-soft);
+        text-decoration: none;
+      }
+      .foot-links a:hover {
+        color: var(--accent);
+      }
+    </style>
+
+    <script>
+      // Reveal elements as they enter the viewport - the gallery's shared motion.
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+      );
+      const attach = () =>
+        document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+      if (document.readyState !== 'loading') attach();
+      else document.addEventListener('DOMContentLoaded', attach);
+    </script>
+  </body>
+</html>

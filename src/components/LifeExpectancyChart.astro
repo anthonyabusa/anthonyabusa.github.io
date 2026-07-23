@@ -1,0 +1,240 @@
+---
+// Interactive world life-expectancy chart. Everything lives inside the SVG (marks
+// + foreignObject callouts) so labels share the chart's coordinate system and
+// scale exactly with it. Hover to read any year; toggle countries to see how
+// uneven the global gain was.
+import { countries } from '../data/life-expectancy';
+---
+
+<figure class="le" data-reveal>
+  <div class="le-controls">
+    <span class="le-key le-key--world"><i></i>World</span>
+    {
+      countries.map((c) => (
+        <button type="button" class="le-key le-toggle" data-country={c.name} style={`--k:${c.accent}`}>
+          <i></i>{c.name}
+        </button>
+      ))
+    }
+    <span class="le-hint">tap a country to compare</span>
+  </div>
+
+  <div class="le-stage" id="le-stage">
+    <svg id="le-svg" role="img" aria-label="World life expectancy at birth, 1800 to 2021, rising from about 28 to about 71 years."></svg>
+  </div>
+
+  <ol class="le-notes" id="le-notes"></ol>
+
+  <p class="le-foot">Period life expectancy at birth. Hover for exact figures.</p>
+</figure>
+
+<style>
+  .le { margin: var(--space-5) 0; }
+  .le-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    margin-bottom: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+  }
+  .le-key { display: inline-flex; align-items: center; gap: 0.5em; color: var(--ink-soft); }
+  .le-key i { width: 14px; height: 3px; border-radius: 2px; background: var(--k, var(--accent)); }
+  .le-key--world i { background: var(--accent); }
+  .le-toggle {
+    border: 1px solid var(--rule);
+    background: transparent;
+    border-radius: 999px;
+    padding: 3px 10px;
+    cursor: pointer;
+    color: var(--ink-faint);
+    font: inherit;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .le-toggle i { opacity: 0.35; transition: opacity 0.2s; }
+  .le-toggle[aria-pressed='true'] { color: var(--ink); border-color: var(--k); background: color-mix(in srgb, var(--k) 8%, transparent); }
+  .le-toggle[aria-pressed='true'] i { opacity: 1; }
+  .le-hint { margin-left: auto; color: var(--ink-faint); font-style: italic; }
+
+  .le-stage { position: relative; width: 100%; }
+  #le-svg { display: block; width: 100%; height: auto; }
+
+  /* Callouts + readout live in foreignObject, so they scale with the chart. */
+  :global(.le-note) { font-size: 12px; line-height: 1.35; color: var(--ink-soft); font-family: var(--font-sans); }
+  :global(.le-note b) { color: var(--ink); font-weight: 600; }
+  :global(.le-readout) {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .le-notes { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: grid; gap: var(--space-2); }
+  /* li/.n are injected via JS, so they don't carry Astro's scope attribute - style them globally. */
+  :global(.le-notes li) { display: flex; align-items: flex-start; gap: var(--space-2); font-size: var(--step--1); line-height: 1.45; color: var(--ink-soft); }
+  :global(.le-notes b) { color: var(--ink); font-weight: 600; }
+  :global(.le-notes .n) {
+    flex: none; width: 18px; height: 18px; border-radius: 50%; margin-top: 1px;
+    color: var(--paper); font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .le-foot { font-family: var(--font-mono); font-size: var(--step--1); color: var(--ink-faint); margin: var(--space-3) 0 0; }
+</style>
+
+<script>
+  import * as d3 from 'd3';
+  import { world, countries, annotations } from '../data/life-expectancy';
+
+  const svg = d3.select<SVGSVGElement, unknown>('#le-svg');
+  const stage = document.getElementById('le-stage')!;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const active = new Set<string>();
+  let drawnOnce = false;
+
+  const M = { t: 26, r: 24, b: 34, l: 40 };
+  const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
+
+  function render() {
+    const W = stage.clientWidth || 720;
+    const H = Math.round(Math.min(560, Math.max(360, W * 0.58)));
+    const iw = W - M.l - M.r;
+    const ih = H - M.t - M.b;
+
+    const x = d3.scaleLinear().domain([1800, 2021]).range([M.l, M.l + iw]);
+    const y = d3.scaleLinear().domain([20, 90]).range([M.t + ih, M.t]);
+
+    svg.attr('viewBox', `0 0 ${W} ${H}`).attr('preserveAspectRatio', 'xMidYMid meet');
+    svg.selectAll('*').remove();
+
+    // Gridlines + y labels
+    const yt = [30, 45, 60, 75, 90];
+    const grid = svg.append('g');
+    grid.selectAll('line').data(yt).join('line')
+      .attr('x1', M.l).attr('x2', M.l + iw).attr('y1', (d) => y(d)).attr('y2', (d) => y(d))
+      .attr('stroke', 'var(--rule)').attr('stroke-width', 1);
+    grid.selectAll('text').data(yt).join('text')
+      .attr('x', M.l - 8).attr('y', (d) => y(d) + 3).attr('text-anchor', 'end')
+      .attr('font-family', 'var(--font-mono)').attr('font-size', 11).attr('fill', 'var(--ink-faint)')
+      .text((d) => d);
+
+    // X year labels
+    svg.append('g').selectAll('text').data([1800, 1850, 1900, 1950, 2000]).join('text')
+      .attr('x', (d) => x(d)).attr('y', M.t + ih + 22).attr('text-anchor', 'middle')
+      .attr('font-family', 'var(--font-mono)').attr('font-size', 11).attr('fill', 'var(--ink-faint)')
+      .text((d) => d);
+
+    // Reference line at 2x the 1800 world level - makes "more than doubled" literal.
+    const base2x = world[0].value * 2;
+    svg.append('line').attr('x1', M.l).attr('x2', M.l + iw).attr('y1', y(base2x)).attr('y2', y(base2x))
+      .attr('stroke', 'var(--ink-faint)').attr('stroke-width', 1).attr('stroke-dasharray', '5 5').attr('opacity', 0.55);
+    svg.append('text').attr('x', M.l + 4).attr('y', y(base2x) - 6)
+      .attr('font-family', 'var(--font-mono)').attr('font-size', 10).attr('fill', 'var(--ink-faint)')
+      .text(`double the 1800 level (${base2x.toFixed(0)})`);
+
+    const line = d3.line<{ year: number; value: number }>().x((d) => x(d.year)).y((d) => y(d.value)).curve(d3.curveMonotoneX);
+    const area = d3.area<{ year: number; value: number }>().x((d) => x(d.year)).y0(M.t + ih).y1((d) => y(d.value)).curve(d3.curveMonotoneX);
+
+    // World area + line
+    svg.append('path').datum(world).attr('d', area).attr('fill', 'var(--accent)').attr('opacity', 0.08);
+    const path = svg.append('path').datum(world).attr('d', line)
+      .attr('fill', 'none').attr('stroke', 'var(--accent)').attr('stroke-width', 2.5)
+      .attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round');
+
+    svg.append('g').selectAll('circle').data(world).join('circle')
+      .attr('cx', (d) => x(d.year)).attr('cy', (d) => y(d.value)).attr('r', 2.6)
+      .attr('fill', 'var(--paper)').attr('stroke', 'var(--accent)').attr('stroke-width', 1.5);
+
+    // Country overlays
+    for (const c of countries) {
+      if (!active.has(c.name)) continue;
+      svg.append('path').datum(c.series).attr('d', line)
+        .attr('fill', 'none').attr('stroke', c.accent).attr('stroke-width', 2)
+        .attr('stroke-dasharray', '1 5').attr('stroke-linecap', 'round');
+      const last = c.series[c.series.length - 1];
+      // Pin the label just inside the right frame, right-anchored, so long names don't clip.
+      svg.append('text').attr('x', W - M.r).attr('y', y(last.value) - 6).attr('text-anchor', 'end')
+        .attr('font-family', 'var(--font-mono)').attr('font-size', 11).attr('fill', c.accent).text(c.name);
+    }
+
+    // Animated line reveal on first view
+    if (!reduce && !drawnOnce) {
+      const len = (path.node() as SVGPathElement).getTotalLength();
+      path.attr('stroke-dasharray', `${len} ${len}`).attr('stroke-dashoffset', len)
+        .transition().duration(1400).ease(d3.easeCubicInOut).attr('stroke-dashoffset', 0);
+    }
+
+    // Annotation callouts. Wide screens get elegant leader-line callouts overlaid
+    // on the chart; narrow screens (where overlaid callouts collide) get numbered
+    // markers on the line paired with a numbered list beneath.
+    const wide = W >= 560;
+    const notes = document.getElementById('le-notes');
+    if (notes) { notes.innerHTML = ''; notes.style.display = wide ? 'none' : ''; }
+    const NW = 190, NH = 52;
+    annotations.forEach((a, i) => {
+      const c = a.dir === 'down' ? 'var(--accent)' : 'var(--accent-2)';
+      if (wide) {
+        const px = clamp(x(a.year) - NW / 2, 4, W - NW - 4);
+        const py = a.dir === 'down' ? y(a.value) + 14 : y(a.value) - NH - 12;
+        svg.append('line')
+          .attr('x1', x(a.year)).attr('x2', x(a.year))
+          .attr('y1', y(a.value) + (a.dir === 'down' ? 4 : -4))
+          .attr('y2', a.dir === 'down' ? py : py + NH)
+          .attr('stroke', 'var(--ink-faint)').attr('stroke-width', 1).attr('stroke-dasharray', '2 2');
+        const fo = svg.append('foreignObject').attr('x', px).attr('y', py).attr('width', NW).attr('height', NH);
+        fo.append('xhtml:div').attr('class', 'le-note').html(`<b>${a.year}.</b> ${a.label}`);
+      } else {
+        svg.append('circle').attr('cx', x(a.year)).attr('cy', y(a.value)).attr('r', 8).attr('fill', c);
+        svg.append('text').attr('x', x(a.year)).attr('y', y(a.value) + 3.5).attr('text-anchor', 'middle')
+          .attr('font-family', 'var(--font-mono)').attr('font-size', 10).attr('font-weight', 600).attr('fill', 'var(--paper)').text(i + 1);
+        if (notes) {
+          const li = document.createElement('li');
+          li.innerHTML = `<span class="n" style="background:${c}">${i + 1}</span><span><b>${a.year}.</b> ${a.label}</span>`;
+          notes.appendChild(li);
+        }
+      }
+    });
+
+    // Hover: nearest world year → guide + focus dot + readout pill
+    const bisect = d3.bisector<{ year: number; value: number }, number>((d) => d.year).center;
+    const guide = svg.append('line').attr('stroke', 'var(--ink)').attr('stroke-width', 1).attr('opacity', 0).attr('y1', M.t).attr('y2', M.t + ih);
+    const focus = svg.append('circle').attr('r', 4.5).attr('fill', 'var(--accent)').attr('opacity', 0);
+    const rfo = svg.append('foreignObject').attr('width', 120).attr('height', 24).attr('opacity', 0).style('overflow', 'visible');
+    const rdiv = rfo.append('xhtml:div').attr('class', 'le-readout');
+
+    svg.append('rect').attr('x', M.l).attr('y', M.t).attr('width', iw).attr('height', ih)
+      .attr('fill', 'transparent').style('cursor', 'crosshair')
+      .on('pointermove', (event) => {
+        const [mx] = d3.pointer(event);
+        const d = world[bisect(world, x.invert(mx))];
+        guide.attr('x1', x(d.year)).attr('x2', x(d.year)).attr('opacity', 0.25);
+        focus.attr('cx', x(d.year)).attr('cy', y(d.value)).attr('opacity', 1);
+        rdiv.text(`${d.year} · ${d.value.toFixed(1)} yrs`);
+        rfo.attr('x', clamp(x(d.year) - 60, 0, W - 120)).attr('y', y(d.value) - 30).attr('opacity', 1);
+      })
+      .on('pointerleave', () => {
+        guide.attr('opacity', 0);
+        focus.attr('opacity', 0);
+        rfo.attr('opacity', 0);
+      });
+
+    drawnOnce = true;
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.le-toggle').forEach((btn) => {
+    btn.setAttribute('aria-pressed', 'false');
+    btn.addEventListener('click', () => {
+      const name = btn.dataset.country!;
+      if (active.has(name)) { active.delete(name); btn.setAttribute('aria-pressed', 'false'); }
+      else { active.add(name); btn.setAttribute('aria-pressed', 'true'); }
+      render();
+    });
+  });
+
+  let raf = 0;
+  window.addEventListener('resize', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(render); });
+  render();
+</script>

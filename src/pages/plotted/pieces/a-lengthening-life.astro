@@ -1,0 +1,85 @@
+---
+import Base from '../../../layouts/PlottedBase.astro';
+import LifeExpectancyChart from '../../../components/LifeExpectancyChart.astro';
+import { pieces } from '../../../data/plotted-pieces';
+
+const piece = pieces.find((p) => p.slug === 'a-lengthening-life')!;
+---
+
+<Base title={`${piece.title} · Plotted`} description={piece.dek}>
+  <article class="piece">
+    <header class="piece-head" data-reveal>
+      <p class="kicker">{piece.kicker}</p>
+      <h1>{piece.title}</h1>
+      <p class="standfirst measure">{piece.dek}</p>
+    </header>
+
+    <div class="prose measure" data-reveal>
+      <p>
+        Life expectancy is a strange, useful fiction. It asks: if the death
+        rates of a single year held for a lifetime, how long would a newborn
+        live? For almost all of history the answer barely moved: around three
+        decades, held down not by old age but by the sheer number of children
+        who never reached it.
+      </p>
+    </div>
+
+    <LifeExpectancyChart />
+
+    <div class="prose measure" data-reveal>
+      <p>
+        Then the line breaks upward. Not evenly, and not without cost. The 1918
+        influenza pandemic wiped out a century of progress in a single year. But
+        after 1950 something genuinely new happens: antibiotics, vaccines, clean
+        water and oral rehydration reach almost everywhere at once, and the whole
+        world rises together. A child born today can expect more than twice the
+        life of one born in 1800.
+      </p>
+      <p>
+        The averages hide the real drama. Toggle a country onto the chart and
+        the unevenness appears: the United Kingdom started high and climbed
+        steadily; South Korea began below the world average and, within two
+        generations, overtook it. The gap between the luckiest and unluckiest
+        places to be born has been both the great scandal and the great
+        opportunity of the last century. COVID-19 aside, it has mostly been
+        closing.
+      </p>
+    </div>
+
+    <footer class="piece-foot measure" data-reveal>
+      <hr class="rule" />
+      <dl class="meta">
+        <div><dt>Source</dt><dd><a href={piece.source.url}>{piece.source.name}</a></dd></div>
+        <div><dt>License</dt><dd>{piece.source.license}</dd></div>
+        <div><dt>Built with</dt><dd>Astro · D3 · hand-set type</dd></div>
+      </dl>
+      <p class="back"><a href="/plotted">← Back to the gallery</a></p>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .piece { width: var(--frame); margin: 0 auto; }
+  .piece-head { padding: var(--space-6) 0 var(--space-4); }
+  .piece-head h1 { font-size: var(--step-5); margin: var(--space-2) 0 var(--space-3); max-width: 18ch; }
+  .standfirst { font-size: var(--step-2); line-height: 1.35; color: var(--ink-soft); font-family: var(--font-display); font-weight: 400; }
+  .prose { margin: var(--space-4) 0; }
+  .prose p { font-size: var(--step-1); line-height: 1.65; margin: 0 0 var(--space-3); }
+  .prose p:first-child::first-letter {
+    font-family: var(--font-display);
+    font-size: 3.4em;
+    float: left;
+    line-height: 0.8;
+    padding: 0.08em 0.1em 0 0;
+    color: var(--accent);
+  }
+  .piece-foot { margin-top: var(--space-5); }
+  .meta { display: flex; flex-wrap: wrap; gap: var(--space-4); margin: 0; font-size: var(--step--1); }
+  .meta dt { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); margin-bottom: 2px; }
+  .meta dd { margin: 0; color: var(--ink-soft); }
+  .meta a { color: var(--accent); text-decoration: none; }
+  .meta a:hover { text-decoration: underline; }
+  .back { margin-top: var(--space-4); font-family: var(--font-mono); font-size: var(--step--1); }
+  .back a { color: var(--ink-soft); text-decoration: none; }
+  .back a:hover { color: var(--accent); }
+</style>

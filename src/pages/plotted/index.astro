@@ -1,0 +1,164 @@
+---
+import Base from '../../layouts/PlottedBase.astro';
+import { pieces } from '../../data/plotted-pieces';
+---
+
+<Base>
+  <main class="home">
+    <section class="hero" data-reveal>
+      <p class="kicker">In-house data visualization</p>
+      <h1>Plotted</h1>
+      <p class="lede measure">
+        A gallery of data visualizations built from the ground up. Each piece
+        takes one public dataset and turns raw numbers into a story you can
+        see, a clearer way to understand the world, made to be read, not just
+        glanced at.
+      </p>
+    </section>
+
+    <ul class="grid">
+      {
+        pieces.map((p, i) => (
+          <li class="card" data-reveal style={`--card-accent:${p.accent}; transition-delay:${i * 70}ms`}>
+            <a href={p.status === 'soon' ? undefined : `/plotted/pieces/${p.slug}`} class={p.status === 'soon' ? 'card-link is-soon' : 'card-link'}>
+              <div class="card-figure" aria-hidden="true">
+                <span class="fig-mark" />
+              </div>
+              <div class="card-body">
+                <p class="card-kicker">{p.kicker}</p>
+                <h2 class="card-title">{p.title}</h2>
+                <p class="card-dek">{p.dek}</p>
+                <div class="card-foot">
+                  {p.tags.slice(0, 3).map((t) => (
+                    <span class="tag">{t}</span>
+                  ))}
+                  {p.status === 'soon' && <span class="soon">Coming soon</span>}
+                </div>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Base>
+
+<style>
+  .home {
+    width: var(--frame);
+    margin: 0 auto;
+  }
+  .hero {
+    padding: var(--space-6) 0 var(--space-5);
+    max-width: 40ch;
+  }
+  .hero h1 {
+    font-size: var(--step-5);
+    margin: var(--space-2) 0 var(--space-3);
+  }
+  .lede {
+    color: var(--ink-soft);
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+
+  .grid {
+    list-style: none;
+    margin: 0 0 var(--space-6);
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: var(--space-4);
+  }
+  .card {
+    border: 1px solid var(--rule);
+    background: var(--paper-2);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+  .card:hover {
+    border-color: var(--card-accent);
+    transform: translateY(-3px);
+  }
+  .card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+  .card-link.is-soon {
+    cursor: default;
+    opacity: 0.6;
+  }
+  .card-figure {
+    height: 8.5rem;
+    background:
+      radial-gradient(120% 140% at 15% 0%, color-mix(in srgb, var(--card-accent) 16%, transparent), transparent 60%),
+      var(--paper-3);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .fig-mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--card-accent);
+    position: relative;
+  }
+  .fig-mark::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--card-accent) 30%, transparent);
+  }
+  .card-body {
+    padding: var(--space-3) var(--space-4) var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    flex: 1;
+  }
+  .card-kicker {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--card-accent);
+    margin: 0;
+  }
+  .card-title {
+    font-size: var(--step-2);
+    margin: 0;
+  }
+  .card-dek {
+    color: var(--ink-soft);
+    font-size: var(--step-0);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .card-foot {
+    margin-top: auto;
+    padding-top: var(--space-2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    align-items: center;
+  }
+  .tag {
+    font-size: var(--step--1);
+    color: var(--ink-faint);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 1px 9px;
+  }
+  .soon {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--card-accent);
+  }
+</style>

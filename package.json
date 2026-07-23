@@ -16,12 +16,15 @@
     "@astrojs/sitemap": "^3.7.2",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
-    "astro": "^6.3.7"
+    "astro": "^6.3.7",
+    "d3": "^7.9.0",
+    "marked": "^18.0.7"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.3.0",
+    "@types/d3": "^7.4.3",
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3"
   }

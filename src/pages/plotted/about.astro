@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/PlottedBase.astro';
+---
+
+<Base title="About · Plotted" description="What Plotted is and how it's made.">
+  <main class="about measure">
+    <p class="kicker" data-reveal>About</p>
+    <h1 data-reveal>One dataset, one story, made by hand.</h1>
+    <div class="prose" data-reveal>
+      <p>
+        <strong>Plotted</strong> is a gallery of data visualizations built from
+        the ground up, with no dashboards and no templates. Each piece takes a
+        single public dataset and tries to say one true, self-contained thing
+        with it, designed to be read rather than filtered.
+      </p>
+      <p>
+        The aim sits between two references: the interactivity of a good data
+        dashboard and the authored, editorial craft of designers like Federica
+        Fragapane. Every piece names its source and license, and is built with
+        Astro and D3 with the type set by hand.
+      </p>
+      <p>
+        By <a href="https://anthonyabusa.com">Anthony Busa</a>. More things to
+        use live at <a href="https://anthonyabusa.com/apps">anthonyabusa.com/apps</a>.
+      </p>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .about { width: var(--frame); max-width: var(--measure); margin: 0 auto; }
+  .about h1 { font-size: var(--step-4); margin: var(--space-2) 0 var(--space-4); }
+  .prose p { font-size: var(--step-1); line-height: 1.65; margin: 0 0 var(--space-3); }
+  .prose a { color: var(--accent); text-decoration: none; }
+  .prose a:hover { text-decoration: underline; }
+</style>

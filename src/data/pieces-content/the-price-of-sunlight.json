@@ -1,0 +1,245 @@
+{
+  "slug": "the-price-of-sunlight",
+  "head": {
+    "kicker": "Energy · Global · 1976–2024",
+    "title": "The Price of *Sunlight*",
+    "standfirst": "In one generation the cost of turning sunlight into electricity fell further and faster than any energy source in history. It is still falling."
+  },
+  "blocks": [
+    {
+      "type": "intro",
+      "parts": [
+        {
+          "lead": true,
+          "md": "For most of the twentieth century, solar power was a luxury. The first practical silicon cell, built at Bell Labs in 1954, was priceless in the literal sense: it flew on satellites because nothing on Earth could justify the cost. A single watt of solar capacity ran to more than a hundred dollars. At that price the sun was a scientific marvel and an economic non-starter."
+        },
+        {
+          "md": "Then something quietly relentless took hold. Every time the world doubled the amount of solar it had ever built, the price of a panel fell by about a fifth. That pattern, known as Wright's Law, did not waver for four decades. Doubling after doubling, the cost compounded downward until a technology once reserved for spacecraft became the cheapest way to make electricity that humanity has ever found."
+        }
+      ]
+    },
+    {
+      "type": "chart",
+      "title": "Solar passed fossil fuels and kept falling.",
+      "subhead": "Cost to generate a unit of electricity",
+      "chartId": "c1",
+      "fignum": "Chart 1 · The crossover",
+      "aria": "The levelized cost of solar electricity fell from about 45 cents per kilowatt-hour in 2010 to about 4 cents in 2024, crossing below the cheapest fossil-fuel option around 2020.",
+      "caption": "**Levelized cost of electricity, global weighted average.** The fossil line is the cheapest fossil-fuel-fired option (the hardest benchmark to beat). Hover for any year. Source: IRENA, Renewable Power Generation Costs in 2023.",
+      "parts": [
+        {
+          "md": "In 2010 a unit of solar electricity cost roughly **eight times** as much as power from the cheapest fossil-fuel plant. Over the next decade the solar line fell by about **90%** while fossil costs drifted sideways. The two crossed around **2020**, and solar kept going. By 2024 the average solar project produced power for about **four cents** a kilowatt-hour, roughly a quarter below the cheapest fossil option and a tenth of solar's own 2010 cost. The most expensive option had become the cheapest."
+        }
+      ],
+      "chart": {
+        "type": "line",
+        "xmin": 2010,
+        "xmax": 2024,
+        "ymin": 0,
+        "ymax": 0.5,
+        "mr": 96,
+        "ml": 42,
+        "xticks": [2010, 2014, 2018, 2022],
+        "yticks": [0, 0.1, 0.2, 0.3, 0.4],
+        "yfmt": "dollar2",
+        "hfmt": "dollar3",
+        "unit": "$ per kWh",
+        "fills": [{"series": 0, "kind": "hatch"}],
+        "annotations": [
+          {"series": 0, "x": 2010, "lines": ["8x costlier", "than fossil"], "dx": 12, "dy": -16, "side": "right"},
+          {"series": 0, "x": 2015, "lines": ["90% fall", "in a decade"], "dx": 16, "dy": -14, "side": "right"},
+          {"at": "crossover", "lines": ["cheaper than fossil"], "dx": -14, "dy": 26, "side": "left"},
+          {"series": 0, "x": 2024, "lines": ["a tenth of its", "2010 cost"], "dx": -14, "dy": -33, "side": "left"}
+        ],
+        "crossover": { "series": [0, 1], "label": "2020" },
+        "series": [
+          {
+            "color": "--accent-3",
+            "label": "Solar",
+            "val": "$0.04",
+            "dy": 9,
+            "pts": [[2010, 0.445], [2013, 0.268], [2016, 0.18], [2018, 0.104], [2020, 0.057], [2022, 0.049], [2024, 0.043]]
+          },
+          {
+            "color": "--ink-faint",
+            "label": "Cheapest fossil",
+            "val": "$0.06",
+            "mute": true,
+            "dy": -8,
+            "pts": [[2010, 0.052], [2014, 0.054], [2018, 0.056], [2020, 0.058], [2022, 0.064], [2024, 0.059]]
+          }
+        ]
+      }
+    },
+    {
+      "type": "chart",
+      "title": "The world is installing it faster every year.",
+      "subhead": "Cumulative solar capacity ever built",
+      "chartId": "c2",
+      "fignum": "Chart 2 · The scale-up",
+      "aria": "Cumulative installed solar capacity rose from about 1 gigawatt in 2000 to more than 2,200 gigawatts in 2024.",
+      "caption": "**Total solar capacity installed worldwide.** Hover for any year. Source: IEA and IRENA capacity statistics.",
+      "parts": [
+        {
+          "md": "Falling prices did not just make solar viable; they made it explosive. The total amount of solar humanity had ever installed went from barely a **gigawatt** in 2000 to more than **2,200 gigawatts** by 2024, a growth rate above thirty percent a year sustained for a quarter century. Each drop in price unlocked more demand, and each surge in demand drove the next drop in price. The curve is not slowing. It is bending upward."
+        }
+      ],
+      "chart": {
+        "type": "line",
+        "xmin": 2000,
+        "xmax": 2024,
+        "ymin": 0,
+        "ymax": 2400,
+        "mr": 84,
+        "ml": 44,
+        "xticks": [2000, 2008, 2016, 2024],
+        "yticks": [0, 600, 1200, 1800],
+        "yfmt": "gw",
+        "hfmt": "gwround",
+        "unit": "gigawatts installed",
+        "annotations": [
+          {"series": 0, "x": 2010, "lines": ["just 40 GW", "in 2010"], "dx": -10, "dy": -22, "side": "left"},
+          {"series": 0, "x": 2022, "lines": ["1.2 TW", "by 2022"], "dx": -14, "dy": -20, "side": "left"}
+        ],
+        "series": [
+          {
+            "color": "--accent-2",
+            "area": true,
+            "label": "Installed",
+            "val": "2.2 TW",
+            "pts": [[2000, 1.3], [2005, 5], [2010, 40], [2014, 180], [2018, 490], [2020, 720], [2022, 1200], [2024, 2200]]
+          }
+        ]
+      }
+    },
+    {
+      "type": "chart",
+      "title": "Storage solved the sun's one weakness.",
+      "subhead": "Price of a lithium-ion battery pack",
+      "chartId": "c3",
+      "fignum": "Chart 3 · The battery answer",
+      "aria": "Lithium-ion battery pack prices fell from about 1,436 dollars per kilowatt-hour in 2010 to about 115 dollars in 2024.",
+      "caption": "**Volume-weighted average lithium-ion battery pack price.** Hover for any year. Source: BloombergNEF Battery Price Survey.",
+      "parts": [
+        {
+          "md": "The oldest objection to solar is that the sun sets. The answer arrived on its own cost curve. A lithium-ion battery pack that cost about **$1,400** a kilowatt-hour in 2010 fell to roughly **$115** by 2024, a decline of more than **90%**. Cheap panels paired with cheap storage turn daytime sunlight into round-the-clock power. The two curves together, not either alone, are what make a solar-run grid ordinary rather than aspirational."
+        }
+      ],
+      "chart": {
+        "type": "line",
+        "xmin": 2010,
+        "xmax": 2024,
+        "ymin": 0,
+        "ymax": 1500,
+        "mr": 92,
+        "ml": 48,
+        "xticks": [2010, 2014, 2018, 2022],
+        "yticks": [0, 500, 1000, 1500],
+        "yfmt": "dollar0",
+        "hfmt": "dollar0",
+        "unit": "$ per kWh, pack",
+        "fills": [{"series": 0, "kind": "gradient"}],
+        "annotations": [
+          {"series": 0, "x": 2013, "lines": ["halved in", "three years"], "dx": 14, "dy": -14, "side": "right"},
+          {"series": 0, "x": 2022, "lines": ["a brief uptick", "in 2022"], "dx": 2, "dy": -26, "side": "center"}
+        ],
+        "series": [
+          {
+            "color": "--accent",
+            "label": "Battery pack",
+            "val": "$115",
+            "pts": [[2010, 1436], [2013, 668], [2016, 300], [2018, 197], [2020, 137], [2022, 151], [2024, 115]]
+          }
+        ]
+      }
+    },
+    {
+      "type": "chart",
+      "title": "It now powers a real share of the world.",
+      "subhead": "Solar's share of global electricity",
+      "chartId": "c4",
+      "fignum": "Chart 4 · The share",
+      "aria": "Solar rose from about 0.1 percent of global electricity in 2010 to roughly 6 percent in 2024.",
+      "caption": "**Solar as a share of global electricity generation.** Hover for any year. Source: Ember and IEA electricity statistics.",
+      "parts": [
+        {
+          "md": "In 2010 solar supplied about **one part in a thousand** of the world's electricity, a rounding error. By 2024 it was near **one part in seventeen** and roughly doubling every three years. That is the signature of a technology still early on its curve, not one running out of room. The question has shifted from whether solar can compete to how quickly the rest of the system can be built to match it."
+        }
+      ],
+      "chart": {
+        "type": "line",
+        "xmin": 2010,
+        "xmax": 2024,
+        "ymin": 0,
+        "ymax": 6,
+        "mr": 92,
+        "ml": 36,
+        "xticks": [2010, 2014, 2018, 2022],
+        "yticks": [0, 2, 4, 6],
+        "yfmt": "pct",
+        "hfmt": "fixed1pct",
+        "unit": "% of world electricity",
+        "annotations": [
+          {"series": 0, "x": 2010, "lines": ["one part in", "a thousand"], "dx": 8, "dy": -24, "side": "right"},
+          {"series": 0, "x": 2019, "lines": ["doubling every", "three years"], "dx": -14, "dy": -16, "side": "left"}
+        ],
+        "series": [
+          {
+            "color": "--accent-3",
+            "area": true,
+            "label": "Solar share",
+            "val": "~6%",
+            "pts": [[2010, 0.1], [2013, 0.5], [2016, 1.5], [2019, 2.8], [2021, 3.6], [2023, 4.6], [2024, 6.0]]
+          }
+        ]
+      }
+    },
+    {
+      "type": "stats",
+      "title": "A four-decade decline with no real precedent.",
+      "stats": [
+        {
+          "n": "99.6%",
+          "l": "Fall in the price of a solar module since 1976, from about $106 to under $0.40 per watt"
+        },
+        {
+          "n": "~20%",
+          "l": "Price cut for every doubling of cumulative capacity, holding for forty years (Wright's Law)"
+        }
+      ],
+      "parts": [
+        {
+          "md": "No other energy technology has ever fallen this far, this consistently, for this long. Coal, gas, and nuclear costs move in a band; solar moves down an escalator. The reason is structural. A solar panel is a manufactured good, not a fuel to be extracted, so it obeys the same learning curve as microchips and flat screens: make more, learn more, charge less. Every panel installed makes the next one cheaper."
+        }
+      ]
+    },
+    {
+      "type": "prose",
+      "title": "The cheapest way out is also the fastest.",
+      "parts": [
+        {
+          "md": "For decades the climate conversation assumed a trade-off: that cutting emissions meant accepting a more expensive, more constrained way of life. Solar has quietly dissolved much of that premise. The clean option is now the cheap option, and the cheap option compounds. When the lowest-cost choice and the lowest-carbon choice are the same choice, the transition stops depending on sacrifice and starts running on ordinary economic self-interest."
+        },
+        {
+          "pull": "The sun delivers more energy to the Earth in an hour than humanity uses in a year. The engineering problem was never supply. It was price, and price has been solved."
+        },
+        {
+          "md": "Plenty of hard work remains: grids to modernize, storage to scale, permitting and supply chains to untangle. But these are problems of deployment, not of possibility, and deployment is exactly what falling prices accelerate. The hardest part, making sunlight cheaper than everything else, is already behind us. What is left is to build."
+        }
+      ]
+    }
+  ],
+  "foot": {
+    "sourcesMd": "**Sources.** Chart 1 · [IRENA](https://www.irena.org/Publications/2024/Sep/Renewable-Power-Generation-Costs-in-2023), Renewable Power Generation Costs in 2023 (solar LCOE $0.46/kWh in 2010 to $0.044/kWh in 2023). Chart 2 · IEA and IRENA cumulative capacity statistics. Chart 3 · [BloombergNEF](https://about.bnef.com/insights/clean-energy/lithium-ion-battery-pack-prices-hit-record-low-of-139-kwh/) Battery Price Survey. Chart 4 · Ember and IEA electricity statistics. Module learning curve · [Our World in Data](https://ourworldindata.org/grapher/solar-pv-prices), solar panel prices (Nemet 2009; Farmer & Lafond 2016; IRENA).",
+    "meta": [
+      {
+        "dt": "Data",
+        "dd": "Public · IRENA · IEA · BloombergNEF · Ember · OWID"
+      },
+      {
+        "dt": "Built with",
+        "dd": "Astro · hand-set SVG · Fraunces"
+      }
+    ]
+  }
+}
