@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Shared pre-push gate (session-coordination layer D, 2026-07-23).
+#
+# Why: parallel agent sessions were landing work that failed the repo's own
+# gate (em dashes past copy-lint, a build-breaking missing dep), leaving the
+# next session to clean it up on merge. This runs the SAME gate every session
+# must pass BEFORE anything reaches origin, so no session lands broken work.
+#
+# Install per clone (not auto-synced, git hooks never are):
+#   git config core.hooksPath .githooks
+# Bypass for a genuine emergency: git push --no-verify
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+echo "[pre-push] copy-lint..."
+node scripts/copy-lint.mjs
+
+echo "[pre-push] build..."
+if ! npm run build >/tmp/prepush-build.log 2>&1; then
+  echo "[pre-push] BUILD FAILED (see /tmp/prepush-build.log):"
+  tail -5 /tmp/prepush-build.log
+  exit 1
+fi
+
+echo "[pre-push] gate passed."
