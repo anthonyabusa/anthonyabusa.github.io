@@ -18,7 +18,7 @@ export type Knob = (k: string, d: number) => number;
 
 // A sub-sprite of a composite motif, rotating about ITS OWN centre (Ant: "the
 // axis should be at the centre of the gear like in real life"). Used for the
-// meshing gears — each gear is the same sprite placed at cx/cy (0..1 of the
+// meshing gears: each gear is the same sprite placed at cx/cy (0..1 of the
 // staging canvas), sized by `scale`, turning at `dir`·`speed` (meshing gears
 // counter-rotate, and a smaller gear turns proportionally faster).
 export type MotifPart = { cx: number; cy: number; scale: number; dir: number; speed: number };
@@ -48,7 +48,7 @@ function drawChar(tc: TextCanvas, col: number, row: number, char: string, opacit
 
 // Draw the source image with motion, resolve gradient, and light sweep onto a
 // staging canvas. Motion is one of two modes (Ant, 2026-07-20 "default to full
-// movement for the ones we can — turn the gears"):
+// movement for the ones we can: turn the gears"):
 //   • spin ≠ 0  → CONTINUOUS rotation at `spin` rad-velocity (gears actually
 //                 turn, compass rose seeks). Sign sets direction.
 //   • spin = 0  → the calmer sine WOBBLE (`wobbleAmp`) for motifs a full
@@ -77,7 +77,7 @@ export function drawSource(
   ctx.shadowOffsetY = 15;
   if (parts && parts.length) {
     // Composite motif (the meshing gears): draw the SAME sprite once per part,
-    // each translated to its own centre THEN rotated — so every gear turns on
+    // each translated to its own centre THEN rotated: so every gear turns on
     // its own axle instead of the whole image orbiting one point (Ant: "the
     // axis should be at the centre of the gear like in real life"). Meshing
     // gears counter-rotate (`dir`) and a smaller gear turns faster (`speed`).
