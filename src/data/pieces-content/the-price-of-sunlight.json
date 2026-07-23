@@ -43,6 +43,14 @@
         "yticks": [0, 0.1, 0.2, 0.3, 0.4],
         "yfmt": "dollar2",
         "hfmt": "dollar3",
+        "unit": "$ per kWh",
+        "fills": [{"series": 0, "kind": "hatch"}],
+        "annotations": [
+          {"series": 0, "x": 2010, "lines": ["8x costlier", "than fossil"], "dx": 12, "dy": -16, "side": "right"},
+          {"series": 0, "x": 2015, "lines": ["90% fall", "in a decade"], "dx": 16, "dy": -14, "side": "right"},
+          {"at": "crossover", "lines": ["cheaper than fossil"], "dx": -14, "dy": 26, "side": "left"},
+          {"series": 0, "x": 2024, "lines": ["a tenth of its", "2010 cost"], "dx": -14, "dy": -33, "side": "left"}
+        ],
         "crossover": { "series": [0, 1], "label": "2020" },
         "series": [
           {
@@ -88,6 +96,11 @@
         "yticks": [0, 600, 1200, 1800],
         "yfmt": "gw",
         "hfmt": "gwround",
+        "unit": "gigawatts installed",
+        "annotations": [
+          {"series": 0, "x": 2010, "lines": ["just 40 GW", "in 2010"], "dx": -10, "dy": -22, "side": "left"},
+          {"series": 0, "x": 2022, "lines": ["1.2 TW", "by 2022"], "dx": -14, "dy": -20, "side": "left"}
+        ],
         "series": [
           {
             "color": "--accent-2",
@@ -124,6 +137,12 @@
         "yticks": [0, 500, 1000, 1500],
         "yfmt": "dollar0",
         "hfmt": "dollar0",
+        "unit": "$ per kWh, pack",
+        "fills": [{"series": 0, "kind": "gradient"}],
+        "annotations": [
+          {"series": 0, "x": 2013, "lines": ["halved in", "three years"], "dx": 14, "dy": -14, "side": "right"},
+          {"series": 0, "x": 2022, "lines": ["a brief uptick", "in 2022"], "dx": 2, "dy": -26, "side": "center"}
+        ],
         "series": [
           {
             "color": "--accent",
@@ -159,6 +178,11 @@
         "yticks": [0, 2, 4, 6],
         "yfmt": "pct",
         "hfmt": "fixed1pct",
+        "unit": "% of world electricity",
+        "annotations": [
+          {"series": 0, "x": 2010, "lines": ["one part in", "a thousand"], "dx": 8, "dy": -24, "side": "right"},
+          {"series": 0, "x": 2019, "lines": ["doubling every", "three years"], "dx": -14, "dy": -16, "side": "left"}
+        ],
         "series": [
           {
             "color": "--accent-3",

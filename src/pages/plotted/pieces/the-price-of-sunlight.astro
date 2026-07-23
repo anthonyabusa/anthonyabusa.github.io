@@ -11,7 +11,7 @@ import contentJson from '../../../data/pieces-content/the-price-of-sunlight.json
 const data: any = contentJson;
 const piece = pieces.find((p) => p.slug === 'the-price-of-sunlight')!;
 
-// Inline markdown → HTML for a single run of text (no wrapping <p>).
+// Inline markdown -> HTML for a single run of text (no wrapping <p>).
 const mdi = (s: string): string => marked.parseInline(s ?? '', { async: false }) as string;
 
 // One prose part is either a paragraph {md, lead?} or a pull-quote {pull, cite?}.
@@ -21,6 +21,7 @@ const partHtml = (p: any): string =>
 // Chart specs, keyed by svg id, handed to the client engine as JSON.
 const chartSpecs: Record<string, any> = {};
 for (const b of data.blocks) if (b.type === 'chart') chartSpecs[b.chartId] = b.chart;
+
 ---
 
 <Base title={`${piece.title} · Plotted`} description={piece.dek}>
@@ -183,6 +184,65 @@ for (const b of data.blocks) if (b.type === 'chart') chartSpecs[b.chartId] = b.c
   .signote { font-family: var(--font-sans); font-size: var(--step--1); color: var(--ink-faint); line-height: 1.45; margin: 0; flex: 1; min-width: 15rem; }
   .signote strong { color: var(--ink-soft); font-weight: 600; }
 
+  /* Editorial hover tooltip card - created by the chart engine, so styled via
+     :global (Astro-scoped selectors cannot match JS-created nodes). Chrome colors
+     are ALSO set inline from the engine's static TOKENS map so the card is correct
+     even if this stylesheet races the module on WebKit. */
+  :global(.chart-wrap) { position: relative; }
+  :global(.cv-tip) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    min-width: 8rem;
+    max-width: 14rem;
+    padding: 0.45rem 0.65rem 0.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 0 2px 12px rgba(27, 26, 23, 0.14), 0 0 0 0.5px rgba(27, 26, 23, 0.04);
+  }
+  :global(.cv-tip.on) { opacity: 1; visibility: visible; }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.cv-tip) { transition: opacity 130ms ease; }
+  }
+  :global(.cv-tip-year) {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.2;
+    padding-bottom: 0.3rem;
+    margin-bottom: 0.32rem;
+    border-bottom: 1px solid var(--rule);
+    font-variant-numeric: tabular-nums;
+  }
+  :global(.cv-tip-row) {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    line-height: 1.55;
+    white-space: nowrap;
+  }
+  :global(.cv-tip-swatch) {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    align-self: center;
+  }
+  :global(.cv-tip-label) { font-family: var(--font-sans); }
+  :global(.cv-tip-val) {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    font-weight: 600;
+  }
+
   .callout {
     background: var(--paper-2);
     border-left: 2px solid var(--accent-3);
@@ -218,10 +278,12 @@ for (const b of data.blocks) if (b.type === 'chart') chartSpecs[b.chartId] = b.c
 </style>
 
 <script>
-  // Hand-set SVG charts - no D3. Shared line + diverging-bar engine, direct labels
-  // (no legends), one pre-attentive cue per chart, zero-baseline bars: the house
-  // data-viz rules. Reads the Plotted design tokens so colour + type stay in system.
+  // Hand-set SVG charts - no D3. Shared line engine, direct labels (no legend boxes),
+  // one pre-attentive cue per chart, zero-baseline plots: the house data-viz rules.
   // Chart specs are data (embedded as JSON by the page) so graphics stay editable.
+  // This pass adds three engine primitives, all spec-driven: an editorial HTML
+  // tooltip card, a JSON annotation layer (leader line + node dot + short callout),
+  // and textured/gradient area fills - see NOTES.md in the delivery folder.
   const NS = 'http://www.w3.org/2000/svg';
   function el(n, a) { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; }
   // House tokens resolved from a static map, NOT getComputedStyle. This module script
@@ -266,9 +328,10 @@ for (const b of data.blocks) if (b.type === 'chart') chartSpecs[b.chartId] = b.c
 
   // Exact intersection of two polylines (series pts), scanning their shared x-range
   // segment by segment. Returns [x, y] at the first crossing, or null. The crossover
-  // indicator is DERIVED from this - the dashed guide, the dot, and the year label are
-  // placed at the true geometric crossing, so a hand-entered year can never drift off
-  // the point where the lines actually meet (the defect that shipped in the first cut).
+  // indicator is DERIVED from this - the dashed guide, the dot, the glow, the year
+  // label, and any {at:"crossover"} annotation are placed at the true geometric
+  // crossing, so a hand-entered year can never drift off the point where the lines
+  // actually meet (the defect that shipped in the first cut).
   function seriesIntersection(a, b) {
     const xs = [...new Set([...a, ...b].map((p) => p[0]))].sort((m, n) => m - n);
     const yat = (pts, xv) => {
@@ -284,81 +347,282 @@ for (const b of data.blocks) if (b.type === 'chart') chartSpecs[b.chartId] = b.c
     return null;
   }
 
+  // Linear interpolation of a series polyline at data-x. Shared by the hover layer
+  // and the annotation layer, so an annotation anchor is always ON the drawn line.
+  function interpY(pts, xv) {
+    for (let i = 0; i < pts.length - 1; i++) { if (xv >= pts[i][0] && xv <= pts[i + 1][0]) { const t = (xv - pts[i][0]) / (pts[i + 1][0] - pts[i][0]); return pts[i][1] + t * (pts[i + 1][1] - pts[i][1]); } }
+    return xv < pts[0][0] ? pts[0][1] : pts[pts.length - 1][1];
+  }
+
+  // Entrance fade for a decoration group: set, force reflow, transition. Only ever
+  // called when reduced motion is OFF - with it on, everything renders fully static.
+  function fadeIn(node, delay) {
+    node.style.opacity = '0';
+    node.getBoundingClientRect();
+    node.style.transition = 'opacity 0.8s ease ' + delay + 's';
+    node.style.opacity = '1';
+  }
+
   function makeChart(id, cfg) {
     const svg = document.getElementById(id);
     if (!svg) return;
-    const W = 680, H = cfg.H || 330, M = { t: 16, r: cfg.mr || 96, b: 30, l: cfg.ml || 30 };
+    // Wrap the svg in a positioned div so the HTML tooltip card can sit over it.
+    // Done here (not in markup) so the primitive propagates to any piece that
+    // adopts this engine without a template change.
+    let wrap = svg.parentElement;
+    if (!wrap.classList.contains('chart-wrap')) {
+      const w = document.createElement('div');
+      w.className = 'chart-wrap';
+      w.style.position = 'relative';
+      svg.parentNode.insertBefore(w, svg);
+      w.appendChild(svg);
+      wrap = w;
+    }
+    const W = 680, H = cfg.H || 330, M = { t: cfg.mt || 30, r: cfg.mr || 96, b: 38, l: cfg.ml || 30 };
     const iw = W - M.l - M.r, ih = H - M.t - M.b;
     const x = (v) => M.l + (v - cfg.xmin) / (cfg.xmax - cfg.xmin) * iw;
     const y = (v) => M.t + ih - (v - cfg.ymin) / (cfg.ymax - cfg.ymin) * ih;
     svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    const defs = el('defs', {});
+    svg.appendChild(defs);
+
+    // Axes: light interior gridlines, a slightly stronger zero baseline, one
+    // consistent mono tick voice. Recessive by design - the data is the loud part.
     cfg.yticks.forEach((t) => {
-      svg.appendChild(el('line', { x1: M.l, x2: M.l + iw, y1: y(t), y2: y(t), stroke: css('--rule'), 'stroke-width': 1 }));
-      const tx = el('text', { x: M.l - 6, y: y(t) + 4, 'text-anchor': 'end', 'font-family': css('--font-mono'), 'font-size': 10, fill: css('--ink-faint') });
+      if (t !== cfg.ymin) svg.appendChild(el('line', { x1: M.l, x2: M.l + iw, y1: y(t), y2: y(t), stroke: css('--rule'), 'stroke-width': 1, opacity: 0.55 }));
+      const tx = el('text', { x: M.l - 8, y: y(t) + 3.5, 'text-anchor': 'end', 'font-family': css('--font-mono'), 'font-size': 10, fill: css('--ink-faint') });
       tx.textContent = cfg.yfmt ? cfg.yfmt(t) : t; svg.appendChild(tx);
     });
+    svg.appendChild(el('line', { x1: M.l, x2: M.l + iw, y1: y(cfg.ymin), y2: y(cfg.ymin), stroke: css('--ink-faint'), 'stroke-width': 1, opacity: 0.7 }));
     cfg.xticks.forEach((t) => {
-      const tx = el('text', { x: x(t), y: M.t + ih + 18, 'text-anchor': 'middle', 'font-family': css('--font-mono'), 'font-size': 10, fill: css('--ink-faint') });
+      const tx = el('text', { x: x(t), y: M.t + ih + 20, 'text-anchor': 'middle', 'font-family': css('--font-mono'), 'font-size': 10, fill: css('--ink-faint') });
       tx.textContent = t; svg.appendChild(tx);
     });
+    // Small-caps mono micro-label naming the unit, top-left of the plot.
+    if (cfg.unit) {
+      const ut = el('text', { x: M.l, y: M.t - 10, 'font-family': css('--font-mono'), 'font-size': 8.5, 'letter-spacing': '0.12em', fill: css('--ink-faint') });
+      ut.textContent = String(cfg.unit).toUpperCase(); svg.appendChild(ut);
+    }
     if (cfg.mark) {
       const mx = x(cfg.mark[0]);
       svg.appendChild(el('line', { x1: mx, x2: mx, y1: M.t + 2, y2: M.t + ih, stroke: css('--ink-faint'), 'stroke-width': 1, 'stroke-dasharray': '2 3', opacity: 0.7 }));
-      const mt = el('text', { x: mx, y: M.t - 3, 'text-anchor': 'middle', 'font-family': css('--font-mono'), 'font-size': 10.5, 'font-weight': 600, fill: css('--ink-soft') });
+      const mt = el('text', { x: mx, y: M.t - 6, 'text-anchor': 'middle', 'font-family': css('--font-mono'), 'font-size': 10.5, 'font-weight': 600, fill: css('--ink-soft') });
       mt.textContent = cfg.mark[1]; svg.appendChild(mt);
     }
+
     // Crossover indicator, derived from the data geometry (never a hand-placed year).
-    // Draw the guide + year label here (behind the lines); the dot goes on top below.
+    // Draw the guide + year label here (behind the lines); the glow and dot go on top.
     let cross = null;
     if (cfg.crossover && cfg.series[cfg.crossover.series[0]] && cfg.series[cfg.crossover.series[1]]) {
       cross = seriesIntersection(cfg.series[cfg.crossover.series[0]].pts, cfg.series[cfg.crossover.series[1]].pts);
       if (cross) {
         const cxp = x(cross[0]);
         svg.appendChild(el('line', { x1: cxp, x2: cxp, y1: M.t + 2, y2: M.t + ih, stroke: css('--ink-faint'), 'stroke-width': 1, 'stroke-dasharray': '2 3', opacity: 0.7 }));
-        const ct = el('text', { x: cxp, y: M.t - 3, 'text-anchor': 'middle', 'font-family': css('--font-mono'), 'font-size': 10.5, 'font-weight': 600, fill: css('--ink-soft') });
+        const ct = el('text', { x: cxp, y: M.t - 6, 'text-anchor': 'middle', 'font-family': css('--font-mono'), 'font-size': 10.5, 'font-weight': 600, fill: css('--ink-soft') });
         ct.textContent = cfg.crossover.label; svg.appendChild(ct);
       }
     }
-    cfg.series.forEach((s) => {
+
+    // Which fills a series wants: {area:true} in the spec = gradient wash; a
+    // spec-level fills[] entry adds "gradient" or "hatch" (hatch layers a 45deg
+    // Fragapane-style texture over the gradient). All under the lines, all quiet.
+    const fillKindsFor = (i, s) => {
+      const k = [];
+      if (s.area) k.push('gradient');
+      (cfg.fills || []).forEach((f) => { if (f.series === i) { if (f.kind === 'hatch') k.push('gradient', 'hatch'); else k.push(f.kind); } });
+      return [...new Set(k)];
+    };
+    const fillG = el('g', {});
+    svg.appendChild(fillG);
+    // Decoration group: end-label stacks, crossover glow, annotations. Fades in
+    // after the lines when motion is allowed; fully static and visible otherwise.
+    const deco = el('g', {});
+
+    cfg.series.forEach((s, si) => {
       const d = s.pts.map((p, i) => (i ? 'L' : 'M') + x(p[0]) + ',' + y(p[1])).join('');
-      if (s.area) {
+      const kinds = fillKindsFor(si, s);
+      if (kinds.length) {
         const ad = 'M' + x(s.pts[0][0]) + ',' + y(cfg.ymin) + s.pts.map((p) => 'L' + x(p[0]) + ',' + y(p[1])).join('') + 'L' + x(s.pts[s.pts.length - 1][0]) + ',' + y(cfg.ymin) + 'Z';
-        svg.appendChild(el('path', { d: ad, fill: css(s.color), opacity: 0.08 }));
+        if (kinds.indexOf('gradient') > -1) {
+          const gid = 'pg-' + id + '-' + si;
+          const gr = el('linearGradient', { id: gid, x1: 0, y1: 0, x2: 0, y2: 1 });
+          gr.appendChild(el('stop', { offset: '0%', 'stop-color': css(s.color), 'stop-opacity': 0.16 }));
+          gr.appendChild(el('stop', { offset: '100%', 'stop-color': css(s.color), 'stop-opacity': 0.02 }));
+          defs.appendChild(gr);
+          fillG.appendChild(el('path', { d: ad, fill: 'url(#' + gid + ')' }));
+        }
+        if (kinds.indexOf('hatch') > -1) {
+          const hid = 'ph-' + id + '-' + si;
+          const pt = el('pattern', { id: hid, width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' });
+          pt.appendChild(el('line', { x1: 0, y1: 0, x2: 0, y2: 6, stroke: css(s.color), 'stroke-width': 1, 'stroke-opacity': 0.5 }));
+          defs.appendChild(pt);
+          fillG.appendChild(el('path', { d: ad, fill: 'url(#' + hid + ')', 'fill-opacity': 0.28 }));
+        }
       }
       const ln = el('path', { d: d, fill: 'none', stroke: css(s.color), 'stroke-width': s.w || 2.4, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', opacity: s.mute ? 0.85 : 1 });
       svg.appendChild(ln);
-      if (!reduce) { const L = ln.getTotalLength(); ln.style.strokeDasharray = L; ln.style.strokeDashoffset = L; ln.getBoundingClientRect(); ln.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(.22,.61,.36,1)'; ln.style.strokeDashoffset = 0; }
+      if (!reduce) { const L = ln.getTotalLength(); ln.style.strokeDasharray = L; ln.style.strokeDashoffset = L; ln.getBoundingClientRect(); ln.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(.22,.61,.36,1) ' + (si * 0.18) + 's'; ln.style.strokeDashoffset = 0; }
+      // End-of-line label stack: end dot with a paper ring, series name over its
+      // latest value. The name carries identity (series hue); the value is quieter
+      // ink so the stack reads name-then-number, not two competing marks.
       const lp = s.pts[s.pts.length - 1], ly = y(lp[1]) + (s.dy || 0);
-      svg.appendChild(el('circle', { cx: x(lp[0]), cy: y(lp[1]), r: 3, fill: css(s.color) }));
-      const nm = el('text', { x: x(lp[0]) + 8, y: ly - 3, 'font-family': css('--font-sans'), 'font-size': 11, 'font-weight': 600, fill: css(s.color) });
-      nm.textContent = s.label; svg.appendChild(nm);
-      const vl = el('text', { x: x(lp[0]) + 8, y: ly + 9, 'font-family': css('--font-mono'), 'font-size': 10.5, fill: css(s.mute ? '--ink-faint' : s.color) });
-      vl.textContent = s.val; svg.appendChild(vl);
+      deco.appendChild(el('circle', { cx: x(lp[0]), cy: y(lp[1]), r: 3, fill: css(s.color), stroke: css('--paper'), 'stroke-width': 1.2 }));
+      const nm = el('text', { x: x(lp[0]) + 8, y: ly - 4, 'font-family': css('--font-sans'), 'font-size': 11, 'font-weight': 600, fill: css(s.color) });
+      nm.textContent = s.label; deco.appendChild(nm);
+      const vl = el('text', { x: x(lp[0]) + 8, y: ly + 8, 'font-family': css('--font-mono'), 'font-size': 10, fill: css(s.mute ? '--ink-faint' : '--ink-soft') });
+      vl.textContent = s.val; deco.appendChild(vl);
     });
-    // The crossover dot sits ON the exact intersection, drawn after the lines so it
-    // reads as the point where they meet - visual proof the indicator is accurate.
+
+    // Soft focal glow behind the crossover: the artful hero moment, still centred
+    // on the computed intersection. Two translucent rings of the hero series hue.
+    if (cross) {
+      const gx = x(cross[0]), gy = y(cross[1]);
+      const hero = css(cfg.series[cfg.crossover.series[0]].color);
+      deco.appendChild(el('circle', { cx: gx, cy: gy, r: 13, fill: hero, opacity: 0.08 }));
+      deco.appendChild(el('circle', { cx: gx, cy: gy, r: 7, fill: hero, opacity: 0.14 }));
+    }
+
+    // Annotation layer: pure JSON in the spec -> short callouts anchored to DATA
+    // coordinates. {series,x} interpolates y on that series' polyline; {at:"crossover"}
+    // anchors to the computed intersection. Each gets a node dot on the line, a thin
+    // leader, and 1-2 short mono lines. Offsets (dx/dy) are viewBox px; "side" sets
+    // text-anchor so callouts can hang left, right, or centred off their anchor.
+    const LH = 11.5;
+    (cfg.annotations || []).forEach((a) => {
+      let ax, ay;
+      if (a.at === 'crossover') { if (!cross) return; ax = x(cross[0]); ay = y(cross[1]); }
+      else { const s = cfg.series[a.series || 0]; if (!s) return; ax = x(a.x); ay = y(interpY(s.pts, a.x)); }
+      const lines = Array.isArray(a.lines) ? a.lines : [String(a.lines || '')];
+      const lx = ax + (a.dx || 0), ly = ay + (a.dy || 0);
+      const anchor = a.side === 'left' ? 'end' : a.side === 'center' ? 'middle' : 'start';
+      const bottom = ly + (lines.length - 1) * LH;
+      // Leader aims at the text-block edge nearest the anchor.
+      let ex, ey;
+      if (anchor === 'middle') { ex = lx; ey = (a.dy || 0) < 0 ? bottom + 4 : ly - 10; }
+      else { ex = anchor === 'end' ? lx + 5 : lx - 5; ey = ((a.dy || 0) < 0 ? bottom : ly) - 3.5; }
+      const gap = a.at === 'crossover' ? 15 : 6;
+      const vx = ex - ax, vy = ey - ay, len = Math.sqrt(vx * vx + vy * vy);
+      if (len > gap + 4) {
+        const sx = ax + vx / len * gap, sy = ay + vy / len * gap;
+        deco.appendChild(el('line', { x1: sx, y1: sy, x2: ex, y2: ey, stroke: css('--ink-faint'), 'stroke-width': 1, opacity: 0.8 }));
+      }
+      if (a.at !== 'crossover') {
+        const s = cfg.series[a.series || 0];
+        deco.appendChild(el('circle', { cx: ax, cy: ay, r: 2.4, fill: css(s.color), stroke: css('--paper'), 'stroke-width': 1 }));
+      }
+      lines.forEach((t, i) => {
+        const tx = el('text', { x: lx, y: ly + i * LH, 'text-anchor': anchor, 'font-family': css('--font-mono'), 'font-size': 9.5, 'letter-spacing': '0.02em', fill: css('--ink-soft') });
+        tx.textContent = t; deco.appendChild(tx);
+      });
+    });
+
+    svg.appendChild(deco);
+    // The crossover dot sits ON the exact intersection, drawn last so it reads as
+    // the point where the lines meet - visual proof the indicator is accurate. It
+    // never fades: with or without motion it is present from first paint.
     if (cross) svg.appendChild(el('circle', { cx: x(cross[0]), cy: y(cross[1]), r: 3.6, fill: css('--ink'), stroke: css('--paper'), 'stroke-width': 1.6 }));
-    // hover readout
+    // Entrance choreography: lines draw (staggered above), fills wash in, then the
+    // decoration layer (labels, glow, annotations) fades up. Entirely skipped when
+    // the reader prefers reduced motion - everything is simply there, fully opaque.
+    if (!reduce) {
+      fadeIn(fillG, 0.7);
+      fadeIn(deco, 1.1 + cfg.series.length * 0.18);
+    }
+
+    // Hover layer: vertical crosshair snapped to the nearest year, a ringed dot on
+    // every series, and an editorial HTML tooltip card - year header in the display
+    // face, one row per series (swatch dot, label, hfmt value in tabular mono).
+    // The card follows the pointer, flips sides near the right edge, and clamps
+    // fully inside the chart at any width. Pointer, touch, and keyboard all drive it.
     const guide = el('line', { y1: M.t, y2: M.t + ih, stroke: css('--ink'), 'stroke-width': 1, opacity: 0 }); svg.appendChild(guide);
     const dots = cfg.series.map((s) => { const c = el('circle', { r: 4, fill: css(s.color), stroke: css('--paper'), 'stroke-width': 1.5, opacity: 0 }); svg.appendChild(c); return c; });
-    const bg = el('rect', { rx: 3, fill: css('--ink'), opacity: 0 }); svg.appendChild(bg);
-    const lbl = el('text', { 'font-family': css('--font-mono'), 'font-size': 11, fill: css('--paper'), opacity: 0, 'text-anchor': 'middle' }); svg.appendChild(lbl);
-    function interp(pts, xv) { for (let i = 0; i < pts.length - 1; i++) { if (xv >= pts[i][0] && xv <= pts[i + 1][0]) { const t = (xv - pts[i][0]) / (pts[i + 1][0] - pts[i][0]); return pts[i][1] + t * (pts[i + 1][1] - pts[i][1]); } } return xv < pts[0][0] ? pts[0][1] : pts[pts.length - 1][1]; }
-    const over = el('rect', { x: M.l, y: M.t, width: iw, height: ih, fill: 'transparent', cursor: 'crosshair' }); svg.appendChild(over);
+    const tip = document.createElement('div');
+    tip.className = 'cv-tip';
+    tip.style.background = css('--paper');
+    tip.style.borderColor = css('--rule');
+    tip.style.color = css('--ink');
+    const head = document.createElement('div');
+    head.className = 'cv-tip-year';
+    head.style.fontFamily = css('--font-display');
+    head.style.borderBottomColor = css('--rule');
+    tip.appendChild(head);
+    // Series names come from data - insert via textContent, never innerHTML.
+    const rowVals = cfg.series.map((s) => {
+      const row = document.createElement('div'); row.className = 'cv-tip-row';
+      const sw = document.createElement('span'); sw.className = 'cv-tip-swatch'; sw.style.background = css(s.color);
+      const lb = document.createElement('span'); lb.className = 'cv-tip-label'; lb.style.color = css('--ink-soft'); lb.style.fontFamily = css('--font-sans'); lb.textContent = s.label;
+      const vl = document.createElement('span'); vl.className = 'cv-tip-val'; vl.style.color = css('--ink'); vl.style.fontFamily = css('--font-mono');
+      row.appendChild(sw); row.appendChild(lb); row.appendChild(vl);
+      tip.appendChild(row);
+      return vl;
+    });
+    wrap.appendChild(tip);
+    const over = el('rect', { x: M.l, y: M.t, width: iw, height: ih, fill: 'transparent', cursor: 'crosshair', tabindex: 0 });
+    over.setAttribute('aria-label', 'Chart values by year. Use left and right arrow keys to step through years.');
+    svg.appendChild(over);
+
+    // cx/cy are CSS px relative to the chart wrap; xv is the snapped data year.
+    function showAt(xv, cx, cy) {
+      const gx = x(xv);
+      guide.setAttribute('x1', gx); guide.setAttribute('x2', gx); guide.setAttribute('opacity', 0.18);
+      head.textContent = String(xv);
+      cfg.series.forEach((s, i) => {
+        const yv = interpY(s.pts, xv);
+        dots[i].setAttribute('cx', gx); dots[i].setAttribute('cy', y(yv)); dots[i].setAttribute('opacity', 1);
+        rowVals[i].textContent = String(cfg.hfmt ? cfg.hfmt(yv) : Math.round(yv));
+      });
+      tip.classList.add('on');
+      const bw = wrap.clientWidth, bh = wrap.clientHeight;
+      const tw = tip.offsetWidth, th = tip.offsetHeight;
+      let tx = cx + 14;
+      if (tx + tw > bw - 2) tx = cx - 14 - tw;
+      tx = Math.max(2, Math.min(tx, bw - tw - 2));
+      let ty = cy - th - 12;
+      if (ty < 2) ty = cy + 16;
+      ty = Math.max(2, Math.min(ty, bh - th - 2));
+      tip.style.transform = 'translate(' + tx + 'px,' + ty + 'px)';
+    }
+    function hide() {
+      guide.setAttribute('opacity', 0);
+      dots.forEach((d) => d.setAttribute('opacity', 0));
+      tip.classList.remove('on');
+    }
+    function snap(clientX) {
+      const r = svg.getBoundingClientRect();
+      const cx = (clientX - r.left) / r.width * W;
+      let xv = Math.round(cfg.xmin + (cx - M.l) / iw * (cfg.xmax - cfg.xmin));
+      return Math.max(cfg.xmin, Math.min(cfg.xmax, xv));
+    }
     function move(ev) {
       const r = svg.getBoundingClientRect();
-      const cx = ((ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left) / r.width * W;
-      let xv = Math.round(cfg.xmin + (cx - M.l) / iw * (cfg.xmax - cfg.xmin)); xv = Math.max(cfg.xmin, Math.min(cfg.xmax, xv));
-      guide.setAttribute('x1', x(xv)); guide.setAttribute('x2', x(xv)); guide.setAttribute('opacity', 0.16);
-      const parts = [xv];
-      cfg.series.forEach((s, i) => { const yv = interp(s.pts, xv); dots[i].setAttribute('cx', x(xv)); dots[i].setAttribute('cy', y(yv)); dots[i].setAttribute('opacity', 1); parts.push(cfg.hfmt ? cfg.hfmt(yv) : Math.round(yv)); });
-      const txt = parts.join('  '); lbl.textContent = txt; const w = txt.length * 6.7 + 14;
-      const lx = Math.max(M.l + w / 2, Math.min(M.l + iw - w / 2, x(xv)));
-      lbl.setAttribute('x', lx); lbl.setAttribute('y', M.t + 12); lbl.setAttribute('opacity', 1);
-      bg.setAttribute('x', lx - w / 2); bg.setAttribute('y', M.t); bg.setAttribute('width', w); bg.setAttribute('height', 17); bg.setAttribute('opacity', 0.92);
+      const px = ev.touches ? ev.touches[0].clientX : ev.clientX;
+      const py = ev.touches ? ev.touches[0].clientY : ev.clientY;
+      showAt(snap(px), px - r.left, py - r.top);
     }
-    function leave() { guide.setAttribute('opacity', 0); bg.setAttribute('opacity', 0); lbl.setAttribute('opacity', 0); dots.forEach((d) => d.setAttribute('opacity', 0)); }
-    over.addEventListener('pointermove', move); over.addEventListener('pointerleave', leave); over.addEventListener('touchmove', (e) => move(e), { passive: true });
+    over.addEventListener('pointermove', move);
+    over.addEventListener('pointerdown', move);
+    over.addEventListener('pointerleave', hide);
+    over.addEventListener('pointercancel', hide);
+    over.addEventListener('touchstart', (e) => move(e), { passive: true });
+    over.addEventListener('touchmove', (e) => move(e), { passive: true });
+    // Keyboard: focus shows the latest year; arrows step, Home/End jump, blur hides.
+    let kx = null;
+    function showKey() {
+      const r = svg.getBoundingClientRect();
+      showAt(kx, x(kx) / W * r.width, (M.t + 34) / H * r.height);
+    }
+    over.addEventListener('focus', () => { kx = cfg.xmax; showKey(); });
+    over.addEventListener('blur', () => { kx = null; hide(); });
+    over.addEventListener('keydown', (e) => {
+      if (kx === null) kx = cfg.xmax;
+      if (e.key === 'ArrowLeft') kx = Math.max(cfg.xmin, kx - 1);
+      else if (e.key === 'ArrowRight') kx = Math.min(cfg.xmax, kx + 1);
+      else if (e.key === 'Home') kx = cfg.xmin;
+      else if (e.key === 'End') kx = cfg.xmax;
+      else return;
+      e.preventDefault();
+      showKey();
+    });
   }
 
   // Draw every chart from the embedded spec. Format tokens resolve to the functions
