@@ -24,11 +24,11 @@
       "subhead": "Cost to generate a unit of electricity",
       "chartId": "c1",
       "fignum": "Chart 1 · The crossover",
-      "aria": "The levelized cost of solar electricity fell from about 46 cents per kilowatt-hour in 2010 to about 4 cents in 2024, crossing below fossil fuels around 2018.",
-      "caption": "**Levelized cost of electricity, global weighted average.** Hover for any year. Source: IRENA, Renewable Power Generation Costs in 2023.",
+      "aria": "The levelized cost of solar electricity fell from about 45 cents per kilowatt-hour in 2010 to about 4 cents in 2024, crossing below the cheapest fossil-fuel option around 2020.",
+      "caption": "**Levelized cost of electricity, global weighted average.** The fossil line is the cheapest fossil-fuel-fired option (the hardest benchmark to beat). Hover for any year. Source: IRENA, Renewable Power Generation Costs in 2023.",
       "parts": [
         {
-          "md": "In 2010 a unit of solar electricity cost roughly five times as much as the same unit from a fossil-fuel plant. Over the next decade the solar line fell by about **90%** while fossil costs drifted sideways. The two crossed near **2018**, and solar kept going. By 2024 the average solar project produced power for about **four cents** a kilowatt-hour, a little over half the cost of the cheapest fossil alternative. The most expensive option had become the cheapest."
+          "md": "In 2010 a unit of solar electricity cost roughly **eight times** as much as power from the cheapest fossil-fuel plant. Over the next decade the solar line fell by about **90%** while fossil costs drifted sideways. The two crossed around **2020**, and solar kept going. By 2024 the average solar project produced power for about **four cents** a kilowatt-hour, roughly a quarter below the cheapest fossil option and a tenth of solar's own 2010 cost. The most expensive option had become the cheapest."
         }
       ],
       "chart": {
@@ -43,21 +43,22 @@
         "yticks": [0, 0.1, 0.2, 0.3, 0.4],
         "yfmt": "dollar2",
         "hfmt": "dollar3",
-        "mark": [2018, "2018"],
+        "crossover": { "series": [0, 1], "label": "2020" },
         "series": [
           {
             "color": "--accent-3",
             "label": "Solar",
             "val": "$0.04",
-            "pts": [[2010, 0.46], [2013, 0.28], [2016, 0.13], [2018, 0.089], [2020, 0.057], [2022, 0.049], [2024, 0.043]]
+            "dy": 9,
+            "pts": [[2010, 0.445], [2013, 0.268], [2016, 0.18], [2018, 0.104], [2020, 0.057], [2022, 0.049], [2024, 0.043]]
           },
           {
             "color": "--ink-faint",
-            "label": "Fossil fuels",
-            "val": "$0.10",
+            "label": "Cheapest fossil",
+            "val": "$0.06",
             "mute": true,
-            "dy": 2,
-            "pts": [[2010, 0.085], [2013, 0.088], [2016, 0.093], [2018, 0.097], [2020, 0.098], [2022, 0.10], [2024, 0.10]]
+            "dy": -8,
+            "pts": [[2010, 0.052], [2014, 0.054], [2018, 0.056], [2020, 0.058], [2022, 0.064], [2024, 0.059]]
           }
         ]
       }

@@ -154,10 +154,13 @@
         ],
         "yfmt": "pct",
         "hfmt": "fixed1pct",
-        "mark": [
-          1997,
-          "1997"
-        ],
+        "crossover": {
+          "series": [
+            0,
+            1
+          ],
+          "label": "1997"
+        },
         "series": [
           {
             "color": "--accent-3",
