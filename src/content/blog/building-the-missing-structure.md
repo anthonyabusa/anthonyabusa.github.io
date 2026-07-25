@@ -8,15 +8,15 @@ draft: false
 
 The first thing I ever built was a student government that mostly existed on paper, which is the polite way of saying the university had printed the office before anyone had built the institution underneath it.
 
-I was handed “Student Body President,” but beneath the title there was not much of a machine: no operating rhythm, no durable process, no mechanism that could survive the next person sitting in the chair. It was a name with responsibility stapled to it, waiting for someone to make the responsibility real. Before I could do the job, I had to build the thing that made the job possible. At the time, I did not recognize that as a pattern. It was just the work sitting in front of me.
+I was given “Student Body President,” but beneath the title there was not much of a machine: no operating rhythm, no durable process, no mechanism that could survive the next person sitting in the chair. It was a role with responsibility attached to it, but almost none of the structure that made the responsibility actionable. Before I could do the job, I had to build the thing that made the job possible. At the time, I did not recognize that as a pattern. It was just the work in front of me.
 
 Then it kept happening.
 
 A few years later, I was at a chemicals company older than the light bulb, and I founded its North American Government Affairs function from nothing: no team, no mandate, no precedent to copy, only a gap that mattered and enough institutional room to build into it. More recently, the missing structure has been my own. I built an autonomous AI system to run the operations of how I work, because the tool I wanted did not exist yet, and waiting politely for someone else to ship it felt like taking the scenic route and calling it strategy. Same move, different altitude.
 
-I diverge; my point is this. There are two basic ways to move through most institutions. You can inherit the structure and optimize inside it, or you can notice that the structure is missing and build it. I have never been especially natural at the first one. My attention goes to the system underneath the goal: the process that makes the next ten goals cheaper, the infrastructure that turns repeated effort into leverage, the quiet machinery that lets future work require less heroism.
+I diverge; my point is this. There are two basic ways to move through most institutions. You can inherit the structure and optimize inside it, or you can notice that the structure is missing and build it. I have never been especially natural at the first one. My attention moves toward the system underneath the goal: the process that makes the next ten goals cheaper, the infrastructure that turns repeated effort into leverage, the quiet machinery that lets future work require less heroism.
 
-Building the missing structure is slower than borrowing one, and it rarely comes with a permission slip. But it compounds differently, because you know where the weight actually sits. You remember why each piece exists; you were there when the load first showed up and something had to hold it. That memory matters. It keeps the system from becoming theater.
+Building the missing structure is slower than borrowing one, and it rarely arrives with a permission slip. But it compounds differently, because you know where the weight actually sits. You remember why each piece exists; you were there when the load first showed up and something had to hold it. That memory matters. It keeps the system from becoming theater.
 
 This site is the same move, one more time.
 
