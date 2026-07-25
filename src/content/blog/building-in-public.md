@@ -8,7 +8,7 @@ draft: false
 
 Shipping a portfolio is the easy part; building one that shows how I think, why I choose what I choose, and what I am still trying to understand is the actual work. It is also the only version I can defend putting my name on.
 
-Most portfolios become tidy little museums of finishedness: projects compressed into polite summaries, lessons retrofitted into clean arcs, artifacts from work that has already stopped breathing. The living material usually sits somewhere else: notebooks, branches, conversations, abandoned drafts, rough first passes, and arguments that have not yet learned how to behave in public. I did not want a headstone. I wanted a site that could move as I move; finished work where it belongs, but with enough of the machinery visible that someone landing here sees more than proof that I once shipped a project and learned how to center a card.
+Most portfolios become tidy little museums of finishedness: projects compressed into polite summaries, lessons retrofitted into clean arcs, artifacts from work that has already stopped breathing. The living material usually sits somewhere else: notebooks, branches, conversations, abandoned drafts, rough first passes, and arguments still too feral for public company. I did not want a headstone. I wanted a site that could move as I move: finished work where it belongs, but with enough of the machinery visible that someone landing here sees more than proof that I once shipped a project and learned how to center a card.
 
 ### The constraints I gave myself
 
