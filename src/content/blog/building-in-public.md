@@ -6,9 +6,9 @@ tags: ["Entrepreneurship", "Building", "Personal Brand"]
 draft: false
 ---
 
-Shipping a portfolio is easy; building one that shows how I think, why I choose, and what I am still trying to understand is the harder work. It is also the only version worth putting my name on.
+Shipping a portfolio is easy; building one that shows how I think, why I choose what I choose, and what I am still trying to understand is the real work. It is also the only version I can justify putting my name on.
 
-Most portfolios become tidy little archives of finishedness: projects wrapped in polite summaries, lessons sanded into shape, artifacts from work that has already stopped breathing. The living work usually sits somewhere else: notebooks, branches, conversations, abandoned drafts, awkward first passes, and arguments that are not yet ready to behave in public. I did not want a headstone. I wanted a site that could move as I move; finished work where it belongs, but also enough of the machinery underneath that someone landing here sees more than proof that I once shipped a project and learned how to center a card.
+Most portfolios become clean little museums of finishedness: projects compressed into polite summaries, lessons shaped into something tidy, artifacts from work that has already stopped breathing. The live material is usually hidden somewhere else: notebooks, branches, conversations, abandoned drafts, rough first passes, and arguments that have not yet learned how to behave in public. I did not want a headstone. I wanted a site that could move as I move; finished work in its proper place, but enough of the machinery exposed that someone landing here sees more than proof that I once shipped a project and learned how to center a card.
 
 ### The constraints I gave myself
 
@@ -16,10 +16,10 @@ Most portfolios become tidy little archives of finishedness: projects wrapped in
 
 **Content before design.** A beautifully designed empty site is still empty. The thinking has to exist first; otherwise the polish is just well-lit vacancy.
 
-**Ship ugly, then sharpen.** The worst outcome is not a rough launch. It is a polished site that never leaves the draft folder. I would rather build in public, let the weak edges stay visible, and keep filing them down as the work earns its shape.
+**Ship ugly, then sharpen.** The worst outcome is not a rough launch. It is a polished site that never escapes the draft folder. I would rather build in public, let the weak edges stay visible, and keep filing them down as the work earns its shape.
 
 ### What you'll find here
 
-Projects from consulting, product, and open source. Writing at the intersection of business and technology, plus the fields that keep feeding that intersection: philosophy, psychology, economics. Honest post-mortems on the work that did not pan out, because failure usually teaches more than the clean case study is willing to admit.
+Projects from consulting, product, and open source. Writing at the intersection of business and technology, along with the fields that keep complicating and feeding that intersection: philosophy, psychology, economics. Honest post-mortems on the work that did not pan out, because failure usually teaches more than the clean case study is willing to admit.
 
 So why build it in public? Because the alternative is building it in private, polishing the headstone, and hoping someone eventually wanders into the graveyard.
