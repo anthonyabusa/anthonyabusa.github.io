@@ -8,7 +8,7 @@ draft: false
 
 Shipping a portfolio is not the hard part. The harder thing is building one that can actually hold the way I think: the decisions, the tradeoffs, the unfinished questions, and the occasional sharp edge that has not yet been sanded into a case-study sentence. That is the only version worth putting my name on.
 
-Most portfolios become small museums of completion. Projects get compressed into clean summaries, lessons get scrubbed by hindsight until they barely resemble the learning that produced them, and artifacts get arranged as if the work stopped moving the moment the page went live. The more honest material usually lives somewhere less presentable: notebooks, branches, conversations, abandoned drafts, first passes, and arguments still too unsocialized for polite company.
+Most portfolios become small museums of completion. Projects get compressed into clean summaries, lessons get laundered by hindsight until they barely resemble the work that produced them, and artifacts get arranged as if the thinking stopped moving the moment the page went live. The more honest material usually lives somewhere less presentable: notebooks, branches, conversations, abandoned drafts, first passes, and arguments still too unsocialized for polite company.
 
 I did not want to build a headstone. I wanted a site with a pulse: finished work where finished work belongs, but with enough of the machinery still visible that someone landing here can see more than proof that I once shipped something and learned how to center a card.
 
