@@ -6,9 +6,9 @@ tags: ["AI", "Systems", "Strategy"]
 draft: false
 ---
 
-The first time you get access to a frontier model, the instinct is to hand it the whole shop. It is the most capable thing in the room, or at least the thing most fluent in capability theater, so the serious answer starts to feel almost responsible: route everything through it, let raw intelligence chew through the mess, and treat the invoice as the cost of staying near the edge.
+The first time you get access to a frontier model, the instinct is to hand it the whole shop. It is the most capable thing in the room, or at least the thing most fluent in capability theater, so the serious answer starts to feel almost responsible: route everything through it, let raw intelligence chew through the mess, and treat the invoice as the cost of staying close to the edge.
 
-I ran my system that way for about a week. Every draft, every file rename, every three-line summary, every procedural splinter went through the strongest and most expensive model I had available. A week was enough for the premise to start cross-examining itself; quietly at first, then with less grace, because eventually the bill stops looking like a receipt and starts looking like telemetry.
+I ran my system that way for about a week. Every draft, every file rename, every three-line summary, every procedural splinter went through the strongest and most expensive model I had available. A week was enough for the premise to start arguing back; quietly at first, then with less grace, because eventually the bill stops looking like a receipt and starts looking like telemetry.
 
 What gets flattened in agent discourse is that most of what an agent actually *does* is not deep thought. It is volume. Reformatting a file, drafting boilerplate, grepping a directory, summarizing a log, renaming a variable across forty places: the day fills with **toil tokens**, and paying frontier rates for toil tokens is the operational equivalent of flying your most senior partner across the country to photocopy a contract.
 
