@@ -6,9 +6,9 @@ tags: ["Strategy", "Building", "Personal Brand"]
 draft: false
 ---
 
-The first thing I ever built was a student government that mostly existed on paper, which is the polite way of saying the university had printed the office before anyone had built the institution beneath it.
+The first thing I ever built was a student government that mostly existed on paper, which is the polite version of saying the university had printed the office before anyone had built the institution underneath it.
 
-I was handed “Student Body President,” but beneath the title there was not much machinery: no operating rhythm, no durable process, no mechanism sturdy enough to survive the person currently sitting in the chair. The role carried responsibility, but responsibility without structure is mostly exposure wearing a blazer. Before I could do the job, I had to build the thing that made the job possible. I did not have a clean theory for that yet. It was just the work in front of me, wearing a name tag and doing a fairly convincing impression of an institution.
+I was handed “Student Body President,” but under the title there was very little machinery: no operating rhythm, no durable process, no mechanism sturdy enough to outlast whoever happened to be sitting in the chair. The role carried responsibility, but responsibility without structure is mostly exposure in a blazer. Before I could do the job, I had to build the thing that made the job possible. I did not have clean language for that yet. It was just the work in front of me, wearing a name tag and doing a fairly convincing impression of an institution.
 
 Then the pattern developed the inconvenient habit of following me.
 
