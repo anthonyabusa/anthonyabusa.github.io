@@ -6,13 +6,13 @@ tags: ["Entrepreneurship", "Building", "Personal Brand"]
 draft: false
 ---
 
-Shipping a portfolio is easy; building one that shows how you think, why you choose, and what you are still trying to understand is the harder work. It is also the only version worth putting your name on.
+Shipping a portfolio is easy; building one that shows how I think, why I choose, and what I am still trying to understand is the harder work. It is also the only version worth putting my name on.
 
-Most portfolios become tidy little archives of finishedness: projects wrapped in polite summaries, lessons sanded into shape, artifacts from work that has already stopped breathing. The living work usually sits somewhere else, scattered across notebooks, branches, conversations, abandoned drafts, awkward first passes, and arguments that are not yet respectable enough for strangers. I did not want a headstone. I wanted a site that could move as I move: finished work where it belongs, yes, but also some of the machinery underneath it, so the person landing here sees more than evidence that I once shipped a project and learned how to center a card.
+Most portfolios become tidy little archives of finishedness: projects wrapped in polite summaries, lessons sanded into shape, artifacts from work that has already stopped breathing. The living work usually sits somewhere else: notebooks, branches, conversations, abandoned drafts, awkward first passes, and arguments that are not yet ready to behave in public. I did not want a headstone. I wanted a site that could move as I move; finished work where it belongs, but also enough of the machinery underneath that someone landing here sees more than proof that I once shipped a project and learned how to center a card.
 
 ### The constraints I gave myself
 
-**No templates.** If a stranger can deploy the same site in five minutes, it is not a personal brand. It is a theme wearing your name badge.
+**No templates.** If a stranger can deploy the same site in five minutes, it is not a personal brand. It is a theme wearing my name badge.
 
 **Content before design.** A beautifully designed empty site is still empty. The thinking has to exist first; otherwise the polish is just well-lit vacancy.
 
