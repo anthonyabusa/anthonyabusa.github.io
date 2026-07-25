@@ -6,7 +6,7 @@ tags: ["AI", "Systems", "Strategy"]
 draft: false
 ---
 
-The first time you get access to a frontier model, the instinct is to hand it the whole shop. It is the most capable thing in the room, or at least the thing most fluent in capability theater, so the serious answer starts to feel almost responsible: route everything through it, let raw intelligence chew through the mess, and accept the invoice as the price of staying near the edge.
+The first time you get access to a frontier model, the instinct is to hand it the whole shop. It is the most capable thing in the room, or at least the thing most fluent in capability theater, so the serious answer starts to feel almost responsible: route everything through it, let raw intelligence chew through the mess, and treat the invoice as the cost of staying near the edge.
 
 I ran my system that way for about a week. Every draft, every file rename, every three-line summary, every procedural splinter went through the strongest and most expensive model I had available. A week was enough for the premise to start cross-examining itself; quietly at first, then with less grace, because eventually the bill stops looking like a receipt and starts looking like telemetry.
 
@@ -22,7 +22,7 @@ So I rebuilt the system around a different shape. One high-judgment model orches
 
 The expensive mind plans the migration and reviews the diff; the cheap hands type it out. Judgment stays at the top, where it compounds. Toil sinks to the bottom, where it is nearly free. The tokens still get spent. They just stop getting spent as if every task deserves a board meeting, a postmortem, and a tiny commemorative memo.
 
-The obvious objection is that cheaper models will drag the output down. In practice, they do not, because they are not being asked to make the decisions. They draft; the orchestrator decides.
+The obvious objection is that cheaper models will pull the output down. In practice, they do not, because they are not being asked to make the decisions. They draft; the orchestrator decides.
 
 A weaker writer with a strong editor ships better work than a stronger writer with no editor, and the architecture makes that pairing structural instead of leaving it to mood, memory, or 11pm discipline. The system is not smarter than its best model. It is smarter than its best model working alone, which is a narrower claim, but it is also the claim that matters.
 
