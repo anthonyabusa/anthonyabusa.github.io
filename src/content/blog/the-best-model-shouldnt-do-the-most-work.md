@@ -6,13 +6,13 @@ tags: ["AI", "Systems", "Strategy"]
 draft: false
 ---
 
-The first time you get access to a frontier model, the temptation is to hand it the whole factory. It is the most capable thing in the room, or at least the thing most fluent in capability theater, so the serious answer starts to look almost responsible: route everything through it, let raw intelligence grind through the mess, and treat the invoice as the cost of staying close to the edge.
+The first time you get access to a frontier model, the temptation is to hand it the whole factory. It is the most capable thing in the room, or at least the thing most fluent in capability theater, so the serious answer starts to look almost responsible: route everything through it, let raw intelligence chew through the mess, and treat the invoice as the price of staying near the edge.
 
 I ran my system that way for about a week. Every draft, every file rename, every three-line summary, every procedural splinter went through the strongest and most expensive model I had available. A week was enough for the premise to start arguing back; quietly at first, then with less grace, because eventually the bill stops looking like a receipt and starts looking like telemetry.
 
 What gets flattened in agent discourse is that most of what an agent actually *does* is not deep thought. It is volume. Reformatting a file, drafting boilerplate, grepping a directory, summarizing a log, renaming a variable across forty places: the day fills with **toil tokens**, and paying frontier rates for toil tokens is the operational equivalent of flying your most senior partner across the country to photocopy a contract.
 
-They can do it. They will probably do it cleanly. That is precisely the trap. Capability is not purpose, and once you confuse the two, expensive systems learn to spend themselves elegantly on work that never needed them.
+They can do it. They will probably do it cleanly. That is exactly the trap. Capability is not purpose, and once you confuse the two, expensive systems learn to spend themselves elegantly on work that never needed them.
 
 Picture the kitchen. The head chef who insists on peeling every potato is not protecting quality; they are turning judgment into a bottleneck and calling it standards. The line slows to the pace of the one person who refuses to delegate. The dish that actually needs their taste, the sauce that breaks if the heat is wrong, sits waiting while the chef keeps peeling.
 
