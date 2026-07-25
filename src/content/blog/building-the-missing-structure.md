@@ -6,17 +6,17 @@ tags: ["Strategy", "Building", "Personal Brand"]
 draft: false
 ---
 
-The first thing I ever built was a student government that mostly existed on paper, which is a polite way of saying the university had printed the title before anyone had built the machine underneath it.
+The first thing I ever built was a student government that mostly existed on paper, which is the polite version of saying the university had printed the title before anyone had built the machine underneath it.
 
-I was handed “Student Body President,” but beneath the title there was not much of an institution: no operating rhythm, no durable process, no machinery that could survive the next person sitting in the chair. It was a name with responsibility stapled to it, waiting for someone to make the responsibility real. Before I could do the job, I had to build the thing that made the job possible. At the time, I did not recognize that as a pattern. It was just the work sitting in front of me.
+I was handed “Student Body President,” but beneath the title there was not much of an institution: no operating rhythm, no durable process, no machinery that could survive the next person who sat in the chair. It was a name with responsibility stapled to it, waiting for someone to make the responsibility real. Before I could do the job, I had to build the thing that made the job possible. At the time, I did not recognize that as a pattern. It was just the work in front of me.
 
 It became the pattern.
 
-A few years later, I was at a chemicals company older than the light bulb, and I founded its North American Government Affairs function from nothing: no team, no mandate, no precedent to borrow, just a gap that mattered and enough institutional room to build into it. More recently, the missing structure has been my own. I built an autonomous AI system to run the operations of how I work, because the tool I wanted did not exist yet, and waiting for someone else to ship it felt like choosing the slower road for the sake of politeness. Three versions of the same move, each at a different scale.
+A few years later, I was at a chemicals company older than the light bulb, and I founded its North American Government Affairs function from nothing: no team, no mandate, no precedent to borrow, just a gap that mattered and enough institutional room to build into it. More recently, the missing structure has been my own. I built an autonomous AI system to run the operations of how I work, because the tool I wanted did not exist yet, and waiting for someone else to ship it felt like taking the slower road for the sake of politeness. Three versions of the same move, each at a different scale.
 
 I diverge; the point is this. There are two basic ways to move through most institutions. You can inherit the structure and optimize inside it, or you can notice that the structure is missing and build it. I have never been especially natural at the first one. My instinct goes to the system beneath the goal: the process that makes the next ten goals cheaper, the infrastructure that turns repeated effort into leverage, the quiet machinery that lets future work require less heroism.
 
-Building the missing structure is slower than borrowing one, and it almost never arrives with a permission slip. But it compounds differently, because you know where the weight sits. You remember why each piece exists; you were there when the load first showed up and something had to hold it.
+Building the missing structure is slower than borrowing one, and it rarely arrives with a permission slip. But it compounds differently, because you know where the weight sits. You remember why each piece exists; you were there when the load first showed up and something had to hold it.
 
 This site is the same move, one more time.
 
