@@ -6,11 +6,11 @@ tags: ["Entrepreneurship", "Building", "Personal Brand"]
 draft: false
 ---
 
-Shipping a portfolio is not the difficult part. The harder thing is building one that can carry how I think, why I made the tradeoffs I made, and what I am still trying to understand without turning all of that into a neatly lit showroom. That is the only version worth putting my name on.
+Shipping a portfolio is not the hard part. The harder thing is building one that can hold how I think, why I made the tradeoffs I made, and what I am still trying to understand without turning all of that into a politely staged showroom. That is the only version worth putting my name on.
 
-Most portfolios become small museums of completion: projects compressed into tidy summaries, lessons washed clean by hindsight until they barely resemble the learning, artifacts arranged as if the work stopped moving the moment the case study went live. The truer material usually lives somewhere less presentable: notebooks, branches, conversations, abandoned drafts, first passes, and arguments still too unsocialized for polite company.
+Most portfolios become small museums of completion: projects compressed into clean summaries, lessons scrubbed by hindsight until they barely resemble the learning, artifacts arranged as if the work stopped moving the moment the case study went live. The more honest material usually lives somewhere less presentable: notebooks, branches, conversations, abandoned drafts, first passes, and arguments still too unsocialized for polite company.
 
-I did not want to build a headstone. I wanted a site with a pulse: finished work where finished work belongs, but with enough of the machinery left visible that someone landing here can see more than evidence that I once shipped something and learned how to center a card.
+I did not want to build a headstone. I wanted a site with a pulse: finished work where finished work belongs, but with enough of the machinery left visible that someone landing here can see more than proof that I once shipped something and learned how to center a card.
 
 ### The constraints I gave myself
 
