@@ -59,7 +59,14 @@ const piece = pieces.find((p) => p.slug === 'a-lengthening-life')!;
 </Base>
 
 <style>
-  .piece { width: var(--frame); margin: 0 auto; }
+  .piece { width: var(--frame-wide); margin: 0 auto; padding: 0 var(--space-3); }
+  /* Prose stays at a readable measure and centers within the wide frame; figures fill it. */
+  .piece-head,
+  section > h2,
+  .prose,
+  .stats,
+  figcaption,
+  .piece-foot { max-width: var(--measure); margin-inline: auto; }
   .piece-head { padding: var(--space-6) 0 var(--space-4); }
   .piece-head h1 { font-size: var(--step-5); margin: var(--space-2) 0 var(--space-3); max-width: 18ch; }
   .standfirst { font-size: var(--step-2); line-height: 1.35; color: var(--ink-soft); font-family: var(--font-display); font-weight: 400; }

@@ -25,7 +25,7 @@
       "chartId": "c1",
       "fignum": "Chart 1 · The crossover",
       "aria": "The levelized cost of solar electricity fell from about 45 cents per kilowatt-hour in 2010 to about 4 cents in 2024, crossing below the cheapest fossil-fuel option around 2020.",
-      "caption": "**Levelized cost of electricity, global weighted average.** The fossil line is the cheapest fossil-fuel-fired option (the hardest benchmark to beat). Hover for any year. Source: IRENA, Renewable Power Generation Costs in 2023.",
+      "caption": "**Levelized cost of electricity, global weighted average.** The fossil line is the cheapest fossil-fuel option. Hover for any year. Source: IRENA, Renewable Power Generation Costs in 2023.",
       "parts": [
         {
           "md": "In 2010 a unit of solar electricity cost roughly **eight times** as much as power from the cheapest fossil-fuel plant. Over the next decade the solar line fell by about **90%** while fossil costs drifted sideways. The two crossed around **2020**, and solar kept going. By 2024 the average solar project produced power for about **four cents** a kilowatt-hour, roughly a quarter below the cheapest fossil option and a tenth of solar's own 2010 cost. The most expensive option had become the cheapest."
@@ -46,10 +46,7 @@
         "unit": "$ per kWh",
         "fills": [{"series": 0, "kind": "hatch"}],
         "annotations": [
-          {"series": 0, "x": 2010, "lines": ["8x costlier", "than fossil"], "dx": 12, "dy": -16, "side": "right"},
-          {"series": 0, "x": 2015, "lines": ["90% fall", "in a decade"], "dx": 16, "dy": -14, "side": "right"},
-          {"at": "crossover", "lines": ["cheaper than fossil"], "dx": -14, "dy": 26, "side": "left"},
-          {"series": 0, "x": 2024, "lines": ["a tenth of its", "2010 cost"], "dx": -14, "dy": -33, "side": "left"}
+          {"at": "crossover", "lines": ["cheaper than fossil"], "dx": -14, "dy": 26, "side": "left"}
         ],
         "crossover": { "series": [0, 1], "label": "2020" },
         "series": [
@@ -97,10 +94,6 @@
         "yfmt": "gw",
         "hfmt": "gwround",
         "unit": "gigawatts installed",
-        "annotations": [
-          {"series": 0, "x": 2010, "lines": ["just 40 GW", "in 2010"], "dx": -10, "dy": -22, "side": "left"},
-          {"series": 0, "x": 2022, "lines": ["1.2 TW", "by 2022"], "dx": -14, "dy": -20, "side": "left"}
-        ],
         "series": [
           {
             "color": "--accent-2",
@@ -140,8 +133,7 @@
         "unit": "$ per kWh, pack",
         "fills": [{"series": 0, "kind": "gradient"}],
         "annotations": [
-          {"series": 0, "x": 2013, "lines": ["halved in", "three years"], "dx": 14, "dy": -14, "side": "right"},
-          {"series": 0, "x": 2022, "lines": ["a brief uptick", "in 2022"], "dx": 2, "dy": -26, "side": "center"}
+          {"series": 0, "x": 2013, "lines": ["halved in", "three years"], "dx": 14, "dy": -14, "side": "right"}
         ],
         "series": [
           {
@@ -180,7 +172,6 @@
         "hfmt": "fixed1pct",
         "unit": "% of world electricity",
         "annotations": [
-          {"series": 0, "x": 2010, "lines": ["one part in", "a thousand"], "dx": 8, "dy": -24, "side": "right"},
           {"series": 0, "x": 2019, "lines": ["doubling every", "three years"], "dx": -14, "dy": -16, "side": "left"}
         ],
         "series": [

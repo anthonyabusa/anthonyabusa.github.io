@@ -44,6 +44,7 @@
   --space-7: 6rem;
   --measure: 66ch; /* reading width for prose */
   --frame: min(92rem, 100% - 2.5rem); /* page gutter */
+  --frame-wide: min(68rem, 100% - 2.5rem); /* piece frame: charts fill this, prose stays at --measure */
 
   /* Motion */
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
