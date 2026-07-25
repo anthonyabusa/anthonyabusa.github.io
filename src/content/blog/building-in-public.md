@@ -6,9 +6,9 @@ tags: ["Entrepreneurship", "Building", "Personal Brand"]
 draft: false
 ---
 
-Shipping a portfolio is easy; building one that shows how I think, why I choose what I choose, and what I am still trying to understand is the real work. It is also the only version I can honestly defend putting my name on.
+Shipping a portfolio is the easy part; building one that shows how I think, why I choose what I choose, and what I am still trying to understand is the actual work. It is also the only version I can defend putting my name on.
 
-Most portfolios become tidy little museums of finishedness: projects compressed into polite summaries, lessons retrofitted into clean arcs, artifacts from work that has already stopped breathing. The live material usually lives somewhere else: notebooks, branches, conversations, abandoned drafts, rough first passes, and arguments that have not yet learned how to behave in public. I did not want a headstone. I wanted a site that could move as I move; finished work in its proper place, but with enough of the machinery exposed that someone landing here sees more than proof that I once shipped a project and learned how to center a card.
+Most portfolios become tidy little museums of finishedness: projects compressed into polite summaries, lessons retrofitted into clean arcs, artifacts from work that has already stopped breathing. The living material usually sits somewhere else: notebooks, branches, conversations, abandoned drafts, rough first passes, and arguments that have not yet learned how to behave in public. I did not want a headstone. I wanted a site that could move as I move; finished work where it belongs, but with enough of the machinery visible that someone landing here sees more than proof that I once shipped a project and learned how to center a card.
 
 ### The constraints I gave myself
 
@@ -20,6 +20,6 @@ Most portfolios become tidy little museums of finishedness: projects compressed 
 
 ### What you'll find here
 
-Projects from consulting, product, and open source. Writing at the intersection of business and technology, along with the fields that keep complicating and feeding that intersection: philosophy, psychology, economics. Honest post-mortems on the work that did not pan out, because failure usually teaches more than the clean case study is willing to admit.
+Projects from consulting, product, and open source. Writing at the intersection of business and technology, plus the fields that keep complicating and feeding that intersection: philosophy, psychology, economics. Honest post-mortems on the work that did not pan out, because failure usually teaches more than the clean case study is willing to admit.
 
 So why build it in public? Because the alternative is building it in private, polishing the headstone, and hoping someone eventually wanders into the graveyard.
