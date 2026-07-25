@@ -8,7 +8,7 @@ draft: false
 
 Shipping a portfolio is not the hard part; shipping one that can hold how I think, why I made the decisions I made, and what I am still trying to understand is the real work. That is the only version I can justify putting my name on.
 
-Most portfolios become small museums of finishedness: projects compressed into tidy summaries, lessons cleaned up after the fact, artifacts arranged as if the work stopped breathing the moment the case study went live. The living material is usually somewhere less presentable: notebooks, branches, conversations, abandoned drafts, rough first passes, and arguments still a little too unhousebroken for polite company. I did not want a headstone. I wanted a site that could move as I move; finished work where it belongs, but with enough of the machinery still visible that someone landing here sees more than proof that I once shipped a project and learned how to center a card.
+Most portfolios become small museums of finishedness: projects compressed into tidy summaries, lessons cleaned up after the fact, artifacts arranged as if the work stopped breathing the moment the case study went live. The more honest material usually lives somewhere less presentable: notebooks, branches, conversations, abandoned drafts, rough first passes, and arguments still a little too unhousebroken for polite company. I did not want a headstone. I wanted a site that could move as I move; finished work where it belongs, but with enough of the machinery still visible that someone landing here sees more than proof that I once shipped a project and learned how to center a card.
 
 ### The constraints I gave myself
 
