@@ -8,7 +8,7 @@ draft: false
 
 Shipping a portfolio is easy; building one that actually reflects how you think is harder, and that is the only version worth putting your name behind.
 
-Most portfolios become well-arranged graveyards: finished projects, polished summaries, artifacts from work that has already stopped moving. The actual thinking is usually happening somewhere else, in notebooks, branches, conversations, and half-formed arguments that have not been made presentable yet. I did not want a headstone. I wanted a site that could grow as I do, reason the way I reason, and give the person who lands here something more useful than proof that I once completed a thing.
+Most portfolios become neatly arranged graveyards: finished projects, polished blurbs, artifacts from work that has already stopped moving. The actual thinking usually lives somewhere else, in notebooks, branches, conversations, and half-formed arguments that have not yet been made polite for public consumption. I did not want a headstone. I wanted a site that could grow as I do, show the machinery behind the finished thing, and give the person who lands here something more useful than proof that I once completed a project and knew how to center a card.
 
 ### The constraints I gave myself
 
@@ -16,10 +16,10 @@ Most portfolios become well-arranged graveyards: finished projects, polished sum
 
 **Content before design.** A beautifully designed empty site is still empty. The thinking has to exist first; otherwise the polish has nothing honest to serve.
 
-**Ship ugly, then sharpen.** The worst outcome is not a rough launch. It is a polished site that never leaves the draft folder. I would rather build in the open, let the weak edges stay visible, and keep filing them down as the work earns its shape.
+**Ship ugly, then sharpen.** The worst outcome is not a rough launch. It is a polished site that never leaves the draft folder. I would rather build in public, let the weak edges stay visible, and keep filing them down as the work earns its shape.
 
 ### What you'll find here
 
-Projects from consulting, product, and open source. Writing at the intersection of business and technology, plus the places that keep feeding it: philosophy, psychology, economics. Honest post-mortems on the work that did not pan out, because failure usually teaches more than the clean case study is willing to admit.
+Projects from consulting, product, and open source. Writing at the intersection of business and technology, plus the fields that keep feeding that intersection: philosophy, psychology, economics. Honest post-mortems on the work that did not pan out, because failure usually teaches more than the clean case study is willing to admit.
 
 So why build it in public? Because the alternative is building it in private, polishing the headstone, and hoping someone eventually wanders into the graveyard.
