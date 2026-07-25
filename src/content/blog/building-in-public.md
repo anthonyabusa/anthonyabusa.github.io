@@ -6,9 +6,9 @@ tags: ["Entrepreneurship", "Building", "Personal Brand"]
 draft: false
 ---
 
-Shipping a portfolio is not the hard part; shipping one that can carry how I think, why I made the choices I made, and what I am still trying to understand is the work. That is the only version worth putting my name on.
+Shipping a portfolio is not the hard part; shipping one that can carry how I think, why I made the choices I made, and what I am still trying to understand is the actual work. That is the only version worth putting my name on.
 
-Most portfolios turn into small museums of finishedness: projects compressed into clean summaries, lessons scrubbed into hindsight, artifacts arranged as if the work stopped breathing the moment the case study went live. The more honest material usually lives somewhere less presentable: notebooks, branches, conversations, abandoned drafts, rough first passes, and arguments still a little too unhousebroken for polite company. I did not want a headstone. I wanted a site with a pulse; finished work where it belongs, but enough of the machinery still visible that someone landing here sees more than proof that I once shipped a project and learned how to center a card.
+Most portfolios become small museums of finishedness: projects compressed into clean summaries, lessons scrubbed into hindsight, artifacts arranged as if the work stopped breathing the moment the case study went live. The more useful material usually lives somewhere less presentable: notebooks, branches, conversations, abandoned drafts, rough first passes, and arguments still a little too unhousebroken for polite company. I did not want to build a headstone. I wanted a site with a pulse; finished work where it belongs, but with enough of the machinery still visible that someone landing here can see more than proof that I once shipped a project and learned how to center a card.
 
 ### The constraints I gave myself
 
