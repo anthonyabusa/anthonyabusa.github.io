@@ -8,7 +8,7 @@ draft: false
 
 The first thing I ever built was a student government that mostly existed on paper, which is the polite way of saying the university had printed the office before anyone had built the institution underneath it.
 
-I was handed “Student Body President,” but beneath the title there was almost no machinery: no operating rhythm, no durable process, no mechanism sturdy enough to survive the person currently sitting in the chair. The role came with responsibility, but responsibility without structure is mostly exposure wearing a blazer. Before I could do the job, I had to build the thing that made the job possible.
+I was handed “Student Body President,” but under the title there was almost no machinery: no operating rhythm, no durable process, no mechanism sturdy enough to survive the person currently sitting in the chair. The role came with responsibility, but responsibility without structure is mostly exposure in a blazer. Before I could do the job, I had to build the thing that made the job possible.
 
 I did not have clean language for that yet. It was just the work in front of me, wearing a name tag and doing a reasonably convincing impression of an institution.
 
@@ -18,7 +18,7 @@ A few years later, I was at a chemicals company older than the light bulb, and I
 
 Same move, different altitude.
 
-I diverge, my point is this: most institutions offer you two basic choices. You can inherit the structure and optimize inside it, or you can notice that the structure is missing and build it. I have never been especially natural at the first one. My attention keeps drifting underneath the stated goal, toward the system that makes the next ten goals cheaper: the process that turns repetition into leverage, the infrastructure that lets future work require less heroism, the quiet machinery that keeps ambition from becoming a tax paid by whoever cares most.
+I diverge, my point is this: most institutions offer you two basic choices. You can inherit the structure and optimize inside it, or you can notice that the structure is missing and build it. I have never been especially natural at the first one. My attention keeps drifting beneath the stated goal, toward the system that makes the next ten goals cheaper: the process that turns repetition into leverage, the infrastructure that lets future work require less heroism, the quiet machinery that keeps ambition from becoming a tax paid by whoever cares most.
 
 Building the missing structure is slower than borrowing one, and it rarely arrives with a permission slip. But it compounds differently, because you know where the weight actually sits. You remember why each beam exists; you were there when the load first appeared and something had to hold it. That memory matters. It keeps the system from hardening into theater, from becoming the kind of process people keep performing long after they have forgotten the problem it was built to solve.
 
