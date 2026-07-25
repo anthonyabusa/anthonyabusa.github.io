@@ -6,9 +6,9 @@ tags: ["Strategy", "Building", "Personal Brand"]
 draft: false
 ---
 
-The first thing I ever built was a student government that mostly existed on paper, which is the polite way of saying the university had printed the office before anyone had built the institution beneath it.
+The first thing I ever built was a student government that mostly existed on paper, which is the polite way of saying the university had printed the office before anyone had built the institution underneath it.
 
-I was handed “Student Body President,” but under the title there was not much of a machine: no operating rhythm, no durable process, no mechanism strong enough to survive the person sitting in the chair. The role had responsibility, but almost none of the structure that makes responsibility useful. Before I could do the job, I had to build the thing that made the job possible. At the time, I did not recognize that as a pattern. It was just the work sitting directly in front of me.
+I was handed “Student Body President,” but beneath the title there was not much of a machine: no operating rhythm, no durable process, no mechanism strong enough to outlast the person sitting in the chair. The role carried responsibility, but almost none of the structure that makes responsibility useful. Before I could do the job, I had to build the thing that made the job possible. At the time, I did not recognize that as a pattern. It was simply the work directly in front of me.
 
 Then the pattern developed the irritating habit of following me.
 
@@ -16,7 +16,7 @@ A few years later, I was at a chemicals company older than the light bulb, and I
 
 I diverge, my point is this: there are two basic ways to move through most institutions. You can inherit the structure and optimize inside it, or you can notice that the structure is missing and build it. I have never been especially natural at the first one. My attention goes to the system beneath the goal: the process that makes the next ten goals cheaper, the infrastructure that turns repeated effort into leverage, the quiet machinery that lets future work require less heroism.
 
-Building the missing structure is slower than borrowing one, and it rarely comes with a permission slip. But it compounds differently, because you know where the weight actually sits. You remember why each piece exists; you were there when the load first appeared and something had to hold it. That memory matters. It keeps the system from becoming theater.
+Building the missing structure is slower than borrowing one, and it rarely arrives with a permission slip. But it compounds differently, because you know where the weight actually sits. You remember why each piece exists; you were there when the load first appeared and something had to hold it. That memory matters. It keeps the system from becoming theater.
 
 This site is the same move, one more time.
 
