@@ -3,7 +3,7 @@
   "head": {
     "kicker": "Energy · Global · 1976–2024",
     "title": "The Price of *Sunlight*",
-    "standfirst": "In one generation the cost of turning sunlight into electricity fell further and faster than any energy source in history. It is still falling."
+    "standfirst": "In one generation the cost of turning sunlight into electricity fell by more than 99 percent, and it is still falling. The question is no longer whether the cheapest way to make power can also be the cleanest; it is how fast the rest of the system can be rebuilt to use it."
   },
   "blocks": [
     {
@@ -78,7 +78,7 @@
       "caption": "**Total solar capacity installed worldwide.** Hover for any year. Source: IEA and IRENA capacity statistics.",
       "parts": [
         {
-          "md": "Falling prices did not just make solar viable; they made it explosive. The total amount of solar humanity had ever installed went from barely a **gigawatt** in 2000 to more than **2,200 gigawatts** by 2024, a growth rate above thirty percent a year sustained for a quarter century. Each drop in price unlocked more demand, and each surge in demand drove the next drop in price. The curve is not slowing. It is bending upward."
+          "md": "Falling prices did not just make solar viable; they made it explosive. The total amount of solar humanity had ever installed went from barely a **gigawatt** in 2000 to more than **2,200 gigawatts** by 2024, a growth rate above thirty percent a year sustained for a quarter century. Each drop in price unlocked more demand, and each surge in demand drove the next drop in price; four decades in, the curve shows no sign of straightening."
         }
       ],
       "chart": {
@@ -187,7 +187,7 @@
     },
     {
       "type": "stats",
-      "title": "A four-decade decline with no real precedent.",
+      "title": "A four-decade decline, and a remarkably steady one.",
       "stats": [
         {
           "n": "99.6%",
