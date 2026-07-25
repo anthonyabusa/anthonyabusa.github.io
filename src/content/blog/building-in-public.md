@@ -6,9 +6,9 @@ tags: ["Entrepreneurship", "Building", "Personal Brand"]
 draft: false
 ---
 
-Shipping a portfolio is not the hard part. Shipping one that can carry how I think, why I made the tradeoffs I made, and what I am still trying to understand is the real work. That is the only version worth putting my name on.
+Shipping a portfolio is not the hard part. Shipping one that can hold how I think, why I made the tradeoffs I made, and what I am still trying to understand is the real work. That is the only version worth attaching my name to.
 
-Most portfolios become small museums of completion: projects compressed into tidy summaries, lessons scrubbed by hindsight until they no longer resemble the lesson, artifacts arranged as if the work froze the moment the case study went live. But the material that tells the truth usually lives in less polished places: notebooks, branches, conversations, abandoned drafts, rough first passes, and arguments still a little too unsocialized for polite company. I did not want to build a headstone. I wanted a site with a pulse; finished work where finished work belongs, but enough of the machinery left visible that someone landing here can see more than proof that I once shipped something and learned how to center a card.
+Most portfolios become small museums of completion: projects compressed into tidy summaries, lessons cleaned up by hindsight until they no longer resemble the lesson, artifacts arranged as if the work stopped breathing the moment the case study went live. But the material that tells the truth usually lives somewhere rougher: notebooks, branches, conversations, abandoned drafts, first passes, and arguments still a little too unsocialized for polite company. I did not want to build a headstone. I wanted a site with a pulse; finished work where finished work belongs, but enough of the machinery left visible that someone landing here can see more than proof that I once shipped something and learned how to center a card.
 
 ### The constraints I gave myself
 
@@ -16,7 +16,7 @@ Most portfolios become small museums of completion: projects compressed into tid
 
 **Content before design.** A beautifully designed empty site is still empty. The thinking has to exist first; otherwise the polish is just well-lit vacancy.
 
-**Ship ugly, then sharpen.** The worst outcome is not a rough launch. It is a polished site that never makes it out of the draft folder. I would rather build in public, leave the weak edges visible, and keep filing them down as the work earns its shape.
+**Ship ugly, then sharpen.** The bad outcome is not a rough launch. The bad outcome is a polished site that never escapes the draft folder. I would rather build in public, leave the weak edges visible, and keep filing them down as the work earns its shape.
 
 ### What you'll find here
 
