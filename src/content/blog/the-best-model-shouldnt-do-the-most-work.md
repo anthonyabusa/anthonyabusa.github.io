@@ -8,7 +8,7 @@ draft: false
 
 The first time you get access to a frontier model, the temptation is to hand it the whole factory.
 
-It is the most capable thing in the room, or at least the thing most fluent in capability theater, so the serious answer starts to look almost responsible: route everything through it, let raw intelligence chew through the mess, and treat the invoice as the cost of staying near the edge.
+It is the most capable thing in the room, or at least the thing most fluent in capability theater, so the serious answer starts to feel almost responsible: route everything through it, let raw intelligence chew through the mess, and treat the invoice as the price of staying close to the edge.
 
 I ran my system that way for about a week. Every draft, every file rename, every three-line summary, every procedural splinter went through the strongest and most expensive model I had available. A week was enough for the premise to start arguing back; quietly at first, then with less grace, because eventually the bill stops looking like a receipt and starts looking like telemetry.
 
