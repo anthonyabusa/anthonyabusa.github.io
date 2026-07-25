@@ -6,9 +6,11 @@ tags: ["Entrepreneurship", "Building", "Personal Brand"]
 draft: false
 ---
 
-Shipping a portfolio is not the hard part. Shipping one that can carry how I think, why I made the tradeoffs I made, and what I am still trying to understand is the real work. That is the only version I am willing to put my name on.
+Shipping a portfolio is not the hard part. Shipping one that can hold how I think, why I made the tradeoffs I made, and what I am still trying to understand is the actual work. That is the only version I am willing to put my name on.
 
-Most portfolios become small museums of completion: projects compressed into tidy summaries, lessons cleaned up by hindsight until they barely resemble the lesson, artifacts arranged as if the work stopped breathing the moment the case study went live. But the material that tells the truth usually lives somewhere less polished: notebooks, branches, conversations, abandoned drafts, first passes, and arguments still a little too unsocialized for polite company. I did not want to build a headstone. I wanted a site with a pulse: finished work where finished work belongs, but with enough of the machinery left visible that someone landing here can see more than proof that I once shipped something and learned how to center a card.
+Most portfolios become small museums of completion: projects compressed into tidy summaries, lessons cleaned up by hindsight until they barely resemble the lesson, artifacts arranged as if the work stopped breathing the moment the case study went live. But the material that tells the truth usually lives somewhere less polished: notebooks, branches, conversations, abandoned drafts, first passes, and arguments still a little too unsocialized for polite company.
+
+I did not want to build a headstone. I wanted a site with a pulse: finished work where finished work belongs, but with enough of the machinery left visible that someone landing here can see more than proof that I once shipped something and learned how to center a card.
 
 ### The constraints I gave myself
 
