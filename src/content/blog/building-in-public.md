@@ -6,9 +6,9 @@ tags: ["Entrepreneurship", "Building", "Personal Brand"]
 draft: false
 ---
 
-Shipping a portfolio is easy; building one that shows how I think, why I choose what I choose, and what I am still trying to understand is the real work. It is also the only version I can justify putting my name on.
+Shipping a portfolio is easy; building one that shows how I think, why I choose what I choose, and what I am still trying to understand is the actual work. It is also the only version I can defend putting my name on.
 
-Most portfolios become clean little museums of finishedness: projects compressed into polite summaries, lessons shaped into something tidy, artifacts from work that has already stopped breathing. The live material is usually hidden somewhere else: notebooks, branches, conversations, abandoned drafts, rough first passes, and arguments that have not yet learned how to behave in public. I did not want a headstone. I wanted a site that could move as I move; finished work in its proper place, but enough of the machinery exposed that someone landing here sees more than proof that I once shipped a project and learned how to center a card.
+Most portfolios become tidy little museums of finishedness: projects compressed into polite summaries, lessons retrofitted into clean arcs, artifacts from work that has already stopped breathing. The live material usually sits somewhere else: notebooks, branches, conversations, abandoned drafts, rough first passes, and arguments that have not yet learned how to behave in public. I did not want a headstone. I wanted a site that could move as I move; finished work in its proper place, but with enough of the machinery exposed that someone landing here sees more than proof that I once shipped a project and learned how to center a card.
 
 ### The constraints I gave myself
 
