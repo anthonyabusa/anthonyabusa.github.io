@@ -6,22 +6,20 @@ tags: ["Entrepreneurship", "Building", "Personal Brand"]
 draft: false
 ---
 
-Shipping a portfolio is not the hard part. The harder thing is building one that can actually carry the way I think: the decisions, the tradeoffs, the unfinished questions, and the occasional sharp edge that has not yet been sanded down into a respectable case-study sentence. That is the only version I can justify putting my name on.
+Shipping a portfolio is easy; building one that actually reflects how you think is the hard part, and the hard part is the only part worth doing.
 
-Most portfolios become small museums of completion. Projects get compressed into clean summaries, lessons get laundered through hindsight until they barely resemble the work that produced them, and artifacts get arranged as if the thinking stopped the moment the page went live. The more honest material usually lives somewhere less presentable: notebooks, branches, conversations, abandoned drafts, first passes, and arguments still too unsocialized for polite company.
-
-I did not want to build a headstone. I wanted a site with a pulse: finished work where finished work belongs, but with enough of the machinery still visible that someone landing here can see more than proof that I once shipped something and learned how to center a card.
+Most portfolios are graveyards: a list of finished projects sitting untouched while the real work happens somewhere else. I did not want a headstone. I wanted a site that grows as I do, argues the way I argue, and leaves the person who lands on it with something they can use.
 
 ### The constraints I gave myself
 
-**No templates.** If a stranger can deploy the same site in five minutes, it is not a personal brand. It is a theme wearing my name badge.
+**No templates.** If a stranger can deploy the same site in five minutes, it was never a personal brand; it was a theme with your name on it.
 
-**Content before design.** A beautifully designed empty site is still empty. The thinking has to exist first; otherwise the polish is just well-lit vacancy.
+**Content before design.** A beautifully designed empty site is still empty; the thinking has to exist before it is worth dressing up.
 
-**Ship ugly, then sharpen.** The bad outcome is not a rough launch. The bad outcome is a polished site that never leaves the draft folder. I would rather build in public, let the weak edges show, and keep filing them down as the work earns its shape.
+**Ship ugly, then sharpen.** The worst outcome is not a rough launch; it is a polished site that never ships, so I would rather build in the open and let the edges come off as I go.
 
 ### What you'll find here
 
-Projects from consulting, product, and open source. Writing at the intersection of business and technology, plus the fields that keep complicating and feeding that intersection: philosophy, psychology, economics. Honest post-mortems on work that did not pan out, because failure usually teaches more than the clean case study is willing to admit.
+Projects from consulting, product, and open source. Writing at the seam of business and technology, and in the places that feed it: philosophy, psychology, economics. Honest post-mortems on the work that did not pan out, because those are usually the ones worth reading.
 
-So why build it in public? Because the alternative is building it in private, polishing the headstone, and hoping someone eventually wanders into the graveyard.
+So why build it in public? Because the alternative is building it in private, and hoping someone finds the graveyard.
