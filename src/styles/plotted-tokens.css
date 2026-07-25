@@ -121,6 +121,29 @@ a {
 .measure {
   max-width: var(--measure);
 }
+
+/* Plotted layout convention (canonical; every piece follows this).
+   A piece is ONE reading column at --measure. The `.piece` wrapper sets
+   `max-width: var(--measure); margin: 0 auto`, so every child (head, prose,
+   stats, footer) inherits the column and reads centered by default. Do NOT
+   re-center children or re-set their horizontal margins; in particular avoid the
+   `margin: <top> 0 0` shorthand on text blocks (it silently zeroes margin-inline
+   and left-aligns them out of the column, the bug this convention removes).
+
+   Charts break OUT of the column, wider, centered on the same axis, via `.bleed`.
+   Put `.bleed` on the chart's <figure> (or a wrapper around a chart component);
+   its <figcaption> re-joins the reading column at --measure. Width is clamped to
+   the viewport so a bleed never causes horizontal overflow on mobile. */
+.bleed {
+  width: min(68rem, calc(100vw - 2 * var(--space-3)));
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+.bleed > figcaption {
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+
 .rule {
   border: 0;
   border-top: 1px solid var(--rule);

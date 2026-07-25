@@ -104,17 +104,10 @@ for (const b of data.blocks) if (b.type === 'chart') chartSpecs[b.chartId] = b.c
 
 <style>
   .piece {
-    width: var(--frame-wide);
+    max-width: var(--measure);
     margin: 0 auto;
     padding: 0 var(--space-3);
   }
-  /* Prose stays at a readable measure and centers within the wide frame; figures fill it. */
-  .piece-head,
-  section > h2,
-  .prose,
-  .stats,
-  figcaption,
-  .piece-foot { max-width: var(--measure); margin-inline: auto; }
   .piece-head { padding: var(--space-6) 0 var(--space-4); }
   .piece-head h1 { font-size: var(--step-5); margin: var(--space-2) 0 var(--space-3); }
   .piece-head h1 em { font-style: italic; color: var(--accent-2); }
@@ -167,11 +160,20 @@ for (const b of data.blocks) if (b.type === 'chart') chartSpecs[b.chartId] = b.c
     margin-top: var(--space-2);
   }
 
-  figure { margin: var(--space-4) 0 0; padding: 0; }
+  /* Charts break out wider than the --measure reading column, centered on the same axis.
+     All text stays in the column so text + figures read as one consistent layout. */
+  figure {
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    width: min(68rem, calc(100vw - 2 * var(--space-3)));
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
   .subhead { font-family: var(--font-sans); font-size: var(--step-0); font-weight: 600; color: var(--ink-soft); margin: 0; }
   svg { display: block; width: 100%; height: auto; overflow: visible; touch-action: pan-y; margin-top: var(--space-2); }
   figcaption {
-    margin: var(--space-2) 0 0;
+    max-width: var(--measure);
+    margin: var(--space-2) auto 0;
     padding-top: var(--space-1);
     border-top: 1px solid var(--rule);
     display: flex;
