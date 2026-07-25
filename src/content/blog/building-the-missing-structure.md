@@ -8,7 +8,7 @@ draft: false
 
 The first thing I ever built was a student government that mostly existed on paper, which is the polite way of saying the university had printed the office before anyone had built the institution underneath it.
 
-I was given “Student Body President,” but beneath the title there was not much of a machine: no operating rhythm, no durable process, no mechanism that could survive the next person sitting in the chair. It was a role with responsibility attached to it, but almost none of the structure that made the responsibility actionable. Before I could do the job, I had to build the thing that made the job possible. At the time, I did not recognize that as a pattern. It was just the work in front of me.
+I was given “Student Body President,” but beneath the title there was not much of a machine: no operating rhythm, no durable process, no mechanism that could outlive the next person sitting in the chair. It was a role with responsibility attached to it, but almost none of the structure that made the responsibility usable. Before I could do the job, I had to build the thing that made the job possible. At the time, I did not recognize that as a pattern. It was just the work in front of me.
 
 Then it kept happening.
 
