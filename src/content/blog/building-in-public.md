@@ -6,17 +6,17 @@ tags: ["Entrepreneurship", "Building", "Personal Brand"]
 draft: false
 ---
 
-Shipping a portfolio is not the hard part; shipping one that can actually carry how I think, why I make the choices I make, and what I am still trying to understand is the real work. That is also the only version I can justify putting my name on.
+Shipping a portfolio is not the hard part; shipping one that can actually hold how I think, why I make the choices I make, and what I am still trying to understand is the real work. That is also the only version I can justify attaching my name to.
 
-Most portfolios become small museums of finishedness: projects pressed into tidy summaries, lessons cleaned up after the fact, artifacts arranged as if the work stopped breathing the moment the case study was published. The living material usually lives somewhere else: notebooks, branches, conversations, abandoned drafts, rough first passes, and arguments still a little too untamed for polite company. I did not want a headstone. I wanted a site that could move as I move: finished work where it belongs, but with enough of the machinery left visible that someone landing here sees more than proof that I once shipped a project and learned how to center a card.
+Most portfolios become small museums of finishedness: projects compressed into tidy summaries, lessons cleaned up after the fact, artifacts arranged as if the work stopped breathing the moment the case study went live. The living material usually sits somewhere else: notebooks, branches, conversations, abandoned drafts, rough first passes, and arguments still a little too unhousebroken for polite company. I did not want a headstone. I wanted a site that could move as I move: finished work where it belongs, but with enough of the machinery left visible that someone landing here sees more than proof that I once shipped a project and learned how to center a card.
 
 ### The constraints I gave myself
 
-**No templates.** If a stranger can deploy the same site in five minutes, it is not a personal brand. It is a theme wearing my name badge.
+**No templates.** If a stranger can deploy the same site in five minutes, it is not a personal brand. It is a theme borrowing my name badge.
 
 **Content before design.** A beautifully designed empty site is still empty. The thinking has to exist first; otherwise the polish is just well-lit vacancy.
 
-**Ship ugly, then sharpen.** The worst outcome is not a rough launch. It is a polished site that never escapes the draft folder. I would rather build in public, let the weak edges stay visible, and keep filing them down as the work earns its shape.
+**Ship ugly, then sharpen.** The worst outcome is not a rough launch. It is a polished site that never leaves the draft folder. I would rather build in public, let the weak edges stay visible, and keep filing them down as the work earns its shape.
 
 ### What you'll find here
 
