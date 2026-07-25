@@ -8,9 +8,9 @@ draft: false
 
 The first thing I ever built was a student government that mostly existed on paper, which is the polite way of saying the university had printed the office before anyone had built the institution beneath it.
 
-I was given “Student Body President,” but under the title there was not much of a machine: no operating rhythm, no durable process, no mechanism that could survive the next person sitting in the chair. It was a role with responsibility attached to it, but almost none of the structure that made the responsibility usable. Before I could do the job, I had to build the thing that made the job possible. At the time, I did not understand that as a pattern. It was just the work in front of me.
+I was given “Student Body President,” but underneath the title there was not much of a machine: no operating rhythm, no durable process, no mechanism that could survive the next person sitting in the chair. It was a role with responsibility attached to it, but almost none of the structure that made the responsibility usable. Before I could do the job, I had to build the thing that made the job possible. At the time, I did not understand that as a pattern. It was just the work sitting in front of me.
 
-Then the pattern developed a habit of following me.
+Then the pattern developed the mildly inconvenient habit of following me.
 
 A few years later, I was at a chemicals company older than the light bulb, and I founded its North American Government Affairs function from nothing: no team, no mandate, no precedent to copy, only a gap that mattered and enough institutional room to build into it. More recently, the missing structure has been my own. I built an autonomous AI system to run the operations of how I work, because the tool I wanted did not exist yet, and waiting politely for someone else to ship it felt like taking the scenic route and calling it strategy. Same move, different altitude.
 
