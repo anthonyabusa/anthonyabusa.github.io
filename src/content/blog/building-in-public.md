@@ -6,11 +6,11 @@ tags: ["Entrepreneurship", "Building", "Personal Brand"]
 draft: false
 ---
 
-Shipping a portfolio is not the hard part. The harder thing is building one that can hold how I think, why I made the tradeoffs I made, and what I am still trying to understand without turning all of that into a politely staged showroom. That is the only version worth putting my name on.
+Shipping a portfolio is not the hard part. The harder thing is building one that can actually hold the way I think: the decisions, the tradeoffs, the unfinished questions, and the occasional sharp edge that has not yet been sanded into a case-study sentence. That is the only version worth putting my name on.
 
-Most portfolios become small museums of completion: projects compressed into clean summaries, lessons scrubbed by hindsight until they barely resemble the learning, artifacts arranged as if the work stopped moving the moment the case study went live. The more honest material usually lives somewhere less presentable: notebooks, branches, conversations, abandoned drafts, first passes, and arguments still too unsocialized for polite company.
+Most portfolios become small museums of completion. Projects get compressed into clean summaries, lessons get scrubbed by hindsight until they barely resemble the learning that produced them, and artifacts get arranged as if the work stopped moving the moment the page went live. The more honest material usually lives somewhere less presentable: notebooks, branches, conversations, abandoned drafts, first passes, and arguments still too unsocialized for polite company.
 
-I did not want to build a headstone. I wanted a site with a pulse: finished work where finished work belongs, but with enough of the machinery left visible that someone landing here can see more than proof that I once shipped something and learned how to center a card.
+I did not want to build a headstone. I wanted a site with a pulse: finished work where finished work belongs, but with enough of the machinery still visible that someone landing here can see more than proof that I once shipped something and learned how to center a card.
 
 ### The constraints I gave myself
 
@@ -18,7 +18,7 @@ I did not want to build a headstone. I wanted a site with a pulse: finished work
 
 **Content before design.** A beautifully designed empty site is still empty. The thinking has to exist first; otherwise the polish is just well-lit vacancy.
 
-**Ship ugly, then sharpen.** The bad outcome is not a rough launch. The bad outcome is a polished site that never leaves the draft folder. I would rather build in public, leave the weak edges visible, and keep filing them down as the work earns its shape.
+**Ship ugly, then sharpen.** The bad outcome is not a rough launch. The bad outcome is a polished site that never leaves the draft folder. I would rather build in public, let the weak edges show, and keep filing them down as the work earns its shape.
 
 ### What you'll find here
 
