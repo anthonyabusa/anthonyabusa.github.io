@@ -17,5 +17,5 @@ takeaways:
   - "Excess protein above the acute maximizing dose is not entirely oxidized for energy; some of the additional amino acids are still used for tissue building."
   - "Practical guidance favors even protein distribution across the day rather than concentrating intake in one or two large feedings."
 notionId: "3a1176cc-7864-818b-b842-f71b5476fcad"
-notionLastEdited: "2026-07-18T20:37:00.000Z"
+notionLastEdited: "2026-07-20T07:05:00.000Z"
 ---
