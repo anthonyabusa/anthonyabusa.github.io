@@ -19,3 +19,5 @@ sourceUrl: "https://arxiv.org/abs/2203.11171"
 notionId: "3a0176cc-7864-81ef-9ffd-fc36a9f6182e"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---
+
+Self-consistency is ensembling wearing a different hat, and I mean that as a compliment. The part I'd underline is that it works because diverse reasoning paths converge on truth while errors scatter, not because you drew more samples; sameness buys you nothing, difference buys you accuracy. That is a principle I trust well past this paper: if you want a reliable answer out of an unreliable process, make it disagree with itself productively and count where it lands. It is also the honest, unglamorous kind of robustness I'll take every time, because it forgives a flawed prompt I didn't know was flawed. The catch I keep in view is cost. Voting over forty paths is forty times the compute, so I want it where correctness is worth paying for, not sprayed across everything.

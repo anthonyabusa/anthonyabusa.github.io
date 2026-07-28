@@ -19,3 +19,5 @@ sourceUrl: "https://arxiv.org/abs/2305.20050"
 notionId: "3a0176cc-7864-8116-9c3a-dec34767688c"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---
+
+This one lands for me because it names a failure I care about: a model that reaches the right answer through broken logic isn't correct, it's lucky, and outcome supervision can't tell the difference. Rewarding the reasoning step by step is the gap between a system that thinks and one that guesses well, and I would rather ship the former even when the latter scores the same today. There's an alignment dividend too, since rewarding a human-endorsed chain discourages the model from fabricating a path to an answer it already knows. But the part I respect most is the least glamorous. The real deliverable is 800,000 step-level human labels. Everyone wants the method; almost no one wants to pay for the labels that make it work, and that lesson generalizes far past reasoning models. The expensive, boring dataset is usually the moat, not the algorithm.
