@@ -19,3 +19,5 @@ sourceUrl: "https://arxiv.org/abs/2210.03629"
 notionId: "3a0176cc-7864-8137-ba9a-eb1fce527cda"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---
+
+What ReAct really settles is that separating reasoning from action was always artificial. A plan you can't act on and revise as the world answers back isn't a plan, it's a guess dressed up as one; interleaving thought and action in a single trajectory is what turns a model from a chatbot into an agent. The second win is the one people undersell: because the trajectory is a legible trace of thoughts and actions, you can read why the agent did what it did. That is the whole difference between a system you can debug and one you can only pray to. An agent that reasons in the open, step by step against what it just observed, is one you can actually hold accountable. Do the thinking and the doing in one loop, and make that loop something a human can read.

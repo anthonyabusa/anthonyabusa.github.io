@@ -19,3 +19,5 @@ sourceUrl: "https://arxiv.org/abs/2303.11366"
 notionId: "3a0176cc-7864-8150-903c-ea19d126d117"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---
+
+Reflexion is the cheapest kind of learning I know: write down, in plain language, why the last attempt failed, keep it in memory, and do better on the next trial without touching a single weight. That is the self-heal loop I want, and it runs at inference time instead of in a training run. But it carries its own warning. The whole thing rests on the quality of the self-evaluation; a model that can't tell it failed will happily reflect its way deeper into the same hole, so the scaffold has to feed it ground truth the reflection can't fake. And the reflection itself was never the point. Storing it and pulling it back up next time is what matters; without the episodic memory it's just a mea culpa, and with it, failure compounds into competence. Cheap to run, dependent on an honest critic, and worthless without a memory to hold it.

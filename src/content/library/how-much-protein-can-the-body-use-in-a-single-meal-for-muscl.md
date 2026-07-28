@@ -20,3 +20,5 @@ sourceUrl: "https://jissn.biomedcentral.com/articles/10.1186/s12970-018-0215-1"
 notionId: "3a1176cc-7864-818b-b842-f71b5476fcad"
 notionLastEdited: "2026-07-20T07:05:00.000Z"
 ---
+
+The "20 grams a meal and the rest is wasted" rule doesn't survive the data; whole-protein absorption isn't the bottleneck, so spreading roughly 0.4 g/kg across four or so meals is a distribution choice, not a hard ceiling anyone runs into. But I'd order it carefully. Hit the daily total first, somewhere near 1.6 g/kg; the four-meals split is a rounding optimization laid on top of that, real but secondary. And even the split matters less than the habit that carries it. The paper's quieter gift is permission to stop micromanaging timing to the gram and just eat enough, evenly-ish, on a schedule you'll actually keep. Debunk the cap, respect the total, then let the practice be simple. Precision you won't sustain loses to a rougher rule you will.

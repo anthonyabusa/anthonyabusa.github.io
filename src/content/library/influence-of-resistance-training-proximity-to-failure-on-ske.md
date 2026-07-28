@@ -20,3 +20,5 @@ sourceUrl: "https://link.springer.com/article/10.1007/s40279-022-01784-y"
 notionId: "3a1176cc-7864-81fd-bb96-de9ce050358b"
 notionLastEdited: "2026-07-18T20:37:00.000Z"
 ---
+
+The clean headline is that training to momentary failure buys almost nothing for growth over stopping a rep or two short, so the fatigue and injury cost of grinding out that last ugly rep rarely pays for itself. I hold to that, but I won't flatten it into "failure is useless." The relationship is non-linear: you still have to get close, and "close enough" only beats "all the way" once you account for what the extra fatigue does to the rest of the week's volume. And the honest asterisk is that most of the non-failure arms never measured how close they actually got, so we are partly arguing about a variable the studies barely pinned down. Three truths that sit together: leave a couple of reps in reserve, respect that proximity still matters, and hold the whole conclusion loosely because the measurement was loose. Train hard enough to grow, not so hard you spend next session paying for this one.
