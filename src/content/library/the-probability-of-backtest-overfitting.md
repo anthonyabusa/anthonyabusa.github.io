@@ -16,6 +16,7 @@ takeaways:
   - "The framework is generic and model-free, requiring only the time series of backtested performance for each strategy configuration and no knowledge of the underlying trading rule or forecasting equation, making it applicable across diverse strategy types and compatible with any user-chosen performance statistic beyond the Sharpe ratio."
   - "A backtest is characterized as overfit when the IS-optimal configuration systematically loses its relative rank out of sample, which occurs because parameters are selected to exploit noise patterns present in the training period that are either diluted or actively reversed in new data, particularly under mean-reverting financial processes."
   - "The paper demonstrates that minimum backtest length is a related but distinct concept from PBO: MinBTL is a necessary but not sufficient condition for avoiding overfitting, while PBO provides a direct probabilistic measure of whether the selection process itself has inflated the apparent quality of the chosen strategy."
+sourceUrl: "https://www.davidhbailey.com/dhbpapers/backtest-prob.pdf"
 notionId: "3a0176cc-7864-811f-bd08-db931be6f792"
 notionLastEdited: "2026-07-17T20:23:00.000Z"
 ---

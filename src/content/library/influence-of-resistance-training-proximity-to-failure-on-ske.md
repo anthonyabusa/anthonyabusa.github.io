@@ -16,6 +16,7 @@ takeaways:
   - "Neither volume load (p=0.884) nor relative load (p=0.525) moderated the small failure-versus-non-failure effect on hypertrophy."
   - "The authors conclude there is no evidence that going all the way to momentary failure is superior for hypertrophy, so leaving a few reps in reserve can grow muscle comparably."
   - "A key limitation is that non-failure conditions rarely quantified the actual proximity-to-failure reached, which constrains precise practical prescriptions."
+sourceUrl: "https://link.springer.com/article/10.1007/s40279-022-01784-y"
 notionId: "3a1176cc-7864-81fd-bb96-de9ce050358b"
 notionLastEdited: "2026-07-18T20:37:00.000Z"
 ---

@@ -16,6 +16,7 @@ takeaways:
   - "At the higher end of intake reported in the literature (2.2 g/kg/day) spread over four meals, per-meal intake would reach about 0.55 g/kg."
   - "Excess protein above the acute maximizing dose is not entirely oxidized for energy; some of the additional amino acids are still used for tissue building."
   - "Practical guidance favors even protein distribution across the day rather than concentrating intake in one or two large feedings."
+sourceUrl: "https://jissn.biomedcentral.com/articles/10.1186/s12970-018-0215-1"
 notionId: "3a1176cc-7864-818b-b842-f71b5476fcad"
 notionLastEdited: "2026-07-20T07:05:00.000Z"
 ---

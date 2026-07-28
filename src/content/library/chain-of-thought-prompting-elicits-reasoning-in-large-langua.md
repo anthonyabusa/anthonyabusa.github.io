@@ -15,6 +15,7 @@ takeaways:
   - "Performance gains are largest on the most difficult multi-step problems: on GSM8K, performance more than doubled for the largest GPT and PaLM models compared to standard prompting, while single-step problems showed minimal or no gain."
   - "Ablation studies show that neither equation-only prompting nor variable-length compute alone accounts for the gains, and that providing the chain of thought only after the answer does not help, confirming that sequential intermediate reasoning in natural language is the operative mechanism."
   - "Chain-of-thought prompting is robust across different annotators, different sets of exemplars, and different exemplar orderings, and it also facilitates out-of-distribution length generalization for symbolic tasks such as coin flip tracking and letter concatenation."
+sourceUrl: "https://arxiv.org/abs/2201.11903"
 notionId: "3a0176cc-7864-8198-b993-e1b3c454ff07"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

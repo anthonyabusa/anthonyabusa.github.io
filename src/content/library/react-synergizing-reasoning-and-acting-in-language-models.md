@@ -15,6 +15,7 @@ takeaways:
   - "On two interactive decision-making benchmarks, ALFWorld and WebShop, one or two-shot ReAct prompting outperforms imitation and reinforcement learning methods trained on 10,000 to 100,000 task instances, achieving absolute success rate improvements of 34% and 10% respectively."
   - "An error analysis on HotpotQA finds that hallucination accounts for 56% of CoT failures but 0% of ReAct failures, while ReAct introduces a distinct reasoning error mode where the model loops on prior thoughts when search results are uninformative."
   - "When fine-tuned on just 3,000 bootstrapped trajectories, smaller PaLM-8B and 62B models with ReAct outperform all PaLM-540B prompting methods on HotpotQA, suggesting that the reasoning-and-acting paradigm transfers well to fine-tuning regimes."
+sourceUrl: "https://arxiv.org/abs/2210.03629"
 notionId: "3a0176cc-7864-8137-ba9a-eb1fce527cda"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

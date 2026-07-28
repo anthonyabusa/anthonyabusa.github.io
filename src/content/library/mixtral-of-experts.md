@@ -16,6 +16,7 @@ takeaways:
   - "Mixtral was pretrained with substantially more multilingual data than Mistral 7B and significantly outperforms Llama 2 70B on French, German, Spanish, and Italian benchmarks while maintaining strong English performance."
   - "An instruction-tuned variant, Mixtral 8x7B Instruct, fine-tuned with supervised fine-tuning and Direct Preference Optimization, achieves an LMSys Arena Elo of 1121, outperforming Claude-2.1, GPT-3.5-Turbo, and Gemini Pro on human evaluation benchmarks."
   - "Routing analysis shows expert assignment is more strongly correlated with token syntax than with semantic domain, and consecutive tokens exhibit high temporal locality in expert selection, with implications for caching and Expert Parallelism strategies."
+sourceUrl: "https://arxiv.org/abs/2401.04088"
 notionId: "3a0176cc-7864-8193-8725-d301c0e68788"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

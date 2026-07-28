@@ -15,6 +15,7 @@ takeaways:
   - "Feedback quality is critical to performance: specific, actionable feedback consistently outperforms generic feedback, which in turn outperforms no feedback, as demonstrated in ablation experiments on Code Optimization, Sentiment Reversal, and Acronym Generation."
   - "In Code Optimization, GPT-4 with Self-Refine improves the optimization rate from 27.3% to 36.0%, an absolute gain of 8.7%, while Dialogue Response preference scores improve from 25.4% to 74.6% with GPT-4."
   - "Self-Refine shows diminishing returns with additional iterations, with most gains occurring in early feedback-refine cycles, and does not consistently benefit weaker models such as Vicuna-13B, which struggle to follow the refinement format."
+sourceUrl: "https://arxiv.org/abs/2303.17651"
 notionId: "3a0176cc-7864-819b-9a2a-f4aa387e05df"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

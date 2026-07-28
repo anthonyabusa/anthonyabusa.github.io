@@ -39,6 +39,10 @@ const library = defineCollection({
     // in a dedicated "Key takeaways" section, kept separate from the first-person
     // Reflections (body) so a summary is never presented as Ant's own notes.
     takeaways: z.array(z.string()).default([]),
+    // Public link to the primary source (arXiv abstract, open-access DOI, or
+    // author-hosted PDF) for research-paper cards. Repo-owned, verified at add
+    // time, preserved across Notion syncs; renders a "Read the paper" link.
+    sourceUrl: z.string().url().optional(),
     notionId: z.string(),
     notionLastEdited: z.string().optional(),
   }),

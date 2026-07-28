@@ -15,6 +15,7 @@ takeaways:
   - "For a retrieval-augmented question answering task on the Natural Questions dataset with GPT-3.5, AutoGen with interactive retrieval achieves an F1 of 66.65% and recall of 62.59%, compared to 25.88% F1 and 15.12% recall for DPR without interactive retrieval, highlighting the value of iterative context updates."
   - "In a multi-agent coding application built on OptiGuide, a three-agent system with a Commander, Writer, and Safeguard improves F1 score for identifying unsafe code by 8% with GPT-4 and 35% with GPT-3.5-turbo compared to a single-agent ablation, and reduces workflow code from over 430 lines to 100 lines."
   - "AutoGen supports flexible conversation patterns including two-agent chat, hierarchical chat, and dynamic group chat via a GroupChatManager that selects speakers dynamically, enabling applications ranging from math tutoring with expert escalation to conversational chess with grounding agents."
+sourceUrl: "https://arxiv.org/abs/2308.08155"
 notionId: "3a0176cc-7864-81bf-8c4c-c190edb45ceb"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

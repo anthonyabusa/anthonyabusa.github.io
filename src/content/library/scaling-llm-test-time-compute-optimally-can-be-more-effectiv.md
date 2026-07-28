@@ -15,6 +15,7 @@ takeaways:
   - "In a FLOPs-matched evaluation, additional test-time compute applied to a smaller model can outperform a model approximately 14 times larger on easy and medium difficulty problems, though very hard problems still benefit more from additional pretraining."
   - "Beam search outperforms best-of-N at small generation budgets against a PRM but shows diminishing returns at larger budgets, with signs of over-optimization on easier problems where it can degrade performance."
   - "Question difficulty, estimated from a model's own pass-at-1 rate across sampled solutions, serves as a practical sufficient statistic for selecting the compute-optimal test-time strategy without requiring ground-truth labels."
+sourceUrl: "https://arxiv.org/abs/2408.03314"
 notionId: "3a0176cc-7864-81d5-98b4-d6927841d7d2"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

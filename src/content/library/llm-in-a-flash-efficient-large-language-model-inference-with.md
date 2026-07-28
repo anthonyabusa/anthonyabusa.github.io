@@ -16,6 +16,7 @@ takeaways:
   - "Row-column bundling coalesces corresponding up-projection columns and down-projection rows into contiguous flash chunks, doubling effective chunk size from d-model to 2*d-model bytes and increasing read throughput toward the sequential-read ceiling of flash."
   - "On an Apple M1 Max with half the model size available in DRAM, the combined system reduces OPT 6.7B I/O latency from 2196 ms (naive) to 87 ms on CPU with all techniques enabled, and achieves 20x to 25x speedup over naive loading on Metal and NVIDIA GPU backends."
   - "The method is orthogonal to quantization and sparsification and runs models up to twice the DRAM capacity, expanding LLM accessibility to personal devices such as smartphones and laptops without requiring changes to model weights or architecture."
+sourceUrl: "https://arxiv.org/abs/2312.11514"
 notionId: "3a0176cc-7864-816e-b0cb-c96513bbc87a"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

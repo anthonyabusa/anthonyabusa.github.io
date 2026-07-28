@@ -15,6 +15,7 @@ takeaways:
   - "Chain-of-thought reasoning during AI evaluations significantly improves the accuracy of harm identification, with ensembled chain-of-thought approaching the performance of preference models trained on human feedback labels for larger model sizes."
   - "The constitutional approach produces non-evasive responses: rather than refusing harmful queries outright, the trained model engages with them by explaining its objections, reducing the tension between helpfulness and harmlessness that affected prior RLHF models."
   - "Human oversight in this framework is compressed to a small, legible set of natural language principles rather than tens of thousands of human preference labels, making the values governing model behavior more transparent and easier to audit and adjust."
+sourceUrl: "https://arxiv.org/abs/2212.08073"
 notionId: "3a0176cc-7864-81b2-82f7-deb43e4b6106"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

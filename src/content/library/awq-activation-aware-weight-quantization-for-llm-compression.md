@@ -16,6 +16,7 @@ takeaways:
   - "Across LLaMA, Llama-2, OPT, Mistral, and Mixtral model families under INT3 and INT4 quantization, AWQ consistently achieves lower perplexity than round-to-nearest (RTN) and GPTQ baselines."
   - "AWQ generalizes to instruction-tuned models (Vicuna) and, for the first time, to multi-modal language models (OpenFlamingo-9B, LLaVA-13B, VILA), reducing quantization degradation on COCO captioning from 4.57 to 1.17 CIDEr points under INT4-g128."
   - "The accompanying TinyChat inference framework uses on-the-fly dequantization, SIMD-aware weight packing, and kernel fusion to deliver more than 3x speedup over the HuggingFace FP16 baseline on desktop and mobile GPUs, enabling deployment of 70B-scale models on edge hardware."
+sourceUrl: "https://arxiv.org/abs/2306.00978"
 notionId: "3a0176cc-7864-8107-b07f-e29f1ad4fbe9"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

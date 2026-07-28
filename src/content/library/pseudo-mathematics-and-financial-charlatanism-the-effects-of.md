@@ -16,6 +16,7 @@ takeaways:
   - "When there are no compensation effects (i.e., the financial process has no mean-reversion memory), overfitting does not induce negative out-of-sample performance on average, but the selected strategy still delivers near-zero OOS returns, making any high in-sample Sharpe ratio essentially uninformative about future returns."
   - "Model complexity compounds the overfitting risk because each additional binary parameter doubles the number of possible configurations, making it straightforward to achieve high in-sample Sharpe ratios through brute-force search even without any genuine predictive insight."
   - "A key practical implication is that any backtest submitted to investors or journals without disclosure of the number of trials N cannot be properly assessed for overfitting risk, and the authors argue that demanding this disclosure should be a standard requirement for evaluating investment research."
+sourceUrl: "https://www.ams.org/notices/201405/rnoti-p458.pdf"
 notionId: "3a0176cc-7864-81ce-af6f-e764df0f0dbc"
 notionLastEdited: "2026-07-17T20:23:00.000Z"
 ---

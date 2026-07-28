@@ -15,6 +15,7 @@ takeaways:
   - "InstructGPT shows meaningful improvements in truthfulness, generating truthful and informative answers on TruthfulQA approximately twice as often as GPT-3, and produces roughly 25% fewer toxic outputs than GPT-3 when prompted to be respectful."
   - "RLHF fine-tuning introduces an alignment tax, causing performance regressions on some public NLP benchmarks such as SQuAD and HellaSwag, but mixing pretraining gradients into PPO updates substantially reduces these regressions without degrading labeler preference scores."
   - "InstructGPT generalizes instruction-following behavior to domains underrepresented in fine-tuning, including non-English languages and coding tasks, suggesting the models learn a broader notion of following instructions rather than memorizing specific patterns."
+sourceUrl: "https://arxiv.org/abs/2203.02155"
 notionId: "3a0176cc-7864-8173-af77-f28c6ddd2257"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

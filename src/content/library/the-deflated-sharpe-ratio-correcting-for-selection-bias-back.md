@@ -16,6 +16,7 @@ takeaways:
   - "Under multiple testing, the expected maximum observed Sharpe ratio among N zero-true-SR strategies grows with N even when no strategy has genuine skill, so a fixed acceptance threshold for Sharpe ratio becomes increasingly prone to false positives as the number of candidates grows."
   - "Memory effects in financial time series make backtest overfitting especially costly because an overfit strategy targets the most extreme in-sample pattern, and mean-reverting processes will actively unwind that pattern out of sample, converting the inflation of in-sample performance into active losses rather than merely near-zero OOS returns."
   - "The hold-out or k-fold cross-validation method does not resolve backtest overfitting because it treats each application as a single trial, ignoring the accumulated multiple testing that occurred before the hold-out was applied, and repeated use of hold-out at a fixed confidence level makes invalid strategies likely to pass eventually."
+sourceUrl: "https://www.davidhbailey.com/dhbpapers/deflated-sharpe.pdf"
 notionId: "3a0176cc-7864-817a-8dcb-c333f560bbcd"
 notionLastEdited: "2026-07-17T20:23:00.000Z"
 ---

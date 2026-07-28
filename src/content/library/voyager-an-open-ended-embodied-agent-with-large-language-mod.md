@@ -15,6 +15,7 @@ takeaways:
   - "Ablation studies show that removing self-verification causes a 73% drop in discovered item count, replacing the automatic curriculum with a random one causes a 93% drop, and removing the skill library causes the agent to plateau in later stages."
   - "Voyager demonstrates zero-shot generalization to unseen tasks in a new Minecraft world, consistently solving all four novel tasks tested within 50 prompting iterations, while baselines including ReAct, Reflexion, and AutoGPT fail to solve any."
   - "The skill library acts as a transferable plug-and-play asset: providing Voyager's skill library to AutoGPT substantially boosts its zero-shot generalization performance, demonstrating the library's broad utility beyond the Voyager system itself."
+sourceUrl: "https://arxiv.org/abs/2305.16291"
 notionId: "3a0176cc-7864-813a-a013-d7112c7ff393"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

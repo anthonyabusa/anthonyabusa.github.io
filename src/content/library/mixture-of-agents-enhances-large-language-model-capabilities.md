@@ -15,6 +15,7 @@ takeaways:
   - "On MT-Bench, MoA with GPT-4o as the final aggregator achieves an average score of 9.25, placing it at the top of the leaderboard and exceeding GPT-4 Turbo and GPT-4 Omni."
   - "A cost-efficiency analysis shows that MoA-Lite, using only 2 MoA layers, matches GPT-4o in cost while achieving a 1.8% improvement in LC win rate on AlpacaEval 2.0, and outperforms GPT-4 Turbo by approximately 4% while being more than twice as cost-effective."
   - "Performance improves monotonically with the number of proposer agents per layer, and using diverse heterogeneous models as proposers consistently yields better results than using the same model multiple times at a fixed temperature, confirming that model diversity is a key driver of MoA quality gains."
+sourceUrl: "https://arxiv.org/abs/2406.04692"
 notionId: "3a0176cc-7864-8198-8e85-cb0103f77a58"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

@@ -15,6 +15,7 @@ takeaways:
   - "Verbosity bias causes LLM judges to favor unnecessarily long responses over more concise, accurate ones, with Claude-v1 and GPT-3.5 showing high failure rates on a repetitive-list attack while GPT-4 is substantially more robust."
   - "LLM judges exhibit limited capability in grading math and reasoning questions, but a reference-guided method, where the judge first independently generates an answer before evaluating, reduces the math grading failure rate from 70% to 15% over a default prompt."
   - "MT-bench and traditional benchmarks such as MMLU measure complementary qualities; no single benchmark determines overall model quality, supporting the use of both capability-based and preference-based evaluations together."
+sourceUrl: "https://arxiv.org/abs/2306.05685"
 notionId: "3a0176cc-7864-811d-b45c-fc22b1541f5d"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

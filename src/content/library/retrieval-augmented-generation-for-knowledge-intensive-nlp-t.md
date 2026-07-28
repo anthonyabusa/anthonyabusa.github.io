@@ -15,6 +15,7 @@ takeaways:
   - "On the Jeopardy question generation task, human evaluators rated RAG generations as more factual than BART in 42.7% of cases versus 7.1% for BART, and RAG generations were judged more specific in 37.4% of cases versus 16.8% for BART."
   - "For FEVER fact verification, RAG achieves accuracy within 4.3% of state-of-the-art pipeline models that use strong retrieval supervision and domain-specific architectures, despite RAG requiring no retrieval supervision."
   - "The non-parametric memory in RAG can be updated at test time by swapping in a new document index without retraining, demonstrating that world knowledge can be refreshed independently of the generator parameters."
+sourceUrl: "https://arxiv.org/abs/2005.11401"
 notionId: "3a0176cc-7864-8187-91f7-e3d2baaa72a3"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

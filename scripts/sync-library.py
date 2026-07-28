@@ -392,6 +392,11 @@ def main():
         # Never fetched or fabricated; preserved verbatim across a pull.
         takeaways = old_fm.get("takeaways") or []
 
+        # Source URL: repo-owned public link to the primary source (arXiv abstract,
+        # open-access DOI, author-hosted PDF) for research-paper cards. Verified at
+        # add time; never fetched or fabricated; preserved verbatim across a pull.
+        source_url = old_fm.get("sourceUrl") or ""
+
         # Genres: Notion-owned, but UNION in any locally-added genres (e.g. Open
         # Library enrichment via enrich-genres-covers.py) so a pull never drops
         # them. Notion genres always kept; additive only.
@@ -411,6 +416,7 @@ def main():
             "cover": cover,
             "synopsis": synopsis,
             "takeaways": takeaways,  # emits nothing when empty (yaml_dump skips [])
+            "sourceUrl": source_url,  # emits nothing when empty (yaml_dump skips "")
             "notionId": nid,
             "notionLastEdited": b["notionLastEdited"],
         }

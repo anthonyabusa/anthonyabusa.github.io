@@ -15,6 +15,7 @@ takeaways:
   - "A large reward model can reliably approximate human supervision for smaller reward models, enabling large-scale ablation studies that would otherwise be infeasible due to the cost of human feedback."
   - "The PRM800K dataset, containing 800,000 step-level human feedback labels across 75,000 solutions to 12,000 problems, is released publicly to support further research into process supervision."
   - "Process supervision also carries alignment advantages: it is easier for humans to interpret and more directly rewards models for following a human-endorsed chain-of-thought, discouraging models from using incorrect reasoning to reach correct answers."
+sourceUrl: "https://arxiv.org/abs/2305.20050"
 notionId: "3a0176cc-7864-8116-9c3a-dec34767688c"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---

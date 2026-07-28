@@ -15,6 +15,7 @@ takeaways:
   - "For document question answering, fixed-context baselines degrade in performance as document truncation increases, while MemGPT maintains stable accuracy by iteratively paging through archival storage, effectively decoupling performance from context window size."
   - "On a nested key-value retrieval task requiring multi-hop lookups across chained key-value pairs, MemGPT with GPT-4 is the only approach able to consistently complete tasks beyond 2 nesting levels, while all fixed-context baselines drop to 0% accuracy at 3 nesting levels."
   - "The OS-inspired design, including event-driven control flow, function chaining via a heartbeat mechanism, and queue eviction policies, allows MemGPT to handle unbounded contexts using fixed-context LLMs without requiring changes to the underlying model architecture."
+sourceUrl: "https://arxiv.org/abs/2310.08560"
 notionId: "3a0176cc-7864-8114-bb62-c19dbba6710f"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---
