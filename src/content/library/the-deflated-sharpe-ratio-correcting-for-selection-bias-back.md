@@ -20,3 +20,5 @@ sourceUrl: "https://www.davidhbailey.com/dhbpapers/deflated-sharpe.pdf"
 notionId: "3a0176cc-7864-817a-8dcb-c333f560bbcd"
 notionLastEdited: "2026-07-17T20:23:00.000Z"
 ---
+
+The Deflated Sharpe Ratio does the one thing every serious backtest should be forced to do: it accounts for how many strategies you tried before you kept the one that looked best. Search long enough over random noise and you will always find a beautiful curve; the deflated version puts a number on how much of that beauty is selection bias. I treat it as table stakes. What I will not do is mistake it for safety. Deflating the Sharpe corrects for the sin of trying too many things, but it says nothing about a strategy quietly overfit to a market regime that no longer exists, or about the structural break waiting a month out of sample. It answers whether I fooled myself while searching, which is necessary and nowhere near sufficient. The honest posture is to assume the edge is fragile until the market keeps paying for it, and to size accordingly. A backtest earns confidence; it does not grant it.

@@ -19,3 +19,5 @@ sourceUrl: "https://arxiv.org/abs/2401.18059"
 notionId: "3a0176cc-7864-81af-adf4-cb30f4dea3f3"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---
+
+Most retrieval systems treat a corpus as a bag of chunks: you ask a question, they hand back the paragraphs that share your words, and you hope the answer was sitting in one of them. RAPTOR's move is quieter and more important. It summarizes the material into a tree before anyone asks anything, so what you retrieve is the shape of an argument rather than a keyword match. That is exactly what I wanted out of Metis's memory. When the system reasons about a decision I made months ago, it should recover why the decision was made, not just the line where I happened to say it. Flat search can find the sentence; only a hierarchy can find the reasoning. The lesson I keep coming back to is that memory is not storage, it is structure. What you are able to retrieve was decided by how you chose to organize it, long before the question arrived.

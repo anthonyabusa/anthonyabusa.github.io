@@ -21,3 +21,5 @@ sourceUrl: "https://arxiv.org/abs/2410.05229"
 notionId: "12c176cc-7864-809f-b940-d928bec51fa0"
 notionLastEdited: "2026-07-17T20:24:00.000Z"
 ---
+
+It is tempting to read GSM-Symbolic as a takedown: change the numbers in a grade-school math problem, watch accuracy fall, conclude the model was never reasoning at all. I think that reads the result too literally. The fragility is real, but it is a statement about how we measure reasoning, not proof that reasoning is absent. A single model asked to be right in one pass, with no way to check itself, will always look brittle under perturbation; that is the condition we put it in, not a fixed property of the thing. So it changes what I build rather than whether I build. The robustness has to live in the scaffold: verification against ground truth, multiple passes that are allowed to disagree, a system that treats a confident answer as a hypothesis instead of a verdict. The paper does not tell me the model cannot reason. It tells me to stop asking a single forward pass to carry the whole burden.
