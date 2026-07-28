@@ -20,3 +20,5 @@ sourceUrl: "https://arxiv.org/abs/2312.11514"
 notionId: "3a0176cc-7864-816e-b0cb-c96513bbc87a"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---
+
+This sits right next to AWQ for me: another way to run a model bigger than the machine should allow, and another reason the future of this technology is personal hardware, not only data centers. The elegance is that it exploits a property the model already has instead of bolting on new machinery. More than ninety percent of the feed-forward neurons sit idle on any given token, so if you can predict the few that will fire, you stream only those from flash and leave the rest on disk. That is a pattern I trust in general: the cheapest speedup is usually the work you can prove you don't have to do. Running a model at twice your available memory, on a laptop, without touching the weights, is the kind of result that quietly moves capability from something you rent to something you own.

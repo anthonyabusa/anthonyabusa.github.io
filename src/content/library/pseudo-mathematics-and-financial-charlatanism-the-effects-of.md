@@ -20,3 +20,5 @@ sourceUrl: "https://www.ams.org/notices/201405/rnoti-p458.pdf"
 notionId: "3a0176cc-7864-81ce-af6f-e764df0f0dbc"
 notionLastEdited: "2026-07-17T20:23:00.000Z"
 ---
+
+If I could make one paper required reading before anyone shows me a backtest, this is a candidate, mostly for the demand buried in it: tell me how many strategies you tried. Without the number of trials, a reported Sharpe ratio is uninterpretable, because searching hard enough over random data will always hand you a beautiful curve that means nothing. The authors don't soften the language, and I respect that. Dressing up noise-mining in equations is charlatanism, whatever the credentials attached. Minimum backtest length puts a floor on how much history you need before a result could even be real. What I carry from it is a posture more than a formula: assume any impressive backtest is overfit until the search behind it is disclosed, and treat a missing trial count as the tell. The math that impresses me is the math that tells you how you might be fooling yourself.

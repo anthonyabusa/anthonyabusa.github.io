@@ -19,3 +19,5 @@ sourceUrl: "https://arxiv.org/abs/2306.05685"
 notionId: "3a0176cc-7864-811d-b45c-fc22b1541f5d"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---
+
+I lean on LLM-as-judge in my own system, so I read this less for the reassuring headline, GPT-4 agreeing with human experts about eighty percent of the time, and more for the failure modes. Those are the gift. A judge that favors whatever answer came first, or the longer one, or that can't grade math without working the problem itself, is a judge you can harden once you know its tells: swap the positions and re-ask, force a reference answer before it scores. What I take from it is a rule I apply everywhere I automate evaluation. An unaudited judge doesn't remove bias, it launders the model's preferences into a number that looks objective. The score is only as trustworthy as the interrogation you put the scorer through.

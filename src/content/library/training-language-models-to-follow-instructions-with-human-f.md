@@ -19,3 +19,5 @@ sourceUrl: "https://arxiv.org/abs/2203.02155"
 notionId: "3a0176cc-7864-8173-af77-f28c6ddd2257"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---
+
+The number that reframes the whole scale conversation is that a 1.3-billion-parameter aligned model beat a 175-billion one that wasn't, in human preference. Alignment isn't a safety garnish added at the end; it's a capability multiplier. A model that reliably does what you meant is worth more than a bigger one that merely knows more and guesses at your intent. That maps onto how I judge tools and people alike: raw horsepower matters far less than whether it points at the thing you actually asked for. I also respect that the paper is honest about the alignment tax, the small regressions the training causes on some benchmarks, and shows a way to buy most of it back. The lesson I hold is that following intent is a skill in its own right, often a scarcer and more valuable one than raw knowledge. Capability without direction is just expensive noise.

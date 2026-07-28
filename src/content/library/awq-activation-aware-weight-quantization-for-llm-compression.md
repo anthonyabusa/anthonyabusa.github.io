@@ -20,3 +20,5 @@ sourceUrl: "https://arxiv.org/abs/2306.00978"
 notionId: "3a0176cc-7864-8107-b07f-e29f1ad4fbe9"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---
+
+AWQ is one of the reasons I can run a capable model on my own hardware instead of renting one by the token. The insight is the kind of asymmetry I look for everywhere: only about one percent of weight channels actually carry the model's performance, and you find them by watching activations, not weight magnitude. Get the right one percent and you can quantize the rest to four bits without the model noticing. I care about this less as a compression trick and more as sovereignty. Every capability I can push onto local, quantized hardware is one I don't have to rent, meter, or ship my data away to use. The edge-deployment story is the whole point for me: a large model running on a machine I own is the difference between building on infrastructure and being a tenant on someone else's.

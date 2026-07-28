@@ -19,3 +19,5 @@ sourceUrl: "https://arxiv.org/abs/2310.08560"
 notionId: "3a0176cc-7864-8114-bb62-c19dbba6710f"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---
+
+MemGPT is close to a blueprint for how I think about memory. The move is to stop treating the context window as the whole world and start treating it like RAM: a small, fast tier that pages facts in and out of larger external storage under the model's own control. That is the architecture Metis runs on, a working context plus recall and archival storage, because the answer to 'the model forgot' is almost never a bigger window; it's an operating system. The ninety-three versus thirty-five percent recall gap against a raw baseline is the entire argument in one number. What I'd add from experience is that the hard part isn't the tiers, it's the eviction policy: deciding what earns a place in the small fast memory is where the intelligence actually lives. Memory isn't storage. It's the discipline of what you choose to keep close.

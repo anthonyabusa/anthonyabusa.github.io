@@ -20,3 +20,5 @@ sourceUrl: "https://arxiv.org/abs/2401.04088"
 notionId: "3a0176cc-7864-8193-8725-d301c0e68788"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---
+
+I run a mixture-of-experts model locally, so Mixtral isn't abstract for me; it's the architecture class my own infrastructure depends on. The principle is the same one that keeps showing up in the work I respect: activate only what a given token actually needs. Forty-seven billion parameters of capacity, thirteen billion of compute per step, and it still beats a dense seventy-billion model. That is capacity without paying the full bill for it. The finding I enjoy most is the deflating one: the router assigns experts more by syntax than by meaning, which quietly kills the romantic story that each expert is a little domain specialist. They aren't scholars, they're load-balancers. Sparse activation is how you get a large model to fit and run on hardware you own, and the honesty about what the experts are really doing is a good antidote to anthropomorphizing the architecture.

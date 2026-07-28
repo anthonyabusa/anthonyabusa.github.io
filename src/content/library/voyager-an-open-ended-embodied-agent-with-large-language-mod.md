@@ -19,3 +19,5 @@ sourceUrl: "https://arxiv.org/abs/2305.16291"
 notionId: "3a0176cc-7864-813a-a013-d7112c7ff393"
 notionLastEdited: "2026-07-17T20:22:00.000Z"
 ---
+
+I filed this one under aspiration, and the Minecraft setting is beside the point. The idea I actually want is the ever-growing skill library: an agent that writes a verified, reusable program every time it solves something new, stores it, and is permanently better for it. That's the direction I want my own system to grow, away from re-solving the same problem every session and toward accumulating a compounding library of what already worked. The ablations make the case honestly. Remove the skill library and the agent plateaus; replace the curriculum with random tasks and discovery collapses by over ninety percent. So the lesson isn't that agents are amazing, it's that open-ended competence needs two specific things: a source of the right next challenge and a memory of solved problems to build on. And the skills transfer, which is the real tell. Progress you can hand to another system was real progress, not a trick that only worked once.
