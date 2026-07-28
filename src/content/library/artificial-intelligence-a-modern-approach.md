@@ -17,7 +17,7 @@ takeaways:
   - "Situates machine learning as one component of a broader intelligent system rather than the whole of AI, placing supervised, reinforcement, and deep learning inside the agent framework."
   - "The fourth edition expands coverage of deep learning, transformers, probabilistic programming, and the ethics and safety of increasingly capable systems."
 notionId: "3ab176cc-7864-8186-9c91-c4af63954c8d"
-notionLastEdited: "2026-07-28T17:54:00.000Z"
+notionLastEdited: "2026-07-28T18:00:00.000Z"
 ---
 
 AIMA is the map I keep coming back to when the discourse forgets there was a field before large language models. Russell and Norvig frame everything around the rational agent, a thing that perceives and acts to maximize an objective, and that framing has aged better than most of the specific techniques in the book. It's a useful corrective to recency bias: search, logic, planning, and probabilistic reasoning didn't stop mattering because transformers arrived; they're the substrate a good agent still needs underneath the model. I treat it less as a how-to and more as a sense of proportion. The current moment is one chapter in a long book, and knowing the earlier chapters is what keeps me from mistaking a powerful tool for the whole of intelligence. The fundamentals are cheaper to learn than to rediscover the hard way.

@@ -17,7 +17,7 @@ takeaways:
   - "Treats unsupervised and competitive learning, including self-organizing feature maps, as principled ways for networks to discover structure without labels."
   - "Reflects the late-1980s to early-1990s theoretical foundations that predate modern deep learning, emphasizing physics-derived intuitions that still underlie current models."
 notionId: "3ab176cc-7864-81a0-9185-c483e3253c1d"
-notionLastEdited: "2026-07-28T17:55:00.000Z"
+notionLastEdited: "2026-07-28T18:00:00.000Z"
 ---
 
 This one is a reminder that neural networks didn't spring from nowhere in the last decade; they have a lineage that runs through physics. Hertz, Krogh, and Palmer come at the subject like statistical mechanics, energy landscapes, attractors, systems settling into stable states, and reading it changes the metaphors you reach for. I like the discipline of the older, more mathematical view because it strips away the anthropomorphic language we've layered onto these systems and puts something more honest underneath: not a mind, but a physical system relaxing toward a low-energy configuration. It dates itself in places, and that's part of the value. Seeing which ideas survived and which didn't teaches you to hold today's certainties a little more loosely. The oldest books are often where you find the assumptions everyone else stopped questioning.
