@@ -17,7 +17,7 @@ takeaways:
   - "The non-parametric memory in RAG can be updated at test time by swapping in a new document index without retraining, demonstrating that world knowledge can be refreshed independently of the generator parameters."
 sourceUrl: "https://arxiv.org/abs/2005.11401"
 notionId: "3a0176cc-7864-8187-91f7-e3d2baaa72a3"
-notionLastEdited: "2026-08-02T15:03:00.000Z"
+notionLastEdited: "2026-08-09T15:06:00.000Z"
 ---
 
 This is the founding statement of a pattern almost everything I build now leans on, so I read it for the idea that survived rather than the specific retriever-and-generator machinery, which has long since been replaced. The durable insight is decoupling knowledge from the weights. Treat the documents as an external memory the model reads at inference time, and you can refresh what the system knows by swapping the index, with no retraining at all. That single property is why a system can stay current without being rebuilt. It's also a useful corrective to the instinct to cram everything into the model itself. Some knowledge belongs in the parameters and some belongs in a store you can edit on Tuesday. Knowing which is which is most of the architecture. The model should reason; the index should remember.
