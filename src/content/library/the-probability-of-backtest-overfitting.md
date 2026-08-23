@@ -18,7 +18,7 @@ takeaways:
   - "The paper demonstrates that minimum backtest length is a related but distinct concept from PBO: MinBTL is a necessary but not sufficient condition for avoiding overfitting, while PBO provides a direct probabilistic measure of whether the selection process itself has inflated the apparent quality of the chosen strategy."
 sourceUrl: "https://www.davidhbailey.com/dhbpapers/backtest-prob.pdf"
 notionId: "3a0176cc-7864-811f-bd08-db931be6f792"
-notionLastEdited: "2026-08-09T15:01:00.000Z"
+notionLastEdited: "2026-08-16T15:01:00.000Z"
 ---
 
 If the charlatanism paper is the indictment, this is the working tool. Its cleverness is refusing the comfortable lie of a single hold-out period, which can be gamed, consciously or not, by where you happen to place the split. Instead it recombines the data every which way and asks a sharper question: across all those splits, how often does the strategy I picked as best in-sample fall below average out of sample? That probability is the overfitting risk, stated as a number instead of a feeling. I value it because it moves the argument from rhetoric to measurement, and because it's model-free; it needs only the performance series, so it can't be dodged by hiding behind a proprietary rule. It also keeps me honest about a distinction I'd otherwise blur: having enough data is necessary, but it never proves the search that used the data didn't fool me. Length is an alibi; the probability is the audit.
