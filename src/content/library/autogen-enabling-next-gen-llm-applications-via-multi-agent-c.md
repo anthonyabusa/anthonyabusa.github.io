@@ -17,7 +17,7 @@ takeaways:
   - "AutoGen supports flexible conversation patterns including two-agent chat, hierarchical chat, and dynamic group chat via a GroupChatManager that selects speakers dynamically, enabling applications ranging from math tutoring with expert escalation to conversational chess with grounding agents."
 sourceUrl: "https://arxiv.org/abs/2308.08155"
 notionId: "3a0176cc-7864-81bf-8c4c-c190edb45ceb"
-notionLastEdited: "2026-08-16T15:04:00.000Z"
+notionLastEdited: "2026-08-23T15:03:00.000Z"
 ---
 
 AutoGen's real move is treating the conversation as the program: control flow emerges from the dialogue instead of a script someone hardcoded in advance. That matches how I actually build. Metis runs work through separate lanes because a reviewer who didn't write the code catches what the author is blind to, and the paper's own result, a Commander, Writer, and Safeguard beating a single agent at flagging unsafe code, is the same lesson in miniature. But I won't pretend multi-agent is free. Every extra agent is more calls, more latency, and more places for a handoff to drop something, and most agent frameworks add ceremony without adding a genuine second set of eyes. The value was never the framework. It's the division of labor, and whether each role actually sees what the others miss.
