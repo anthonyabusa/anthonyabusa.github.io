@@ -44,7 +44,7 @@ const links: { href: string; label: string; also?: string[] }[] = [
     </nav>
 
     <!-- Mobile nav toggle -->
-    <details class="md:hidden group">
+    <details id="mobile-menu" class="md:hidden group">
       {/* p-3/-m-3 grows the 22px icon's tap target to 46px (WCAG 2.5.8 / mobile
           guidelines) without moving it visually. */}
       <summary class="list-none cursor-pointer inline-flex p-3 -m-3 text-ink-subtle hover:text-ink" aria-label="Menu">
@@ -81,4 +81,23 @@ const links: { href: string; label: string; also?: string[] }[] = [
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // Mobile menu dismissal: <details> keeps its own open state, but users
+  // expect Escape and a tap outside to close an overlay menu (WAI menu
+  // pattern). Escape also returns focus to the toggle so keyboard users
+  // aren't stranded.
+  const menu = document.getElementById('mobile-menu') as HTMLDetailsElement | null;
+  if (menu) {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.open) {
+        menu.open = false;
+        menu.querySelector('summary')?.focus();
+      }
+    });
+    document.addEventListener('click', (e) => {
+      if (menu.open && e.target instanceof Node && !menu.contains(e.target)) {
+        menu.open = false;
+      }
+    });
+  }
 </script>

@@ -15,7 +15,7 @@ const { value, prefix = '', suffix = '', label } = Astro.props;
     data-prefix={prefix}
     data-suffix={suffix}
   >
-    {prefix}0{suffix}
+    {prefix}{value}{suffix}
   </div>
   <p class="text-sm text-ink-muted">{label}</p>
 </div>
@@ -28,11 +28,11 @@ const { value, prefix = '', suffix = '', label } = Astro.props;
     const prefix = el.getAttribute('data-prefix') ?? '';
     const suffix = el.getAttribute('data-suffix') ?? '';
 
-    // Reduced-motion: skip the count-up, show the final value immediately.
-    if (reduceMotion) {
-      el.textContent = prefix + target + suffix;
-      return;
-    }
+    // The markup ships the final value (correct with no JS / for crawlers /
+    // under reduced motion). Only when we will actually animate do we zero it
+    // out, then count up on first view.
+    if (reduceMotion) return;
+    el.textContent = prefix + '0' + suffix;
 
     const observer = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;

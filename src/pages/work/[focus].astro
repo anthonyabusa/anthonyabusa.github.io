@@ -40,12 +40,12 @@ const experienceWork = related.filter((project) => project.placement === 'experi
 
     {projectWork.length > 0 && (
       <section class="mb-16">
-        <div class="flex items-end justify-between mb-7">
+        <div class="flex items-end justify-between gap-4 mb-7">
           <div>
             <p class="text-accent font-mono text-xs tracking-widest uppercase mb-2">Projects</p>
             <h2 class="text-2xl font-bold text-ink">Built systems</h2>
           </div>
-          <span class="text-[10px] uppercase tracking-[0.14em] text-ink-faint font-mono">{projectWork.length} matched</span>
+          <span class="shrink-0 whitespace-nowrap text-[10px] uppercase tracking-[0.14em] text-ink-faint font-mono">{projectWork.length} matched</span>
         </div>
         <div class="reveal-group grid sm:grid-cols-2 md:grid-cols-3 gap-6">
           {projectWork.map((project) => (
@@ -61,12 +61,12 @@ const experienceWork = related.filter((project) => project.placement === 'experi
 
     {experienceWork.length > 0 && (
       <section>
-        <div class="flex items-end justify-between mb-7">
+        <div class="flex items-end justify-between gap-4 mb-7">
           <div>
             <p class="text-accent font-mono text-xs tracking-widest uppercase mb-2">Experience</p>
             <h2 class="text-2xl font-bold text-ink">Professional work</h2>
           </div>
-          <span class="text-[10px] uppercase tracking-[0.14em] text-ink-faint font-mono">{experienceWork.length} matched</span>
+          <span class="shrink-0 whitespace-nowrap text-[10px] uppercase tracking-[0.14em] text-ink-faint font-mono">{experienceWork.length} matched</span>
         </div>
         <div class="space-y-6">
           {experienceWork.map((role) => (
