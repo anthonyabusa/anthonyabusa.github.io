@@ -17,7 +17,7 @@ takeaways:
   - "Performance improves monotonically with the number of proposer agents per layer, and using diverse heterogeneous models as proposers consistently yields better results than using the same model multiple times at a fixed temperature, confirming that model diversity is a key driver of MoA quality gains."
 sourceUrl: "https://arxiv.org/abs/2406.04692"
 notionId: "3a0176cc-7864-8198-8e85-cb0103f77a58"
-notionLastEdited: "2026-08-23T15:03:00.000Z"
+notionLastEdited: "2026-08-30T15:04:00.000Z"
 ---
 
 Mixture-of-Agents is self-consistency scaled up a level: instead of sampling many paths from one model, you sample from many different models and synthesize. The result that matters to me is that a set of open-source proposers with a good aggregator beat GPT-4 alone. That is close to the thesis of how I've built things. You rarely need the single best model; you need diverse-enough contributors and something competent to reconcile them. The recurring lesson, the same one from self-consistency, is that diversity beats repetition: heterogeneous models outperform the same model run many times, because sameness has nothing to disagree about. The catch is the aggregator. Being a good proposer and a good synthesizer are different skills, some models are only one, and the whole system is capped by how well the reconciler tells signal from noise. Ensembling is only as smart as its editor.

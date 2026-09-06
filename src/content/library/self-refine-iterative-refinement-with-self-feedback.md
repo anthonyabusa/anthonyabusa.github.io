@@ -17,7 +17,7 @@ takeaways:
   - "Self-Refine shows diminishing returns with additional iterations, with most gains occurring in early feedback-refine cycles, and does not consistently benefit weaker models such as Vicuna-13B, which struggle to follow the refinement format."
 sourceUrl: "https://arxiv.org/abs/2303.17651"
 notionId: "3a0176cc-7864-819b-9a2a-f4aa387e05df"
-notionLastEdited: "2026-08-23T15:02:00.000Z"
+notionLastEdited: "2026-08-30T15:02:00.000Z"
 ---
 
 Self-Refine is the close cousin of Reflexion, and it isolates the variable that actually matters: the quality of the feedback. Generic 'make this better' does almost nothing; specific, actionable critique is what drives the roughly twenty percent gain. That tracks with everything I've seen building self-correcting loops, and it's the same reason a real code review beats a thumbs-down. The caveat is the one I plan around: weaker models can't reliably run the loop, because critiquing your own work and acting on the critique is harder than producing the work in the first place. So self-refinement is a capability you have to earn, not a free wrapper you bolt onto anything. And the returns fade fast after the first pass. The lesson I keep is that a system improves in proportion to how precisely it can name what's wrong, not how many times it loops.

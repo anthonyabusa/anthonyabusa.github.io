@@ -17,7 +17,7 @@ takeaways:
   - "Human oversight in this framework is compressed to a small, legible set of natural language principles rather than tens of thousands of human preference labels, making the values governing model behavior more transparent and easier to audit and adjust."
 sourceUrl: "https://arxiv.org/abs/2212.08073"
 notionId: "3a0176cc-7864-81b2-82f7-deb43e4b6106"
-notionLastEdited: "2026-08-23T15:02:00.000Z"
+notionLastEdited: "2026-08-30T15:02:00.000Z"
 ---
 
 The headline is that a model can learn harmlessness from its own AI feedback instead of tens of thousands of human labels. The part I actually care about is that the values end up written down as a short, legible constitution you can read, argue with, and change. That is the difference between governance you can audit and a black box trained to behave for reasons no one can reconstruct. I trust the first and distrust the second, in models and in organizations alike. The other quiet win is the non-evasive posture: a model that engages with a hard request and explains its objection is more useful, and more honest, than one that reflexively refuses. Encoding your values as explicit, editable principles rather than a pile of opaque examples is just good system design, whether the thing you are aligning is a model or a team.
