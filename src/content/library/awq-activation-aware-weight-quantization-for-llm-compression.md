@@ -18,7 +18,7 @@ takeaways:
   - "The accompanying TinyChat inference framework uses on-the-fly dequantization, SIMD-aware weight packing, and kernel fusion to deliver more than 3x speedup over the HuggingFace FP16 baseline on desktop and mobile GPUs, enabling deployment of 70B-scale models on edge hardware."
 sourceUrl: "https://arxiv.org/abs/2306.00978"
 notionId: "3a0176cc-7864-8107-b07f-e29f1ad4fbe9"
-notionLastEdited: "2026-08-30T15:03:00.000Z"
+notionLastEdited: "2026-09-06T15:03:00.000Z"
 ---
 
 AWQ is one of the reasons I can run a capable model on my own hardware instead of renting one by the token. The insight is the kind of asymmetry I look for everywhere: only about one percent of weight channels actually carry the model's performance, and you find them by watching activations, not weight magnitude. Get the right one percent and you can quantize the rest to four bits without the model noticing. I care about this less as a compression trick and more as sovereignty. Every capability I can push onto local, quantized hardware is one I don't have to rent, meter, or ship my data away to use. The edge-deployment story is the whole point for me: a large model running on a machine I own is the difference between building on infrastructure and being a tenant on someone else's.
