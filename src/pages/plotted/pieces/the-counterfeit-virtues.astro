@@ -1,0 +1,137 @@
+---
+import Base from '../../../layouts/PlottedBase.astro';
+import NearEnemyChart from '../../../components/NearEnemyChart.astro';
+import { pieces } from '../../../data/plotted-pieces';
+import { summary } from '../../../data/near-enemies';
+
+const piece = pieces.find((p) => p.slug === 'the-counterfeit-virtues')!;
+---
+
+<Base title={`${piece.title} · Plotted`} description={piece.dek}>
+  <article class="piece">
+    <header class="piece-head" data-reveal>
+      <p class="kicker">{piece.kicker}</p>
+      <h1>{piece.title}</h1>
+      <p class="standfirst measure">{piece.dek}</p>
+    </header>
+
+    <div class="prose measure" data-reveal>
+      <p>
+        Every virtue has an opposite, and the opposite is rarely the problem.
+        Nobody sets out to be cruel and mistakes it for compassion. The trouble
+        comes from the impostor that sits right beside the real thing: pity
+        wearing compassion's clothes, control passing itself off as care,
+        certainty borrowing the authority of conviction. Fifth-century Buddhist
+        psychology gave these two failure modes names. The far enemy is the plain
+        opposite. The near enemy is the counterfeit, and it is the dangerous one,
+        because you can practice it for years while believing you are practicing
+        the virtue.
+      </p>
+      <p>
+        That is a claim about distance: the counterfeit is supposed to sit closer
+        to the virtue than the opposite does. It is usually offered as wisdom
+        literature, which means it is usually offered without evidence. So here is
+        a way to check it against numbers that were gathered by people who had
+        never heard of it.
+      </p>
+      <p>
+        In 2013 a team of psycholinguists paid roughly 1,800 people to rate 13,915
+        English words on how pleasant each one felt, how intense, and how much a
+        sense of control it carried. They were building a reference database for
+        language research. They were not testing any theory of virtue. Twenty-one
+        virtue triads from a working list, resolved to the closest words that
+        database contains, can simply be looked up in it.
+      </p>
+    </div>
+
+    <div class="bleed">
+      <NearEnemyChart />
+    </div>
+
+    <div class="prose measure" data-reveal>
+      <p>
+        The framework survives the test. In {`${summary.nearCloserCount} of the ${summary.triads}`} triads
+        the near enemy scores closer to its virtue than the far enemy does.
+        Averaged across the set, the counterfeit sits {`${summary.meanNearDistance}`} points
+        from the real thing and the opposite sits {`${summary.meanFarDistance}`}.
+        Strangers rating words in isolation, with no
+        framework in front of them and no reason to cooperate with one, reproduced
+        the geometry the Visuddhimagga described in the fifth century.
+      </p>
+      <p>
+        The top of the chart is where it gets uncomfortable. Hope and optimism are
+        separated by 0.27 points on a nine-point scale, which is to say they are
+        not separated at all. Empathy and sympathy score identically on sense of
+        control and differ by 0.72 on pleasantness. These are the pairs that
+        careful writers insist are different in kind, and in the aggregate public
+        ear they are close to the same word. That is not a failure of the raters.
+        It is the mechanism: a near enemy is hard to catch precisely because the
+        language has not bothered to keep them apart.
+      </p>
+      <p>
+        Switch the axis to sense of control and a second pattern shows up. Most
+        counterfeits do not feel much less pleasant than the virtue, but they feel
+        markedly less powerful. Integrity rates 6.96 for control and rigidity
+        rates 4.83. Patience rates 7.18 and indifference 5.64. The near enemy
+        keeps the warmth and loses the agency, which is a decent working
+        description of what it is like to be stuck in one.
+      </p>
+      <p>
+        One triad refuses to cooperate. Discipline's counterfeit, rigidity, lands
+        further from it than plain laziness does, which breaks the pattern. It may
+        be that discipline is unusual, or that rigidity is doing double duty here
+        as the near enemy of both discipline and integrity, or simply that a
+        one-word proxy cannot carry the idea. That is the honest reading of a
+        method with real limits.
+      </p>
+      <p>
+        Those limits are worth stating plainly, because they bound what this can
+        show. The lexicon holds single words, and several of these ideas are not
+        single words: self-abasement had to become "meek," people-pleasing had to
+        become "flattery," self-righteousness had to become "sanctimonious." Each
+        substitution loses something, and each one was a judgment call that could
+        have been made differently. The ratings measure what English speakers
+        associate with a word, not what the state is actually like to live inside.
+        And the triads themselves are a working list, not a validated instrument.
+      </p>
+      <p>
+        What the exercise establishes is narrower than the framework's full claim
+        and more than nothing. The near enemy is not a poetic device. It is a
+        measurable position: close enough to the virtue to be mistaken for it,
+        far enough to take you somewhere else. This is the map. The series that
+        follows walks the territory one virtue at a time.
+      </p>
+    </div>
+
+    <footer class="piece-foot measure" data-reveal>
+      <hr class="rule" />
+      <dl class="meta">
+        <div><dt>Source</dt><dd><a href={piece.source.url}>{piece.source.name}</a></dd></div>
+        <div><dt>License</dt><dd>{piece.source.license}</dd></div>
+        <div><dt>Method</dt><dd>scripts/plotted/build-near-enemies.py</dd></div>
+        <div><dt>Built with</dt><dd>Astro · D3 · hand-set type</dd></div>
+      </dl>
+      <p class="back"><a href="/plotted">← Back to the gallery</a></p>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  /* One reading column at --measure; the chart breaks out via the shared `.bleed`
+     wrapper. Convention: plotted-tokens.css, matching the other pieces. */
+  .piece { max-width: var(--measure); margin: 0 auto; padding: 0 var(--space-3); }
+  .piece-head { padding: var(--space-6) 0 var(--space-4); }
+  .piece-head h1 { font-size: var(--step-5); margin: var(--space-2) 0 var(--space-3); max-width: 18ch; }
+  .standfirst { font-size: var(--step-2); line-height: 1.35; color: var(--ink-soft); font-family: var(--font-display); font-weight: 400; }
+  .prose { margin: var(--space-4) 0; }
+  .prose p { font-size: var(--step-1); line-height: 1.65; margin: 0 0 var(--space-3); }
+  .prose p:first-child::first-letter {
+    font-family: var(--font-display);
+    font-size: 3.4em;
+    float: left;
+    line-height: 0.8;
+    padding: 0.08em 0.1em 0 0;
+    color: var(--accent);
+  }
+  .piece-foot { margin-top: var(--space-5); }
+</style>
