@@ -16,6 +16,21 @@ export interface Piece {
 
 export const pieces: Piece[] = [
   {
+    slug: 'the-counterfeit-virtues',
+    title: 'The Counterfeit Virtues',
+    dek: 'Every virtue has an opposite and an impostor. Ratings from 13,915 words, collected by people who had never heard of the idea, show the impostor really does stand closer.',
+    kicker: 'Psychology · Language · 21 triads',
+    accent: 'var(--accent-4)',
+    source: {
+      name: 'Warriner, Kuperman & Brysbaert (2013) · Behavior Research Methods',
+      url: 'https://link.springer.com/article/10.3758/s13428-012-0314-x',
+      license: 'Ratings CC BY-NC-SA 3.0',
+    },
+    published: '2026-09-09',
+    tags: ['Psychology', 'Language', 'Near enemies'],
+    status: 'live',
+  },
+  {
     slug: 'the-price-of-sunlight',
     title: 'The Price of Sunlight',
     dek: 'In one generation the cost of solar electricity fell more than 99 percent. It is now the cheapest power humanity has ever built, and still falling.',
