@@ -28,7 +28,11 @@ export const pieces: Piece[] = [
     },
     published: '2026-09-09',
     tags: ['Psychology', 'Language', 'Near enemies'],
-    status: 'live',
+    // Held unlinked until the paired essay clears its voice pass: Ant asked for
+    // the essay and the piece to launch together, and the essay is still
+    // `draft: true`. Flipping this to 'live' and the essay to `draft: false` is
+    // the single launch switch for the pair.
+    status: 'soon',
   },
   {
     slug: 'the-price-of-sunlight',
