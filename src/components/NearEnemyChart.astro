@@ -1,0 +1,232 @@
+---
+// Twenty-one virtue triads on one axis. Each row draws the virtue, its near enemy
+// and its far enemy at their crowdsourced ratings, so the gap the framework claims
+// becomes something you can measure with a ruler. Rows are sorted by how tightly
+// the counterfeit hugs the real thing: the hardest ones to catch sit at the top.
+// Toggle the axis to check the claim on a second, independent dimension.
+import { triads, summary } from '../data/near-enemies';
+---
+
+<figure class="ne" data-reveal>
+  <div class="ne-controls">
+    <div class="ne-axis" role="group" aria-label="Choose the rating dimension">
+      <button type="button" class="ne-tab" data-axis="valence" aria-pressed="true">Pleasantness</button>
+      <button type="button" class="ne-tab" data-axis="dominance" aria-pressed="false">Sense of control</button>
+    </div>
+    <div class="ne-legend">
+      <span class="ne-key"><i style="background:var(--accent)"></i>Virtue</span>
+      <span class="ne-key"><i style="background:var(--accent-2)"></i>Near enemy</span>
+      <span class="ne-key"><i class="hollow"></i>Far enemy</span>
+    </div>
+  </div>
+
+  <div class="ne-stage" id="ne-stage">
+    <svg
+      id="ne-svg"
+      role="img"
+      aria-label={`Twenty-one virtues with their near and far enemies, rated for pleasantness. In ${summary.nearCloserCount} of ${summary.triads} cases the near enemy scores closer to the virtue than the far enemy does.`}
+    ></svg>
+  </div>
+
+  <p class="ne-foot">
+    Ratings from Warriner et al. (2013), 1 to 9, collected for an unrelated study.
+    Hover a row to read it. Sorted by how close the near enemy sits to its virtue.
+  </p>
+</figure>
+
+<style>
+  .ne { margin: var(--space-5) 0; }
+  .ne-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    margin-bottom: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+  }
+  .ne-axis { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; }
+  .ne-tab {
+    border: 0;
+    background: transparent;
+    padding: 4px 12px;
+    cursor: pointer;
+    color: var(--ink-faint);
+    font: inherit;
+    transition: color 0.2s, background 0.2s;
+  }
+  .ne-tab[aria-pressed='true'] { color: var(--paper); background: var(--ink); }
+  .ne-legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); margin-left: auto; }
+  .ne-key { display: inline-flex; align-items: center; gap: 0.5em; color: var(--ink-soft); }
+  .ne-key i { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+  .ne-key i.hollow { background: transparent; border: 1.5px solid var(--ink-faint); }
+
+  .ne-stage { position: relative; width: 100%; }
+  #ne-svg { display: block; width: 100%; height: auto; }
+
+  :global(.ne-readout) {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.5;
+    padding: 5px 9px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  :global(.ne-readout b) { color: var(--paper); font-weight: 600; }
+  :global(.ne-readout s) { color: var(--paper); opacity: 0.6; text-decoration: none; }
+
+  .ne-foot {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--ink-faint);
+    line-height: 1.5;
+    margin: var(--space-3) 0 0;
+  }
+</style>
+
+<script>
+  import * as d3 from 'd3';
+  import { triads } from '../data/near-enemies';
+
+  const svg = d3.select<SVGSVGElement, unknown>('#ne-svg');
+  const stage = document.getElementById('ne-stage')!;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  type Axis = 'valence' | 'dominance';
+  let axis: Axis = 'valence';
+  let drawnOnce = false;
+
+  const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
+
+  function render() {
+    const W = stage.clientWidth || 720;
+    const narrow = W < 560;
+    // Narrow screens stack the virtue name above its row, so rows need more height.
+    const ROW = narrow ? 34 : 24;
+    const M = { t: 30, r: 14, b: 30, l: narrow ? 12 : 104 };
+    const H = M.t + triads.length * ROW + M.b;
+    const iw = W - M.l - M.r;
+
+    svg.attr('viewBox', `0 0 ${W} ${H}`).attr('preserveAspectRatio', 'xMidYMid meet');
+    svg.selectAll('*').remove();
+
+    const x = d3.scaleLinear().domain([1, 9]).range([M.l, M.l + iw]);
+    const rowY = (i: number) => M.t + i * ROW + (narrow ? ROW - 10 : ROW / 2);
+
+    // Vertical gridlines + scale labels along the top.
+    const ticks = [1, 3, 5, 7, 9];
+    const grid = svg.append('g');
+    grid.selectAll('line').data(ticks).join('line')
+      .attr('x1', (d) => x(d)).attr('x2', (d) => x(d))
+      .attr('y1', M.t - 8).attr('y2', H - M.b + 4)
+      .attr('stroke', 'var(--rule)').attr('stroke-width', 1);
+    grid.selectAll('text').data(ticks).join('text')
+      .attr('x', (d) => x(d)).attr('y', M.t - 14).attr('text-anchor', 'middle')
+      .attr('font-family', 'var(--font-mono)').attr('font-size', 10).attr('fill', 'var(--ink-faint)')
+      .text((d) => d);
+
+    svg.append('text')
+      .attr('x', M.l).attr('y', H - 8)
+      .attr('font-family', 'var(--font-mono)').attr('font-size', 10).attr('fill', 'var(--ink-faint)')
+      .text(axis === 'valence' ? 'unpleasant  <  rated pleasantness  >  pleasant' : 'powerless  <  rated sense of control  >  in control');
+
+    const rows = svg.append('g');
+
+    triads.forEach((t, i) => {
+      const y = rowY(i);
+      const v = t.words.virtue[axis];
+      const n = t.words.near[axis];
+      const f = t.words.far[axis];
+      const g = rows.append('g').attr('class', 'ne-row').style('cursor', 'crosshair');
+
+      // Spine from the far enemy to the virtue: the full moral distance of the row.
+      g.append('line')
+        .attr('x1', x(Math.min(v, f))).attr('x2', x(Math.max(v, f)))
+        .attr('y1', y).attr('y2', y)
+        .attr('stroke', 'var(--rule)').attr('stroke-width', 1.5).attr('stroke-linecap', 'round');
+
+      // Emphasised segment: virtue to near enemy, the gap the framework says is small.
+      g.append('line')
+        .attr('x1', x(Math.min(v, n))).attr('x2', x(Math.max(v, n)))
+        .attr('y1', y).attr('y2', y)
+        .attr('stroke', 'var(--accent-2)').attr('stroke-width', 2.5)
+        .attr('stroke-linecap', 'round').attr('opacity', 0.42);
+
+      g.append('circle').attr('cx', x(f)).attr('cy', y).attr('r', 3.6)
+        .attr('fill', 'var(--paper)').attr('stroke', 'var(--ink-faint)').attr('stroke-width', 1.5);
+      g.append('circle').attr('cx', x(n)).attr('cy', y).attr('r', 4.4).attr('fill', 'var(--accent-2)');
+      g.append('circle').attr('cx', x(v)).attr('cy', y).attr('r', 4.4).attr('fill', 'var(--accent)');
+
+      // Virtue name: a left gutter on wide screens, stacked above the row when narrow.
+      g.append('text')
+        .attr('x', narrow ? M.l : M.l - 12)
+        .attr('y', narrow ? y - 14 : y + 3.5)
+        .attr('text-anchor', narrow ? 'start' : 'end')
+        .attr('font-family', 'var(--font-mono)').attr('font-size', 11).attr('fill', 'var(--ink-soft)')
+        .text(t.virtue);
+
+      g.append('title').text(
+        `${t.virtue} ${v} · ${t.words.near.word} ${n} · ${t.words.far.word} ${f}`
+      );
+    });
+
+    // Hover readout. One pill, repositioned to whichever row the pointer is over.
+    const rfo = svg.append('foreignObject').attr('width', 260).attr('height', 48)
+      .attr('opacity', 0).style('overflow', 'visible').style('pointer-events', 'none');
+    const rdiv = rfo.append('xhtml:div').attr('class', 'ne-readout');
+    const band = svg.append('rect')
+      .attr('x', M.l).attr('width', iw).attr('height', ROW - 4).attr('rx', 3)
+      .attr('fill', 'var(--ink)').attr('opacity', 0).style('pointer-events', 'none');
+
+    svg.append('rect')
+      .attr('x', M.l).attr('y', M.t).attr('width', iw).attr('height', triads.length * ROW)
+      .attr('fill', 'transparent').style('cursor', 'crosshair')
+      .on('pointermove', (event) => {
+        const [, my] = d3.pointer(event);
+        const i = clamp(Math.floor((my - M.t) / ROW), 0, triads.length - 1);
+        const t = triads[i];
+        const y = rowY(i);
+        band.attr('y', y - (ROW - 4) / 2).attr('opacity', 0.05);
+        rdiv.html(
+          `<b>${t.virtue} ${t.words.virtue[axis].toFixed(2)}</b><br>` +
+          `${t.words.near.word} ${t.words.near[axis].toFixed(2)} <s>near</s> · ` +
+          `${t.words.far.word} ${t.words.far[axis].toFixed(2)} <s>far</s>`
+        );
+        rfo.attr('x', clamp(x(t.words.virtue[axis]) - 130, 2, W - 262))
+          .attr('y', y > M.t + triads.length * ROW - 60 ? y - 54 : y + 12)
+          .attr('opacity', 1);
+      })
+      .on('pointerleave', () => {
+        rfo.attr('opacity', 0);
+        band.attr('opacity', 0);
+      });
+
+    if (!reduce && !drawnOnce) {
+      rows.selectAll<SVGGElement, unknown>('.ne-row')
+        .attr('opacity', 0)
+        .transition().delay((_, i) => i * 34).duration(420).ease(d3.easeCubicOut)
+        .attr('opacity', 1);
+    }
+
+    drawnOnce = true;
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.ne-tab').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const next = btn.dataset.axis as Axis;
+      if (next === axis) return;
+      axis = next;
+      document.querySelectorAll<HTMLButtonElement>('.ne-tab').forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.axis === axis));
+      });
+      render();
+    });
+  });
+
+  let raf = 0;
+  window.addEventListener('resize', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(render); });
+  render();
+</script>
