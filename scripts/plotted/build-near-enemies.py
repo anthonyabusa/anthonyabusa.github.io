@@ -12,6 +12,11 @@ the closest single word the lexicon actually contains; where that proxy is lossy
 the `proxyNote` field records it, so the piece can state the limitation instead of
 hiding it.
 
+Five triads also carry a `literature` annotation: cases where mainstream psychology
+independently split the same construct in two and published a measure for it. Those
+are annotations only. Distances are computed from the lexicon entries alone, so a
+citation can be added, corrected or removed without moving a single number.
+
 Source: Warriner, A.B., Kuperman, V., & Brysbaert, M. (2013). "Norms of valence,
 arousal, and dominance for 13,915 English lemmas." Behavior Research Methods 45(4).
 Ratings mirror: github.com/JULIELab/XANEW (CC BY-NC-SA 3.0).
@@ -81,6 +86,45 @@ TRIADS = [
 ]
 
 
+# Where mainstream psychology has independently split the same construct in two, the
+# triad is annotated with that literature. These are annotations, not inputs: the
+# distances below are computed from the single-word lexicon entries and nothing here
+# touches them. That separation is deliberate. The published constructs are multi-word
+# ("hubristic pride", "unmitigated communion") and the Warriner norms only score single
+# lemmas, so swapping a construct name into the scored column is not possible without
+# abandoning the method. Where the literature's seam does not run exactly where the
+# triad's does, `note` says so rather than smoothing it over.
+LITERATURE = {
+    "Confidence": {
+        "construct": "authentic pride vs hubristic pride",
+        "citation": "Tracy, J.L. & Robins, R.W. (2007). The psychological structure of pride: A tale of two facets. Journal of Personality and Social Psychology, 92(3), 506-525.",
+        "url": "https://doi.org/10.1037/0022-3514.92.3.506",
+    },
+    "Compassion": {
+        "construct": "compassion vs empathic distress",
+        "citation": "Klimecki, O.M., Leiberg, S., Ricard, M. & Singer, T. (2014). Differential pattern of functional brain plasticity after compassion and empathy training. Social Cognitive and Affective Neuroscience, 9(6), 873-879.",
+        "url": "https://doi.org/10.1093/scan/nst060",
+    },
+    "Empathy": {
+        "construct": "empathic concern vs personal distress",
+        "citation": "Batson, C.D., Fultz, J. & Schoenrade, P.A. (1987). Distress and empathy: Two qualitatively distinct vicarious emotions with different motivational consequences. Journal of Personality, 55(1), 19-39.",
+        "url": "https://doi.org/10.1111/j.1467-6494.1987.tb00426.x",
+        "note": "The seam does not match the triad's. Batson groups sympathy WITH empathy on the adaptive side and puts personal distress opposite both, so the literature does not endorse sympathy as the near enemy of empathy. It is cited because it establishes the two-factor shape, not the specific pair.",
+    },
+    "Kindness": {
+        "construct": "communion vs unmitigated communion",
+        "citation": "Fritz, H.L. & Helgeson, V.S. (1998). Distinctions of unmitigated communion from communion: Self-neglect and overinvolvement with others. Journal of Personality and Social Psychology, 75(1), 121-140.",
+        "url": "https://doi.org/10.1037/0022-3514.75.1.121",
+    },
+    "Discipline": {
+        "construct": "perfectionism dimensions (socially prescribed is the consistently maladaptive one)",
+        "citation": "Hewitt, P.L. & Flett, G.L. (1991). Perfectionism in the self and social contexts: Conceptualization, assessment, and association with psychopathology. Journal of Personality and Social Psychology, 60(3), 456-470.",
+        "url": "https://doi.org/10.1037/0022-3514.60.3.456",
+        "note": "Hewitt & Flett split perfectionism by target (self-oriented, other-oriented, socially prescribed), not into adaptive and maladaptive halves. The adaptive/maladaptive framing belongs to later work; what this paper establishes is that one construct carries dimensions with sharply different psychopathology associations.",
+    },
+}
+
+
 def fetch_ratings():
     with urllib.request.urlopen(RATINGS_URL, timeout=120) as resp:
         text = resp.read().decode("utf-8")
@@ -125,6 +169,7 @@ def main():
             "nearDistance": dist(rv, rn),
             "farDistance": dist(rv, rf),
             **({"proxyNote": note} if note else {}),
+            **({"literature": LITERATURE[label]} if label in LITERATURE else {}),
         })
 
     triads.sort(key=lambda t: t["nearDistance"])
@@ -182,6 +227,18 @@ export interface Triad {
   farDistance: number;
   /** Present when the single-word proxy is a lossy stand-in for the real idea. */
   proxyNote?: string;
+  /**
+   * Present when mainstream psychology has independently split the same construct
+   * in two and published a measure for it. Annotation only: no scored value above
+   * is derived from this, so a citation can change without moving a number.
+   */
+  literature?: {
+    construct: string;
+    citation: string;
+    url: string;
+    /** Present when the literature's split does not run exactly where the triad's does. */
+    note?: string;
+  };
 }
 
 export interface Summary {

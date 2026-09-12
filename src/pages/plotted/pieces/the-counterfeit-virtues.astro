@@ -2,9 +2,13 @@
 import Base from '../../../layouts/PlottedBase.astro';
 import NearEnemyChart from '../../../components/NearEnemyChart.astro';
 import { pieces } from '../../../data/plotted-pieces';
-import { summary } from '../../../data/near-enemies';
+import { summary, triads } from '../../../data/near-enemies';
 
 const piece = pieces.find((p) => p.slug === 'the-counterfeit-virtues')!;
+
+// The triads that psychology reached independently. Ordered as the chart is, so a
+// reader scanning both sees the same sequence.
+const cited = triads.filter((t) => t.literature);
 ---
 
 <Base title={`${piece.title} · Plotted`} description={piece.dek}>
@@ -95,6 +99,32 @@ const piece = pieces.find((p) => p.slug === 'the-counterfeit-virtues')!;
         And the triads themselves are a working list, not a validated instrument.
       </p>
       <p>
+        There is one check the list can pass that is not circular. If a counterfeit
+        virtue is real rather than a nice piece of framing, researchers with no
+        interest in the framework should have run into it anyway, from the other
+        direction, and split the construct in two on their own evidence. For
+        {`${cited.length} of the ${summary.triads}`} triads they did, and they built
+        measures for the halves.
+      </p>
+      <ul class="lit">
+        {cited.map((t) => (
+          <li>
+            <p class="lit-head">
+              <strong>{t.virtue}</strong> · {t.literature!.construct}
+            </p>
+            <p class="lit-cite"><a href={t.literature!.url}>{t.literature!.citation}</a></p>
+            {t.literature!.note && <p class="lit-note">{t.literature!.note}</p>}
+          </li>
+        ))}
+      </ul>
+      <p>
+        Two of those five come with a caveat printed above rather than buried, because
+        the published seam does not run exactly where the triad's does. That is the
+        point of listing them: convergent evidence is worth something only when you
+        can see where it converges and where it does not. The other sixteen triads
+        have no such literature at all, which is the gap the series is about.
+      </p>
+      <p>
         What the exercise establishes is narrower than the framework's full claim
         and more than nothing. The near enemy is not a poetic device. It is a
         measurable position: close enough to the virtue to be mistaken for it,
@@ -132,6 +162,22 @@ const piece = pieces.find((p) => p.slug === 'the-counterfeit-virtues')!;
     line-height: 0.8;
     padding: 0.08em 0.1em 0 0;
     color: var(--accent);
+  }
+  .lit { list-style: none; margin: 0 0 var(--space-3); padding: 0; }
+  .lit li {
+    border-left: 2px solid var(--rule, currentColor);
+    padding-left: var(--space-2);
+    margin: 0 0 var(--space-2);
+  }
+  .lit-head { font-size: var(--step-0); margin: 0 0 0.2rem; }
+  .lit-cite { font-size: var(--step--1); line-height: 1.5; margin: 0; color: var(--ink-soft); }
+  .lit-cite a { color: inherit; }
+  .lit-note {
+    font-size: var(--step--1);
+    line-height: 1.5;
+    margin: 0.35rem 0 0;
+    color: var(--ink-soft);
+    font-style: italic;
   }
   .piece-foot { margin-top: var(--space-5); }
 </style>

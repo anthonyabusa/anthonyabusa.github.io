@@ -35,6 +35,18 @@ export interface Triad {
   farDistance: number;
   /** Present when the single-word proxy is a lossy stand-in for the real idea. */
   proxyNote?: string;
+  /**
+   * Present when mainstream psychology has independently split the same construct
+   * in two and published a measure for it. Annotation only: no scored value above
+   * is derived from this, so a citation can change without moving a number.
+   */
+  literature?: {
+    construct: string;
+    citation: string;
+    url: string;
+    /** Present when the literature's split does not run exactly where the triad's does. */
+    note?: string;
+  };
 }
 
 export interface Summary {
@@ -106,7 +118,13 @@ export const triads: Triad[] = [
       }
     },
     "nearDistance": 0.72,
-    "farDistance": 4.69
+    "farDistance": 4.69,
+    "literature": {
+      "construct": "empathic concern vs personal distress",
+      "citation": "Batson, C.D., Fultz, J. & Schoenrade, P.A. (1987). Distress and empathy: Two qualitatively distinct vicarious emotions with different motivational consequences. Journal of Personality, 55(1), 19-39.",
+      "url": "https://doi.org/10.1111/j.1467-6494.1987.tb00426.x",
+      "note": "The seam does not match the triad's. Batson groups sympathy WITH empathy on the adaptive side and puts personal distress opposite both, so the literature does not endorse sympathy as the near enemy of empathy. It is cited because it establishes the two-factor shape, not the specific pair."
+    }
   },
   {
     "virtue": "Humility",
@@ -229,7 +247,12 @@ export const triads: Triad[] = [
     },
     "nearDistance": 2.17,
     "farDistance": 6.82,
-    "proxyNote": "'flattery' is the closest available proxy for people-pleasing."
+    "proxyNote": "'flattery' is the closest available proxy for people-pleasing.",
+    "literature": {
+      "construct": "communion vs unmitigated communion",
+      "citation": "Fritz, H.L. & Helgeson, V.S. (1998). Distinctions of unmitigated communion from communion: Self-neglect and overinvolvement with others. Journal of Personality and Social Psychology, 75(1), 121-140.",
+      "url": "https://doi.org/10.1037/0022-3514.75.1.121"
+    }
   },
   {
     "virtue": "Gratitude",
@@ -289,7 +312,13 @@ export const triads: Triad[] = [
       }
     },
     "nearDistance": 2.68,
-    "farDistance": 2.24
+    "farDistance": 2.24,
+    "literature": {
+      "construct": "perfectionism dimensions (socially prescribed is the consistently maladaptive one)",
+      "citation": "Hewitt, P.L. & Flett, G.L. (1991). Perfectionism in the self and social contexts: Conceptualization, assessment, and association with psychopathology. Journal of Personality and Social Psychology, 60(3), 456-470.",
+      "url": "https://doi.org/10.1037/0022-3514.60.3.456",
+      "note": "Hewitt & Flett split perfectionism by target (self-oriented, other-oriented, socially prescribed), not into adaptive and maladaptive halves. The adaptive/maladaptive framing belongs to later work; what this paper establishes is that one construct carries dimensions with sharply different psychopathology associations."
+    }
   },
   {
     "virtue": "Authenticity",
@@ -530,7 +559,12 @@ export const triads: Triad[] = [
       }
     },
     "nearDistance": 4.42,
-    "farDistance": 5.35
+    "farDistance": 5.35,
+    "literature": {
+      "construct": "authentic pride vs hubristic pride",
+      "citation": "Tracy, J.L. & Robins, R.W. (2007). The psychological structure of pride: A tale of two facets. Journal of Personality and Social Psychology, 92(3), 506-525.",
+      "url": "https://doi.org/10.1037/0022-3514.92.3.506"
+    }
   },
   {
     "virtue": "Trust",
@@ -590,7 +624,12 @@ export const triads: Triad[] = [
       }
     },
     "nearDistance": 5.07,
-    "farDistance": 6.66
+    "farDistance": 6.66,
+    "literature": {
+      "construct": "compassion vs empathic distress",
+      "citation": "Klimecki, O.M., Leiberg, S., Ricard, M. & Singer, T. (2014). Differential pattern of functional brain plasticity after compassion and empathy training. Social Cognitive and Affective Neuroscience, 9(6), 873-879.",
+      "url": "https://doi.org/10.1093/scan/nst060"
+    }
   },
   {
     "virtue": "Courage",
