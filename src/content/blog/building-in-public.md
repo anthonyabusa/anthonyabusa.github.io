@@ -22,4 +22,4 @@ Most portfolios become graveyards: a neat row of finished projects, frozen in pl
 
 Projects from consulting, product, and open source. Writing at the seam of business and technology, and in the places that feed it: philosophy, psychology, economics. Honest post-mortems on the work that did not pan out, because those are usually the ones with the most signal once the posturing gets stripped away.
 
-So why build it in public? Because the alternative is building it in private, arranging the graveyard carefully, and hoping someone eventually wanders in.
+So I build it in public; the alternative is building it in private, arranging the graveyard carefully, and hoping someone eventually wanders in.
