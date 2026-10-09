@@ -22,6 +22,4 @@ Goals will not reliably get you there; systems will. "Use the expensive model le
 
 None of this makes the architecture risk-free, and pretending otherwise would be the same overconfidence I am arguing against. The failure mode is not cheap hands producing sloppy work; it is a judgment call getting misrouted *down*, sent to the volume tier because it looked like toil when it was not. A migration that quietly needed a decision, drafted by a model that was never asked to decide, can ship a mistake with confidence. The defense is not to route everything back up to the expensive mind, which only rebuilds the bottleneck. The defense is to make the orchestrator's one non-negotiable job the sorting itself, so the only thing it is never allowed to delegate is deciding what can be delegated.
 
-So the smartest thing you can do with the smartest model is to guard it. The point was never how much the best mind in the room can do, but how little of it you can afford to waste. The question for anyone building with these tools is not "how powerful is your model?"
-
-It is: what is it doing right now that something cheaper should be doing instead?
+So the smartest thing you can do with the smartest model is to guard it. The point was never how much the best mind in the room can do, but how little of it you can afford to waste. The challenge for anyone building with these tools is not to ask how powerful their model is. It is to ask what that model is doing right now that something cheaper should be doing instead.
