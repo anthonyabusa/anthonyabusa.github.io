@@ -26,4 +26,4 @@ If one framework here saves you a month, or one honest mistake keeps you from ma
 
 I have always held that entrepreneurship is having the vision of a better future, the creativity to design a bridge between it and the present, and the passion to build that bridge so others can cross it trustingly. This is me building in the open, one beam at a time.
 
-And if you are standing in a room that does not quite exist yet: what are you still waiting for permission to build?
+And if you find yourself standing in a room that does not quite exist yet, you are the only one who can give yourself permission to build it.
