@@ -23,7 +23,7 @@ That distinction is the real lesson, and it has almost nothing to do with any on
 
 The prisoners who adjusted fastest were not the ones with the clearest memory of the sun. They were the ones who, somewhere along the way, had built themselves a lamp.
 
-So the question worth sitting with is not who will have access to the best model next month. It may be you; it may not. The better question is quieter, and it points back at your own infrastructure. Those three days of sun are already over. The next three will end too. What can you put in place now, so that the next time the light goes out, you still have your own?
+So the question worth sitting with is not who will have access to the best model next month. It may be you; it may not. The better question is quieter, and it points back at your own infrastructure. Those three days of sun are already over. The next three will end too. The work is putting something in place now, so that the next time the light goes out, you still have your own.
 
 **Sources**
 - Anthropic, [Statement on the US government directive to suspend access to Fable 5 and Mythos 5](https://www.anthropic.com/news/fable-mythos-access)
