@@ -7,7 +7,7 @@ import MotionCut from '../../../components/MotionCut.astro';
 const piece = pieces.find((p) => p.slug === 'a-lengthening-life')!;
 ---
 
-<Base title={`${piece.title} · Plotted`} description={piece.dek}>
+<Base title={`${piece.title} · Plotted`} description={piece.dek} ogImage={`/plotted/og/${piece.slug}.png`}>
   <article class="piece">
     <header class="piece-head" data-reveal>
       <p class="kicker">{piece.kicker}</p>
@@ -39,6 +39,11 @@ const piece = pieces.find((p) => p.slug === 'a-lengthening-life')!;
         life of one born in 1800.
       </p>
       <MotionCut src="/plotted/media/life-world-square.mp4" poster="/plotted/media/life-world-square.png"
+        steps={[
+          { at: 5.3, text: '1918: the influenza pandemic wipes out a century of progress in a single year, down to 27.5 years.' },
+          { at: 6.6, text: '1950: antibiotics, vaccines and clean water reach almost everywhere at once, and the whole world rises together.' },
+          { at: 8.4, text: '2021: COVID-19 pulls it back, from 72.8 years in 2019 to about 71.' },
+        ]}
         label="Animated chart: world life expectancy from 1800 to 2021, more than doubling, with the 1918 pandemic, the post-1950 rise and COVID-19 marked." />
       <p>
         The averages hide the real drama. Toggle a country onto the chart and
