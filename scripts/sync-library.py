@@ -397,6 +397,10 @@ def main():
         # add time; never fetched or fabricated; preserved verbatim across a pull.
         source_url = old_fm.get("sourceUrl") or ""
 
+        # Kind: repo-owned optional override for the books/papers split
+        # (src/lib/library.ts). Absent = derived from sourceUrl. Preserved verbatim.
+        kind = old_fm.get("kind") or ""
+
         # Genres: Notion-owned, but UNION in any locally-added genres (e.g. Open
         # Library enrichment via enrich-genres-covers.py) so a pull never drops
         # them. Notion genres always kept; additive only.
@@ -417,6 +421,7 @@ def main():
             "synopsis": synopsis,
             "takeaways": takeaways,  # emits nothing when empty (yaml_dump skips [])
             "sourceUrl": source_url,  # emits nothing when empty (yaml_dump skips "")
+            "kind": kind,  # emits nothing when empty
             "notionId": nid,
             "notionLastEdited": b["notionLastEdited"],
         }

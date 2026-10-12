@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { isPaper } from '../../lib/library';
 
 export async function getStaticPaths() {
   const books = await getCollection('library');
@@ -10,6 +11,9 @@ export async function getStaticPaths() {
 const { book } = Astro.props;
 const { title, authors = [], genres = [], status, rating, progress, completed, cover, synopsis, takeaways = [], sourceUrl } = book.data;
 const { Content } = await render(book);
+// Papers keep their /library/<slug>/ URL (stable links) but point back to /papers.
+const paper = isPaper(book);
+const back = paper ? { href: '/papers/', label: 'Back to papers' } : { href: '/library/', label: 'Back to the shelf' };
 
 const statusLabel = { read: 'Read', reading: 'Reading', want: 'Want to read' }[status];
 const byline = authors.join(', ');
@@ -23,15 +27,15 @@ const hasNotes = ((book.body ?? '').trim().length) > 0;
 ---
 
 <BaseLayout
-  title={`${title} · Library`}
-  description={`${title}${byline ? ` by ${byline}` : ''}. From Anthony Busa's bookshelf.`}
+  title={`${title} · ${paper ? 'Papers' : 'Library'}`}
+  description={`${title}${byline ? ` by ${byline}` : ''}. From Anthony Busa's ${paper ? 'research reading list' : 'bookshelf'}.`}
 >
   <div class="max-w-4xl mx-auto px-6 pt-32 pb-24">
     <a
-      href="/library/"
+      href={back.href}
       class="reveal inline-flex items-center gap-1.5 font-mono text-xs text-ink-muted hover:text-ink transition-colors mb-8"
     >
-      <span aria-hidden="true">←</span> Back to the shelf
+      <span aria-hidden="true">←</span> {back.label}
     </a>
 
     <div class="reveal grid gap-8 md:grid-cols-[minmax(0,200px)_1fr]">
@@ -70,7 +74,7 @@ const hasNotes = ((book.body ?? '').trim().length) > 0;
           <div class="flex flex-wrap gap-2">
             {genres.map((g) => (
               <a
-                href={`/library/?genre=${encodeURIComponent(g.trim())}`}
+                href={`${back.href}?genre=${encodeURIComponent(g.trim())}`}
                 class="rounded-full border border-border px-2.5 py-0.5 font-mono text-[0.65rem] text-ink-muted hover:border-accent hover:text-ink transition-colors"
               >
                 {g.trim()}
@@ -108,7 +112,7 @@ const hasNotes = ((book.body ?? '').trim().length) > 0;
       {hasNotes ? (
         <div class="prose max-w-none"><Content /></div>
       ) : (
-        <p class="text-ink-muted">No notes on this one yet. I add reflections as I finish or revisit a book.</p>
+        <p class="text-ink-muted">No notes on this one yet. I add reflections as I finish or revisit a {paper ? 'paper' : 'book'}.</p>
       )}
     </div>
   </div>

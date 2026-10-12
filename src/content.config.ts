@@ -43,6 +43,9 @@ const library = defineCollection({
     // author-hosted PDF) for research-paper cards. Repo-owned, verified at add
     // time, preserved across Notion syncs; renders a "Read the paper" link.
     sourceUrl: z.string().url().optional(),
+    // Optional repo-owned override for the books/papers split (src/lib/library.ts).
+    // Absent means "derive it": an entry with a sourceUrl is a paper.
+    kind: z.enum(['book', 'paper']).optional(),
     notionId: z.string(),
     notionLastEdited: z.string().optional(),
   }),

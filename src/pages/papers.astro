@@ -1,0 +1,198 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { isPaper } from '../lib/library';
+
+// Research papers and foundational readings. Same `library` collection as the
+// bookshelf (one Notion reading log); split out by src/lib/library.ts. Status is
+// my reading state: want, reading, read.
+const papers = await getCollection('library', isPaper);
+
+// Same shelf order as /library (in progress, then read, then the queue). Within a
+// status, the most recently finished or touched paper floats up.
+const statusOrder = { reading: 0, read: 1, want: 2 };
+const recency = (p: (typeof papers)[number]) =>
+  p.data.completed?.valueOf() || Date.parse(p.data.notionLastEdited ?? '') || 0;
+const sorted = papers.sort((a, b) => {
+  const s = statusOrder[a.data.status] - statusOrder[b.data.status];
+  if (s !== 0) return s;
+  return recency(b) - recency(a);
+});
+
+const counts = {
+  read: papers.filter((p) => p.data.status === 'read').length,
+  reading: papers.filter((p) => p.data.status === 'reading').length,
+  want: papers.filter((p) => p.data.status === 'want').length,
+};
+
+const filters = [
+  { key: 'all', label: `All · ${papers.length}` },
+  { key: 'reading', label: `Reading · ${counts.reading}` },
+  { key: 'read', label: `Read · ${counts.read}` },
+  { key: 'want', label: `Want to read · ${counts.want}` },
+];
+
+const topicCounts = new Map<string, number>();
+for (const p of papers) {
+  for (const g of p.data.genres ?? []) {
+    const key = g.trim();
+    if (key) topicCounts.set(key, (topicCounts.get(key) ?? 0) + 1);
+  }
+}
+const topics = [...topicCounts.entries()].sort((a, b) => b[1] - a[1]);
+
+const statusMeta = {
+  read: { label: 'Read', cls: 'text-emerald-200 ring-emerald-300/40' },
+  reading: { label: 'Reading', cls: 'text-accent-lighter ring-accent/50' },
+  want: { label: 'Want to read', cls: 'text-ink-soft ring-white/20' },
+};
+---
+
+<BaseLayout
+  title="Papers"
+  description="Research papers and foundational readings on Anthony Busa's list: what I've read, what I'm reading, and what's next."
+>
+  <div class="max-w-5xl mx-auto px-6 pt-32 pb-24">
+    <div class="reveal mb-10">
+      <p class="text-accent font-mono text-xs tracking-widest uppercase mb-4">Reading Log</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-ink mb-3">Papers</h1>
+      <p class="text-xl text-ink-soft mb-4">Research and Foundational Readings</p>
+      <p class="text-ink-muted max-w-xl">
+        The papers behind the ideas I build on and the ones queued up next: {counts.read} read,
+        {counts.reading} in progress, {counts.want} on deck.
+      </p>
+      <a
+        href="/library/"
+        class="mt-5 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-accent hover:text-ink transition-colors"
+      >
+        <span aria-hidden="true">←</span> The bookshelf
+      </a>
+    </div>
+
+    <div class="reveal flex flex-col gap-3 mb-10">
+      <div class="flex flex-wrap gap-2" role="group" aria-label="Filter by reading status">
+        {filters.map((f) => (
+          <button class:list={['project-filter', f.key === 'all' && 'active']} data-filter={f.key}>{f.label}</button>
+        ))}
+      </div>
+      <div class="flex items-center gap-2">
+        <label for="topic-filter" class="font-mono text-xs uppercase tracking-widest text-ink-faint">Topic</label>
+        <select
+          id="topic-filter"
+          class="rounded-full border border-border bg-surface px-3 py-1 font-mono text-xs text-ink-muted hover:text-ink focus:border-accent focus:outline-none"
+        >
+          <option value="all">All topics · {papers.length}</option>
+          {topics.map(([t, n]) => <option value={t}>{t} · {n}</option>)}
+        </select>
+      </div>
+    </div>
+
+    <ul class="reveal-group flex flex-col gap-4">
+      {sorted.map((paper) => {
+        const { title, authors = [], genres = [], status, cover, synopsis, sourceUrl } = paper.data;
+        const meta = statusMeta[status];
+        return (
+          <li
+            class="reveal"
+            data-paper
+            data-status={status}
+            data-genres={genres.map((g) => g.trim()).join('|')}
+          >
+            <article class="card-hover group relative flex gap-4 sm:gap-5 rounded-xl border border-border bg-surface p-3 sm:p-4">
+              <div class="relative w-20 sm:w-28 shrink-0 aspect-[17/22] overflow-hidden rounded-lg border border-border bg-surface2">
+                {cover ? (
+                  <img
+                    src={cover}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
+                  />
+                ) : (
+                  <div class="flex h-full w-full items-center justify-center p-2 text-center">
+                    <span class="font-mono text-[0.6rem] uppercase tracking-widest text-ink-faint">No cover</span>
+                  </div>
+                )}
+              </div>
+
+              <div class="flex min-w-0 flex-1 flex-col gap-1.5">
+                <span
+                  class:list={['self-start rounded-full px-2 py-0.5 font-mono text-[0.6rem] uppercase tracking-wider bg-black/40 ring-1', meta.cls]}
+                >
+                  {meta.label}
+                </span>
+                <h2 class="text-base sm:text-lg font-semibold leading-snug text-ink group-hover:text-accent transition-colors">
+                  <a href={`/library/${paper.id}/`} class="after:absolute after:inset-0 after:rounded-xl">{title}</a>
+                </h2>
+                {authors.length > 0 && <p class="text-xs text-ink-muted line-clamp-1">{authors.join(', ')}</p>}
+                {synopsis && <p class="hidden sm:block text-sm text-ink-soft leading-relaxed line-clamp-3">{synopsis}</p>}
+                <div class="mt-auto flex flex-wrap items-center gap-2 pt-1">
+                  {genres.slice(0, 3).map((g) => (
+                    <span class="rounded-full border border-border px-2.5 py-0.5 font-mono text-[0.6rem] text-ink-muted">{g.trim()}</span>
+                  ))}
+                  {sourceUrl && (
+                    <a
+                      href={sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="relative z-10 ml-auto inline-flex items-center gap-1 font-mono text-[0.65rem] uppercase tracking-widest text-accent hover:text-ink transition-colors"
+                      aria-label={`Read the paper: ${title} (opens in a new tab)`}
+                    >
+                      Source <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </article>
+          </li>
+        );
+      })}
+    </ul>
+
+    <p id="empty-state" class="reveal mt-10 text-center text-ink-muted" hidden>No papers match that filter.</p>
+  </div>
+</BaseLayout>
+
+<script>
+  const statusButtons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const topicSelect = document.querySelector<HTMLSelectElement>('#topic-filter');
+  const rows = document.querySelectorAll<HTMLElement>('[data-paper]');
+  const emptyState = document.querySelector<HTMLElement>('#empty-state');
+  let activeStatus = 'all';
+  let activeTopic = 'all';
+
+  function apply() {
+    let visible = 0;
+    rows.forEach((row) => {
+      const okStatus = activeStatus === 'all' || row.dataset.status === activeStatus;
+      const okTopic = activeTopic === 'all' || (row.dataset.genres ?? '').split('|').includes(activeTopic);
+      const show = okStatus && okTopic;
+      row.hidden = !show;
+      if (show) visible++;
+    });
+    if (emptyState) emptyState.hidden = visible !== 0;
+  }
+
+  statusButtons.forEach((button) => button.addEventListener('click', () => {
+    statusButtons.forEach((item) => item.classList.remove('active'));
+    button.classList.add('active');
+    activeStatus = button.dataset.filter ?? 'all';
+    apply();
+  }));
+
+  topicSelect?.addEventListener('change', () => {
+    activeTopic = topicSelect.value;
+    apply();
+  });
+
+  // Deep link: /papers/?genre=Technology preselects a topic (from a paper's detail page).
+  const wanted = new URLSearchParams(location.search).get('genre');
+  if (wanted && topicSelect) {
+    const match = [...topicSelect.options].find((o) => o.value === wanted);
+    if (match) {
+      topicSelect.value = wanted;
+      activeTopic = wanted;
+      apply();
+    }
+  }
+</script>

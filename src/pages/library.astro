@@ -2,8 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BookCard from '../components/BookCard.astro';
 import { getCollection } from 'astro:content';
+import { isPaper } from '../lib/library';
 
-const books = await getCollection('library');
+// Books only: research papers share the collection but live on /papers.
+const books = await getCollection('library', (entry) => !isPaper(entry));
+const paperCount = (await getCollection('library', isPaper)).length;
 
 // Shelf order: currently reading first, then read, then the to-read pile.
 // Within a status, higher rating and more recent completion float up.
@@ -53,6 +56,14 @@ const genres = [...genreCounts.entries()].sort((a, b) => b[1] - a[1]);
         The books I've read, the ones I'm in, and the pile I'm working toward: {counts.read} read,
         {counts.reading} in progress, {counts.want} on deck. Kept in sync with my reading log.
       </p>
+      {paperCount > 0 && (
+        <a
+          href="/papers/"
+          class="mt-5 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-accent hover:text-ink transition-colors"
+        >
+          Research papers · {paperCount} <span aria-hidden="true">→</span>
+        </a>
+      )}
     </div>
 
     <div class="reveal flex flex-col gap-3 mb-10">
@@ -96,7 +107,7 @@ const genres = [...genreCounts.entries()].sort((a, b) => b[1] - a[1]);
       ))}
     </div>
 
-    <p id="empty-state" class="reveal mt-10 hidden text-center text-ink-muted">No books match that filter.</p>
+    <p id="empty-state" class="reveal mt-10 text-center text-ink-muted" hidden>No books match that filter.</p>
 
     <p class="reveal mt-14 text-center font-mono text-xs text-ink-faint">
       Covers via <a href="https://openlibrary.org" class="hover:text-ink-muted underline underline-offset-2">Open Library</a>.

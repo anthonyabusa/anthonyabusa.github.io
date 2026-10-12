@@ -3,13 +3,14 @@ import { flags } from '../data/flags';
 
 const pathname = Astro.url.pathname;
 
-const links = [
+// `also`: extra path prefixes that light up a link (/papers lives under Library).
+const links: { href: string; label: string; also?: string[] }[] = [
   { href: '/apps', label: 'Apps' },
   { href: '/about', label: 'About' },
   { href: '/experience', label: 'Experience' },
   { href: '/projects', label: 'Projects' },
   { href: '/plotted', label: 'Plotted' },
-  { href: '/library', label: 'Library' },
+  { href: '/library', label: 'Library', also: ['/papers'] },
   { href: '/blog', label: 'Writing' },
   // Consulting landing: only surfaced once its flag is flipped on (kept out of
   // nav during review so the page stays undiscoverable until the copy ships).
@@ -26,13 +27,13 @@ const links = [
 
     <!-- Desktop nav -->
     <nav class="hidden md:flex items-center gap-8" aria-label="Primary navigation">
-      {links.map(({ href, label }) => (
+      {links.map(({ href, label, also = [] }) => (
         <a
           href={href}
-          aria-current={pathname.startsWith(href) ? 'page' : undefined}
+          aria-current={[href, ...also].some((p) => pathname.startsWith(p)) ? 'page' : undefined}
           class:list={[
             "text-sm transition-colors duration-200",
-            pathname.startsWith(href)
+            [href, ...also].some((p) => pathname.startsWith(p))
               ? "text-accent"
               : "text-ink-subtle hover:text-ink"
           ]}
@@ -51,12 +52,12 @@ const links = [
         <svg aria-hidden="true" class="hidden group-open:block" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </summary>
       <nav class="absolute top-full left-3 right-3 bg-[#212435]/95 backdrop-blur-xl border border-border-strong border-t-white/10 rounded-xl p-3 flex flex-col gap-1 shadow-[0_18px_50px_rgba(0,0,0,0.7)]">
-        {links.map(({ href, label }) => (
+        {links.map(({ href, label, also = [] }) => (
           <a
             href={href}
             class:list={[
               "text-sm font-semibold px-4 py-3 rounded-lg border transition-colors",
-              pathname.startsWith(href)
+              [href, ...also].some((p) => pathname.startsWith(p))
                 ? "text-accent-lighter bg-accent/15 border-accent/40"
                 : "text-ink-soft border-transparent hover:text-ink hover:bg-white/5 hover:border-white/10"
             ]}
