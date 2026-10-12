@@ -2,18 +2,84 @@
 // Motion cut of a chart (rendered by projects/motion-viz in metis-os), set inline in the prose
 // like a GIF: no frame, no controls, same paper as the page. Plays from the top on scrolling
 // into view, pauses on leaving, tap to pause or resume. Reduce Motion keeps the still until tapped.
-interface Props { src: string; poster: string; label: string }
-const { src, poster, label } = Astro.props;
+//
+// With `steps` it becomes a step-through instead (Mayer's segmenting: one idea per beat, the
+// reader sets the pace). It plays to each step's time, holds there with that step's caption,
+// and a tap moves on. After the last step it plays out and holds the final frame; a tap
+// replays. Under Reduce Motion a tap jumps straight to each step's frame, so nothing moves.
+// Step times come from the motion-viz engine (beats.mjs), captions from the piece's own prose.
+interface Step { at: number; text: string }
+interface Props { src: string; poster: string; label: string; steps?: Step[] }
+const { src, poster, label, steps } = Astro.props;
 ---
 
-<video class="motion" muted loop playsinline preload="none" poster={poster} src={src} aria-label={label}></video>
+{steps?.length ? (
+  <figure class="motion-step" data-steps={JSON.stringify(steps)}>
+    <video class="motion" muted playsinline preload="none" poster={poster} src={src} aria-label={label}></video>
+    <figcaption>
+      <span class="step-text" aria-live="polite"></span>
+      <span class="step-hint">Tap the chart to step through</span>
+    </figcaption>
+  </figure>
+) : (
+  <video class="motion" muted loop playsinline preload="none" poster={poster} src={src} aria-label={label}></video>
+)}
 
 <script>
+  type Step = { at: number; text: string };
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const seen = new WeakSet<HTMLVideoElement>();
+  const stepped = new WeakMap<HTMLVideoElement, { start: () => void; stop: () => void }>();
+
+  // Step-through: `next` is the index of the step the video is heading for (steps.length = the end).
+  for (const fig of document.querySelectorAll<HTMLElement>('figure.motion-step')) {
+    const v = fig.querySelector('video')!;
+    const steps: Step[] = JSON.parse(fig.dataset.steps!);
+    const text = fig.querySelector<HTMLElement>('.step-text')!;
+    const hint = fig.querySelector<HTMLElement>('.step-hint')!;
+    let next = 0, raf = 0, started = false;
+    const show = (i: number) => {
+      text.textContent = i < steps.length ? steps[i].text : '';
+      hint.textContent = i < steps.length ? `${i + 1} of ${steps.length} · tap to continue` : 'Tap to replay';
+    };
+    const watch = () => {
+      if (next < steps.length && v.currentTime >= steps[next].at) {
+        v.pause();
+        v.currentTime = steps[next].at;
+        show(next);
+        return;
+      }
+      raf = requestAnimationFrame(watch);
+    };
+    const play = () => { text.textContent = ''; v.play().catch(() => {}); cancelAnimationFrame(raf); raf = requestAnimationFrame(watch); };
+    const advance = () => {
+      if (still) {
+        // Reduce Motion: jump frame to frame, no playback
+        next = !started || next >= steps.length ? 0 : next + 1;
+        started = true;
+        const end = Number.isFinite(v.duration) ? v.duration - 0.05 : steps[steps.length - 1].at;
+        v.currentTime = next < steps.length ? steps[next].at : end;
+        show(next);
+        return;
+      }
+      if (!started || next >= steps.length) { next = 0; v.currentTime = 0; started = true; play(); return; }
+      if (v.paused && text.textContent) { next += 1; play(); return; }
+      v.paused ? play() : v.pause();
+    };
+    v.addEventListener('ended', () => { cancelAnimationFrame(raf); next = steps.length; show(next); });
+    v.addEventListener('click', advance);
+    stepped.set(v, {
+      start: () => { if (!started && !still) { started = true; next = 0; v.currentTime = 0; play(); } },
+      stop: () => { cancelAnimationFrame(raf); v.pause(); },
+    });
+    if (still) { hint.textContent = 'Tap the chart to step through'; v.preload = 'metadata'; }
+  }
+
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) {
       const v = e.target as HTMLVideoElement;
+      const s = stepped.get(v);
+      if (s) { e.isIntersecting ? s.start() : s.stop(); continue; }
       if (!e.isIntersecting) { v.pause(); continue; }
       if (still) continue;
       if (!seen.has(v)) { seen.add(v); v.currentTime = 0; }
@@ -22,10 +88,14 @@ const { src, poster, label } = Astro.props;
   }, { threshold: 0.4 });
   for (const v of document.querySelectorAll<HTMLVideoElement>('video.motion')) {
     io.observe(v);
-    v.addEventListener('click', () => (v.paused ? v.play().catch(() => {}) : v.pause()));
+    if (!stepped.has(v)) v.addEventListener('click', () => (v.paused ? v.play().catch(() => {}) : v.pause()));
   }
 </script>
 
 <style>
   .motion { display: block; width: 100%; height: auto; aspect-ratio: 1; margin: var(--space-3) 0 0; background: var(--paper); cursor: pointer; }
+  .motion-step { margin: 0; }
+  .motion-step figcaption { display: flex; flex-direction: column; gap: 4px; min-height: 4.6em; padding-top: var(--space-2, 8px); }
+  .step-text { font-family: var(--font-serif, Fraunces, serif); font-size: 1.02rem; line-height: 1.45; color: var(--ink, #1b1a17); }
+  .step-hint { font-family: var(--font-sans, Inter, sans-serif); font-size: 0.78rem; letter-spacing: 0.04em; color: var(--ink-muted, #6f6b64); }
 </style>

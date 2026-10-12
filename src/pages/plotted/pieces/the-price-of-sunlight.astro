@@ -25,7 +25,7 @@ for (const b of data.blocks) if (b.type === 'chart') chartSpecs[b.chartId] = b.c
 
 ---
 
-<Base title={`${piece.title} · Plotted`} description={piece.dek}>
+<Base title={`${piece.title} · Plotted`} description={piece.dek} ogImage={`/plotted/og/${piece.slug}.png`}>
   <article class="piece">
     <header class="piece-head" data-reveal>
       <p class="kicker">{data.head.kicker}</p>
