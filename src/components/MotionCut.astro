@@ -1,0 +1,31 @@
+---
+// Motion cut of a chart (rendered by projects/motion-viz in metis-os), set inline in the prose
+// like a GIF: no frame, no controls, same paper as the page. Plays from the top on scrolling
+// into view, pauses on leaving, tap to pause or resume. Reduce Motion keeps the still until tapped.
+interface Props { src: string; poster: string; label: string }
+const { src, poster, label } = Astro.props;
+---
+
+<video class="motion" muted loop playsinline preload="none" poster={poster} src={src} aria-label={label}></video>
+
+<script>
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const seen = new WeakSet<HTMLVideoElement>();
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      const v = e.target as HTMLVideoElement;
+      if (!e.isIntersecting) { v.pause(); continue; }
+      if (still) continue;
+      if (!seen.has(v)) { seen.add(v); v.currentTime = 0; }
+      v.play().catch(() => {});
+    }
+  }, { threshold: 0.4 });
+  for (const v of document.querySelectorAll<HTMLVideoElement>('video.motion')) {
+    io.observe(v);
+    v.addEventListener('click', () => (v.paused ? v.play().catch(() => {}) : v.pause()));
+  }
+</script>
+
+<style>
+  .motion { display: block; width: 100%; height: auto; aspect-ratio: 1; margin: var(--space-3) 0 0; background: var(--paper); cursor: pointer; }
+</style>

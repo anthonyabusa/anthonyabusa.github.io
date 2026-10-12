@@ -2,6 +2,7 @@
 import Base from '../../../layouts/PlottedBase.astro';
 import LifeExpectancyChart from '../../../components/LifeExpectancyChart.astro';
 import { pieces } from '../../../data/plotted-pieces';
+import MotionCut from '../../../components/MotionCut.astro';
 
 const piece = pieces.find((p) => p.slug === 'a-lengthening-life')!;
 ---
@@ -37,6 +38,8 @@ const piece = pieces.find((p) => p.slug === 'a-lengthening-life')!;
         world rises together. A child born today can expect more than twice the
         life of one born in 1800.
       </p>
+      <MotionCut src="/plotted/media/life-world-square.mp4" poster="/plotted/media/life-world-square.png"
+        label="Animated chart: world life expectancy from 1800 to 2021, more than doubling, with the 1918 pandemic, the post-1950 rise and COVID-19 marked." />
       <p>
         The averages hide the real drama. Toggle a country onto the chart and
         the unevenness appears: the United Kingdom started high and climbed
@@ -46,6 +49,8 @@ const piece = pieces.find((p) => p.slug === 'a-lengthening-life')!;
         opportunity of the last century. COVID-19 aside, it has mostly been
         closing.
       </p>
+      <MotionCut src="/plotted/media/life-korea-square.mp4" poster="/plotted/media/life-korea-square.png"
+        label="Animated chart: life expectancy in South Korea, the United Kingdom and the world from 1900 to 2021. South Korea passes the world average and then the United Kingdom." />
     </div>
 
     <footer class="piece-foot measure" data-reveal>
