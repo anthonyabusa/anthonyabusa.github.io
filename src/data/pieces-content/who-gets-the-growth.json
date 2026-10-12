@@ -504,7 +504,7 @@
       "title": "Measured against the economy's own growth, most of the distribution fell behind.",
       "subhead": "Real income growth by group, 1980–2014, minus the +61% economy-wide average",
       "chartId": "c5",
-      "motion": { "src": "/plotted/media/growth-method-square.mp4", "poster": "/plotted/media/growth-method-square.png", "steps": [ { "at": 4.55, "text": "Every group's real income grew, from +1% for the bottom half to +205% for the top 1%." }, { "at": 5.5, "text": "On average, real income per adult grew +61%." }, { "at": 8.3, "text": "Measured against that average, the bottom 90% fell behind: the bottom half by 60 points, the middle 40% by 19." } ] },
+      "motion": { "src": "/plotted/media/growth-method-square.mp4", "poster": "/plotted/media/growth-method-square.png", "point": "Against the +61% average, 90% of adults fell behind. The bottom half grew just +1%.", "steps": [ { "at": 4.55, "text": "Every group's real income grew, from +1% for the bottom half to +205% for the top 1%." }, { "at": 5.5, "text": "On average, real income per adult grew +61%." }, { "at": 8.3, "text": "Measured against that average, the bottom 90% fell behind: the bottom half by 60 points, the middle 40% by 19." } ] },
       "fignum": "Chart 5 · The residual",
       "aria": "Income growth relative to the economy-wide average from 1980 to 2014: the bottom 50 percent grew about 60 points below average, the top 1 percent about 144 points above.",
       "caption": "**Each group's cumulative real pre-tax income growth minus the population-wide average of +61%.** A positive bar outgrew the economy; a negative bar fell behind it. The top 1% is the apex slice of the top 10%. Source: Piketty, Saez & Zucman (2018), Table II.",
