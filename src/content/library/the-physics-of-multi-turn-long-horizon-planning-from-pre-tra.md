@@ -14,6 +14,8 @@ takeaways:
   - "On-policy distillation has a broader effective region than group relative policy optimization under low-quality pre-training data and long planning horizons."
   - "Distilling unseen multi-path procedures from a teacher with different underlying knowledge may impair the student’s existing world modeling without fully establishing the new knowledge."
   - "Multi-teacher on-policy distillation integrates capabilities by converging to shared planning-pattern distributions, enabling cross-environment generalization and supporting continual learning."
+kind: "paper"
+sourceUrl: "https://arxiv.org/abs/2607.24720"
 notionId: "3f7176cc-7864-81c7-98b9-dbb65016a732"
 notionLastEdited: "2026-10-12T20:31:00.000Z"
 ---
