@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/PlottedBase.astro';
+import MotionCut from '../../../components/MotionCut.astro';
 import { pieces } from '../../../data/plotted-pieces';
 import { marked } from 'marked';
 import contentJson from '../../../data/pieces-content/the-price-of-sunlight.json';
@@ -55,8 +56,7 @@ for (const b of data.blocks) if (b.type === 'chart') chartSpecs[b.chartId] = b.c
             <div class="prose">
               {b.parts.map((p: any) => <p class={p.pull ? 'pull' : p.lead ? 'lead' : undefined} set:html={partHtml(p)} />)}
               {b.motion && (
-                <video class="motion" muted loop playsinline preload="none" poster={b.motion.poster} src={b.motion.src}
-                  aria-label={`Animated version of the chart above. ${b.aria}`}></video>
+                <MotionCut src={b.motion.src} poster={b.motion.poster} label={`Animated version of the chart above. ${b.aria}`} />
               )}
             </div>
           </section>
@@ -103,26 +103,6 @@ for (const b of data.blocks) if (b.type === 'chart') chartSpecs[b.chartId] = b.c
     </footer>
   </article>
 
-  <script>
-    // GIF behavior for the motion cuts: play from the top on scrolling into view, pause on
-    // leaving, tap to pause or resume. Reduce Motion keeps the still frame until tapped.
-    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const vids = [...document.querySelectorAll<HTMLVideoElement>('video.motion')];
-    const seen = new WeakSet<HTMLVideoElement>();
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries) {
-        const v = e.target as HTMLVideoElement;
-        if (!e.isIntersecting) { v.pause(); continue; }
-        if (still) continue;
-        if (!seen.has(v)) { seen.add(v); v.currentTime = 0; }
-        v.play().catch(() => {});
-      }
-    }, { threshold: 0.4 });
-    for (const v of vids) {
-      io.observe(v);
-      v.addEventListener('click', () => (v.paused ? v.play().catch(() => {}) : v.pause()));
-    }
-  </script>
   <script type="application/json" id="chart-specs" is:inline set:html={JSON.stringify(chartSpecs)}></script>
 </Base>
 
@@ -217,9 +197,6 @@ for (const b of data.blocks) if (b.type === 'chart') chartSpecs[b.chartId] = b.c
   .signote { font-family: var(--font-sans); font-size: var(--step--1); color: var(--ink-faint); line-height: 1.45; margin: 0; flex: 1; min-width: 15rem; }
   .signote strong { color: var(--ink-soft); font-weight: 600; }
 
-  /* Motion cut of a chart (rendered by projects/motion-viz in metis-os), set inline in the prose
-     like a GIF: no frame, no controls, same paper as the page. Played by the script below. */
-  .motion { display: block; width: 100%; height: auto; aspect-ratio: 1; margin: var(--space-3) 0 0; background: var(--paper); cursor: pointer; }
 
   /* Editorial hover tooltip card - created by the chart engine, so styled via
      :global (Astro-scoped selectors cannot match JS-created nodes). Chrome colors
