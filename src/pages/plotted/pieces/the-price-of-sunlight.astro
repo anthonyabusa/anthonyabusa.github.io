@@ -51,6 +51,13 @@ for (const b of data.blocks) if (b.type === 'chart') chartSpecs[b.chartId] = b.c
                 <span class="fignum">{b.fignum}</span>
                 <p class="signote" set:html={mdi(b.caption)} />
               </figcaption>
+              {b.motion && (
+                <details class="motion">
+                  <summary>{b.motion.label}</summary>
+                  <video controls muted playsinline preload="none" poster={b.motion.poster} src={b.motion.src}
+                    aria-label={`Animated version of this chart. ${b.aria}`}></video>
+                </details>
+              )}
             </figure>
             <div class="prose">
               {b.parts.map((p: any) => <p class={p.pull ? 'pull' : p.lead ? 'lead' : undefined} set:html={partHtml(p)} />)}
@@ -192,6 +199,20 @@ for (const b of data.blocks) if (b.type === 'chart') chartSpecs[b.chartId] = b.c
   }
   .signote { font-family: var(--font-sans); font-size: var(--step--1); color: var(--ink-faint); line-height: 1.45; margin: 0; flex: 1; min-width: 15rem; }
   .signote strong { color: var(--ink-soft); font-weight: 600; }
+
+  /* Optional motion cut of a chart (rendered by projects/motion-viz in metis-os). Collapsed by
+     default and never autoplays, so the interactive chart stays the primary read. */
+  .motion { max-width: var(--measure); margin: var(--space-2) auto 0; }
+  .motion summary {
+    cursor: pointer; width: fit-content;
+    font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.12em;
+    text-transform: uppercase; font-weight: 600; color: var(--accent-2);
+  }
+  .motion summary:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; }
+  .motion video {
+    display: block; width: 100%; max-width: 34rem; height: auto; aspect-ratio: 1;
+    margin-top: var(--space-2); border: 1px solid var(--rule); border-radius: 6px; background: var(--paper);
+  }
 
   /* Editorial hover tooltip card - created by the chart engine, so styled via
      :global (Astro-scoped selectors cannot match JS-created nodes). Chrome colors
