@@ -87,14 +87,16 @@ a {
   color: inherit;
 }
 
-/* Scroll-reveal: pieces fade/rise into view. Opt out under reduced motion. */
-[data-reveal] {
+/* Scroll-reveal: pieces fade/rise into view. Opt out under reduced motion.
+   Hidden state is gated on html.js (inline head script) so content is never
+   invisible when JS is absent or fails: no-JS, crawlers, print. */
+html.js [data-reveal] {
   opacity: 0;
   transform: translateY(14px);
   transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
   will-change: opacity, transform;
 }
-[data-reveal].is-in {
+html.js [data-reveal].is-in {
   opacity: 1;
   transform: none;
 }
@@ -104,7 +106,8 @@ a {
     animation: none !important;
     transition: none !important;
   }
-  [data-reveal] {
+  /* Must outweigh the html.js-gated hidden state above. */
+  html.js [data-reveal] {
     opacity: 1;
     transform: none;
   }

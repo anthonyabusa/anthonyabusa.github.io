@@ -18,6 +18,9 @@ const image = new URL(ogImage, Astro.site);
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <!-- Progressive-enhancement gate: [data-reveal] hides content only when JS
+         is confirmed present (html.js): no-JS, crawlers, and print see it all. -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
