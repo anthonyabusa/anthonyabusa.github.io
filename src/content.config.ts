@@ -3,7 +3,9 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 const blog = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
+  // Underscore-prefixed files are drafts/templates, never entries: a _template with a
+  // placeholder pubDate broke every build (and Hearth's preview restore) from 2026-09-12.
+  loader: glob({ pattern: ['**/*.md', '!**/_*.md'], base: './src/content/blog' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -21,7 +23,7 @@ const blog = defineCollection({
 // Notion). Notion owns the catalog; the repo owns published notes. Each field
 // has exactly one authoritative side, so the two-way sync never clobbers.
 const library = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/library' }),
+  loader: glob({ pattern: ['**/*.md', '!**/_*.md'], base: './src/content/library' }),
   schema: z.object({
     title: z.string(),
     authors: z.array(z.string()).default([]),
