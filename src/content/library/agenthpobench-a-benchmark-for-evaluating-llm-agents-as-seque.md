@@ -4,8 +4,6 @@ genres:
   - "Artificial Intelligence"
   - "Computer Science"
 status: "want"
-kind: "paper"
-sourceUrl: "https://arxiv.org/abs/2607.29626"
 cover: "/covers/agenthpobench-a-benchmark-for-evaluating-llm-agents-as-seque.png"
 synopsis: "AgentHPOBench evaluates LLM agents as sequential hyperparameter optimizers using 30 executable tasks across seven categories. Agents observe accumulated configurations, metrics, and logs to propose valid next steps. Results show measurable optimization ability but highlight limitations in sustained iterative refinement, complex log diagnosis, and consistent progress toward reported reference performance compared to conventional baselines."
 takeaways:
@@ -15,6 +13,8 @@ takeaways:
   - "Current agents exhibit measurable experimental optimization ability across domains, yet face clear limitations in sustained iterative refinement."
   - "Agents struggle with complex log diagnosis and consistent progress toward reported reference performance."
   - "Removing intermediate experimental evidence reduces optimization performance, while later interventions may plateau or discard earlier gains."
+sourceUrl: "https://arxiv.org/abs/2607.29626"
+kind: "paper"
 notionId: "401176cc-7864-8139-a8e5-d614b1a0f2a3"
 notionLastEdited: "2026-10-22T02:43:00.000Z"
 ---
