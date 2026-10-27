@@ -16,7 +16,7 @@
     "@astrojs/sitemap": "^3.7.2",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
-    "astro": "^6.3.7",
+    "astro": "^7.2.8",
     "d3": "^7.9.0",
     "marked": "^18.0.7"
   },
