@@ -404,6 +404,64 @@
     ]
   },
   {
+    "title": "Clairemont Civic Feed",
+    "slug": "clairemont-civic-feed",
+    "role": "Builder",
+    "status": "Live",
+    "screenshot": "/screenshots/clairemont-civic-feed.png",
+    "description": "A plain-English feed of what the Clairemont Community Planning Group is deciding, built from public City of San Diego agendas and permit data and refreshed every week.",
+    "url": "https://clairemont-civic-feed.github.io",
+    "liveUrl": "https://clairemont-civic-feed.github.io",
+    "tags": [
+      "Civic Tech",
+      "Open Data",
+      "Python",
+      "Local AI"
+    ],
+    "focusAreas": [
+      "data-analytics-engineering",
+      "ai-automation",
+      "product-program-leadership"
+    ],
+    "featured": false,
+    "year": 2026,
+    "endYear": "Present",
+    "type": "site",
+    "challenge": "Planning group agendas are posted as PDFs written in permit language, so most neighbors hear about a liquor license or a subdivision after the vote. The Civic Feed asks whether a resident can see what is coming, in words they would use, before the meeting.",
+    "approach": "A weekly job pulls each agenda PDF and the city's open development-permit data, keeps the open Clairemont projects that need a public decision, and has a local language model rewrite each item as a short plain-English summary. Every card links back to its source, either the official agenda or the city permit record. The page is static HTML on GitHub Pages under a neutral community address.",
+    "metrics": [
+      {
+        "value": "13",
+        "label": "Open Clairemont projects in city review, tracked from permit data (Nov 2026)"
+      },
+      {
+        "value": "Weekly",
+        "kind": "qualitative",
+        "label": "Refreshes itself every Monday from public city data"
+      },
+      {
+        "value": "Sourced",
+        "kind": "qualitative",
+        "label": "Every item links to the official agenda or permit record"
+      }
+    ],
+    "outcomes": [
+      "Planning group votes summarized in plain English before each meeting.",
+      "Weeks of notice on projects still in city review, not days.",
+      "Runs unattended on public data, with no accounts and no tracking."
+    ],
+    "focusNarratives": {
+      "data-analytics-engineering": "Civic data engineering: parsing agenda PDFs, filtering half a million permit records down to the projects that need a public decision, and joining the two on the city's own project numbers.",
+      "ai-automation": "A local language model does the rewriting, so the feed runs weekly at no cost. Each summary is checked against its source record, and every card links back to the original.",
+      "product-program-leadership": "A small public product with one job: tell a neighbor what is about to be decided, in plain words, early enough to show up."
+    },
+    "caseHeadings": [
+      "What is the planning group deciding?",
+      "Public agendas and permit data, rewritten plainly",
+      "Notice before the vote"
+    ]
+  },
+  {
     "title": "Plotted",
     "slug": "plotted-data-viz",
     "role": "Designer & developer",
