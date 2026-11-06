@@ -1,6 +1,6 @@
-# Anthony Abusa Portfolio
+# Anthony Busa Portfolio
 
-Astro-powered personal portfolio for Anthony Abusa: consulting, entrepreneurship, projects, and writing.
+Astro-powered personal portfolio for Anthony Busa: consulting, entrepreneurship, projects, and writing.
 
 Live site: https://anthonyabusa.github.io
 
