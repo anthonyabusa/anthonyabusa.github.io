@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const sections = [
+  {
+    heading: 'What it reads.',
+    body: 'Metis reads email sent to metis@anthonyabusa.com, and only from senders I have approved. Messages from anyone else are ignored and never answered.',
+  },
+  {
+    heading: 'What it does with it.',
+    body: 'It replies to confirm a request, turns the request into a task in my private workspace, and saves any attachments to a Drive folder it created. It can only see Drive files it made itself. AI tools I use may process those tasks to carry them out.',
+  },
+  {
+    heading: 'What it never does.',
+    body: 'It does not sell or share your data, publish it, or use it for advertising.',
+  },
+  {
+    heading: 'Google data.',
+    body: "Metis's use and transfer of information received from Google APIs adheres to the Google API Services User Data Policy, including the Limited Use requirements.",
+  },
+];
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="Privacy policy for Metis, a private tool Anthony Busa built to run his own work."
+>
+  <div class="max-w-2xl mx-auto px-6 pt-32 pb-24">
+    <p class="text-accent font-mono text-xs tracking-widest uppercase mb-4">Privacy</p>
+    <h1 class="text-4xl md:text-5xl font-bold text-ink mb-4 leading-tight">Privacy Policy</h1>
+    <p class="text-ink-faint text-sm mb-10">Last updated November 10, 2026.</p>
+
+    <div class="space-y-6 text-ink-muted text-lg leading-relaxed">
+      <p>
+        This page covers Metis, a private tool I built to run my own work. It is not a public product, and the only Google account it signs in to is my own.
+      </p>
+      {sections.map((s) => (
+        <p><strong class="text-ink font-semibold">{s.heading}</strong> {s.body}</p>
+      ))}
+      <p>
+        <strong class="text-ink font-semibold">Removing access.</strong> You can revoke Metis at any time from your Google Account under Security, Third-party apps and services. To ask for anything to be deleted, reach me through the <a href="/contact" class="text-accent underline underline-offset-4">contact page</a>.
+      </p>
+    </div>
+  </div>
+</BaseLayout>
